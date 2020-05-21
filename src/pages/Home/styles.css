@@ -1,0 +1,75 @@
+.home-page{
+    background-color: var(--primary-low-shade);
+    color: var(--primary-contrast);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-page .title{
+    cursor: default;
+    margin-bottom: 20px;
+    background: var(--secondary-low-shade);
+    color: var(--secondary-contrast);
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+
+.home-page .container{
+    background: var(--primary);
+    display: flex;
+    flex-direction: row;
+    border-radius: 3px;
+}
+
+.home-page .container form{
+    margin: 15px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.home-page .container h2{
+    color: var(--secondary-intense);
+    margin-bottom: 10px;
+}
+
+.home-page .container .input-group{
+    width: 200px;
+    margin-bottom: 5px;
+}
+
+.home-page .container input{
+    width: 100%;
+    height: 36px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-shade);
+    padding: 0 10px;
+    line-height: 24px;
+    font-size: 16px;
+    transition: all .5s;
+}
+
+.home-page .container input:focus{
+    border-color: var(--secondary);
+    box-shadow: 0px 0px 3px 2px var(--secondary-transparent);
+}
+
+.home-page .container button{
+    cursor: pointer;
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border: none;
+    line-height: 24px;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: all .2s;
+}
+
+.home-page .container button:hover{
+    background-color: var(--secondary-shade);
+}
