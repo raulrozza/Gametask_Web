@@ -15,6 +15,7 @@
     color: var(--secondary-contrast);
     padding: 10px 20px;
     border-radius: 15px;
+    text-align: center;
 }
 
 .home-page .container{
@@ -22,6 +23,10 @@
     display: flex;
     flex-direction: row;
     border-radius: 3px;
+}
+
+.home-page .container .form-toggle{
+    display: none;
 }
 
 .home-page .container form{
@@ -59,17 +64,69 @@
     box-shadow: 0px 0px 3px 2px var(--secondary-transparent);
 }
 
+.home-page .container .error-field{
+    background-color: rgb(253, 57, 57);
+    color: #FFF;
+    padding: 7px 5px 2px;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    border-radius: 0px 0px 5px 5px;
+}
+
 .home-page .container button{
     cursor: pointer;
     background-color: var(--secondary);
     color: var(--secondary-contrast);
     border: none;
+    border-radius: 2px;
     line-height: 24px;
     font-size: 16px;
     padding: 8px 12px;
     transition: all .2s;
 }
 
-.home-page .container button:hover{
+.home-page .container button:hover:not(:disabled){
     background-color: var(--secondary-shade);
+}
+
+.home-page .container button:disabled{
+    opacity: 0.3;
+    cursor: default;
+}
+
+@media (max-width: 768px){
+    .home-page .container{
+        flex-direction: column;
+    }
+
+    .home-page .container .form-toggle{
+        width: 100%;
+        display: flex;
+    }
+
+    .home-page .container .form-toggle button{
+        width: 50%;
+        border-radius: 0px;
+        font-weight: bold;
+    }
+
+    .home-page .container .form-toggle button.active{
+        background-color: #FFF;
+        color: var(--secondary-intense);
+    }
+
+    .home-page .container h2{
+        display: none;
+    }
+
+    .home-page .container form{
+        transition: all .5s;
+    }
+
+    .home-page .container form:not(.active){
+        height: 0px;
+        overflow: hidden;
+        margin: 0px;
+    }
 }

@@ -1,5 +1,6 @@
-/* Theme defining */
+/* Variables defining */
 :root{
+  /* Theme */
   --primary: #FFFFFF;
   --primary-intense: #FFFFFF;
   --primary-extra-intense: #FFFFFF;
@@ -13,6 +14,13 @@
   --secondary-low-shade: #ab39a5;
   --secondary-shade: #c651bf;
   --secondary-contrast: #FFF;
+
+  /* Responsiveness */
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
 }
 
 /* Fonts */
