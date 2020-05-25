@@ -1,0 +1,22 @@
+.dashboard{
+    background-color: var(--primary-low-shade);
+    min-height: 100vh;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.dashboard .column{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+}
+
+.dashboard .info-box{
+    background-color: var(--primary);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}

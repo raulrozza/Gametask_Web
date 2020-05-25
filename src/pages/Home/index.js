@@ -70,7 +70,7 @@ const Home = () => {
                         try{
                             const response = await api.post('/login', values)
 
-                            localStorage.setItem('loggedUser', response.data);
+                            localStorage.setItem('loggedUser', JSON.stringify(response.data));
 
                             history.push('/dashboard')
                         }
