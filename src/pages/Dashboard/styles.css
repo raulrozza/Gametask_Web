@@ -10,8 +10,6 @@
 .dashboard .column{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 500px;
 }
 
 .dashboard .info-box{

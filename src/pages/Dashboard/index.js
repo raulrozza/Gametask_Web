@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Custom Components
+import AchievementContainer from '../../components/AchievementContainer';
 import Loading from '../../components/Loading';
 import Ranking from '../../components/Ranking';
 
@@ -50,7 +51,7 @@ const Dashboard = () => {
     <main className="dashboard">
       <Ranking ranking={game.weeklyRanking} />
       <div className="column">
-        <Ranking ranking={game.weeklyRanking} />
+        <AchievementContainer />
         <Ranking ranking={game.weeklyRanking} />
       </div>
       <Ranking ranking={game.weeklyRanking} />
