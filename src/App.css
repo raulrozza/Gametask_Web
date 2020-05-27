@@ -76,6 +76,15 @@ body, input, button{
   color: var(--primary-contrast);
 }
 
+a{
+  color: var(--secondary-intense);
+  transition: all 0.2s;
+}
+
+a:hover{
+  color: var(--secondary-low-shade);
+}
+
 h1, h2, h3, h4, h5, h6{
   font-family: Open-Sans;
 }

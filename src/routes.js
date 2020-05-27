@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import NotFound from './components/NotFound';
 
 // Pages
+import Achievements from './pages/Achievements';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 
@@ -15,6 +16,7 @@ const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/achievements" exact component={Achievements} />
             <Route path="/" exact component={Home} />
 
             <Route path='*' exact component={() => (<NotFound message={

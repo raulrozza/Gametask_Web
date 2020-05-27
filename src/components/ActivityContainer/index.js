@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -66,6 +67,7 @@ const ActivityContainer = () => {
                 )}
             </div>
             <div className="activity-min-max">
+                <Link to="/activities">Gerenciar Atividades</Link>
                 <FontAwesomeIcon
                     icon={`sort-${minmax ? "up" : "down"}`}
                     onClick={() => setMinmax(!minmax)}

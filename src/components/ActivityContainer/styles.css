@@ -42,11 +42,22 @@
 .activity-box .activity-min-max{
     border-top: 1px solid var(--primary-low-shade);
     margin-top: 8px;
+    position: relative;
     width: 100%;
-    text-align: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
 }
+
+.activity-box .activity-min-max{
+    font-size: 14px;
+}
+
 
 .activity-box .activity-min-max svg{
     cursor: pointer;
     color: var(--primary-shade);
+    position: absolute;
+    right: 0px;
 }

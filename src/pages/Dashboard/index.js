@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 // Custom Components
 import AchievementContainer from '../../components/AchievementContainer';
@@ -51,6 +52,9 @@ const Dashboard = () => {
     return <Loading />;
   return (
     <main className="dashboard">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <Ranking ranking={game.weeklyRanking} />
       <div className="column">
         <AchievementContainer />
