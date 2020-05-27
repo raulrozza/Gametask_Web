@@ -1,0 +1,52 @@
+.activity-box .activity-container{
+    display: grid;
+    overflow-y: hidden;
+    max-height: 198px; /* 89px for each row, plus 10px for each row's margin */
+    grid-template-columns: repeat(3, 1fr);
+    transition: all 0.5s;
+}
+
+.activity-box .activity-container.maximized{
+    max-height: 2000px;
+}
+
+.activity-box .activity-container .activity{
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid var(--secondary-shade);
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.activity-box .activity-container .activity.no-border{
+    border: none;
+}
+
+.activity-box .activity-container .activity .activity-name{
+    font-size: 16px;
+    text-transform: uppercase;
+    height: 40px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-box .activity-container .activity .activity-experience{
+    color: var(--secondary);
+    font-size: 20px;
+    height: 32px;
+}
+
+.activity-box .activity-min-max{
+    border-top: 1px solid var(--primary-low-shade);
+    margin-top: 8px;
+    width: 100%;
+    text-align: right;
+}
+
+.activity-box .activity-min-max svg{
+    cursor: pointer;
+    color: var(--primary-shade);
+}

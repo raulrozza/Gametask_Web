@@ -20,6 +20,7 @@
     width: inherit;
     height: 80px;
     margin-bottom: 5px;
+    border-radius: 50%;
 }
 
 .achievement-box .achievement-container .achievement .achievement-name{

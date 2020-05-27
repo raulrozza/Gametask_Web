@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 // Custom Components
 import AchievementContainer from '../../components/AchievementContainer';
+import ActivityContainer from '../../components/ActivityContainer';
+import GameContainer from '../../components/GameContainer';
 import Loading from '../../components/Loading';
 import Ranking from '../../components/Ranking';
 
@@ -52,9 +54,9 @@ const Dashboard = () => {
       <Ranking ranking={game.weeklyRanking} />
       <div className="column">
         <AchievementContainer />
-        <Ranking ranking={game.weeklyRanking} />
+        <ActivityContainer />
       </div>
-      <Ranking ranking={game.weeklyRanking} />
+      <GameContainer game={game} />
     </main>
   );
 }
