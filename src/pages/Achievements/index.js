@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Custom components
+import AchievementForm from '../../components/AchievementForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
@@ -16,6 +17,7 @@ import './styles.css';
 
 const Achievements = () => {
     const [achievements, setAchievements] = useState([]);
+    const [selectedAchievement, setSelectedAchievement] = useState(null);
     const [loading, setLoading] = useState(true);
     // Edit panel
     const [showPanel, setShowPanel] = useState(false);
@@ -23,10 +25,18 @@ const Achievements = () => {
     const history = useHistory();
 
     const editAchievement = (id) => {
+        const achievement = achievements.find(achievement => achievement._id === id);
+
+        if(showPanel && achievement !== selectedAchievement){
+            setSelectedAchievement(achievement);
+            return;
+        }
+        setSelectedAchievement(achievement);
         setShowPanel(!showPanel);
     }
 
     const createAchievement = () => {
+        setSelectedAchievement(null);
         setShowPanel(true);
     }
 
@@ -84,7 +94,7 @@ const Achievements = () => {
                             ))}
                         </div>
                         <div className={`achievement-editor ${showPanel ? "shown" : ""}`}>
-
+                            <AchievementForm achievement={selectedAchievement} />
                         </div>
                     </div>
                     <footer>

@@ -98,6 +98,7 @@
     width: 0%;
     border-left: 1px solid transparent;
     min-height: 100%;
+    overflow: hidden;
 }
 
 .page-wrapper .achievement-container.reduced{
@@ -109,6 +110,7 @@
 .page-wrapper .achievement-editor.shown{
     width: 40%;
     border-color: var(--primary-shade);
+    overflow: auto;
 }
 
 .page-wrapper footer{
