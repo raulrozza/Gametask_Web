@@ -28,10 +28,10 @@ const Achievements = () => {
         const achievement = achievements.find(achievement => achievement._id === id);
 
         if(showPanel && achievement !== selectedAchievement){
-            setSelectedAchievement(achievement);
+            setSelectedAchievement({ ...achievement, image: achievement.image_url });
             return;
         }
-        setSelectedAchievement(achievement);
+        setSelectedAchievement({ ...achievement, image: achievement.image_url });
         setShowPanel(!showPanel);
     }
 
@@ -57,13 +57,16 @@ const Achievements = () => {
                 setLoading(false);
             }
             catch(error){
-                const { response: { data } } = error;
-                console.error(error);
+                if(error.response){
+                    const { data } = error.response;
+                    console.error(data);
         
-                if(data.error === "TokenExpiredError: jwt expired"){
-                  localStorage.removeItem('loggedUser');
-                  history.push('/')
+                    if(data.error === "TokenExpiredError: jwt expired"){
+                        localStorage.removeItem('loggedUser');
+                        history.push('/')
+                    }
                 }
+                console.error(error);
             }
         })();
     },[history])

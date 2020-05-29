@@ -1,11 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-// Formik
-import { useFormik } from 'formik';
+// Custom Components
+import ImageInput from '../ImageInput';
 
-// Yup
+// Components
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
+// Services
+import api from '../../services/api';
+import getToken from '../../services/getToken';
 
 import './styles.css';
 
@@ -18,13 +23,37 @@ const AchievementSchema = Yup.object().shape({
 
 const AchievementForm = ({ achievement }) => {
     const [title, setTitle] = useState({});
+    const [token, setToken] = useState(null);
+    const [titleList, setTitleList] = useState(null);
+    const [showTitleList, setShowTitleList] = useState(false);
+    const [overTitleList, setOverTitleList] = useState(false);
+
+    useEffect(() => {
+        const userInfo = getToken();
+        setToken(userInfo.token);
+    }, []);
 
     const setTitleValue = ({ target: { value } }) => {
         form.setFieldValue('title', value);
+        try{
+            const params = value.length > 0 ? { name: value } : {};
+            api.get('/titles', {
+                headers: {
+                    Authorization: 'Bearer '+token,
+                },
+                params
+            })
+            .then(({ data }) => {
+                setTitleList(data);
+            })
+        }
+        catch(error){
+            console.error(error);
+        }
     }
 
     const submitForm = async (values) => {
-        console.log(values);
+        console.log(values, title);
     }
 
     const { setValues, resetForm, ...form } = useFormik({
@@ -53,11 +82,22 @@ const AchievementForm = ({ achievement }) => {
         <div className="achievement-form">
             <form onSubmit={form.handleSubmit}>
                 <div className="form-group">
+                    <ImageInput
+                        name="image"
+                        value={form.values ? form.values.image : null}
+                        setInput={form.setFieldValue}
+                    />
+                    {form.errors.image && form.touched.image ? (
+                        <div className="error-field">{form.errors.image}</div>
+                    ) : null}
+                </div>
+                <div className="form-group">
                     <input
                         type="text"
                         name="name"
                         placeholder="Nome da conquista"
                         onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                         value={form.values.name}
                     />
                     {form.errors.name && form.touched.name ? (
@@ -65,18 +105,29 @@ const AchievementForm = ({ achievement }) => {
                     ) : null}
                 </div>
                 <div className="form-group">
-                    <input
-                        type="text"
+                    <textarea
                         name="description"
                         placeholder="Como obter a conquista?"
                         onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                         value={form.values.description}
                     />
                     {form.errors.description && form.touched.description ? (
                         <div className="error-field">{form.errors.description}</div>
                     ) : null}
                 </div>
-                <div className="form-group">
+                <div
+                    name="title"
+                    className="form-group"
+                    onFocus={() => setShowTitleList(true)}
+                    onBlur={(event) => {
+                        form.handleBlur(event);
+                        if(!overTitleList)
+                            setShowTitleList(false);
+                    }}
+                    onMouseEnter={() => setOverTitleList(true)}
+                    onMouseLeave={() => setOverTitleList(false)}
+                >
                     <input
                         type="text"
                         name="title"
@@ -84,23 +135,26 @@ const AchievementForm = ({ achievement }) => {
                         onChange={setTitleValue}
                         value={form.values.title}
                     />
+                    <div className="title-options" style={{ visibility: showTitleList ? "visible" : "hidden" }}>
+                        {titleList && titleList.length > 0 && <ul>
+                            {titleList.map(title => (
+                                <li
+                                    key={title._id}
+                                    onClick={() => {
+                                        setTitle(title);
+                                        form.setFieldValue('title', title.name);
+                                        setShowTitleList(false);
+                                    }}
+                                >{title.name}</li>
+                            ))}
+                        </ul>}
+                        {titleList && titleList.length === 0 && <button>Adicionar título: {form.values.title}</button>}
+                    </div>
                     {form.errors.title && form.touched.title ? (
                         <div className="error-field">{form.errors.title}</div>
                     ) : null}
                 </div>
-                <div className="form-group">
-                    <input
-                        type="file"
-                        name="image"
-                        onChange={(event) => {
-                            form.setFieldValue("file", event.currentTarget.files[0]);
-                        }}
-                    />
-                    {form.errors.image && form.touched.image ? (
-                        <div className="error-field">{form.errors.image}</div>
-                    ) : null}
-                </div>
-                <button type="submit">{achievement ? "Atualizar" : "Criar"}</button>
+                <button className="submit" type="submit">{achievement ? "Atualizar" : "Criar"}</button>
             </form>
         </div>
     );

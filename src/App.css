@@ -26,36 +26,36 @@
 /* Fonts */
 @font-face {
   font-family: Open-Sans;
-  src: url(./assets/OpenSans-Regular.ttf);
+  src: url(./assets/fonts/OpenSans-Regular.ttf);
 }
 @font-face {
   font-family: Open-Sans;
-  src: url(./assets/OpenSans-Bold.ttf);
+  src: url(./assets/fonts/OpenSans-Bold.ttf);
   font-weight: bold;
 }
 @font-face {
   font-family: Open-Sans;
-  src: url(./assets/OpenSans-ExtraBold.ttf);
+  src: url(./assets/fonts/OpenSans-ExtraBold.ttf);
   font-weight: bolder;
 }
 @font-face {
   font-family: Open-Sans;
-  src: url(./assets/OpenSans-Light.ttf);
+  src: url(./assets/fonts/OpenSans-Light.ttf);
   font-weight: lighter;
 }
 
 @font-face {
   font-family: Roboto;
-  src: url(./assets/Roboto-Regular.ttf);
+  src: url(./assets/fonts/Roboto-Regular.ttf);
 }
 @font-face {
   font-family: Roboto;
-  src: url(./assets/Roboto-Bold.ttf);
+  src: url(./assets/fonts/Roboto-Bold.ttf);
   font-weight: bold;
 }
 @font-face {
   font-family: Roboto;
-  src: url(./assets/Roboto-Light.ttf);
+  src: url(./assets/fonts/Roboto-Light.ttf);
   font-weight: lighter;
 }
 
@@ -71,7 +71,7 @@ body, html, #root{
   height: 100%;
 }
 
-body, input, button{
+body, input, textarea, button{
   font-family: Roboto;
   color: var(--primary-contrast);
 }
