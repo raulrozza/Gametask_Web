@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 // Custom Components
+import AchievementContainer from '../../components/AchievementContainer';
+import ActivityContainer from '../../components/ActivityContainer';
+import GameContainer from '../../components/GameContainer';
 import Loading from '../../components/Loading';
 import Ranking from '../../components/Ranking';
 
@@ -48,12 +52,15 @@ const Dashboard = () => {
     return <Loading />;
   return (
     <main className="dashboard">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <Ranking ranking={game.weeklyRanking} />
       <div className="column">
-        <Ranking ranking={game.weeklyRanking} />
-        <Ranking ranking={game.weeklyRanking} />
+        <AchievementContainer />
+        <ActivityContainer />
       </div>
-      <Ranking ranking={game.weeklyRanking} />
+      <GameContainer game={game} />
     </main>
   );
 }

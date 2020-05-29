@@ -10,8 +10,6 @@
 .dashboard .column{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 500px;
 }
 
 .dashboard .info-box{
@@ -19,4 +17,12 @@
     padding: 10px;
     border-radius: 10px;
     margin: 10px;
+}
+
+@media (max-width: 768px){
+    .dashboard{
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
 }

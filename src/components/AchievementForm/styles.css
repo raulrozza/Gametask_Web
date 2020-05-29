@@ -1,0 +1,97 @@
+.achievement-form form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.achievement-form .form-group{
+    width: 240px;
+    margin-bottom: 5px;
+}
+
+.achievement-form input, .achievement-form textarea{
+    width: 100%;
+    height: 36px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-shade);
+    padding: 0 10px;
+    line-height: 24px;
+    font-size: 14px;
+    transition: border-color .5s;
+}
+
+.achievement-form textarea{
+    resize: vertical;
+}
+
+.achievement-form input:focus, .achievement-form textarea:focus{
+    border-color: var(--secondary);
+}
+
+.achievement-form .error-field{
+    background-color: rgb(253, 57, 57);
+    color: #FFF;
+    padding: 7px 5px 2px;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.achievement-form .submit{
+    cursor: pointer;
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+    border-radius: 2px;
+    line-height: 24px;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: all .2s;
+}
+
+.achievement-form .submit:hover:not(:disabled){
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+}
+
+.achievement-form .submit:disabled{
+    opacity: 0.3;
+    cursor: default;
+}
+
+.achievement-form .title-options{
+    position: absolute;
+    z-index: 10;
+    width: inherit;
+    max-height: 80%;
+    background-color: var(--primary-low-shade);
+    border: 1px solid var(--primary-contrast);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    font-size: 14px;
+}
+
+.achievement-form .title-options ul{
+    list-style: none;
+}
+
+.achievement-form .title-options li, .achievement-form .title-options button{
+    min-height: 20px;
+    padding: 2px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.achievement-form .title-options button{
+    border: none;
+    width: 100%;
+    height: 100%;
+    transition: background-color .2s;
+}
+
+.achievement-form .title-options li:hover, .achievement-form .title-options button:hover{
+    background-color: var(--primary);
+}

@@ -1,0 +1,55 @@
+.achievement-box .achievement-container{
+    display: grid;
+    overflow-y: hidden;
+    max-height: 226px; /* 109px for each row, plus 4px for each row's margin */
+    grid-template-columns: repeat(5, 1fr);
+    transition: all 0.5s;
+}
+
+.achievement-box .achievement-container.maximized{
+    max-height: 2000px;
+}
+
+.achievement-box .achievement-container .achievement{
+    width: 80px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.achievement-box .achievement-container .achievement .achievement-image{
+    width: inherit;
+    height: 80px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+}
+
+.achievement-box .achievement-container .achievement .achievement-name{
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    height: 20px;
+    width: inherit;
+    text-align: center;
+}
+
+.achievement-box .achievement-min-max{
+    border-top: 1px solid var(--primary-low-shade);
+    margin-top: 8px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.achievement-box .achievement-min-max{
+    font-size: 14px;
+}
+
+.achievement-box .achievement-min-max svg{
+    cursor: pointer;
+    color: var(--primary-shade);
+    position: absolute;
+    right: 0px;
+}
