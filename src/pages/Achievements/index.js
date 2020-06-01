@@ -13,6 +13,9 @@ import Loading from '../../components/Loading';
 import api from '../../services/api';
 import getToken from '../../services/getToken';
 
+// Utils
+import { addItemToArray, updateItemInArray } from '../../utils/arrayMethods';
+
 import './styles.css';
 
 const Achievements = () => {
@@ -27,7 +30,7 @@ const Achievements = () => {
     const editAchievement = (id) => {
         const achievement = achievements.find(achievement => achievement._id === id);
 
-        if(showPanel && achievement !== selectedAchievement){
+        if(showPanel && (!selectedAchievement || achievement._id !== selectedAchievement._id)){
             setSelectedAchievement({ ...achievement, image: achievement.image_url });
             return;
         }
@@ -71,33 +74,63 @@ const Achievements = () => {
         })();
     },[history])
 
+    const onSubmit = async ({ achievement, type }) => {
+        switch(type){
+            case 'create':
+                setAchievements(addItemToArray(achievements, achievement));
+                setShowPanel(false);
+                break;
+            case 'update':
+                try{
+                    const userInfo = getToken();
+
+                    const { data } = await api.get(`/achievement/${achievement}`, {
+                        headers: {
+                          Authorization: 'Bearer '+userInfo.token,
+                        }
+                    });
+
+                    const index  = achievements.findIndex(item => item._id === achievement);
+                    setAchievements(updateItemInArray(achievements, data, index));
+                    setShowPanel(false);
+                }
+                catch(error){
+                    console.error(error);
+                }
+                break;
+            default:
+        }
+    }
+
     return (
         <PageWrapper title="Conquistas">
             {!loading ? (
                 <>
                     <div className="row">
-                        <div className={`achievement-container ${showPanel ? "reduced" : ""}`}>
-                            {achievements.map(achievement => (
-                                <div key={achievement._id} className="achievement">
-                                    <img className="achievement-image" src={achievement.image_url} alt={`achievement-${achievement._id}-img`} />
-                                    <div className="achievement-name">
-                                        {achievement.name}
-                                        {achievement.title ? <span className="title"> [{achievement.title.name}]</span> : ""}
+                        <div className={`${showPanel ? "reduced" : ""}`}>
+                            <div className={`achievement-container`}>
+                                {achievements.map(achievement => (
+                                    <div key={achievement._id} className="achievement">
+                                        <img className="achievement-image" src={achievement.image_url} alt={`achievement-${achievement._id}-img`} />
+                                        <div className="achievement-name">
+                                            {achievement.name}
+                                            {achievement.title ? <span className="title"> [{achievement.title.name}]</span> : ""}
+                                        </div>
+                                        <div className="achievement-description">
+                                            {achievement.description}
+                                        </div>
+                                        <button className="delete-button" title="Excluir conquista">
+                                            <FontAwesomeIcon icon="times" />
+                                        </button>
+                                        <button className="edit-button" title="Editar conquista" onClick={() => editAchievement(achievement._id)}>
+                                            <FontAwesomeIcon icon="edit" />
+                                        </button>
                                     </div>
-                                    <div className="achievement-description">
-                                        {achievement.description}
-                                    </div>
-                                    <button className="delete-button" title="Excluir conquista">
-                                        <FontAwesomeIcon icon="times" />
-                                    </button>
-                                    <button className="edit-button" title="Editar conquista" onClick={() => editAchievement(achievement._id)}>
-                                        <FontAwesomeIcon icon="edit" />
-                                    </button>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                         <div className={`achievement-editor ${showPanel ? "shown" : ""}`}>
-                            <AchievementForm achievement={selectedAchievement} />
+                            <AchievementForm achievement={selectedAchievement} submitCallback={onSubmit} />
                         </div>
                     </div>
                     <footer>
