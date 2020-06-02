@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Assets
+import placeholder from '../../assets/img/games/placeholder.png';
+
 // Styles
 import './styles.css';
 
@@ -10,7 +13,10 @@ const GameContainer = ({ game, loading }) => {
     return (
         <div className="info-box game-container">
             <div className="img-container">
-                <img src={game.image_url} alt={game.name} />
+                <picture>
+                    <source srcSet={game.image_url} />
+                    <img src={placeholder} alt={game.name} />
+                </picture>
             </div>
             <div className="name">{game.name}</div>
             <div className="description">{game.description}</div>

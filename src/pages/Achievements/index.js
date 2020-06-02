@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+// Assets
+import placeholder from '../../assets/img/achievements/placeholder.png';
+
 // Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -14,7 +17,7 @@ import api from '../../services/api';
 import getToken from '../../services/getToken';
 
 // Utils
-import { addItemToArray, updateItemInArray } from '../../utils/arrayMethods';
+import { addItemToArray, updateItemInArray, removeItemFromArray } from '../../utils/arrayMethods';
 
 import './styles.css';
 
@@ -41,6 +44,29 @@ const Achievements = () => {
     const createAchievement = () => {
         setSelectedAchievement(null);
         setShowPanel(true);
+    }
+
+    const deleteAchievement = async (id) => {
+        const response = window.confirm("Deseja mesmo excluir esta conquista? Esta ação não pode ser desfeita.");
+        if(response){
+            setLoading(true);
+            try{
+                const userInfo = getToken();
+                await api.delete(`/achievement/${id}`, {
+                    headers: {
+                        Authorization: 'Bearer '+userInfo.token,
+                    }
+                });
+
+                const index = achievements.findIndex(item => item._id === id);
+                setAchievements(removeItemFromArray(achievements, index));
+            }
+            catch(error){
+                console.error(error);
+            }
+            
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -111,7 +137,10 @@ const Achievements = () => {
                             <div className={`achievement-container`}>
                                 {achievements.map(achievement => (
                                     <div key={achievement._id} className="achievement">
-                                        <img className="achievement-image" src={achievement.image_url} alt={`achievement-${achievement._id}-img`} />
+                                        <picture>
+                                            <source srcSet={achievement.image_url} />
+                                            <img className="achievement-image" src={placeholder} alt={`achievement-${achievement._id}-img`} />
+                                        </picture>
                                         <div className="achievement-name">
                                             {achievement.name}
                                             {achievement.title ? <span className="title"> [{achievement.title.name}]</span> : ""}
@@ -119,7 +148,7 @@ const Achievements = () => {
                                         <div className="achievement-description">
                                             {achievement.description}
                                         </div>
-                                        <button className="delete-button" title="Excluir conquista">
+                                        <button className="delete-button" title="Excluir conquista" onClick={() => deleteAchievement(achievement._id)}>
                                             <FontAwesomeIcon icon="times" />
                                         </button>
                                         <button className="edit-button" title="Editar conquista" onClick={() => editAchievement(achievement._id)}>
@@ -134,7 +163,10 @@ const Achievements = () => {
                         </div>
                     </div>
                     <footer>
-                        <button onClick={createAchievement}>Nova Conquista</button>
+                        <button onClick={createAchievement}>
+                            <span>Nova Conquista</span>
+                            <span className="plus-icon"><FontAwesomeIcon icon="plus" /></span>
+                        </button>
                     </footer>
                 </>
             ):(

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+// Assets
+import placeholder from '../../assets/img/achievements/placeholder.png';
+
 // Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -45,7 +48,10 @@ const AchievementContainer = () => {
                 {!loadingData ? achievements.map(
                     achievement => (
                         <div className="achievement" key={`achievement-${achievement._id}`}>
-                            <img className="achievement-image" src={achievement.image_url} alt={`achievement-${achievement._id}-img`} />
+                            <picture>
+                                <source srcSet={achievement.image_url} />
+                                <img className="achievement-image" src={placeholder} alt={`achievement-${achievement._id}-img`} />
+                            </picture>
                             <div className="achievement-name">
                                 {achievement.name}
                             </div>

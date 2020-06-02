@@ -17,6 +17,7 @@ const ImageInput = ({ name, value, setInput, ...props }) => {
         <label
             style={{ backgroundImage: `url(${preview})` }}
             className={`image-input ${value ? 'has-thumbnail' : ''}`}
+            title="Selecione uma imagem!"
         >
             <input
                 type="file"
