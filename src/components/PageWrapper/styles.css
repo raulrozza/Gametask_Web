@@ -1,3 +1,5 @@
+/* COMPONENT */
+
 .page-wrapper{
   background-color: var(--primary-low-shade);
   min-height: 100vh;
@@ -39,4 +41,116 @@
 
 .page-wrapper .container .page-nav a:hover svg{
   color: var(--secondary);
+}
+
+/* CHILDREN STYLING */
+
+/* Loading */
+.loader{
+  width: 100%;
+  height: 80vh;
+}
+
+/* Full container */
+.page-wrapper .row{
+  display: flex;
+}
+
+.page-wrapper .row > div{
+  transition: all 0.5s;
+}
+
+/* Shower */
+.page-wrapper > div > div{
+  transition: width 0.5s;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.page-wrapper .reduced{
+  width: 60%;
+}
+
+/* Editor */
+.page-wrapper .editor{
+  width: 0%;
+  border-left: 1px solid transparent;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.page-wrapper .editor.shown{
+  width: 40%;
+  border-color: var(--primary-shade);
+  overflow: auto;
+}
+
+.page-wrapper footer{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-wrapper footer button{
+  cursor: pointer;
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+  border: none;
+  border-radius: 2px;
+  line-height: 24px;
+  font-size: 16px;
+  padding: 8px 12px;
+  transition: all .2s;
+}
+
+.page-wrapper footer button:hover:not(:disabled){
+  background-color: var(--secondary-shade);
+}
+
+.page-wrapper footer .plus-icon{
+  display: none;
+}
+
+/* Responsiveness */
+@media (max-width: 768px){
+  .page-wrapper .row{
+    flex-direction: column-reverse;
+    transition: height .3s;
+  }
+
+  .page-wrapper .reduced{
+    width: 100%;
+  }
+
+  .page-wrapper .editor{
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    border: none;
+    transition: height .5s;
+  }
+  
+  .page-wrapper .editor.shown{
+    width: 100%;
+    height: auto;
+    border: none;
+    overflow: auto;
+    transition: height .5s;
+  }
+
+  .page-wrapper footer{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 576px){
+  .page-wrapper footer button span{
+    display: none;
+  }
+
+  .page-wrapper footer .plus-icon{
+    display: inline;
+  }
 }

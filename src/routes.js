@@ -7,6 +7,7 @@ import NotFound from './components/NotFound';
 
 // Pages
 const Achievements = lazy(() => import('./pages/Achievements'));
+const Activities = lazy(() => import('./pages/Activities'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Home = lazy(() => import('./pages/Home'));
 
@@ -19,6 +20,7 @@ const Routes = () => (
       <Switch>
         <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/achievements" exact component={Achievements} />
+        <Route path="/activities" exact component={Activities} />
         <Route path="/" exact component={Home} />
 
         <Route path='*' exact component={() => (<NotFound message={

@@ -158,7 +158,7 @@ const Achievements = () => {
                 ))}
               </div>
             </div>
-            <div className={`achievement-editor ${showPanel ? "shown" : ""}`}>
+            <div className={`editor ${showPanel ? "shown" : ""}`}>
               <AchievementForm achievement={selectedAchievement} submitCallback={onSubmit} />
             </div>
           </div>
@@ -170,7 +170,7 @@ const Achievements = () => {
           </footer>
         </>
       ):(
-        <div className="achievement-loader">
+        <div className="loader">
           <Loading />
         </div>
       )}
