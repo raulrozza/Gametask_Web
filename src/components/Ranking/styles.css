@@ -1,33 +1,33 @@
 .ranking{
-    width: 100%;
-    max-width: 330px;
+  width: 100%;
+  max-width: 330px;
 }
 
 .ranking ul{
-    list-style: none;
+  list-style: none;
 }
 
 .ranking ul li{
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-    height: 30px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
 }
 
 .ranking ul li.list-title{
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .ranking ul li div{
-    height: 100%;
-    display: flex;
-    align-items: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .ranking ul li div.points{
-    width: 30%;
+  width: 30%;
 }
 
 .ranking ul li div.name{
-    width: 65%;
+  width: 65%;
 }

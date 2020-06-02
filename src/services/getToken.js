@@ -1,5 +1,5 @@
 export default function getToken(){
-    const token = localStorage.getItem('loggedUser');
+  const token = localStorage.getItem('loggedUser');
 
-    return JSON.parse(token);
+  return JSON.parse(token);
 }

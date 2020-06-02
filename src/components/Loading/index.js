@@ -7,9 +7,9 @@ import './styles.css';
 
 // This is the component displayed when something is loading.
 const Loading = () => (
-    <div className="loading-container">
-        <ReactLoading type="bars" color="var(--secondary)" height={32} width={32} />
-    </div>
+  <div className="loading-container">
+    <ReactLoading type="bars" color="var(--secondary)" height={32} width={32} />
+  </div>
 )
 
 export default Loading;
