@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Custom Components
-import ImageInput from '../ImageInput';
+import Form from '../../Form';
+import ImageInput from '../../ImageInput';
 
 // Components
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // Services
-import api from '../../services/api';
-import getToken from '../../services/getToken';
+import api from '../../../services/api';
+import getToken from '../../../services/getToken';
 
 import './styles.css';
 
@@ -117,7 +118,8 @@ const AchievementForm = ({ achievement, submitCallback }) => {
         else{
           data.append('name', name);
           data.append('description', description);
-          data.append('image', image);
+          if(image)
+            data.append('image', image);
           if(title)
             data.append('title', title._id);
 
@@ -178,7 +180,7 @@ const AchievementForm = ({ achievement, submitCallback }) => {
 
   return (
     <div className="achievement-form">
-      <form onSubmit={form.handleSubmit}>
+      <Form onSubmit={form.handleSubmit}>
         <div className="form-group">
           <ImageInput
             name="image"
@@ -258,7 +260,7 @@ const AchievementForm = ({ achievement, submitCallback }) => {
         <button className="submit" type="submit" disabled={disabledBtn}>
           {achievement ? "Atualizar" : "Criar"}
         </button>
-      </form>
+      </Form>
     </div>
   );
 }

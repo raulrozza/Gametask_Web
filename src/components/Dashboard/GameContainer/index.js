@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Assets
-import placeholder from '../../assets/img/games/placeholder.png';
+import placeholder from '../../../assets/img/games/placeholder.png';
 
 // Styles
 import './styles.css';
@@ -14,7 +14,7 @@ const GameContainer = ({ game, loading }) => {
     <div className="info-box game-container">
       <div className="img-container">
         <picture>
-          <source srcSet={game.image_url} />
+          <source srcSet={game.image && game.image_url} />
           <img src={placeholder} alt={game.name} />
         </picture>
       </div>
@@ -28,6 +28,7 @@ GameContainer.propTypes = {
   game: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
+    image: PropTypes.string,
     image_url: PropTypes.string,
     levelInfo: PropTypes.arrayOf(PropTypes.object),
     administrators: PropTypes.arrayOf(PropTypes.object),

@@ -4,6 +4,7 @@
   max-height: 226px; /* 109px for each row, plus 4px for each row's margin */
   grid-template-columns: repeat(5, 1fr);
   transition: all 0.5s;
+  grid-gap: 5px;
 }
 
 .achievement-box .achievement-container.maximized{
@@ -13,7 +14,6 @@
 .achievement-box .achievement-container .achievement{
   width: 80px;
   padding: 2px;
-  margin: 2px;
 }
 
 .achievement-box .achievement-container .achievement .achievement-image{
@@ -52,4 +52,11 @@
   color: var(--primary-shade);
   position: absolute;
   right: 0px;
+}
+
+/* Responsiveness */
+@media (max-width: 576px){
+  .achievement-box .achievement-container{
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

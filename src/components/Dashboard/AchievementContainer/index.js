@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Assets
-import placeholder from '../../assets/img/achievements/placeholder.png';
+import placeholder from '../../../assets/img/achievements/placeholder.png';
 
 // Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Services
-import api from '../../services/api';
-import getToken from '../../services/getToken';
+import api from '../../../services/api';
+import getToken from '../../../services/getToken';
 
 // Loaders
 import SkeletonLoader from "tiny-skeleton-loader-react";
@@ -49,7 +49,7 @@ const AchievementContainer = () => {
           achievement => (
             <div className="achievement" key={`achievement-${achievement._id}`}>
               <picture>
-                <source srcSet={achievement.image_url} />
+                <source srcSet={achievement.image && achievement.image_url} />
                 <img className="achievement-image" src={placeholder} alt={`achievement-${achievement._id}-img`} />
               </picture>
               <div className="achievement-name">

@@ -61,3 +61,17 @@
   position: absolute;
   right: 0px;
 }
+
+/* Responsiveness */
+@media (max-width: 768px){
+  .activity-box .activity-container{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 576px){
+  .activity-box .activity-container{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
