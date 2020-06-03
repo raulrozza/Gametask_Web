@@ -8,7 +8,7 @@ import placeholder from '../../assets/img/achievements/placeholder.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Custom components
-import AchievementForm from '../../components/AchievementForm';
+import AchievementForm from '../../components/Achievements/AchievementForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
@@ -34,10 +34,10 @@ const Achievements = () => {
     const achievement = achievements.find(achievement => achievement._id === id);
 
     if(showPanel && (!selectedAchievement || achievement._id !== selectedAchievement._id)){
-      setSelectedAchievement({ ...achievement, image: achievement.image_url });
+      setSelectedAchievement({ ...achievement, image: achievement.image ? achievement.image_url : undefined });
       return;
     }
-    setSelectedAchievement({ ...achievement, image: achievement.image_url });
+    setSelectedAchievement({ ...achievement, image: achievement.image ? achievement.image_url : undefined });
     setShowPanel(!showPanel);
   }
 
@@ -138,7 +138,7 @@ const Achievements = () => {
                 {achievements.map(achievement => (
                   <div key={achievement._id} className="achievement">
                     <picture>
-                      <source srcSet={achievement.image_url} />
+                      <source srcSet={achievement.image && achievement.image_url} />
                       <img className="achievement-image" src={placeholder} alt={`achievement-${achievement._id}-img`} />
                     </picture>
                     <div className="achievement-name">

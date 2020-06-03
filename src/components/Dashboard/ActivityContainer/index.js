@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Services
-import api from '../../services/api';
-import getToken from '../../services/getToken';
+import api from '../../../services/api';
+import getToken from '../../../services/getToken';
 
 // Loaders
 import SkeletonLoader from "tiny-skeleton-loader-react";
