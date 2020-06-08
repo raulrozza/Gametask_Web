@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
 // Font Awesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaArrowCircleLeft } from 'react-icons/fa';
 
 import './styles.css';
 
@@ -17,7 +17,7 @@ const PageWrapper = ({ title, children }) => {
       <div className="container">
         <header className="page-nav">
           <Link to="/dashboard" title="Voltar">
-            <FontAwesomeIcon icon="arrow-circle-left" />
+            <FaArrowCircleLeft />
           </Link>
           <h1>{title}</h1>
         </header>

@@ -1,0 +1,13 @@
+.page-wrapper .row{
+  display: flex;
+}
+
+.page-wrapper .row .sidenav{
+  width: 20%;
+}
+
+.page-wrapper .row .content{
+  width: 80%;
+  background-color: var(--primary-low-shade);
+}
+

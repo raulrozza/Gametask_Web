@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
 import api from '../../../services/api';
@@ -68,11 +68,17 @@ const ActivityContainer = () => {
       </div>
       <div className="activity-min-max">
         <Link to="/activities">Gerenciar Atividades</Link>
-        <FontAwesomeIcon
-          icon={`sort-${minmax ? "up" : "down"}`}
-          onClick={() => setMinmax(!minmax)}
-          title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
-        />
+        {minmax ? (
+          <FaSortUp
+            onClick={() => setMinmax(!minmax)}
+            title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
+          />
+        ) : (
+          <FaSortDown
+            onClick={() => setMinmax(!minmax)}
+            title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
+          />
+        )}
       </div>
     </div>
   );

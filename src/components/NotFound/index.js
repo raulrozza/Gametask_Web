@@ -1,8 +1,6 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-
-// Font Awesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaFrown } from 'react-icons/fa';
 
 // Styles
 import './styles.css'
@@ -15,7 +13,7 @@ const NotFound = ({ message }) => {
         <title>Página não encontrada</title>
       </Helmet>
       <div>
-        <FontAwesomeIcon icon="frown" size="lg" />
+        <FaFrown />
         <h1>{message}</h1>
       </div>
     </div>

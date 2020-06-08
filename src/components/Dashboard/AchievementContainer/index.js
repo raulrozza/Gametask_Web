@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import placeholder from '../../../assets/img/achievements/placeholder.png';
 
 // Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
 import api from '../../../services/api';
@@ -72,11 +72,17 @@ const AchievementContainer = () => {
       </div>
       <div className="achievement-min-max">
         <Link to="/achievements">Gerenciar Conquistas</Link>
-        <FontAwesomeIcon
-          icon={`sort-${minmax ? "up" : "down"}`}
-          onClick={() => setMinmax(!minmax)}
-          title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
-        />
+        {minmax ? (
+          <FaSortUp
+            onClick={() => setMinmax(!minmax)}
+            title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
+          />
+        ) : (
+          <FaSortDown
+            onClick={() => setMinmax(!minmax)}
+            title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
+          />
+        )}
       </div>
     </div>
   );

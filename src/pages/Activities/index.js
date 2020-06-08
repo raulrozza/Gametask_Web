@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaEdit, FaTimes, FaPlus } from 'react-icons/fa';
 
 // Custom components
 import ActivityForm from '../../components/Activities/ActivityForm';
@@ -154,10 +154,10 @@ const Activities = () => {
                     </div>
                   )}
                   <button className="delete-button" title="Excluir conquista" onClick={() => deleteActivity(activity._id)}>
-                    <FontAwesomeIcon icon="times" />
+                    <FaTimes />
                   </button>
                   <button className="edit-button" title="Editar conquista" onClick={() => editActivity(activity._id)}>
-                    <FontAwesomeIcon icon="edit" />
+                    <FaEdit />
                   </button>
                 </div>
               ))}
@@ -170,7 +170,7 @@ const Activities = () => {
         <footer>
           <button onClick={createActivity}>
             <span>Nova Atividade</span>
-            <span className="plus-icon"><FontAwesomeIcon icon="plus" /></span>
+            <span className="plus-icon"><FaPlus /></span>
           </button>
         </footer>
       </>

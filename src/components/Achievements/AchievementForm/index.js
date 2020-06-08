@@ -6,6 +6,7 @@ import Form from '../../Form';
 import ImageInput from '../../ImageInput';
 
 // Components
+import { FaEdit } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -181,12 +182,14 @@ const AchievementForm = ({ achievement, submitCallback }) => {
   return (
     <div className="achievement-form">
       <Form onSubmit={form.handleSubmit}>
-        <div className="form-group">
+        <div className="form-group image-group">
           <ImageInput
             name="image"
             value={form.values ? form.values.image : null}
             setInput={form.setFieldValue}
-          />
+          >
+          <button><FaEdit /></button>
+          </ ImageInput>
           {form.errors.image && form.touched.image ? (
             <div className="error-field">{form.errors.image}</div>
           ) : null}

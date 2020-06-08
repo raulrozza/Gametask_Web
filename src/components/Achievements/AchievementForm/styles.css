@@ -31,3 +31,23 @@
 .achievement-form .title-options li:hover, .achievement-form .title-options button:hover{
   background-color: var(--primary);
 }
+
+.achievement-form .image-input{
+  position: relative;
+}
+
+.achievement-form .image-input button{
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  top: 15px;
+  right: 15px;
+  visibility: hidden;
+  color: #AAA;
+}
+
+.achievement-form .image-input:hover button{
+  visibility: visible;
+}
