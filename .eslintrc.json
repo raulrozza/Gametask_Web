@@ -32,6 +32,6 @@
             "trailingComma": "all",
             "arrowParens": "avoid"
         }
-    ]
+      ]
     }
 }

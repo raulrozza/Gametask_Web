@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "formik": "^2.1.4",
     "react": "^16.13.1",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "react-icons": "^3.10.0",

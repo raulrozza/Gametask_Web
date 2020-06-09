@@ -22,7 +22,7 @@ const Routes = () => (
         <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/achievements" exact component={Achievements} />
         <Route path="/activities" exact component={Activities} />
-        <Route path="/game" exact component={Game} />
+        <Route path="/game" component={Game} />
         <Route path="/" exact component={Home} />
 
         <Route path='*' exact component={() => (<NotFound message={

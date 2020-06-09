@@ -23,3 +23,23 @@
 .image-input.has-thumbnail img{
   display: none;
 }
+
+.image-input{
+  position: relative;
+}
+
+.image-input button{
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  top: 15px;
+  right: 15px;
+  visibility: hidden;
+  color: #AAA;
+}
+
+.image-input:hover button{
+  visibility: visible;
+}

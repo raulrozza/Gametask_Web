@@ -22,7 +22,7 @@ const GameContainer = ({ game }) => {
       </div>
       <div className="name">{game.name}</div>
       <div className="description">{game.description}</div>
-      <button type="button">
+      <button type="button" title="Configurações">
         <Link to="/game"><FaCog /></Link>
       </button>
     </div>

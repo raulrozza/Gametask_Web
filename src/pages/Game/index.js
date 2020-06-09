@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Helmet from 'react-helmet';
 import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 
@@ -11,6 +11,9 @@ import api from '../../services/api';
 import getToken from '../../services/getToken';
 
 import './styles.css';
+
+// Subpages
+const InfoForm = lazy(() => import('../../components/Game/InfoForm'));
 
 const Game = () => {
   // States
@@ -34,6 +37,7 @@ const Game = () => {
         });
 
         setGame(data);
+        history.push(`${match.url}/info`);
       }
       catch(error){
         const { response: { data } } = error;
@@ -45,7 +49,7 @@ const Game = () => {
         }
       }
     })();
-  }, [history]);
+  }, [history, match.url]);
 
   return (
     <>
@@ -60,6 +64,9 @@ const Game = () => {
           <main className="content">
             <Suspense fallback={<Loading />}>
               <Switch>
+                <Route path={`${match.path}/info`} exact >
+                  <InfoForm game={game} />
+                </Route>
                 <Route path={`${match.path}`} component={Loading} />
               </Switch>
             </Suspense>
