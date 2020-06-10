@@ -6,9 +6,11 @@ import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
+// Contexts
+import { useAuth } from '../../contexts/Authorization';
+
 // Services
 import api from '../../services/api';
-import getToken from '../../services/getToken';
 
 import './styles.css';
 
@@ -21,20 +23,13 @@ const Game = () => {
 
   // Hooks
   const match = useRouteMatch();
+  const { signOut } = useAuth();
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
       try{
-        const userInfo = getToken();
-        if(!userInfo)
-          history.push('/');
-
-        const {data} = await api.get('/game/5ebc0a1e1da3fa28f4a455a7', {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        const {data} = await api.get('/game/5ebc0a1e1da3fa28f4a455a7');
 
         setGame(data);
         history.push(`${match.url}/info`);
@@ -44,12 +39,11 @@ const Game = () => {
         console.error(error);
 
         if(data.error === "TokenExpiredError: jwt expired"){
-          localStorage.removeItem('loggedUser');
-          history.push('/')
+          signOut()
         }
       }
     })();
-  }, [history, match.url]);
+  }, [signOut, history, match.url]);
 
   return (
     <>

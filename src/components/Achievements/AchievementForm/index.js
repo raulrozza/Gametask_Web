@@ -12,7 +12,6 @@ import * as Yup from 'yup';
 
 // Services
 import api from '../../../services/api';
-import getToken from '../../../services/getToken';
 
 import './styles.css';
 
@@ -27,8 +26,6 @@ const AchievementForm = ({ achievement, submitCallback }) => {
   // Form management
   const [title, setTitle] = useState(null);
   const [disabledBtn, setDisabledBtn] = useState(false);
-  // Global token
-  const [token, setToken] = useState(null);
   // Title suggestions
   const [titleList, setTitleList] = useState(null);
   const [showTitleList, setShowTitleList] = useState(false);
@@ -36,9 +33,6 @@ const AchievementForm = ({ achievement, submitCallback }) => {
 
   // Sets the initial component configuration based on the received achievement and stored jwt token
   useEffect(() => {
-    const userInfo = getToken();
-    setToken(userInfo.token);
-    
     if(achievement)
       setTitle(achievement.title ? achievement.title : null)
   }, [achievement]);
@@ -50,9 +44,6 @@ const AchievementForm = ({ achievement, submitCallback }) => {
     try{
       const params = value.length > 0 ? { name: value } : {};
       api.get('/titles', {
-        headers: {
-          Authorization: 'Bearer '+token,
-        },
         params
       })
       .then(({ data }) => {
@@ -71,10 +62,6 @@ const AchievementForm = ({ achievement, submitCallback }) => {
     try{
       const response = await api.post('/title', {
         name
-      },{
-        headers: {
-          Authorization: 'Bearer '+token,
-        }
       });
       setTitle(response.data);
       setShowTitleList(false);
@@ -103,11 +90,7 @@ const AchievementForm = ({ achievement, submitCallback }) => {
             data.append('image', image);
           data.append('title', title ? title._id : undefined);
               
-          const response = await api.put(`/achievement/${achievement._id}`, data, {
-            headers: {
-              Authorization: 'Bearer '+token,
-            }
-          });
+          const response = await api.put(`/achievement/${achievement._id}`, data);
           
           if(response.data.nModified > 0){
             submitCallback({
@@ -124,11 +107,7 @@ const AchievementForm = ({ achievement, submitCallback }) => {
           if(title)
             data.append('title', title._id);
 
-          const response = await api.post('/achievement', data, {
-            headers: {
-              Authorization: 'Bearer '+token,
-            }
-          });
+          const response = await api.post('/achievement', data);
           
           submitCallback({
             achievement: {

@@ -6,7 +6,6 @@ import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
 import api from '../../../services/api';
-import getToken from '../../../services/getToken';
 
 // Loaders
 import SkeletonLoader from "tiny-skeleton-loader-react";
@@ -22,13 +21,7 @@ const ActivityContainer = () => {
   useEffect(() => {
     (async () => {
       try{
-        const userInfo = getToken();
-
-        const {data} = await api.get('/activities', {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        const {data} = await api.get('/activities');
 
         setActivities(data);
         setLoadingData(false);
@@ -57,10 +50,10 @@ const ActivityContainer = () => {
           [1, 2, 3, 4, 5].map(item => (
             <div className="activity no-border" key={`activity-skeleton-${item}`}>
               <div className="activity-name">
-                <SkeletonLoader height="100%" />
+                <SkeletonLoader background="var(--primary-shade)" height="100%" />
               </div>
               <div className="activity-experience">
-                <SkeletonLoader height="100%" />
+                <SkeletonLoader background="var(--primary-shade)" height="100%" />
               </div>
             </div>
           ))

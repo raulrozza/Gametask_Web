@@ -18,11 +18,11 @@ const Ranking = ({ ranking }) => {
           ))
         :   (
           <>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
           </>
         )}
       </ul>

@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 
 // Services
 import api from '../../../services/api';
-import getToken from '../../../services/getToken';
 
 // Utils
 import setTheme from '../../../utils/setTheme';
