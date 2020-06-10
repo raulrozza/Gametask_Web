@@ -1,0 +1,10 @@
+.form .form-group button[type="reset"]{
+  color: var(--secondary);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.form .form-group button[type="reset"]:hover{
+  text-decoration: underline;
+}

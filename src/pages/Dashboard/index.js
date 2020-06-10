@@ -37,8 +37,10 @@ const Dashboard = () => {
         setLoading(false);
       }
       catch(error){
-        const { response: { data } } = error;
         console.error(error);
+        if(!error.response)
+          return;
+        const { response: { data } } = error;
 
         if(data.error === "TokenExpiredError: jwt expired"){
           localStorage.removeItem('loggedUser');

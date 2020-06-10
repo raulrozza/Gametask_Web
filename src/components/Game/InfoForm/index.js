@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 // Custom components
 import Form from '../../Form';
+import ColorInput from '../../ColorInput';
 import ImageInput from '../../ImageInput';
 
 // Components
 import { FaEdit } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ChromePicker } from 'react-color';
 
 // Services
 import api from '../../../services/api';
@@ -17,6 +17,8 @@ import getToken from '../../../services/getToken';
 
 // Utils
 import setTheme from '../../../utils/setTheme';
+
+import './styles.css';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome do jogo.'),
@@ -103,16 +105,20 @@ const InfoForm = ({ game }) => {
           ) : null}
         </div>
         <div className="form-group">
-          <ChromePicker
-            disableAlpha
-            color={form.values.theme.primary}
+          <h3>Tema</h3>
+          <ColorInput
+            label="Cor de fundo"
+            name="primary"
+            value={form.values.theme.primary}
             onChange={color => handleColorChange('primary', color.hex)}
           />
-          <ChromePicker
-            disableAlpha
-            color={form.values.theme.secondary}
+          <ColorInput
+            label="Cor dos botões"
+            name="secondary"
+            value={form.values.theme.secondary}
             onChange={color => handleColorChange('secondary', color.hex)}
           />
+          <button type="reset" onClick={() => setTheme()}>Restaurar tema padrão</button>
         </div>
         <button className="submit" type="submit" disabled={disabledBtn}>
           Atualizar

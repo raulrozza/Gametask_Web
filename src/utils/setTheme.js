@@ -12,6 +12,9 @@ const fillPallete = (key, value) => {
   pallete[`--${key}-shade`] = color.isLight() ?
     tinyColor(value).darken(20).toHexString() :
     tinyColor(value).lighten(20).toHexString();
+  pallete[`--${key}-extra-shade`] = color.isLight() ?
+    tinyColor(value).darken(40).toHexString() :
+    tinyColor(value).lighten(40).toHexString();
   pallete[`--${key}-intense`] = color.isDark() ?
     tinyColor(value).darken(10).toHexString() :
     tinyColor(value).lighten(10).toHexString();
@@ -26,7 +29,7 @@ const fillPallete = (key, value) => {
 export default function setTheme(theme = { primary: '#FFFFFF', secondary: '#852c80' }){
   const { primary, secondary } = theme;
 
-  fillPallete('primary', primary)
+  fillPallete('primary', primary);
 
   const newTheme = {
     ...fillPallete('primary', primary),
