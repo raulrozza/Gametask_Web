@@ -112,7 +112,7 @@
 
 /* Responsiveness */
 @media (max-width: 768px){
-  .page-wrapper .row{
+  .page-wrapper .row:not(.always-row){
     flex-direction: column-reverse;
     transition: height .3s;
   }

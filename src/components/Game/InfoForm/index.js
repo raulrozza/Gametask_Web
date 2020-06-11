@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 
 // Custom components
 import Form from '../../Form';
 import ColorInput from '../../ColorInput';
 import ImageInput from '../../ImageInput';
+
+// Contexts
+import { useGame } from '../../../contexts/Game';
 
 // Components
 import { FaEdit } from 'react-icons/fa';
@@ -26,12 +28,39 @@ const GameSchema = Yup.object().shape({
   image: Yup.mixed(),
 });
 
-const InfoForm = ({ game }) => {
+const InfoForm = () => {
+  const { game } = useGame();
+
   // Form management
   const [disabledBtn, setDisabledBtn] = useState(false);
 
-  const submitForm = () => {
-    console.log('opa')
+  const submitForm = async (values) => {
+    const { name, description, theme, image } = values;
+    setDisabledBtn(true);
+    
+    try{
+      const data = new FormData();
+
+      if(name !== game.name)
+        data.append('name', name);
+      if(description !== game.description)
+        data.append('description', description);
+      if(theme !== game.theme)
+        data.append('theme', JSON.stringify(theme));
+      if(image !== game.image_url)
+        data.append('image', image);
+      
+      await api.put(`/game/${game._id}`, data);
+
+      window.location.reload();
+    }
+    catch(error){
+      if(error.response)
+        console.error(error.response.data)
+      console.error(error);
+    }
+
+    setDisabledBtn(false);
   }
 
   const { setValues, ...form } = useFormik({
@@ -49,10 +78,8 @@ const InfoForm = ({ game }) => {
     setValues({
       ...game,
       theme: game.theme ? game.theme : {},
-      image: game.image_url
+      image: game.image_url,
     });
-    if(game)
-      setTheme(game.theme);
   }, [setValues, game]);
 
   const handleColorChange = (key, color) => {
@@ -107,15 +134,17 @@ const InfoForm = ({ game }) => {
           <h3>Tema</h3>
           <ColorInput
             label="Cor de fundo"
-            name="primary"
             value={form.values.theme.primary}
             onChange={color => handleColorChange('primary', color.hex)}
+            onShowPanel={() => setTheme(form.values.theme)}
+            onHidePanel={() => setTheme(game.theme)}
           />
           <ColorInput
             label="Cor dos botões"
-            name="secondary"
             value={form.values.theme.secondary}
             onChange={color => handleColorChange('secondary', color.hex)}
+            onShowPanel={() => setTheme(form.values.theme)}
+            onHidePanel={() => setTheme(game.theme)}
           />
           <button type="reset" onClick={() => setTheme()}>Restaurar tema padrão</button>
         </div>
@@ -125,14 +154,5 @@ const InfoForm = ({ game }) => {
       </Form>
   )
 };
-
-InfoForm.propTypes = {
-  game: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    theme: PropTypes.object,
-    image_url: PropTypes.string
-  })
-}
 
 export default InfoForm;

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { ChromePicker } from 'react-color';
 
-import './styles.css'
+import './styles.css';
 
-const ColorInput = ({ label, value, name, onChange }) => {
+const ColorInput = ({ label, value, onChange, onShowPanel, onHidePanel }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [mouseOnPicker, setMouseOnPicker] = useState(false);
 
@@ -14,13 +15,16 @@ const ColorInput = ({ label, value, name, onChange }) => {
       <div
         className="color-viewer"
         readOnly
-        style={{ backgroundColor: `var(--${name})` }}
+        style={{ backgroundColor: value }}
         onClick={() => {
-          setShowPicker(true)
+          onShowPanel();
+          setShowPicker(true);
         }}
         onBlur={() => {
-          if(!mouseOnPicker)
-            setShowPicker(false)
+          if(!mouseOnPicker){
+            setShowPicker(false);
+            onHidePanel();
+          }
         }}
         tabIndex={1}
       >
@@ -39,6 +43,21 @@ const ColorInput = ({ label, value, name, onChange }) => {
       </div>
     </div>
   )
+}
+
+ColorInput.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  onShowPanel: PropTypes.func,
+  onHidePanel: PropTypes.func,
+}
+
+ColorInput.defaultProps = {
+  label: "",
+  onChange: () => {},
+  onShowPanel: () => {},
+  onHidePanel: () => {},
 }
 
 export default ColorInput;

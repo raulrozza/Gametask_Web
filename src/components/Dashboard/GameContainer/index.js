@@ -1,9 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Components
 import { FaCog } from 'react-icons/fa';
+
+// Contexts
+import { useGame } from '../../../contexts/Game';
 
 // Assets
 import placeholder from '../../../assets/img/games/placeholder.png';
@@ -11,7 +13,9 @@ import placeholder from '../../../assets/img/games/placeholder.png';
 // Styles
 import './styles.css';
 
-const GameContainer = ({ game }) => {
+const GameContainer = () => {
+  const { game } = useGame();
+
   return (
     <div className="info-box game-container">
       <div className="img-container">
@@ -27,18 +31,6 @@ const GameContainer = ({ game }) => {
       </button>
     </div>
   );
-}
-
-GameContainer.propTypes = {
-  game: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    image: PropTypes.string,
-    image_url: PropTypes.string,
-    levelInfo: PropTypes.arrayOf(PropTypes.object),
-    administrators: PropTypes.arrayOf(PropTypes.object),
-    theme: PropTypes.object,
-  }).isRequired
 }
 
 export default GameContainer;

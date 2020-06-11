@@ -1,16 +1,16 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import Helmet from 'react-helmet';
-import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { Switch, Route, Redirect, Link, useRouteMatch, useLocation } from 'react-router-dom';
 
 // Component
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
-// Contexts
-import { useAuth } from '../../contexts/Authorization';
+// Libs
+import { FaBars } from 'react-icons/fa';
 
-// Services
-import api from '../../services/api';
+// Contexts
+import { useGame } from '../../contexts/Game';
 
 import './styles.css';
 
@@ -18,50 +18,57 @@ import './styles.css';
 const InfoForm = lazy(() => import('../../components/Game/InfoForm'));
 
 const Game = () => {
-  // States
-  const [game, setGame] = useState({});
-
+  const [showMenu, setShowMenu] = useState(false);
   // Hooks
   const match = useRouteMatch();
-  const { signOut } = useAuth();
-  const history = useHistory();
+  const location = useLocation();
+  const { loading } = useGame();
 
-  useEffect(() => {
-    (async () => {
-      try{
-        const {data} = await api.get('/game/5ebc0a1e1da3fa28f4a455a7');
+  const sidenavItems = [
+    {
+      key: 'info',
+      title: 'Informações gerais',
+      url: `${match.url}/info`,
+    },
+    {
+      key: 'leveling',
+      title: 'Gerenciar níveis',
+      url: `${match.url}/leveling`,
+    },
+  ]
 
-        setGame(data);
-        history.push(`${match.url}/info`);
-      }
-      catch(error){
-        const { response: { data } } = error;
-        console.error(error);
-
-        if(data.error === "TokenExpiredError: jwt expired"){
-          signOut()
-        }
-      }
-    })();
-  }, [signOut, history, match.url]);
-
+  if(loading)
+    return <Loading />
   return (
     <>
       <Helmet>
         <title>Configurações</title>
       </Helmet>
       <PageWrapper title="Configurações">
-        <div className="row">
-          <aside className="sidenav">
-            Sidenav
+        <div className="row always-row">
+          <aside className={`sidenav ${showMenu ? 'shown' : ''}`}>
+            <button type="button" onClick={() => setShowMenu(!showMenu)}>
+              <FaBars />
+            </button>
+            <ul>
+              {sidenavItems.map(item => (
+                <Link to={item.url} key={item.key}>
+                  <li className={item.url === location.pathname ? "active" : ""}>
+                    {item.title}
+                  </li>
+                </Link>
+              ))}
+            </ul>
           </aside>
           <main className="content">
             <Suspense fallback={<Loading />}>
               <Switch>
                 <Route path={`${match.path}/info`} exact >
-                  <InfoForm game={game} />
+                  <InfoForm />
                 </Route>
-                <Route path={`${match.path}`} component={Loading} />
+                <Route path={`${match.path}*`}>
+                  <Redirect to={`${match.url}/info`} />
+                </Route>
               </Switch>
             </Suspense>
           </main>

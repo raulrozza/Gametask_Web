@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import api from '../services/api';
+import setTheme from '../utils/setTheme';
 
 const AuthorizationContext = createContext();
 
@@ -31,8 +32,8 @@ const Authorization = ({ children }) => {
 
   const signOut = () => {
     localStorage.clear();
-    api.defaults.headers['Authorization'] = 'Bearer '+token.token;
     setToken(null);
+    setTheme();
     setLogged(false);
   }
 
