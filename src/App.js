@@ -1,19 +1,17 @@
 import React from 'react';
-import Routes from './routes';
+import Routes from './routes/index.routes';
 
-// Font Awesome icons import
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArrowCircleLeft, faEdit, faFrown, faPlus, faSortDown, faSortUp, faTimes } from '@fortawesome/free-solid-svg-icons'
+// Contexts
+import Authorization from './contexts/Authorization';
 
 // Styles
 import './App.css';
 
-// Font Awesome initialization
-library.add(faArrowCircleLeft, faEdit, faFrown, faPlus, faSortDown, faSortUp, faTimes)
-
 function App() {
   return (
-    <Routes />
+    <Authorization>
+      <Routes />
+    </Authorization>
   );
 }
 

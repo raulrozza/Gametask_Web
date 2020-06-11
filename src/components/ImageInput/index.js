@@ -6,7 +6,7 @@ import placeholder from '../../assets/img/achievements/placeholder.png';
 
 import './styles.css';
 
-const ImageInput = ({ name, value, setInput, ...props }) => {
+const ImageInput = ({ name, value, setInput, children, ...props }) => {
   const preview = useMemo(() => {
     if(typeof(value) === "string")
       return value;
@@ -28,6 +28,7 @@ const ImageInput = ({ name, value, setInput, ...props }) => {
         {...props}
       />
       <img src={placeholder} alt="Select achievement icon" />
+      {children}
     </label>
   );
 }
@@ -39,6 +40,7 @@ ImageInput.propTypes = {
     PropTypes.string,
   ]),
   setInput: PropTypes.func,
+  children: PropTypes.node,
 }
 
 ImageInput.defaultProps = {

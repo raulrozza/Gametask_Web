@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 // Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaEdit, FaTimes, FaPlus } from 'react-icons/fa';
+
+// Contexts
+import { useAuth } from '../../contexts/Authorization';
 
 // Custom components
 import ActivityForm from '../../components/Activities/ActivityForm';
@@ -11,7 +13,6 @@ import Loading from '../../components/Loading';
 
 // Services
 import api from '../../services/api';
-import getToken from '../../services/getToken';
 
 // Utils
 import { addItemToArray, updateItemInArray, removeItemFromArray } from '../../utils/arrayMethods';
@@ -24,8 +25,8 @@ const Activities = () => {
   // Edit panel
   const [showPanel, setShowPanel] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
-  // History
-  const history = useHistory();
+  // Context
+  const { singOut } = useAuth();
 
   const createActivity = () => {
     setSelectedActivity(null);
@@ -48,12 +49,7 @@ const Activities = () => {
     if(response){
       setLoading(true);
       try{
-        const userInfo = getToken();
-        await api.delete(`/activity/${id}`, {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        await api.delete(`/activity/${id}`);
 
         const index = activities.findIndex(item => item._id === id);
         setActivities(removeItemFromArray(activities, index));
@@ -69,15 +65,7 @@ const Activities = () => {
   useEffect(() => {
     (async () => {
       try{
-        const userInfo = getToken();
-        if(!userInfo)
-          history.push('/');
-
-        const {data} = await api.get('/activities', {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        const {data} = await api.get('/activities');
 
         setActivities(data);
         setLoading(false);
@@ -88,14 +76,13 @@ const Activities = () => {
           console.error(data);
 
           if(data.error === "TokenExpiredError: jwt expired"){
-            localStorage.removeItem('loggedUser');
-            history.push('/')
+            singOut();
           }
         }
         console.error(error);
       }
     })();
-  }, [history]);
+  }, [singOut]);
   
   const onSubmit = async ({ activity, type }) => {
     switch(type){
@@ -105,13 +92,7 @@ const Activities = () => {
       break;
       case 'update':
         try{
-          const userInfo = getToken();
-
-          const { data } = await api.get(`/activity/${activity}`, {
-            headers: {
-              Authorization: 'Bearer '+userInfo.token,
-            }
-          });
+          const { data } = await api.get(`/activity/${activity}`);
 
           const index  = activities.findIndex(item => item._id === activity);
           setActivities(updateItemInArray(activities, data, index));
@@ -154,10 +135,10 @@ const Activities = () => {
                     </div>
                   )}
                   <button className="delete-button" title="Excluir conquista" onClick={() => deleteActivity(activity._id)}>
-                    <FontAwesomeIcon icon="times" />
+                    <FaTimes />
                   </button>
                   <button className="edit-button" title="Editar conquista" onClick={() => editActivity(activity._id)}>
-                    <FontAwesomeIcon icon="edit" />
+                    <FaEdit />
                   </button>
                 </div>
               ))}
@@ -170,7 +151,7 @@ const Activities = () => {
         <footer>
           <button onClick={createActivity}>
             <span>Nova Atividade</span>
-            <span className="plus-icon"><FontAwesomeIcon icon="plus" /></span>
+            <span className="plus-icon"><FaPlus /></span>
           </button>
         </footer>
       </>

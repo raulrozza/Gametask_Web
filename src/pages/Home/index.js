@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 
-// Custom components
-import Loading from '../../components/Loading';
+// Contexts
+import { useAuth } from '../../contexts/Authorization';
 
 // Formik
 import { Formik, Form, Field } from 'formik';
@@ -32,21 +31,9 @@ const Home = () => {
   const [loginButtonDisabled, setLoginButtonDisabled] = useState(false);
   const [signupButtonDisabled, setSignupButtonDisabled] = useState(false);
   const [formToggle, setFormToggle] = useState(true);
-  // Page
-  const [pageState, setPageState] = useState('loading');
-  // History
-  const history = useHistory();
+  // Auth
+  const { signIn } = useAuth();
 
-  useEffect(() => {
-    const loggedUser = localStorage.getItem('loggedUser');
-    if(loggedUser)
-      history.push('/dashboard');
-    else
-      setPageState('rendering')
-  }, [history]);
-
-  if(pageState === 'loading')
-    return <Loading />
   return (
     <section className="home-page">
       <div className="title">
@@ -70,9 +57,7 @@ const Home = () => {
             try{
               const response = await api.post('/login', values)
 
-              localStorage.setItem('loggedUser', JSON.stringify(response.data));
-
-              history.push('/dashboard')
+              signIn(response.data);
             }
             catch(error){
               console.error(error, error.response?.data);

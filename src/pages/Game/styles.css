@@ -1,0 +1,112 @@
+.page-wrapper .row{
+  display: flex;
+}
+
+.page-wrapper .row .sidenav{
+  width: 40%;
+  max-width: 196px;
+}
+
+.page-wrapper .row .sidenav button{
+  display: none;
+}
+
+.page-wrapper .row .sidenav ul{
+  list-style: none;
+  padding: 10px;
+}
+
+.page-wrapper .row .sidenav ul a{
+  text-decoration: none;
+}
+
+.page-wrapper .sidenav ul li{
+  padding: 8px 10px;
+  border-radius: 5px;
+  transition: background-color .2s;
+}
+
+.page-wrapper .sidenav ul li:hover{
+  background-color: var(--primary-low-shade);
+}
+
+.page-wrapper .sidenav ul li.active{
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+}
+
+.page-wrapper .sidenav ul li.active:hover{
+  background-color: var(--secondary-low-shade);
+}
+
+.page-wrapper .row .content{
+  width: 100%;
+  background-color: var(--primary-low-shade);
+  border-radius: 3px;
+}
+
+@media (max-width: 992px){
+  .page-wrapper .row .sidenav button{
+    display: block;
+    cursor: pointer;
+    margin: 0 10px;
+    background-color: transparent;
+    color: var(--secondary);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: color .2s;
+  }
+
+  .page-wrapper .row .sidenav button:hover{
+    color: var(--primary-contrast);
+  }
+
+  .page-wrapper .row .sidenav{
+    width: 30px;
+    transition: width 0.3s;
+  }
+
+  .page-wrapper .row .sidenav button{
+    margin-left: 4px;
+    margin-right: 6px;
+    transition: margin .2s;
+  }
+
+  .page-wrapper .row .sidenav ul{
+    visibility: hidden;
+  }
+
+  .page-wrapper .row .sidenav.shown{
+    width: 20%;
+  }
+
+  .page-wrapper .row .sidenav.shown button{
+    margin: 0 10px;
+  }
+
+  .page-wrapper .row .sidenav.shown ul{
+    visibility: visible;
+  }
+}
+
+@media (max-width: 576px){
+  .page-wrapper .row.always-row{
+    position: relative;
+  }
+
+  .page-wrapper .row .sidenav{
+    position: absolute;
+    height: 100%;
+    z-index: 30;
+  }
+
+  .page-wrapper .row .sidenav button{
+    margin-top: 8px;
+  }
+
+  .page-wrapper .row .sidenav.shown{
+    background-color: var(--primary);
+    width: 180px;
+  }
+}

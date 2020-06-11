@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
 import api from '../../../services/api';
-import getToken from '../../../services/getToken';
 
 // Loaders
 import SkeletonLoader from "tiny-skeleton-loader-react";
@@ -22,13 +21,7 @@ const ActivityContainer = () => {
   useEffect(() => {
     (async () => {
       try{
-        const userInfo = getToken();
-
-        const {data} = await api.get('/activities', {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        const {data} = await api.get('/activities');
 
         setActivities(data);
         setLoadingData(false);
@@ -57,10 +50,10 @@ const ActivityContainer = () => {
           [1, 2, 3, 4, 5].map(item => (
             <div className="activity no-border" key={`activity-skeleton-${item}`}>
               <div className="activity-name">
-                <SkeletonLoader height="100%" />
+                <SkeletonLoader background="var(--primary-shade)" height="100%" />
               </div>
               <div className="activity-experience">
-                <SkeletonLoader height="100%" />
+                <SkeletonLoader background="var(--primary-shade)" height="100%" />
               </div>
             </div>
           ))
@@ -68,11 +61,17 @@ const ActivityContainer = () => {
       </div>
       <div className="activity-min-max">
         <Link to="/activities">Gerenciar Atividades</Link>
-        <FontAwesomeIcon
-          icon={`sort-${minmax ? "up" : "down"}`}
-          onClick={() => setMinmax(!minmax)}
-          title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
-        />
+        {minmax ? (
+          <FaSortUp
+            onClick={() => setMinmax(!minmax)}
+            title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
+          />
+        ) : (
+          <FaSortDown
+            onClick={() => setMinmax(!minmax)}
+            title={`${minmax ? "Minimizar" : "Maximizar"} conquistas.`}
+          />
+        )}
       </div>
     </div>
   );

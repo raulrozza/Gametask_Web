@@ -1,5 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+// Contexts
+import { useGame } from '../../../contexts/Game';
 
 // Loaders
 import SkeletonLoader from "tiny-skeleton-loader-react";
@@ -7,31 +9,29 @@ import SkeletonLoader from "tiny-skeleton-loader-react";
 // Styles
 import './styles.css';
 
-const Ranking = ({ ranking }) => {
+const Ranking = () => {
+  const { game } = useGame();
+
   return (
     <div className="info-box ranking">
       <ul>
         <li className="list-title"><div className="points">Pontuação</div><div className="name">Jogador</div></li>
-        {ranking.length > 0 ?
-          ranking.map(item => (
+        {game.weeklyRanking.length > 0 ?
+          game.weeklyRanking.map(item => (
             <li><div className="points">1000</div><div className="name">{item}</div></li>
           ))
         :   (
           <>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
-            <li><div className="points"><SkeletonLoader /></div><div className="name"><SkeletonLoader /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
+            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
           </>
         )}
       </ul>
     </div>
   );
-}
-
-Ranking.propTypes = {
-  ranking: PropTypes.array.isRequired,
 }
 
 export default Ranking;

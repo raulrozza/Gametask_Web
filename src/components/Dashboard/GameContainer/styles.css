@@ -1,4 +1,5 @@
 .game-container{
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,4 +25,19 @@
 .game-container .name{
   font-weight: bolder;
   font-size: 24px;
+}
+
+.game-container button{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  transition: color .4s;
+}
+
+.game-container button:hover{
+  color: var( --primary-shade);
 }

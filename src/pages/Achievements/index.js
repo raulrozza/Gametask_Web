@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 // Assets
 import placeholder from '../../assets/img/achievements/placeholder.png';
 
 // Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
+
+// Contexts
+import { useAuth } from '../../contexts/Authorization';
 
 // Custom components
 import AchievementForm from '../../components/Achievements/AchievementForm';
@@ -14,7 +16,6 @@ import Loading from '../../components/Loading';
 
 // Services
 import api from '../../services/api';
-import getToken from '../../services/getToken';
 
 // Utils
 import { addItemToArray, updateItemInArray, removeItemFromArray } from '../../utils/arrayMethods';
@@ -27,8 +28,8 @@ const Achievements = () => {
   const [loading, setLoading] = useState(true);
   // Edit panel
   const [showPanel, setShowPanel] = useState(false);
-  // History
-  const history = useHistory();
+  // Context
+  const { signOut } = useAuth();
 
   const editAchievement = (id) => {
     const achievement = achievements.find(achievement => achievement._id === id);
@@ -51,12 +52,7 @@ const Achievements = () => {
     if(response){
       setLoading(true);
       try{
-        const userInfo = getToken();
-        await api.delete(`/achievement/${id}`, {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        await api.delete(`/achievement/${id}`);
 
         const index = achievements.findIndex(item => item._id === id);
         setAchievements(removeItemFromArray(achievements, index));
@@ -72,15 +68,7 @@ const Achievements = () => {
   useEffect(() => {
     (async () => {
       try{
-        const userInfo = getToken();
-        if(!userInfo)
-          history.push('/');
-
-        const {data} = await api.get('/achievements', {
-          headers: {
-            Authorization: 'Bearer '+userInfo.token,
-          }
-        });
+        const {data} = await api.get('/achievements');
 
         setAchievements(data);
         setLoading(false);
@@ -91,14 +79,13 @@ const Achievements = () => {
           console.error(data);
 
           if(data.error === "TokenExpiredError: jwt expired"){
-            localStorage.removeItem('loggedUser');
-            history.push('/')
+            signOut();
           }
         }
         console.error(error);
       }
     })();
-  },[history])
+  },[signOut])
 
   const onSubmit = async ({ achievement, type }) => {
     switch(type){
@@ -108,13 +95,7 @@ const Achievements = () => {
       break;
       case 'update':
         try{
-          const userInfo = getToken();
-
-          const { data } = await api.get(`/achievement/${achievement}`, {
-            headers: {
-              Authorization: 'Bearer '+userInfo.token,
-            }
-          });
+          const { data } = await api.get(`/achievement/${achievement}`);
 
           const index  = achievements.findIndex(item => item._id === achievement);
           setAchievements(updateItemInArray(achievements, data, index));
@@ -149,10 +130,10 @@ const Achievements = () => {
                       {achievement.description}
                     </div>
                     <button className="delete-button" title="Excluir conquista" onClick={() => deleteAchievement(achievement._id)}>
-                      <FontAwesomeIcon icon="times" />
+                      <FaTimes />
                     </button>
                     <button className="edit-button" title="Editar conquista" onClick={() => editAchievement(achievement._id)}>
-                      <FontAwesomeIcon icon="edit" />
+                      <FaEdit />
                     </button>
                   </div>
                 ))}
@@ -165,7 +146,7 @@ const Achievements = () => {
           <footer>
             <button onClick={createAchievement}>
               <span>Nova Conquista</span>
-              <span className="plus-icon"><FontAwesomeIcon icon="plus" /></span>
+              <span className="plus-icon"><FaPlus /></span>
             </button>
           </footer>
         </>

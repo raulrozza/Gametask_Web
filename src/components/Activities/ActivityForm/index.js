@@ -10,7 +10,6 @@ import * as Yup from 'yup';
 
 // Services
 import api from '../../../services/api';
-import getToken from '../../../services/getToken';
 
 import './styles.css';
 
@@ -24,14 +23,6 @@ const ActivitySchema = Yup.object().shape({
 const ActivityForm = ({ activity, submitCallback }) => {
   // Form management
   const [disabledBtn, setDisabledBtn] = useState(false);
-  // Global token
-  const [token, setToken] = useState(null);
-
-  // Sets the initial component configuration based on the received activity and stored jwt token
-  useEffect(() => {
-    const userInfo = getToken();
-    setToken(userInfo.token);
-  }, [activity]);
 
   // Method varies dependending whether it is and update (if the activity prop exists) or a new activity
   // (if the prop doesn't exist). On submiting, summons the submitCallback to warn the parent about the changes
@@ -47,10 +38,6 @@ const ActivityForm = ({ activity, submitCallback }) => {
             description,
             experience,
             dmRules
-          }, {
-            headers: {
-              Authorization: 'Bearer '+token,
-            }
           });
           
           if(response.data.nModified > 0){
@@ -66,10 +53,6 @@ const ActivityForm = ({ activity, submitCallback }) => {
             description,
             experience: parseInt(experience),
             dmRules
-          }, {
-            headers: {
-              Authorization: 'Bearer '+token,
-            }
           });
           
           submitCallback({
