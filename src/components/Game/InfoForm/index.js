@@ -67,7 +67,10 @@ const InfoForm = () => {
     initialValues: {
       name: "",
       description: "",
-      theme: {},
+      theme: {
+        primary: "#FFF",
+        secondary: "#000",
+      },
       image: null,
     },
     validationSchema: GameSchema,

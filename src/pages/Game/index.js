@@ -16,6 +16,7 @@ import './styles.css';
 
 // Subpages
 const InfoForm = lazy(() => import('../../components/Game/InfoForm'));
+const LevelConfig = lazy(() => import('../../components/Game/LevelConfig'));
 
 const Game = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -65,6 +66,9 @@ const Game = () => {
               <Switch>
                 <Route path={`${match.path}/info`} exact >
                   <InfoForm />
+                </Route>
+                <Route path={`${match.path}/leveling`} exact >
+                  <LevelConfig />
                 </Route>
                 <Route path={`${match.path}*`}>
                   <Redirect to={`${match.url}/info`} />
