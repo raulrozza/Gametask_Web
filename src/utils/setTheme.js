@@ -26,7 +26,9 @@ const fillPallete = (key, value) => {
   return pallete;
 }
 
-export default function setTheme(theme = { primary: '#FFFFFF', secondary: '#852c80' }){
+export const defaultTheme = { primary: '#FFFFFF', secondary: '#852c80' };
+
+export default function setTheme(theme = defaultTheme){
   const { primary, secondary } = theme;
 
   fillPallete('primary', primary);

@@ -4,7 +4,8 @@
   flex-direction: column;
   align-items: center;
   padding: 18px;
-  max-height: 100vh;
+  max-height: 200vh;
+  overflow-y: auto;
 }
 
 .level-config > div{
@@ -38,6 +39,9 @@
   grid-template-columns: 60px 100px 1fr;
   grid-gap: 12px;
   position: relative;
+}
+
+.level-config .info-item + .info-item, .level-config .info-item + button{
   margin-top: 12px;
 }
 
@@ -45,6 +49,7 @@
   position: absolute;
   border: none;
   border-radius: 50%;
+  color: #FFF;
   top: 2px;
   left: 2px;
   width: 18px;
@@ -62,6 +67,14 @@
 
 .level-config .info-item:hover{
   background-color: var(--primary-shade);
+}
+
+.level-config .info-item span{
+  color: var(--primary-contrast);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4px;
+  font-size: 14px;
 }
 
 .level-config .info-item input{
@@ -105,4 +118,8 @@
   background-color: var(--secondary-transparent);
   color: var(--secondary-contrast);
   border-color: var(--secondary-contrast);
+}
+
+.level-config footer{
+  margin: 5px 0;
 }
