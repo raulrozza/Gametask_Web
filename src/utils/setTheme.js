@@ -28,6 +28,14 @@ const fillPallete = (key, value) => {
 
 export const defaultTheme = { primary: '#FFFFFF', secondary: '#852c80' };
 
+export const getTextColor = (color) => {
+  const colorObj = tinyColor(color);
+
+  if(colorObj.isLight())
+    return "#1F1F1F";
+  return "#FFF";
+}
+
 export default function setTheme(theme = defaultTheme){
   const { primary, secondary } = theme;
 
