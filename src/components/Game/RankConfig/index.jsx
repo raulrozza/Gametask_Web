@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
@@ -19,21 +19,10 @@ import { getTextColor } from '../../../utils/setTheme';
 import './styles.css';
 
 const RankConfig = () => {
-  const [disabledBtn, disableButton] = useState(false);
-  const [ranks, setRanks] = useState([]);
   const { game } = useGame();
+  const [disabledBtn, disableButton] = useState(false);
+  const [ranks, setRanks] = useState(game.ranks);
 
-  useEffect(() => {
-    (async() => {
-      try{
-        const response = await api.get('/ranks');
-
-        setRanks(response.data.sort((a, b) => a.level - b.level));
-      } catch(error){
-        console.error(error);
-      }
-    })();
-  }, []);
   const handleAddItem = () => {
     const newLevel = {
       level: game.levelInfo[game.levelInfo.length - 1].level,
@@ -77,8 +66,18 @@ const RankConfig = () => {
     setRanks(updateItemInArray(ranks, newItem, index));
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    disableButton(true);
 
+    try{
+      await api.put(`/rank/${game._id}`, { ranks });
+
+      window.location.reload();
+    } catch(error){
+      console.error(error);
+    }
+
+    disableButton(false);
   }
 
   return (
