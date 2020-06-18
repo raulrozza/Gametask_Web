@@ -123,3 +123,36 @@
 .level-config footer{
   margin: 5px 0;
 }
+
+@media (max-width: 576px){
+  .level-config .info-item .title{
+    grid-area: title;
+  }
+  .level-config .info-item .experience{
+    grid-area: experience;
+  }
+  .level-config .info-item .level{
+    grid-area: level;
+  }
+  .level-config .info-item{
+    padding-left: 10%;
+    padding-right: 10%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:  'level experience'
+                          'title title';
+  }
+}
+
+@media (max-width: 440px){
+  .level-config .info-item{
+    padding: 10px;
+  }
+}
+
+@media (max-width: 400px){
+  .level-config .info-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

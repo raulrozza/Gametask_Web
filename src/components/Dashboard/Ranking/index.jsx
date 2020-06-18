@@ -1,10 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
 
-// Loaders
-import SkeletonLoader from "tiny-skeleton-loader-react";
+import { FaFrown } from 'react-icons/fa';
 
 // Styles
 import './styles.css';
@@ -21,15 +21,12 @@ const Ranking = () => {
             <li><div className="points">1000</div><div className="name">{item}</div></li>
           ))
         :   (
-          <>
-            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
-            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
-            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
-            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
-            <li><div className="points"><SkeletonLoader background="var(--primary-shade)" /></div><div className="name"><SkeletonLoader background="var(--primary-shade)" /></div></li>
-          </>
+          <span>Ninguém pontuou ainda <FaFrown /> </span>
         )}
       </ul>
+      <footer>
+        <Link to="/players">Gerenciar Jogadores</Link>
+      </footer>
     </div>
   );
 }

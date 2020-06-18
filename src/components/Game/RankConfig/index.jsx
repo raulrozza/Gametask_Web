@@ -92,8 +92,8 @@ const RankConfig = () => {
 
           return (
             <div className="item" key={`${index}-${rank.level}`} style={{ backgroundColor: rank.color, color: textColor }} >
+              <button type="button" className="delete-item" title="Remover" onClick={() => handleRemoveItem(index)}><FaTimes /></button>
               <div className="select">
-                <button type="button" className="delete-item" title="Remover" onClick={() => handleRemoveItem(index)}><FaTimes /></button>
                 <label htmlFor="level">Nível: </label>
                 <select
                   name="level"

@@ -148,7 +148,7 @@ const Activities = () => {
               <ActivityForm activity={selectedActivity} submitCallback={onSubmit} />
           </div>
         </div>
-        <footer>
+        <footer className="footer">
           <button onClick={createActivity}>
             <span>Nova Atividade</span>
             <span className="plus-icon"><FaPlus /></span>

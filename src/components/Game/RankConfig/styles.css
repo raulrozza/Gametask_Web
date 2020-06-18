@@ -114,3 +114,43 @@
 .rank-config footer{
   margin: 5px 0;
 }
+
+@media (max-width:576px){
+  .rank-config .item .select{
+    grid-area: level;
+  }
+  
+  .rank-config .item .color-input{
+    grid-area: color;
+  }
+
+  .rank-config .item .tag{
+    grid-area: tag;
+  }
+
+  .rank-config .item .name{
+    grid-area: name;
+  }
+
+  .rank-config .item{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 'level tag tag' 'color name name';
+  }
+}
+
+@media (max-width: 400px){
+  .rank-config .item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rank-config .item input{
+    width: 95%;
+  }
+
+  .rank-config .item .color-input{
+    width: 100px;
+  }
+}

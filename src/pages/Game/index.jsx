@@ -59,7 +59,7 @@ const Game = () => {
             </button>
             <ul>
               {sidenavItems.map(item => (
-                <Link to={item.url} key={item.key}>
+                <Link to={item.url} key={item.key} onClick={() => setShowMenu(false)}>
                   <li className={item.url === location.pathname ? "active" : ""}>
                     {item.title}
                   </li>
