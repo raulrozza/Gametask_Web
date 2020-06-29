@@ -1,0 +1,158 @@
+.level-config{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+  max-height: 200vh;
+  overflow-y: auto;
+}
+
+.level-config > div{
+  width: 100%;
+  max-width: 540px;
+  text-align: center;
+}
+
+.level-config h2{
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+
+.level-config p{
+  margin-bottom: 12px;
+}
+
+.level-config .level-info-container{
+  background-color: var(--primary-intense);
+  opacity: .8;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.level-config .info-item{
+  background-color: var(--primary-low-shade);
+  border-radius: 10px;
+  padding: 10px;
+  transition: all .2s;
+  display: grid;
+  grid-template-columns: 60px 100px 1fr;
+  grid-gap: 12px;
+  position: relative;
+}
+
+.level-config .info-item + .info-item, .level-config .info-item + button{
+  margin-top: 12px;
+}
+
+.level-config .info-item .delete-item{
+  position: absolute;
+  border: none;
+  border-radius: 50%;
+  color: #FFF;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  background-color: darkred;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-config .info-item .delete-item:hover{
+  background-color: rgb(180, 31, 31);
+}
+
+.level-config .info-item:hover{
+  background-color: var(--primary-shade);
+}
+
+.level-config .info-item span{
+  color: var(--primary-contrast);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4px;
+  font-size: 14px;
+}
+
+.level-config .info-item input{
+  color: var(--primary-contrast);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px groove var(--secondary);
+  border-radius: 5px 5px 0 0;
+  transition: all .2s;
+  padding: 8px 12px 4px;
+}
+
+.level-config .info-item input:focus{
+  background-color: var(--primary-extra-intense);
+  border-color: var(--secondary-intense);
+}
+
+.level-config .info-item input[type="number"]{
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.level-config .info-item input::-webkit-inner-spin-button,
+.level-config .info-item input::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.level-config .add-item{
+  width: 100%;
+  height: 60px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px dashed var(--primary-contrast);
+  cursor: pointer;
+  font-size: 18px;
+  transition: all .4s;
+}
+
+.level-config .add-item:hover{
+  background-color: var(--secondary-transparent);
+  color: var(--secondary-contrast);
+  border-color: var(--secondary-contrast);
+}
+
+.level-config footer{
+  margin: 5px 0;
+}
+
+@media (max-width: 576px){
+  .level-config .info-item .title{
+    grid-area: title;
+  }
+  .level-config .info-item .experience{
+    grid-area: experience;
+  }
+  .level-config .info-item .level{
+    grid-area: level;
+  }
+  .level-config .info-item{
+    padding-left: 10%;
+    padding-right: 10%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:  'level experience'
+                          'title title';
+  }
+}
+
+@media (max-width: 440px){
+  .level-config .info-item{
+    padding: 10px;
+  }
+}
+
+@media (max-width: 400px){
+  .level-config .info-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

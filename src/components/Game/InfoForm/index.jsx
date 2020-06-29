@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import api from '../../../services/api';
 
 // Utils
-import setTheme from '../../../utils/setTheme';
+import setTheme, { defaultTheme } from '../../../utils/setTheme';
 
 import './styles.css';
 
@@ -67,7 +67,7 @@ const InfoForm = () => {
     initialValues: {
       name: "",
       description: "",
-      theme: {},
+      theme: defaultTheme,
       image: null,
     },
     validationSchema: GameSchema,
@@ -76,7 +76,8 @@ const InfoForm = () => {
 
   useEffect(() => {
     setValues({
-      ...game,
+      name: game.name ? game.name : "",
+      description: game.description ? game.description : "",
       theme: game.theme ? game.theme : {},
       image: game.image_url,
     });
@@ -146,7 +147,16 @@ const InfoForm = () => {
             onShowPanel={() => setTheme(form.values.theme)}
             onHidePanel={() => setTheme(game.theme)}
           />
-          <button type="reset" onClick={() => setTheme()}>Restaurar tema padrão</button>
+          <button
+            type="reset"
+            onClick={() => {
+              setTheme(defaultTheme);
+              setValues({
+                ...form.values,
+                theme: defaultTheme,
+              })
+            }}
+          >Restaurar tema padrão</button>
         </div>
         <button className="submit" type="submit" disabled={disabledBtn}>
           Atualizar

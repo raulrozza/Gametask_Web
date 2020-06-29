@@ -31,3 +31,24 @@
 .ranking ul li div.name{
   width: 65%;
 }
+
+.ranking ul > span{
+  display: flex;
+  height: 60px;
+  align-items: center;
+  font-size: 14px;
+  justify-content: center;
+  text-decoration: underline;
+  color: var(--secondary);
+}
+
+.ranking footer{
+  border-top: 1px solid var(--primary-low-shade);
+  margin-top: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+  font-size: 14px;
+}

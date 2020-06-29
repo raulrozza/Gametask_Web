@@ -11,7 +11,7 @@ const ColorInput = ({ label, value, onChange, onShowPanel, onHidePanel }) => {
 
   return (
     <div className="color-input">
-      <label>{label}:</label>
+      {label && <label>{label}:</label>}
       <div
         className="color-viewer"
         readOnly

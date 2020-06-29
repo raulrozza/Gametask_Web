@@ -143,7 +143,7 @@ const Achievements = () => {
               <AchievementForm achievement={selectedAchievement} submitCallback={onSubmit} />
             </div>
           </div>
-          <footer>
+          <footer className="footer">
             <button onClick={createAchievement}>
               <span>Nova Conquista</span>
               <span className="plus-icon"><FaPlus /></span>
