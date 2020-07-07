@@ -17,18 +17,18 @@
       "sourceType": "module"
   },
   "plugins": [
-      "prettier",
-      "react"
+      "react",
+      "prettier"
   ],
   "rules": {
-      "prettier/prettier":[
-          "error",
-          {
-              "singleQuote": true,
-              "semi": true,
-              "trailingComma": "all",
-              "arrowParens": "avoid"
-          }
-      ]
+    "prettier/prettier":[
+      "error",
+      {
+          "singleQuote": true,
+          "semi": true,
+          "trailingComma": "all",
+          "arrowParens": "avoid"
+      }
+    ]
   }
 }
