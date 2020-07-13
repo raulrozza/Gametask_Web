@@ -15,7 +15,13 @@ const Ranking = () => {
   return (
     <div className="info-box ranking">
       <ul>
-        <li className="list-title"><div className="points">Pontuação</div><div className="name">Jogador</div></li>
+        <li className="list-title">
+          <div className="points">Pontuação</div>
+          <div className="name">Jogador</div>
+          {game.newRegisters && (
+            <div className="registers-box" title="Novas requisições de pontuação.">{game.newRegisters}</div>
+          )}
+        </li>
         {game.weeklyRanking.length > 0 ?
           game.weeklyRanking.map(item => (
             <li><div className="points">1000</div><div className="name">{item}</div></li>

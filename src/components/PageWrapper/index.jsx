@@ -12,7 +12,7 @@ const PageWrapper = ({ title, children }) => {
   return (
     <main className="page-wrapper">
       <Helmet>
-        <title>{title}</title>
+        <title>{title} - GameTask</title>
       </Helmet>
       <div className="container">
         <header className="page-nav">

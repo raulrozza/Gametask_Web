@@ -16,6 +16,7 @@
 
 .ranking ul li.list-title{
   font-weight: bold;
+  align-items: center;
 }
 
 .ranking ul li div{
@@ -30,6 +31,14 @@
 
 .ranking ul li div.name{
   width: 65%;
+}
+
+.ranking ul li div.registers-box{
+  background-color: var(--secondary-shade);
+  color: var(--secondary-contrast);
+  padding: 4px;
+  border-radius: 4px;
+  height: 20px;
 }
 
 .ranking ul > span{

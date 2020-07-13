@@ -14,14 +14,14 @@ import { useGame } from '../../contexts/Game';
 import './styles.css';
 
 const Dashboard = () => {
-  const { loading } = useGame();
+  const { loading, game } = useGame();
 
   if(loading)
     return <Loading />;
   return (
     <main className="dashboard">
       <Helmet>
-        <title>Dashboard</title>
+        <title>{game.newRegisters && `(${game.newRegisters}) `}Dashboard - GameTask</title>
       </Helmet>
       <Ranking />
       <div className="column">
