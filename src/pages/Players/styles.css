@@ -7,46 +7,9 @@
   align-items: flex-start;
 }
 
-/* REQUESTS */
-
-.requests-container{
-  background-color: var(--primary);
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px;
-  width: 100%;
-  max-width: 500px;
-}
-
-.requests-container ul{
-  list-style: none;
-  max-height: 90vh;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.requests-container ul li + li{
-  margin-top: 8px;
-}
-
-.requests-container .request{
-  display: flex;
-  flex-direction: column;
-  padding: 4px;
-}
-
-.requests-container .request section{
-  display: flex;
-  margin-bottom: 4px;
-}
-
-.requests-container .request img{
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
-
-.requests-container .request .main > div{
-  display: flex;
-  flex-direction: column;
+.players-container .back-button{
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  font-size: 28px;
 }

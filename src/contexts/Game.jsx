@@ -18,6 +18,7 @@ const Game = ({ children }) => {
       try{
         const {data: game} = await api.get('/game/5ebc0a1e1da3fa28f4a455a7');
 
+        api.defaults.headers['X-Game-ID'] = '5ebc0a1e1da3fa28f4a455a7';
         setGame(game);
         setTheme(game.theme);
         setLoading(false);

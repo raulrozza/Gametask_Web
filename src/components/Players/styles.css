@@ -1,0 +1,106 @@
+.requests-container{
+  background-color: var(--primary);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.requests-container ul{
+  list-style: none;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.requests-container ul li + li{
+  margin-top: 8px;
+}
+
+.requests-container .request{
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.requests-container .request section{
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.requests-container .request img{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.requests-container .request .main > div{
+  display: flex;
+  flex-direction: column;
+}
+
+.requests-container .request .title strong{
+  text-transform: capitalize;
+}
+
+.requests-container .request .info{
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.requests-container footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.requests-container footer span{
+  color: var(--primary-shade);
+  font-size: 14px;
+}
+
+.requests-container footer div button{
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.requests-container footer div button + button{
+  margin-left: 4px;
+}
+
+.requests-container footer .details{
+  background-color: var(--primary);
+  border: 1px solid var(--secondary-intense);
+  color: var(--secondary-intense);
+}
+
+.requests-container footer .details:hover{
+  background-color: var(--secondary-intense);
+  color: var(--secondary-contrast);
+}
+
+.requests-container footer .confirm{
+  background-color: darkgreen;
+  border: 1px solid darkgreen;
+  color: white;
+}
+
+.requests-container footer .confirm:hover{
+  background-color: green;
+  border: 1px solid green;
+}
+
+.requests-container footer .delete{
+  background-color: darkred;
+  border: 1px solid darkred;
+  color: white;
+}
+
+.requests-container footer .delete:hover{
+  background-color: red;
+  border: 1px solid red;
+}
