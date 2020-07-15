@@ -16,12 +16,17 @@ import './styles.css';
 const Players = () => {
   const { loading, game } = useGame();
 
+  console.log(game);
+
   if(loading)
     return <Loading />;
+
+  const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
+
   return (
     <>
       <Helmet>
-        <title>{game.newRegisters && `(${game.newRegisters}) `}Gerenciar Jogadores - GameTask</title>
+        <title>{registerTitle}Gerenciar Jogadores - GameTask</title>
       </Helmet>
       <div className="players-container">
         <Link to="/dashboard" title="Voltar" className="back-button">

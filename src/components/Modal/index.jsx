@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 
 import './styles.css';
 
-const Modal = ({ title, closeModal, children }) => {
+const Modal = ({ title, closeModal, show, children }) => {
   return (
     <div className="modal-background">
       <div className="modal-content">
@@ -25,12 +25,14 @@ const Modal = ({ title, closeModal, children }) => {
 Modal.propTypes = {
   title: PropTypes.string,
   closeModal: PropTypes.func,
+  show: PropTypes.bool,
   children: PropTypes.node,
 }
 
 Modal.defaultProps = {
   title: "Modal",
   closeModal: () => {},
+  show: false,
   children: <div />,
 }
 

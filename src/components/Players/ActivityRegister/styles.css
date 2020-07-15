@@ -61,6 +61,10 @@
   font-size: 14px;
 }
 
+.requests-container footer div{
+  display: flex;
+}
+
 .requests-container footer div button{
   padding: 4px;
   border-radius: 4px;
@@ -103,4 +107,86 @@
 .requests-container footer .delete:hover{
   background-color: red;
   border: 1px solid red;
+}
+
+/* Modal */
+.request-modal{
+  padding: 8px;
+}
+
+.request-modal header{
+  display: grid;
+  grid-template-areas:
+  'image title'
+  'image description';
+  grid-template-columns: 1fr 3fr;
+  gap: 8px;
+  place-items: center;
+  width: 100%;
+}
+
+.request-modal header > img{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  grid-area: image;
+}
+
+.request-modal header > strong{
+  text-transform: capitalize;
+  grid-area: title;
+  font-size: 24px;
+}
+
+.request-modal header > span{
+  grid-area: description;
+}
+
+.request-modal section{
+  display: grid;
+  grid-template-areas:
+    '. .'
+    'rules rules';
+  grid-template-columns: 1fr 2fr;
+  margin: 16px 0;
+}
+
+.request-modal section cite{
+  grid-area: rules;
+}
+
+.request-modal footer cite{
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.request-modal footer button{
+  width: 48px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px){
+  /* Modal */
+  .request-modal header > img{
+    height: 80px;
+    width: 80px;
+  }
+
+  .request-modal header > strong{
+    font-size: 18px;
+  }
+
+  .request-modal header > span{
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px){
+  .request-modal section{
+    display: flex;
+    flex-direction: column;
+  }
 }
