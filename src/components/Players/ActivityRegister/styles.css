@@ -109,6 +109,18 @@
   border: 1px solid red;
 }
 
+.requests-container .no-requests{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.requests-container .no-requests svg{
+  font-size: 48px;
+  color: var(--secondary);
+}
+
 /* Modal */
 .request-modal{
   padding: 8px;

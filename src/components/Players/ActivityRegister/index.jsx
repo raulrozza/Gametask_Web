@@ -7,6 +7,7 @@ import Modal from '../../Modal';
 
 // Icons
 import { FaCheck, FaTrashAlt, FaTrash } from 'react-icons/fa';
+import { BsController } from 'react-icons/bs';
 
 // Services
 import api from '../../../services/api';
@@ -156,14 +157,16 @@ const ActivityRegister = () => {
 
         api.post('/experience', data);
 
-        /*setRequests(
+        setRequests(
           removeItemFromArray(
             requests,
             requests.findIndex(request => request._id === id)
           )
-        ); */
+        );
+
+        setShowModal(false);
       } catch(error) {
-        console.error(error);
+        console.error(error, error.response?.data);
       }
     }
   }
@@ -181,7 +184,8 @@ const ActivityRegister = () => {
       : (
         <>
           <ul className="request-list">
-            {requests.map(({ requester: user, activity, ...request }) => (
+            {requests.length > 0
+            ? requests.map(({ requester: user, activity, ...request }) => (
               <li className="request" key={request._id}>
                 <section className="main">
                   <img
@@ -236,7 +240,14 @@ const ActivityRegister = () => {
                   </div>
                 </footer>
               </li>
-            ))}
+            ))
+            : (
+              <div className="no-requests">
+               <BsController />
+                Não há requisições!
+              </div>
+            )
+            }
           </ul>
           {showModal && (
             <Modal closeModal={() => setShowModal(false)} show={showModal} title="Atividade">

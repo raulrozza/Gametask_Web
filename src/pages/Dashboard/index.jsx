@@ -18,10 +18,13 @@ const Dashboard = () => {
 
   if(loading)
     return <Loading />;
+
+  const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
+
   return (
     <main className="dashboard">
       <Helmet>
-        <title>{game.newRegisters && `(${game.newRegisters}) `}Dashboard - GameTask</title>
+        <title>{registerTitle}Dashboard - GameTask</title>
       </Helmet>
       <Ranking />
       <div className="column">
