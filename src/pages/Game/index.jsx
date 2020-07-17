@@ -49,7 +49,7 @@ const Game = () => {
   return (
     <>
       <Helmet>
-        <title>Configurações</title>
+        <title>Configurações - GameTask</title>
       </Helmet>
       <PageWrapper title="Configurações">
         <div className="row always-row">

@@ -1,0 +1,204 @@
+.requests-container{
+  background-color: var(--primary);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.requests-container ul{
+  list-style: none;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.requests-container ul li + li{
+  margin-top: 8px;
+}
+
+.requests-container .request{
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.requests-container .request section{
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.requests-container .request img{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.requests-container .request .main > div{
+  display: flex;
+  flex-direction: column;
+}
+
+.requests-container .request .title strong{
+  text-transform: capitalize;
+}
+
+.requests-container .request .info{
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.requests-container footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.requests-container footer span{
+  color: var(--primary-shade);
+  font-size: 14px;
+}
+
+.requests-container footer div{
+  display: flex;
+}
+
+.requests-container footer div button{
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.requests-container footer div button + button{
+  margin-left: 4px;
+}
+
+.requests-container footer .details{
+  background-color: var(--primary);
+  border: 1px solid var(--secondary-intense);
+  color: var(--secondary-intense);
+}
+
+.requests-container footer .details:hover{
+  background-color: var(--secondary-intense);
+  color: var(--secondary-contrast);
+}
+
+.requests-container footer .confirm{
+  background-color: darkgreen;
+  border: 1px solid darkgreen;
+  color: white;
+}
+
+.requests-container footer .confirm:hover{
+  background-color: green;
+  border: 1px solid green;
+}
+
+.requests-container footer .delete{
+  background-color: darkred;
+  border: 1px solid darkred;
+  color: white;
+}
+
+.requests-container footer .delete:hover{
+  background-color: red;
+  border: 1px solid red;
+}
+
+.requests-container .no-requests{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.requests-container .no-requests svg{
+  font-size: 48px;
+  color: var(--secondary);
+}
+
+/* Modal */
+.request-modal{
+  padding: 8px;
+}
+
+.request-modal header{
+  display: grid;
+  grid-template-areas:
+  'image title'
+  'image description';
+  grid-template-columns: 1fr 3fr;
+  gap: 8px;
+  place-items: center;
+  width: 100%;
+}
+
+.request-modal header > img{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  grid-area: image;
+}
+
+.request-modal header > strong{
+  text-transform: capitalize;
+  grid-area: title;
+  font-size: 24px;
+}
+
+.request-modal header > span{
+  grid-area: description;
+}
+
+.request-modal section{
+  display: grid;
+  grid-template-areas:
+    '. .'
+    'rules rules';
+  grid-template-columns: 1fr 2fr;
+  margin: 16px 0;
+}
+
+.request-modal section cite{
+  grid-area: rules;
+}
+
+.request-modal footer cite{
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.request-modal footer button{
+  width: 48px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px){
+  /* Modal */
+  .request-modal header > img{
+    height: 80px;
+    width: 80px;
+  }
+
+  .request-modal header > strong{
+    font-size: 18px;
+  }
+
+  .request-modal header > span{
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px){
+  .request-modal section{
+    display: flex;
+    flex-direction: column;
+  }
+}

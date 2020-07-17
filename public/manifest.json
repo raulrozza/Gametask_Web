@@ -1,5 +1,5 @@
 {
-  "short_name": "Gamification",
+  "short_name": "Gametask",
   "name": "Gamification Managing App",
   "icons": [
     {
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#852c80",
   "background_color": "#ffffff"
 }

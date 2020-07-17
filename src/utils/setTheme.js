@@ -46,7 +46,13 @@ export default function setTheme(theme = defaultTheme){
     ...fillPallete('secondary', secondary),
   }
 
+  // Setting the properties on the root element, defining the new CSS variables
   const root = document.querySelector(':root');
-  
+
   Object.keys(newTheme).map(key => root.style.setProperty(key, newTheme[key]))
+
+  // Setting the secondary color on the app theme, to change the browser's bar color in the phone
+  const meta = document.querySelector('meta[name="theme-color"]');
+
+  meta.setAttribute('content', secondary);
 }

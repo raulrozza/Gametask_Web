@@ -1,0 +1,15 @@
+.players-container{
+  background-color: var(--primary-low-shade);
+  min-height: 100vh;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.players-container .back-button{
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  font-size: 28px;
+}

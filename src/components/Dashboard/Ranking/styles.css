@@ -10,12 +10,14 @@
 .ranking ul li{
   margin-bottom: 5px;
   display: flex;
-  justify-content: space-between;
   height: 30px;
 }
 
 .ranking ul li.list-title{
   font-weight: bold;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--primary-low-shade);
 }
 
 .ranking ul li div{
@@ -28,8 +30,21 @@
   width: 30%;
 }
 
-.ranking ul li div.name{
+.ranking ul li div:not(.list-title){
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.ranking ul li div.user{
   width: 65%;
+}
+
+.ranking ul li div.registers-box{
+  background-color: var(--secondary-shade);
+  color: var(--secondary-contrast);
+  padding: 4px;
+  border-radius: 4px;
+  height: 20px;
 }
 
 .ranking ul > span{
@@ -40,6 +55,21 @@
   justify-content: center;
   text-decoration: underline;
   color: var(--secondary);
+}
+
+.ranking ul .rank{
+  font-weight: bold;
+  padding: 4px;
+  margin-right: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: default;
+  font-family: Open-Sans, Roboto, sans-serif;
+}
+
+.ranking ul li:not(.list-title) .name{
+  font-size: 14px;
 }
 
 .ranking footer{

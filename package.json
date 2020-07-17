@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
-    "formik": "^2.1.4",
+    "formik": "^2.1.5",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
@@ -42,14 +42,14 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react": "^7.20.1",
     "eslint-plugin-standard": "^4.0.1",
     "prettier": "^2.0.5"
   }

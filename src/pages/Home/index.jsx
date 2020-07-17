@@ -37,7 +37,7 @@ const Home = () => {
   return (
     <section className="home-page">
       <div className="title">
-        <h1>Gamification App</h1>
+        <h1>GAMETASK</h1>
       </div>
       <div className="container">
         <div className="form-toggle">
