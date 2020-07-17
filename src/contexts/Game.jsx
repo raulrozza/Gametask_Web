@@ -36,8 +36,16 @@ const Game = ({ children }) => {
     })();
   }, [signOut]);
 
+  const getPlayerRank = player => {
+    const level = player.level;
+
+    return game.ranks
+    .sort((a, b) => b.level - a.level)
+    .find(info => level >= info.level);
+  }
+
   return (
-    <GameContext.Provider value={{ game, loading }} >
+    <GameContext.Provider value={{ game, loading, getPlayerRank }} >
       {children}
     </GameContext.Provider>
   )
