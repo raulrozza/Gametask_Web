@@ -6,9 +6,11 @@
   "extends": [
       "plugin:react/recommended",
       "standard",
+      "plugin:@typescript-eslint/recommended",
       "plugin:prettier/recommended",
       "prettier/react"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
       "ecmaFeatures": {
           "jsx": true
@@ -18,6 +20,7 @@
   },
   "plugins": [
       "react",
+      "@typescript-eslint",
       "prettier"
   ],
   "rules": {
