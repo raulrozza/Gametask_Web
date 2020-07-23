@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Switch, Route, Redirect, Link, useRouteMatch, useLocation } from 'react-router-dom';
 
 // Component

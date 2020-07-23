@@ -1,15 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Contexts
 import { useAuth } from './Authorization';
 
 import api from '../services/api';
 import setTheme from '../utils/setTheme';
+import { IGameHook, IGame } from 'game';
+import { IUser } from 'authorization';
 
-const GameContext = createContext();
+const GameContext = createContext({});
 
-const Game = ({ children }) => {
-  const [game, setGame] = useState(null);
+const Game: React.FC = ({ children }) => {
+  const [game, setGame] = useState<IGame>({} as IGame);
   const [loading, setLoading] = useState(true);
   const { signOut } = useAuth();
 
@@ -36,7 +39,7 @@ const Game = ({ children }) => {
     })();
   }, [signOut]);
 
-  const getPlayerRank = player => {
+  const getPlayerRank = (player: IUser) => {
     const level = player.level;
 
     return game.ranks
@@ -52,9 +55,13 @@ const Game = ({ children }) => {
 };
 
 export const useGame = () => {
-  const game = useContext(GameContext);
+  const game = useContext(GameContext) as IGameHook;
 
   return game;
+};
+
+Game.propTypes = {
+  children: PropTypes.node,
 };
 
 export default Game;

@@ -8,6 +8,7 @@ import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
 
 // Contexts
 import { useAuth } from '../../contexts/Authorization';
+import { IAchievement } from 'game';
 
 // Custom components
 import AchievementForm from '../../components/Achievements/AchievementForm';
@@ -22,24 +23,33 @@ import { addItemToArray, updateItemInArray, removeItemFromArray } from '../../ut
 
 import './styles.css';
 
+interface ISubmitProps {
+  achievementId: string;
+  type: 'create' | 'update';
+}
+
+type ISubmit = (props: ISubmitProps) => void;
+
 const Achievements = () => {
-  const [achievements, setAchievements] = useState([]);
-  const [selectedAchievement, setSelectedAchievement] = useState(null);
+  const [achievements, setAchievements] = useState<IAchievement[]>([]);
+  const [selectedAchievement, setSelectedAchievement] = useState<IAchievement | null>(null);
   const [loading, setLoading] = useState(true);
   // Edit panel
   const [showPanel, setShowPanel] = useState(false);
   // Context
   const { signOut } = useAuth();
 
-  const editAchievement = (id) => {
+  const editAchievement = (id: string) => {
     const achievement = achievements.find(achievement => achievement._id === id);
 
-    if(showPanel && (!selectedAchievement || achievement._id !== selectedAchievement._id)){
+    if(achievement){
+      if(showPanel && (!selectedAchievement || achievement._id !== selectedAchievement._id)){
+        setSelectedAchievement({ ...achievement, image: achievement.image ? achievement.image_url : undefined });
+        return;
+      }
       setSelectedAchievement({ ...achievement, image: achievement.image ? achievement.image_url : undefined });
-      return;
+      setShowPanel(!showPanel);
     }
-    setSelectedAchievement({ ...achievement, image: achievement.image ? achievement.image_url : undefined });
-    setShowPanel(!showPanel);
   }
 
   const createAchievement = () => {
@@ -47,7 +57,7 @@ const Achievements = () => {
     setShowPanel(true);
   }
 
-  const deleteAchievement = async (id) => {
+  const deleteAchievement = async (id: string) => {
     const response = window.confirm("Deseja mesmo excluir esta conquista? Esta ação não pode ser desfeita.");
     if(response){
       setLoading(true);
@@ -60,7 +70,7 @@ const Achievements = () => {
       catch(error){
         console.error(error);
       }
-      
+
       setLoading(false);
     }
   }
@@ -87,17 +97,17 @@ const Achievements = () => {
     })();
   },[signOut])
 
-  const onSubmit = async ({ achievement, type }) => {
+  const onSubmit: ISubmit = async ({ achievementId, type }) => {
     switch(type){
       case 'create':
-        setAchievements(addItemToArray(achievements, achievement));
+        setAchievements(addItemToArray(achievements, achievementId));
         setShowPanel(false);
       break;
       case 'update':
         try{
-          const { data } = await api.get(`/achievement/${achievement}`);
+          const { data } = await api.get(`/achievement/${achievementId}`);
 
-          const index  = achievements.findIndex(item => item._id === achievement);
+          const index  = achievements.findIndex(item => item._id === achievementId);
           setAchievements(updateItemInArray(achievements, data, index));
           setShowPanel(false);
         }

@@ -5,6 +5,7 @@ import { FaEdit, FaTimes, FaPlus } from 'react-icons/fa';
 
 // Contexts
 import { useAuth } from '../../contexts/Authorization';
+import { IActivity } from 'game';
 
 // Custom components
 import ActivityForm from '../../components/Activities/ActivityForm';
@@ -19,32 +20,41 @@ import { addItemToArray, updateItemInArray, removeItemFromArray } from '../../ut
 
 import './styles.css';
 
-const Activities = () => {
-  const [activities, setActivities] = useState([]);
+interface ISubmitProps {
+  activityId: string;
+  type: 'create' | 'update';
+}
+
+type ISubmit = (props: ISubmitProps) => void;
+
+const Activities: React.FC = () => {
+  const [activities, setActivities] = useState<IActivity[]>([]);
   const [loading, setLoading] = useState(true);
   // Edit panel
   const [showPanel, setShowPanel] = useState(false);
-  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   // Context
-  const { singOut } = useAuth();
+  const { signOut } = useAuth();
 
   const createActivity = () => {
     setSelectedActivity(null);
     setShowPanel(true);
   }
 
-  const editActivity = (id) => {
+  const editActivity = (id: string) => {
     const activity = activities.find(activity => activity._id === id);
 
-    if(showPanel && (!selectedActivity || activity._id !== selectedActivity._id)){
+    if(activity){
+      if(showPanel && (!selectedActivity || activity._id !== selectedActivity._id)){
+        setSelectedActivity(activity);
+        return;
+      }
       setSelectedActivity(activity);
-      return;
+      setShowPanel(!showPanel);
     }
-    setSelectedActivity(activity);
-    setShowPanel(!showPanel);
   }
 
-  const deleteActivity = async (id) => {
+  const deleteActivity = async ( id: string ) => {
     const response = window.confirm("Deseja mesmo excluir esta atividade? Esta ação não pode ser desfeita.");
     if(response){
       setLoading(true);
@@ -57,7 +67,7 @@ const Activities = () => {
       catch(error){
         console.error(error);
       }
-      
+
       setLoading(false);
     }
   }
@@ -76,25 +86,25 @@ const Activities = () => {
           console.error(data);
 
           if(data.error === "TokenExpiredError: jwt expired"){
-            singOut();
+            signOut();
           }
         }
         console.error(error);
       }
     })();
-  }, [singOut]);
-  
-  const onSubmit = async ({ activity, type }) => {
+  }, [signOut]);
+
+  const onSubmit: ISubmit = async ({ activityId, type }) => {
     switch(type){
       case 'create':
-        setActivities(addItemToArray(activities, activity));
+        setActivities(addItemToArray(activities, activityId));
         setShowPanel(false);
       break;
       case 'update':
         try{
-          const { data } = await api.get(`/activity/${activity}`);
+          const { data } = await api.get(`/activity/${activityId}`);
 
-          const index  = activities.findIndex(item => item._id === activity);
+          const index  = activities.findIndex(item => item._id === activityId);
           setActivities(updateItemInArray(activities, data, index));
           setShowPanel(false);
         }

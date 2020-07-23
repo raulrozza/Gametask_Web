@@ -1,8 +1,9 @@
 import tinyColor from 'tinycolor2';
+import { IColorPallete } from 'theme';
 
-const fillPallete = (key, value) => {
+const fillPallete = (key: string, value: string) => {
   const color = tinyColor(value);
-  let pallete = {};
+  let pallete = {} as IColorPallete;
 
   pallete[`--${key}`] = color.toHexString();
   pallete[`--${key}-contrast`] = color.isLight() ? '#1F1F1F' : '#FFF';
@@ -26,9 +27,12 @@ const fillPallete = (key, value) => {
   return pallete;
 }
 
-export const defaultTheme = { primary: '#FFFFFF', secondary: '#852c80' };
+export const defaultTheme = {
+  ...fillPallete('primary', '#FFFFFF'),
+  ...fillPallete('secondary', '#852c80'),
+};
 
-export const getTextColor = (color) => {
+export const getTextColor = (color: string) => {
   const colorObj = tinyColor(color);
 
   if(colorObj.isLight())
@@ -47,12 +51,14 @@ export default function setTheme(theme = defaultTheme){
   }
 
   // Setting the properties on the root element, defining the new CSS variables
-  const root = document.querySelector(':root');
+  const root: HTMLElement | null = document.querySelector(':root');
 
-  Object.keys(newTheme).map(key => root.style.setProperty(key, newTheme[key]))
+  if(root)
+    Object.keys(newTheme).map(key => root.style.setProperty(key, newTheme[key]))
 
   // Setting the secondary color on the app theme, to change the browser's bar color in the phone
   const meta = document.querySelector('meta[name="theme-color"]');
 
-  meta.setAttribute('content', secondary);
+  if(meta)
+    meta.setAttribute('content', secondary);
 }

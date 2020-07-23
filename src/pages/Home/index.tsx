@@ -27,7 +27,7 @@ const SignupSchema = Yup.object().shape({
   confirmPassword: Yup.string().required('Repita sua senha')
 });
 
-const Home = () => {
+const Home: React.FC = () => {
   const [loginButtonDisabled, setLoginButtonDisabled] = useState(false);
   const [signupButtonDisabled, setSignupButtonDisabled] = useState(false);
   const [formToggle, setFormToggle] = useState(true);
@@ -52,7 +52,7 @@ const Home = () => {
           validationSchema={LoginSchema}
           onSubmit={async (values, actions) => {
             setLoginButtonDisabled(true);
-            
+
             // Login
             try{
               const response = await api.post('/login', values)
@@ -62,7 +62,7 @@ const Home = () => {
             catch(error){
               console.error(error, error.response?.data);
             }
-            
+
             setLoginButtonDisabled(false);
           }}
         >
@@ -104,7 +104,7 @@ const Home = () => {
               return;
             }
             setSignupButtonDisabled(true);
-            
+
             // Post user in the API
             try{
               await api.post('/signup', values)
@@ -114,7 +114,7 @@ const Home = () => {
             catch(error){
               console.error(error);
             }
-            
+
             setSignupButtonDisabled(false);
           }}
         >
