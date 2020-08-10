@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 import Form from '../../Form';
 
 // Components
-import { useFormik } from 'formik';
+import { useFormik, FormikValues, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 
 // Services
 import api from '../../../services/api';
+
+// Types
+import { IActivity } from 'game';
 
 import './styles.css';
 
@@ -20,69 +23,81 @@ const ActivitySchema = Yup.object().shape({
   experience: Yup.string().required('Quanto de experiência a atividade dá?'),
 });
 
-const ActivityForm = ({ activity, submitCallback }) => {
+interface ISubmitProps {
+  activityId: string;
+  type: 'create' | 'update';
+}
+
+export type ISubmit = (response: ISubmitProps) => void;
+
+interface ActivityFormProps {
+  activity: IActivity | null;
+  submitCallback: ISubmit;
+}
+
+const ActivityForm: React.FC<ActivityFormProps> = ({
+  activity,
+  submitCallback,
+}) => {
   // Form management
   const [disabledBtn, setDisabledBtn] = useState(false);
 
   // Method varies dependending whether it is and update (if the activity prop exists) or a new activity
   // (if the prop doesn't exist). On submiting, summons the submitCallback to warn the parent about the changes
-  const submitForm = async (values) => {
+  const submitForm = async (values: FormikValues) => {
     const { name, description, experience, dmRules } = values;
 
-    try{
-        setDisabledBtn(true);
+    try {
+      setDisabledBtn(true);
 
-        if(activity){              
-          const response = await api.put(`/activity/${activity._id}`, {
-            name,
-            description,
-            experience,
-            dmRules
-          });
-          
-          if(response.data.nModified > 0){
-            submitCallback({
-              activity: activity._id,
-              type: 'update'
-            });
-          }
-        }
-        else{
-          const { data } = await api.post('/activity', {
-            name,
-            description,
-            experience: parseInt(experience),
-            dmRules
-          });
-          
+      if (activity) {
+        const response = await api.put(`/activity/${activity._id}`, {
+          name,
+          description,
+          experience,
+          dmRules,
+        });
+
+        if (response.data.nModified > 0) {
           submitCallback({
-            activity: data,
-            type: 'create'
-          })
+            activityId: activity._id,
+            type: 'update',
+          });
         }
-        
-        setDisabledBtn(false);
-    }
-    catch(error){
-      if(error.response)
-        console.error(error.response.data)
+      } else {
+        const { data }: { data: IActivity } = await api.post('/activity', {
+          name,
+          description,
+          experience: parseInt(experience),
+          dmRules,
+        });
+
+        submitCallback({
+          activityId: data._id,
+          type: 'create',
+        });
+      }
+
+      setDisabledBtn(false);
+    } catch (error) {
+      if (error.response) console.error(error.response.data);
       console.error(error);
     }
-  }
+  };
 
   const { setValues, resetForm, ...form } = useFormik({
     initialValues: {
-      name: "",
-      description: "",
-      dmRules: "",
-      experience: "",
+      name: '',
+      description: '',
+      dmRules: '',
+      experience: '',
     },
     validationSchema: ActivitySchema,
-    validate: (values) => {
-      let error = {};
+    validate: values => {
+      const error = {} as FormikErrors<FormikValues>;
 
-      if(values.experience.length > 0 && isNaN(parseInt(values.experience))){
-        error.experience = "Experiência tem que ser um número."
+      if (values.experience.length > 0 && isNaN(parseInt(values.experience))) {
+        error.experience = 'Experiência tem que ser um número.';
       }
 
       return error;
@@ -91,11 +106,14 @@ const ActivityForm = ({ activity, submitCallback }) => {
   });
 
   useEffect(() => {
-    if(activity){
-      setValues(activity)
-    }
-    else
-      resetForm();
+    if (activity) {
+      setValues({
+        name: activity.name,
+        description: activity.description,
+        dmRules: activity.dmRules || '',
+        experience: String(activity.experience),
+      });
+    } else resetForm();
   }, [setValues, resetForm, activity]);
 
   return (
@@ -152,26 +170,23 @@ const ActivityForm = ({ activity, submitCallback }) => {
           ) : null}
         </div>
         <button className="submit" type="submit" disabled={disabledBtn}>
-          {activity ? "Atualizar" : "Criar"}
+          {activity ? 'Atualizar' : 'Criar'}
         </button>
       </Form>
     </div>
   );
-}
+};
 
 ActivityForm.propTypes = {
   activity: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    activity: PropTypes.string,
-    experience: PropTypes.number,
-  }),
-  submitCallback: PropTypes.func
-}
-
-ActivityForm.defaultProps = {
-  activity: null,
-  submitCallback: () => {}
-}
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    activity: PropTypes.string.isRequired,
+    experience: PropTypes.number.isRequired,
+    dmRules: PropTypes.string.isRequired,
+  }).isRequired,
+  submitCallback: PropTypes.func.isRequired,
+};
 
 export default ActivityForm;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { FaArrowCircleLeft } from 'react-icons/fa';
@@ -13,13 +13,12 @@ import ActivityRegister from '../../components/Players/ActivityRegister';
 
 import './styles.css';
 
-const Players = () => {
+const Players: React.FC = () => {
   const { loading, game } = useGame();
 
   console.log(game);
 
-  if(loading)
-    return <Loading />;
+  if (loading) return <Loading />;
 
   const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
 
@@ -36,7 +35,7 @@ const Players = () => {
         <ActivityRegister />
       </div>
     </>
-  )
-}
+  );
+};
 
 export default Players;

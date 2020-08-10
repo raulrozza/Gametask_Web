@@ -6,34 +6,43 @@ import { FaTimes } from 'react-icons/fa';
 
 import './styles.css';
 
-const Modal = ({ title, closeModal, show, children }) => {
+interface ModalProps {
+  title?: string;
+  closeModal?: () => void;
+  show?: boolean;
+  children: React.ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = ({ title, closeModal, children }) => {
   return (
     <div className="modal-background">
       <div className="modal-content">
         <div className="modal-title">
           <h2>{title}</h2>
-          <button className="close" type="button" onClick={closeModal}><FaTimes /></button>
+          <button className="close" type="button" onClick={closeModal}>
+            <FaTimes />
+          </button>
         </div>
-        <div className="modal-children">
-          {children}
-        </div>
+        <div className="modal-children">{children}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 Modal.propTypes = {
   title: PropTypes.string,
   closeModal: PropTypes.func,
   show: PropTypes.bool,
   children: PropTypes.node,
-}
+};
 
 Modal.defaultProps = {
-  title: "Modal",
-  closeModal: () => {},
+  title: 'Modal',
+  closeModal: () => {
+    console.log('Not implemented.');
+  },
   show: false,
   children: <div />,
-}
+};
 
 export default Modal;

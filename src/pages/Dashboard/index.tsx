@@ -13,11 +13,10 @@ import { useGame } from '../../contexts/Game';
 
 import './styles.css';
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const { loading, game } = useGame();
 
-  if(loading)
-    return <Loading />;
+  if (loading) return <Loading />;
 
   const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
 
@@ -34,6 +33,6 @@ const Dashboard = () => {
       <GameContainer />
     </main>
   );
-}
+};
 
 export default Dashboard;

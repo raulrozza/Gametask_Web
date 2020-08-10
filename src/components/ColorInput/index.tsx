@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { ChromePicker } from 'react-color';
+import { ChromePicker, ColorChangeHandler } from 'react-color';
 
 import './styles.css';
 
-const ColorInput = ({ label, value, onChange, onShowPanel, onHidePanel }) => {
+interface ColorInputAttributes {
+  label?: string;
+  value: string;
+  onChange: ColorChangeHandler;
+  onShowPanel?: () => void;
+  onHidePanel?: () => void;
+}
+
+const ColorInput: React.FC<ColorInputAttributes> = ({
+  label,
+  value,
+  onChange,
+  onShowPanel,
+  onHidePanel,
+}) => {
   const [showPicker, setShowPicker] = useState(false);
   const [mouseOnPicker, setMouseOnPicker] = useState(false);
 
@@ -14,16 +28,15 @@ const ColorInput = ({ label, value, onChange, onShowPanel, onHidePanel }) => {
       {label && <label>{label}:</label>}
       <div
         className="color-viewer"
-        readOnly
         style={{ backgroundColor: value }}
         onClick={() => {
-          onShowPanel();
+          if (onShowPanel) onShowPanel();
           setShowPicker(true);
         }}
         onBlur={() => {
-          if(!mouseOnPicker){
+          if (!mouseOnPicker) {
             setShowPicker(false);
-            onHidePanel();
+            if (onHidePanel) onHidePanel();
           }
         }}
         tabIndex={1}
@@ -34,30 +47,32 @@ const ColorInput = ({ label, value, onChange, onShowPanel, onHidePanel }) => {
           onMouseLeave={() => setMouseOnPicker(false)}
           tabIndex={1}
         >
-          <ChromePicker
-            disableAlpha
-            color={value}
-            onChange={onChange}
-          />
+          <ChromePicker disableAlpha color={value} onChange={onChange} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 ColorInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   onShowPanel: PropTypes.func,
   onHidePanel: PropTypes.func,
-}
+};
 
 ColorInput.defaultProps = {
-  label: "",
-  onChange: () => {},
-  onShowPanel: () => {},
-  onHidePanel: () => {},
-}
+  label: '',
+  onChange: () => {
+    console.log('Not implemented.');
+  },
+  onShowPanel: () => {
+    console.log('Not implemented.');
+  },
+  onHidePanel: () => {
+    console.log('Not implemented.');
+  },
+};
 
 export default ColorInput;

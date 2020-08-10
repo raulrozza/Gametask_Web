@@ -1,6 +1,13 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
-import { Switch, Route, Redirect, Link, useRouteMatch, useLocation } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Redirect,
+  Link,
+  useRouteMatch,
+  useLocation,
+} from 'react-router-dom';
 
 // Component
 import PageWrapper from '../../components/PageWrapper';
@@ -19,7 +26,7 @@ const InfoForm = lazy(() => import('../../components/Game/InfoForm'));
 const LevelConfig = lazy(() => import('../../components/Game/LevelConfig'));
 const RankConfig = lazy(() => import('../../components/Game/RankConfig'));
 
-const Game = () => {
+const Game: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
   // Hooks
   const match = useRouteMatch();
@@ -42,10 +49,9 @@ const Game = () => {
       title: 'Gerenciar patentes',
       url: `${match.url}/ranks`,
     },
-  ]
+  ];
 
-  if(loading)
-    return <Loading />
+  if (loading) return <Loading />;
   return (
     <>
       <Helmet>
@@ -59,8 +65,14 @@ const Game = () => {
             </button>
             <ul>
               {sidenavItems.map(item => (
-                <Link to={item.url} key={item.key} onClick={() => setShowMenu(false)}>
-                  <li className={item.url === location.pathname ? "active" : ""}>
+                <Link
+                  to={item.url}
+                  key={item.key}
+                  onClick={() => setShowMenu(false)}
+                >
+                  <li
+                    className={item.url === location.pathname ? 'active' : ''}
+                  >
                     {item.title}
                   </li>
                 </Link>
@@ -70,13 +82,13 @@ const Game = () => {
           <main className="content">
             <Suspense fallback={<Loading />}>
               <Switch>
-                <Route path={`${match.path}/info`} exact >
+                <Route path={`${match.path}/info`} exact>
                   <InfoForm />
                 </Route>
-                <Route path={`${match.path}/leveling`} exact >
+                <Route path={`${match.path}/leveling`} exact>
                   <LevelConfig />
                 </Route>
-                <Route path={`${match.path}/ranks`} exact >
+                <Route path={`${match.path}/ranks`} exact>
                   <RankConfig />
                 </Route>
                 <Route path={`${match.path}*`}>
@@ -88,7 +100,7 @@ const Game = () => {
         </div>
       </PageWrapper>
     </>
-  )
+  );
 };
 
 export default Game;

@@ -10,13 +10,15 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 // Services
-import api from '../../services/api'
+import api from '../../services/api';
 
 import './styles.css';
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Digite um e-mail válido').required('Digite seu email'),
-  password: Yup.string().required('Digite sua senha')
+  email: Yup.string()
+    .email('Digite um e-mail válido')
+    .required('Digite seu email'),
+  password: Yup.string().required('Digite sua senha'),
 });
 
 const SignupSchema = Yup.object().shape({
@@ -24,7 +26,7 @@ const SignupSchema = Yup.object().shape({
   lastname: Yup.string(),
   email: Yup.string().email('E-mail inválido').required('Digite um e-mail'),
   password: Yup.string().required('Digite uma senha'),
-  confirmPassword: Yup.string().required('Repita sua senha')
+  confirmPassword: Yup.string().required('Repita sua senha'),
 });
 
 const Home: React.FC = () => {
@@ -41,25 +43,34 @@ const Home: React.FC = () => {
       </div>
       <div className="container">
         <div className="form-toggle">
-          <button className={formToggle ? "active" : ""} onClick={() => setFormToggle(true)}>Entre</button>
-          <button className={formToggle ? "" : "active"} onClick={() => setFormToggle(false)}>Cadastre-se</button>
+          <button
+            className={formToggle ? 'active' : ''}
+            onClick={() => setFormToggle(true)}
+          >
+            Entre
+          </button>
+          <button
+            className={formToggle ? '' : 'active'}
+            onClick={() => setFormToggle(false)}
+          >
+            Cadastre-se
+          </button>
         </div>
         <Formik
           initialValues={{
-            email: "",
-            password: ""
+            email: '',
+            password: '',
           }}
           validationSchema={LoginSchema}
-          onSubmit={async (values, actions) => {
+          onSubmit={async values => {
             setLoginButtonDisabled(true);
 
             // Login
-            try{
-              const response = await api.post('/login', values)
+            try {
+              const response = await api.post('/login', values);
 
               signIn(response.data);
-            }
-            catch(error){
+            } catch (error) {
               console.error(error, error.response?.data);
             }
 
@@ -67,7 +78,7 @@ const Home: React.FC = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={formToggle ? "active" : ""} >
+            <Form className={formToggle ? 'active' : ''}>
               <h2>Entre</h2>
               <div className="form-group">
                 <div className="input-group">
@@ -83,7 +94,9 @@ const Home: React.FC = () => {
                   ) : null}
                 </div>
                 <div className="input-group">
-                  <button type="submit" disabled={loginButtonDisabled}>Entrar</button>
+                  <button type="submit" disabled={loginButtonDisabled}>
+                    Entrar
+                  </button>
                 </div>
               </div>
             </Form>
@@ -91,27 +104,28 @@ const Home: React.FC = () => {
         </Formik>
         <Formik
           initialValues={{
-            firstname: "",
-            lastname: "",
-            email: "",
-            password: "",
-            confirmPassword: ""
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
           }}
           validationSchema={SignupSchema}
           onSubmit={async (values, actions) => {
-            if(values.password !== values.confirmPassword){
-              actions.setErrors({ confirmPassword: 'As senhas não são iguais' });
+            if (values.password !== values.confirmPassword) {
+              actions.setErrors({
+                confirmPassword: 'As senhas não são iguais',
+              });
               return;
             }
             setSignupButtonDisabled(true);
 
             // Post user in the API
-            try{
-              await api.post('/signup', values)
+            try {
+              await api.post('/signup', values);
 
               window.location.reload();
-            }
-            catch(error){
+            } catch (error) {
               console.error(error);
             }
 
@@ -119,7 +133,7 @@ const Home: React.FC = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={formToggle ? "" : "active"} >
+            <Form className={formToggle ? '' : 'active'}>
               <h2>Cadastre-se</h2>
               <div className="form-group">
                 <div className="input-group">
@@ -147,13 +161,19 @@ const Home: React.FC = () => {
                   ) : null}
                 </div>
                 <div className="input-group">
-                  <Field type="password" name="confirmPassword" placeholder="Confirme a senha" />
+                  <Field
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirme a senha"
+                  />
                   {errors.confirmPassword && touched.confirmPassword ? (
                     <div className="error-field">{errors.confirmPassword}</div>
                   ) : null}
                 </div>
                 <div className="input-group">
-                  <button type="submit" disabled={signupButtonDisabled}>Cadastrar</button>
+                  <button type="submit" disabled={signupButtonDisabled}>
+                    Cadastrar
+                  </button>
                 </div>
               </div>
             </Form>
@@ -162,6 +182,6 @@ const Home: React.FC = () => {
       </div>
     </section>
   );
-}
+};
 
 export default Home;

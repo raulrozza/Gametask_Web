@@ -13,7 +13,7 @@ import placeholder from '../../../assets/img/games/placeholder.png';
 // Styles
 import './styles.css';
 
-const GameContainer = () => {
+const GameContainer: React.FC = () => {
   const { game } = useGame();
 
   return (
@@ -27,10 +27,12 @@ const GameContainer = () => {
       <div className="name">{game.name}</div>
       <div className="description">{game.description}</div>
       <button type="button" title="Configurações">
-        <Link to="/game"><FaCog /></Link>
+        <Link to="/game">
+          <FaCog />
+        </Link>
       </button>
     </div>
   );
-}
+};
 
 export default GameContainer;

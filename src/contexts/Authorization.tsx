@@ -14,11 +14,10 @@ const Authorization: React.FC = ({ children }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedUser');
-    if(!storedUser)
-      setLogged(false);
-    else{
+    if (!storedUser) setLogged(false);
+    else {
       const parsedUser = JSON.parse(storedUser);
-      api.defaults.headers['Authorization'] = 'Bearer '+parsedUser.token;
+      api.defaults.headers.Authorization = 'Bearer ' + parsedUser.token;
       setUser(parsedUser);
       setLogged(true);
     }
@@ -27,26 +26,28 @@ const Authorization: React.FC = ({ children }) => {
 
   const signIn = (user: IUser) => {
     localStorage.setItem('loggedUser', JSON.stringify(user));
-    api.defaults.headers['Authorization'] = 'Bearer '+user.token;
+    api.defaults.headers.Authorization = 'Bearer ' + user.token;
     setUser(user);
     setLogged(true);
-  }
+  };
 
   const signOut = () => {
     localStorage.clear();
     setUser({} as IUser);
     setTheme();
     setLogged(false);
-  }
+  };
 
   return (
-    <AuthorizationContext.Provider value={{ user, logged, loading, signIn, signOut }} >
+    <AuthorizationContext.Provider
+      value={{ user, logged, loading, signIn, signOut }}
+    >
       {children}
     </AuthorizationContext.Provider>
-  )
+  );
 };
 
-export const useAuth = () => {
+export const useAuth: () => IAuth = () => {
   const auth = useContext(AuthorizationContext) as IAuth;
 
   return auth;

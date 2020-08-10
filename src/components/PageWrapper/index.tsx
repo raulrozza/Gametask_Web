@@ -8,7 +8,12 @@ import { FaArrowCircleLeft } from 'react-icons/fa';
 
 import './styles.css';
 
-const PageWrapper = ({ title, children }) => {
+interface PageWrapperProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+const PageWrapper: React.FC<PageWrapperProps> = ({ title, children }) => {
   return (
     <main className="page-wrapper">
       <Helmet>
@@ -24,12 +29,12 @@ const PageWrapper = ({ title, children }) => {
         {children}
       </div>
     </main>
-  )
+  );
 };
 
 PageWrapper.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
-}
+};
 
 export default PageWrapper;

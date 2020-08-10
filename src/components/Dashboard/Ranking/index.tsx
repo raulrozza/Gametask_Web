@@ -12,7 +12,7 @@ import { getTextColor } from '../../../utils/setTheme';
 // Styles
 import './styles.css';
 
-const Ranking = () => {
+const Ranking: React.FC = () => {
   const { game, getPlayerRank } = useGame();
 
   return (
@@ -22,10 +22,15 @@ const Ranking = () => {
           <div className="points">Pontuação</div>
           <div className="user">Jogador</div>
           {game.newRegisters > 0 && (
-            <div className="registers-box" title="Novas requisições de pontuação.">{game.newRegisters}</div>
+            <div
+              className="registers-box"
+              title="Novas requisições de pontuação."
+            >
+              {game.newRegisters}
+            </div>
           )}
         </li>
-        {game.weeklyRanking.length > 0 ?
+        {game.weeklyRanking.length > 0 ? (
           game.weeklyRanking.map(({ user, currentExperience }) => {
             const playerRank = getPlayerRank(user);
 
@@ -35,21 +40,29 @@ const Ranking = () => {
                 <div className="user">
                   <span
                     className="rank"
-                    style={{ backgroundColor: playerRank.color, color: getTextColor(playerRank.color) }}
+                    style={{
+                      backgroundColor: playerRank.color,
+                      color: getTextColor(playerRank.color),
+                    }}
                     title={playerRank.name}
                   >
                     {playerRank.tag}
                   </span>
-                  <span className="name">{user.firstname}{user.lastname ? ` ${user.lastname}` : ''}</span>
+                  <span className="name">
+                    {user.firstname}
+                    {user.lastname ? ` ${user.lastname}` : ''}
+                  </span>
                   {user.currentTitle && (
                     <span className="title">, {user.currentTitle.name}</span>
                   )}
                 </div>
               </li>
-            )
+            );
           })
-        :   (
-          <span>Ninguém pontuou ainda <FaFrown /> </span>
+        ) : (
+          <span>
+            Ninguém pontuou ainda <FaFrown />{' '}
+          </span>
         )}
       </ul>
       <footer>
@@ -57,6 +70,6 @@ const Ranking = () => {
       </footer>
     </div>
   );
-}
+};
 
 export default Ranking;

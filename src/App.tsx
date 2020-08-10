@@ -7,12 +7,12 @@ import Authorization from './contexts/Authorization';
 // Styles
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Authorization>
       <Routes />
     </Authorization>
   );
-}
+};
 
 export default App;

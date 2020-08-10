@@ -32,6 +32,8 @@
           "trailingComma": "all",
           "arrowParens": "avoid"
       }
-    ]
+    ],
+    "camelcase": 0,
+    "@typescript-eslint/no-explicit-any": 0
   }
 }

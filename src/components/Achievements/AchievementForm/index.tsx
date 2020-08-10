@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import PropTypes from 'prop-types';
 
 // Custom Components
@@ -7,11 +7,14 @@ import ImageInput from '../../ImageInput';
 
 // Components
 import { FaEdit } from 'react-icons/fa';
-import { useFormik } from 'formik';
+import { useFormik, FormikValues, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 
 // Services
 import api from '../../../services/api';
+
+// Types
+import { IAchievement, ITitle } from 'game';
 
 import './styles.css';
 
@@ -22,123 +25,139 @@ const AchievementSchema = Yup.object().shape({
   image: Yup.mixed(),
 });
 
-const AchievementForm = ({ achievement, submitCallback }) => {
+interface ISubmitProps {
+  achievementId: string;
+  type: 'create' | 'update';
+}
+
+export type ISubmit = (response: ISubmitProps) => void;
+
+interface AchievementFormProps {
+  achievement: IAchievement | null;
+  submitCallback: ISubmit;
+}
+
+interface FormValues {
+  name: string;
+  description: string;
+  title: string;
+  image?: string | null;
+}
+
+const AchievementForm: React.FC<AchievementFormProps> = ({
+  achievement,
+  submitCallback,
+}) => {
   // Form management
-  const [title, setTitle] = useState(null);
+  const [title, setTitle] = useState<ITitle | null>(null);
   const [disabledBtn, setDisabledBtn] = useState(false);
+  const initialValues: FormValues = {
+    name: '',
+    description: '',
+    title: '',
+    image: null,
+  };
   // Title suggestions
-  const [titleList, setTitleList] = useState(null);
+  const [titleList, setTitleList] = useState<ITitle[]>([]);
   const [showTitleList, setShowTitleList] = useState(false);
   const [overTitleList, setOverTitleList] = useState(false);
 
   // Sets the initial component configuration based on the received achievement and stored jwt token
   useEffect(() => {
-    if(achievement)
-      setTitle(achievement.title ? achievement.title : null)
+    if (achievement) setTitle(achievement.title ? achievement.title : null);
   }, [achievement]);
 
   // OnChange method that changes the string in the title form, but also checks the API for existing titles
   // and adds them to a suggestion list
-  const setTitleValue = ({ target: { value } }) => {
+  const setTitleValue = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
     form.setFieldValue('title', value);
-    try{
+    try {
       const params = value.length > 0 ? { name: value } : {};
-      api.get('/titles', {
-        params
-      })
-      .then(({ data }) => {
-        setTitleList(data);
-      })
+      api
+        .get('/titles', {
+          params,
+        })
+        .then(({ data }) => {
+          setTitleList(data);
+        });
       setTitle(null);
-    }
-    catch(error){
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   // Method used on the suggestion list that adds a new title to the existing ones, while also adding it to the
   // selected title on the form.
-  const addTitle = async (name) => {
-    try{
+  const addTitle = async (name: string) => {
+    try {
       const response = await api.post('/title', {
-        name
+        name,
       });
       setTitle(response.data);
       setShowTitleList(false);
-    }
-    catch(error){
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   // Method varies dependending whether it is and update (if the achievement prop exists) or a new achievement
   // (if the prop doesn't exist). On submiting, summons the submitCallback to warn the parent about the changes
-  const submitForm = async (values) => {
+  const submitForm = async (values: FormikValues) => {
     const { name, description, image } = values;
 
-    try{
-        setDisabledBtn(true);
+    try {
+      setDisabledBtn(true);
 
-        const data = new FormData();
+      const data = new FormData();
 
-        if(achievement){
-          if(name !== achievement.name)
-            data.append('name', name);
-          if(description !== achievement.description)
-            data.append('description', description);
-          if(image !== achievement.image)
-            data.append('image', image);
-          data.append('title', title ? title._id : undefined);
-              
-          const response = await api.put(`/achievement/${achievement._id}`, data);
-          
-          if(response.data.nModified > 0){
-            submitCallback({
-              achievement: achievement._id,
-              type: 'update'
-            });
-          }
-        }
-        else{
-          data.append('name', name);
+      if (achievement) {
+        if (name !== achievement.name) data.append('name', name);
+        if (description !== achievement.description)
           data.append('description', description);
-          if(image)
-            data.append('image', image);
-          if(title)
-            data.append('title', title._id);
+        if (image !== achievement.image) data.append('image', image);
+        data.append('title', title ? String(title._id) : '');
 
-          const response = await api.post('/achievement', data);
-          
+        const response = await api.put(`/achievement/${achievement._id}`, data);
+
+        if (response.data.nModified > 0) {
           submitCallback({
-            achievement: {
-              ...response.data,
-              title
-            },
-            type: 'create'
-          })
+            achievementId: achievement._id,
+            type: 'update',
+          });
         }
-        
-        setDisabledBtn(false);
-    }
-    catch(error){
-      if(error.response)
-        console.error(error.response.data)
+      } else {
+        data.append('name', name);
+        data.append('description', description);
+        if (image) data.append('image', image);
+        if (title) data.append('title', title._id);
+
+        const response: { data: IAchievement } = await api.post(
+          '/achievement',
+          data,
+        );
+
+        submitCallback({
+          achievementId: response.data._id,
+          type: 'create',
+        });
+      }
+
+      setDisabledBtn(false);
+    } catch (error) {
+      if (error.response) console.error(error.response.data);
       console.error(error);
     }
-  }
+  };
 
   const { setValues, resetForm, ...form } = useFormik({
-    initialValues: {
-      name: "",
-      description: "",
-      title: "",
-      image: null,
-    },
+    initialValues,
     validationSchema: AchievementSchema,
-    validate: (values) => {
-      let error = {};
-      if(values.title.length > 0 && !title){
-        error.title = "Adicione um título existente."
+    validate: values => {
+      const error = {} as FormikErrors<FormikValues>;
+      if (values.title.length > 0 && !title) {
+        error.title = 'Adicione um título existente.';
       }
 
       return error;
@@ -147,15 +166,15 @@ const AchievementForm = ({ achievement, submitCallback }) => {
   });
 
   useEffect(() => {
-    if(achievement){
-      setTitle(achievement.title ? achievement.title : null)
+    if (achievement) {
+      setTitle(achievement.title ? achievement.title : null);
       setValues({
-        ...achievement,
-        title: achievement.title ? achievement.title.name : ""
-      })
-    }
-    else
-      resetForm();
+        name: achievement.name,
+        description: achievement.description,
+        title: achievement.title ? achievement.title.name : '',
+        image: achievement.image,
+      });
+    } else resetForm();
   }, [setValues, resetForm, achievement]);
 
   return (
@@ -167,8 +186,10 @@ const AchievementForm = ({ achievement, submitCallback }) => {
             value={form.values ? form.values.image : null}
             setInput={form.setFieldValue}
           >
-          <button><FaEdit /></button>
-          </ ImageInput>
+            <button>
+              <FaEdit />
+            </button>
+          </ImageInput>
           {form.errors.image && form.touched.image ? (
             <div className="error-field">{form.errors.image}</div>
           ) : null}
@@ -199,13 +220,11 @@ const AchievementForm = ({ achievement, submitCallback }) => {
           ) : null}
         </div>
         <div
-          name="title"
           className="form-group"
           onFocus={() => setShowTitleList(true)}
-          onBlur={(event) => {
+          onBlur={event => {
             form.handleBlur(event);
-            if(!overTitleList)
-              setShowTitleList(false);
+            if (!overTitleList) setShowTitleList(false);
           }}
           onMouseEnter={() => setOverTitleList(true)}
           onMouseLeave={() => setOverTitleList(false)}
@@ -217,52 +236,57 @@ const AchievementForm = ({ achievement, submitCallback }) => {
             onChange={setTitleValue}
             value={form.values.title}
           />
-          <div className="title-options" style={{ visibility: showTitleList ? "visible" : "hidden" }}>
-              {titleList && titleList.length > 0 && <ul>
-                  {titleList.map(title => (
-                    <li
-                      key={title._id}
-                      onClick={() => {
-                        setTitle(title)
-                        form.setFieldValue('title', title.name);
-                        setShowTitleList(false);
-                      }}
-                    >{title.name}</li>
-                  ))}
-              </ul>}
-              {titleList && titleList.length === 0 &&
+          <div
+            className="title-options"
+            style={{ visibility: showTitleList ? 'visible' : 'hidden' }}
+          >
+            {titleList && titleList.length > 0 && (
+              <ul>
+                {titleList.map(title => (
+                  <li
+                    key={title._id}
+                    onClick={() => {
+                      setTitle(title);
+                      form.setFieldValue('title', title.name);
+                      setShowTitleList(false);
+                    }}
+                  >
+                    {title.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {titleList && titleList.length === 0 && (
               <button type="button" onClick={() => addTitle(form.values.title)}>
                 Adicionar título: {form.values.title}
-              </button>}
+              </button>
+            )}
           </div>
           {form.errors.title && form.touched.title ? (
             <div className="error-field">{form.errors.title}</div>
           ) : null}
         </div>
         <button className="submit" type="submit" disabled={disabledBtn}>
-          {achievement ? "Atualizar" : "Criar"}
+          {achievement ? 'Atualizar' : 'Criar'}
         </button>
       </Form>
     </div>
   );
-}
+};
 
 AchievementForm.propTypes = {
   achievement: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     title: PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string
-    }),
-    image: PropTypes.string,
-  }),
-  submitCallback: PropTypes.func
-}
-
-AchievementForm.defaultProps = {
-  achievement: null,
-  submitCallback: () => {}
-}
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    image: PropTypes.string.isRequired,
+    image_url: PropTypes.string.isRequired,
+  }).isRequired,
+  submitCallback: PropTypes.func.isRequired,
+};
 
 export default AchievementForm;
