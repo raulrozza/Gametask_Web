@@ -182,10 +182,9 @@ ActivityForm.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    activity: PropTypes.string.isRequired,
     experience: PropTypes.number.isRequired,
     dmRules: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   submitCallback: PropTypes.func.isRequired,
 };
 

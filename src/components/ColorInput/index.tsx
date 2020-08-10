@@ -7,7 +7,7 @@ import './styles.css';
 
 interface ColorInputAttributes {
   label?: string;
-  value: string;
+  value?: string;
   onChange: ColorChangeHandler;
   onShowPanel?: () => void;
   onHidePanel?: () => void;
@@ -56,7 +56,7 @@ const ColorInput: React.FC<ColorInputAttributes> = ({
 
 ColorInput.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onShowPanel: PropTypes.func,
   onHidePanel: PropTypes.func,
@@ -65,12 +65,6 @@ ColorInput.propTypes = {
 ColorInput.defaultProps = {
   label: '',
   onChange: () => {
-    console.log('Not implemented.');
-  },
-  onShowPanel: () => {
-    console.log('Not implemented.');
-  },
-  onHidePanel: () => {
     console.log('Not implemented.');
   },
 };

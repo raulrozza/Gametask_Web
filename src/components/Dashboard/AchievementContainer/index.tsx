@@ -62,7 +62,7 @@ const AchievementContainer: React.FC = () => {
                 <div className="achievement-image">
                   <SkeletonLoader
                     background="var(--primary-shade)"
-                    height="80"
+                    height="80px"
                     circle
                   />
                 </div>

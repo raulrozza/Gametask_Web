@@ -33,7 +33,17 @@ interface ISubmitProps {
 export type ISubmit = (response: ISubmitProps) => void;
 
 interface AchievementFormProps {
-  achievement: IAchievement | null;
+  achievement: {
+    _id: string;
+    name: string;
+    description: string;
+    title?: {
+      _id: string;
+      name: string;
+    } | null;
+    image?: string | null;
+    image_url: string;
+  } | null;
   submitCallback: ISubmit;
 }
 
@@ -282,10 +292,10 @@ AchievementForm.propTypes = {
     title: PropTypes.shape({
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-    }).isRequired,
-    image: PropTypes.string.isRequired,
+    }),
+    image: PropTypes.string,
     image_url: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   submitCallback: PropTypes.func.isRequired,
 };
 

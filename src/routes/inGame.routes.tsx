@@ -1,5 +1,7 @@
 import React, { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { useGame } from '../contexts/Game';
+import Loading from '../components/Loading';
 
 // Pages
 const Achievements = lazy(() => import('../pages/Achievements'));
@@ -12,6 +14,10 @@ const Players = lazy(() => import('../pages/Players'));
   The object controls the in game routes
 */
 const InGameRoutes: React.FC = () => {
+  const { loading } = useGame();
+
+  if (loading) return <Loading />;
+
   return (
     <Switch>
       <Route path="/dashboard" exact component={Dashboard} />

@@ -51,19 +51,13 @@ const ImageInput: React.FC<ImageInputProps> = ({
 ImageInput.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.string]),
-  setInput: PropTypes.func.arguments({
-    name: PropTypes.string.isRequired,
-    file: PropTypes.instanceOf(File),
-  }),
+  setInput: PropTypes.func.isRequired,
   children: PropTypes.node,
 };
 
 ImageInput.defaultProps = {
   name: '',
   value: null,
-  setInput: () => {
-    console.log('Not implemented.');
-  },
 };
 
 export default ImageInput;

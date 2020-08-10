@@ -126,12 +126,8 @@ RequestModal.propTypes = {
     requestDate: PropTypes.string.isRequired,
     information: PropTypes.string.isRequired,
   }).isRequired,
-  deleteRequest: PropTypes.func.arguments({
-    id: PropTypes.string.isRequired,
-  }),
-  acceptRequest: PropTypes.func.arguments({
-    id: PropTypes.string.isRequired,
-  }),
+  deleteRequest: PropTypes.func.isRequired,
+  acceptRequest: PropTypes.func.isRequired,
 };
 
 RequestModal.defaultProps = {
@@ -151,12 +147,6 @@ RequestModal.defaultProps = {
     completionDate: '',
     requestDate: '',
     information: '',
-  },
-  deleteRequest: () => {
-    console.log('Not implemented.');
-  },
-  acceptRequest: () => {
-    console.log('Not implemented.');
   },
 };
 
