@@ -21,26 +21,29 @@ const Game: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const { signOut } = useAuth();
 
-  const getGameInfo = useCallback(async (gameId: string) => {
-    try {
-      const { data: game } = await api.get(`/game/${gameId}`);
+  const getGameInfo = useCallback(
+    async (gameId: string) => {
+      try {
+        const { data: game } = await api.get(`/game/${gameId}`);
 
-      setGame(game);
-      setTheme(game.theme);
-      setLoading(false);
-      localStorage.setItem('storedGame', JSON.stringify(game));
-    } catch (error) {
-      console.error(error);
-      if (!error.response) return;
-      const {
-        response: { data },
-      } = error;
+        setGame(game);
+        setTheme(game.theme);
+        setLoading(false);
+        localStorage.setItem('storedGame', JSON.stringify(game));
+      } catch (error) {
+        console.error(error);
+        if (!error.response) return;
+        const {
+          response: { data },
+        } = error;
 
-      if (data.error === 'TokenExpiredError: jwt expired') {
-        signOut();
+        if (data.error === 'TokenExpiredError: jwt expired') {
+          signOut();
+        }
       }
-    }
-  }, []);
+    },
+    [signOut],
+  );
 
   useEffect(() => {
     const storedGame = localStorage.getItem('storedGame');
@@ -54,7 +57,7 @@ const Game: React.FC = ({ children }) => {
       getGameInfo(parsedGame._id);
     }
     setLoading(false);
-  }, []);
+  }, [getGameInfo]);
 
   const switchGame = (game?: IGame) => {
     setLoading(true);

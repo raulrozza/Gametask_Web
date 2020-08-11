@@ -3,15 +3,15 @@ import Routes from './routes/index.routes';
 
 // Contexts
 import Authorization from './contexts/Authorization';
-
-// Styles
-import './App.css';
+import Theme from './contexts/Theme';
 
 const App: React.FC = () => {
   return (
-    <Authorization>
-      <Routes />
-    </Authorization>
+    <Theme>
+      <Authorization>
+        <Routes />
+      </Authorization>
+    </Theme>
   );
 };
 
