@@ -122,7 +122,7 @@ const Home: React.FC = () => {
 
             // Post user in the API
             try {
-              await api.post('/signup', values);
+              await api.post('/user/signup', values);
 
               window.location.reload();
             } catch (error) {

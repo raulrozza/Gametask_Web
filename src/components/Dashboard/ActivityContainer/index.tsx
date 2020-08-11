@@ -24,7 +24,7 @@ const ActivityContainer: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/activities');
+        const { data } = await api.get('/activity');
 
         setActivities(data);
         setLoadingData(false);

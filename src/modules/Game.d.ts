@@ -1,5 +1,4 @@
 declare module 'game' {
-  import PropTypes from 'prop-types';
   import { IUser } from 'authorization';
   import { IColorPallete } from 'theme';
 
@@ -10,6 +9,19 @@ declare module 'game' {
     tag: string;
   }
 
+  export interface IPlayer {
+    _id: string;
+    experience: number;
+    level: number;
+    currentTitle: {
+      name: string;
+    };
+    achievements: IAchievement[];
+    rank: IRank;
+    user: IUser;
+    [key: string]: string;
+  }
+
   export interface ILevelInfo {
     level: number;
     requiredExperience: number;
@@ -18,7 +30,7 @@ declare module 'game' {
 
   export interface IRankingItem {
     currentExperience: number;
-    user: IUser;
+    player: IPlayer;
   }
 
   export interface IGame {
@@ -26,6 +38,7 @@ declare module 'game' {
     id: string;
     name: string;
     description: string;
+    administrators: IUser[];
     image?: string;
     image_url: string;
     weeklyRanking: IRankingItem[];
@@ -48,14 +61,6 @@ declare module 'game' {
     dmRules?: string;
   }
 
-  export const ActivityProps = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    experience: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    dmRules: PropTypes.string,
-  });
-
   export interface IAchievement {
     _id: string;
     name: string;
@@ -66,23 +71,9 @@ declare module 'game' {
     obtained?: boolean;
   }
 
-  export const AchievementProps = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    image: PropTypes.string,
-    image_url: PropTypes.string.isRequired,
-    title: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    obtained: PropTypes.bool,
-  });
-
   export interface IGameHook {
     game: IGame;
     loading: boolean;
-    achievements: IAchievement[];
-    getPlayerRank: (user: IUser) => IRank;
+    switchGame: (game?: IGame) => void;
   }
 }

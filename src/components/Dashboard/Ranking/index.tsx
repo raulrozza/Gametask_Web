@@ -13,7 +13,7 @@ import { getTextColor } from '../../../utils/setTheme';
 import './styles.css';
 
 const Ranking: React.FC = () => {
-  const { game, getPlayerRank } = useGame();
+  const { game } = useGame();
 
   return (
     <div className="info-box ranking">
@@ -31,29 +31,27 @@ const Ranking: React.FC = () => {
           )}
         </li>
         {game.weeklyRanking.length > 0 ? (
-          game.weeklyRanking.map(({ user, currentExperience }) => {
-            const playerRank = getPlayerRank(user);
-
+          game.weeklyRanking.map(({ player, currentExperience }) => {
             return (
-              <li key={user._id}>
+              <li key={player._id}>
                 <div className="points">{currentExperience}</div>
                 <div className="user">
                   <span
                     className="rank"
                     style={{
-                      backgroundColor: playerRank.color,
-                      color: getTextColor(playerRank.color),
+                      backgroundColor: player.rank.color,
+                      color: getTextColor(player.rank.color),
                     }}
-                    title={playerRank.name}
+                    title={player.rank.name}
                   >
-                    {playerRank.tag}
+                    {player.rank.tag}
                   </span>
                   <span className="name">
-                    {user.firstname}
-                    {user.lastname ? ` ${user.lastname}` : ''}
+                    {player.user.firstname}
+                    {player.user.lastname ? ` ${player.user.lastname}` : ''}
                   </span>
-                  {user.currentTitle && (
-                    <span className="title">, {user.currentTitle.name}</span>
+                  {player.currentTitle && (
+                    <span className="title">, {player.currentTitle.name}</span>
                   )}
                 </div>
               </li>

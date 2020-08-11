@@ -160,7 +160,7 @@ const ActivityRegister: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await api.get('activityRegisters');
+        const response = await api.get('activityRegister');
 
         setRequests(response.data);
         setLoading(false);

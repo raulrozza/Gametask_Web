@@ -27,7 +27,7 @@ const AchievementContainer: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/achievements');
+        const { data } = await api.get('/achievement');
 
         setAchievements(data);
         setLoadingData(false);
