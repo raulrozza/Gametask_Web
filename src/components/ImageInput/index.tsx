@@ -10,7 +10,7 @@ interface ImageInputProps {
   name: string;
   value?: string | File | null;
   setInput: (name: string, file: File | null) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const ImageInput: React.FC<ImageInputProps> = ({

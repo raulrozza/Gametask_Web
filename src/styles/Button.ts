@@ -1,11 +1,21 @@
 import styled, { css } from 'styled-components';
+import { ButtonProps } from './types';
 
-const Button = styled.button`
-  ${({ theme }) => css`
+const Button = styled.button<ButtonProps>`
+  ${({ theme, outline = false }) => css`
     cursor: pointer;
-    background-color: ${theme.secondary};
-    color: ${theme.secondaryContrast};
-    border: none;
+    ${outline
+      ? css`
+          background-color: ${theme.primary};
+          color: ${theme.secondary};
+          border: 1px solid ${theme.secondary};
+        `
+      : css`
+          background-color: ${theme.secondary};
+          color: ${theme.secondaryContrast};
+          border: none;
+        `}
+
     border-radius: 2px;
     line-height: 24px;
     font-size: 16px;
@@ -13,7 +23,14 @@ const Button = styled.button`
     transition: all 0.2s;
 
     &:hover:not(:disabled) {
-      background-color: var(--secondary-shade);
+      ${outline
+        ? css`
+            background-color: ${theme.secondary};
+            color: ${theme.secondaryContrast};
+          `
+        : css`
+            background-color: var(--secondary-shade);
+          `}
     }
 
     &:disabled {

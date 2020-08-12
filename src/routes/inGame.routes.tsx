@@ -24,7 +24,7 @@ const InGameRoutes: React.FC = () => {
       {!game ? (
         <>
           <Route path="/lobby" exact component={Lobby} />
-          <Route path="/" exact>
+          <Route path="*" exact>
             <Redirect to="/lobby" />
           </Route>
         </>
@@ -35,7 +35,7 @@ const InGameRoutes: React.FC = () => {
           <Route path="/activities" exact component={Activities} />
           <Route path="/game" component={Game} />
           <Route path="/players" component={Players} />
-          <Route path="/" exact>
+          <Route path="*" exact>
             <Redirect to="/dashboard" />
           </Route>
         </>

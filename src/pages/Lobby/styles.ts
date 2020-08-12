@@ -45,7 +45,32 @@ export const GameCard = styled.div<GameCardProps>`
 
   ${({ theme, hasInfo }) =>
     hasInfo
-      ? css``
+      ? css`
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px 8px;
+          text-align: center;
+
+          background-color: ${theme.primaryTransparent};
+          border: 1px solid ${theme.secondary};
+
+          strong {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 22px;
+            color: ${theme.secondary};
+          }
+
+          img {
+            height: 72px;
+            width: 72px;
+            border-radius: 50%;
+          }
+
+          &:hover {
+            background-color: ${theme.primary};
+          }
+        `
       : css`
           border: 1px dashed ${theme.primaryContrast};
 

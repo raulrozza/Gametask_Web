@@ -4,19 +4,21 @@ import PropTypes from 'prop-types';
 // Icons
 import { FaTimes } from 'react-icons/fa';
 
-import './styles.css';
+// Types
+import { ModalProps } from './types';
 
-interface ModalProps {
-  title?: string;
-  closeModal?: () => void;
-  show?: boolean;
-  children: React.ReactNode;
-}
+// Styles
+import { Background, Container } from './styles';
 
-const Modal: React.FC<ModalProps> = ({ title, closeModal, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  title = 'Modal',
+  closeModal,
+  children,
+  size = 'md',
+}) => {
   return (
-    <div className="modal-background">
-      <div className="modal-content">
+    <Background>
+      <Container size={size}>
         <div className="modal-title">
           <h2>{title}</h2>
           <button className="close" type="button" onClick={closeModal}>
@@ -24,25 +26,22 @@ const Modal: React.FC<ModalProps> = ({ title, closeModal, children }) => {
           </button>
         </div>
         <div className="modal-children">{children}</div>
-      </div>
-    </div>
+      </Container>
+    </Background>
   );
 };
 
 Modal.propTypes = {
   title: PropTypes.string,
   closeModal: PropTypes.func,
-  show: PropTypes.bool,
   children: PropTypes.node,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
 };
 
 Modal.defaultProps = {
-  title: 'Modal',
   closeModal: () => {
     console.log('Not implemented.');
   },
-  show: false,
-  children: <div />,
 };
 
 export default Modal;

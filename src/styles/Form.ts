@@ -34,28 +34,6 @@ const Form = styled(FormikForm)`
     textarea {
       resize: vertical;
     }
-
-    .submit {
-      cursor: pointer;
-      background-color: ${theme.primary};
-      color: ${theme.secondary};
-      border: 1px solid ${theme.secondary};
-      border-radius: 2px;
-      line-height: 24px;
-      font-size: 16px;
-      padding: 8px 12px;
-      transition: all 0.2s;
-    }
-
-    .submit:hover:not(:disabled) {
-      background-color: ${theme.secondary};
-      color: ${theme.secondaryContrast};
-    }
-
-    &.activity-form .submit:disabled {
-      opacity: 0.3;
-      cursor: default;
-    }
   `}
 `;
 

@@ -298,11 +298,7 @@ const ActivityRegister: React.FC = () => {
             )}
           </ul>
           {showModal && selectedRequest && (
-            <Modal
-              closeModal={() => setShowModal(false)}
-              show={showModal}
-              title="Atividade"
-            >
+            <Modal closeModal={() => setShowModal(false)} title="Atividade">
               <RequestModal
                 request={selectedRequest}
                 deleteRequest={handleDeleteRegister}
