@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa';
 
 // Components
 import Loading from '../../components/Loading';
+import Navbar from './Navbar';
 
 // Types
 import { IGame } from 'game';
@@ -38,7 +39,7 @@ const Lobby: React.FC = () => {
       <Helmet>
         <title>Lobby - GameTask</title>
       </Helmet>
-      <nav>Navbar</nav>
+      <Navbar />
 
       <section className="games-container">
         <div>

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../contexts/Authorization';
 
 // Formik
-import { Formik, Form, Field } from 'formik';
+import { Formik, Field } from 'formik';
 
 // Yup
 import * as Yup from 'yup';
@@ -12,7 +12,10 @@ import * as Yup from 'yup';
 // Services
 import api from '../../services/api';
 
-import './styles.css';
+// Styles
+import Button from '../../styles/Button';
+import { ErrorField } from '../../styles/Form';
+import { HomePage, FormToggle, Form } from './styles';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -37,25 +40,27 @@ const Home: React.FC = () => {
   const { signIn } = useAuth();
 
   return (
-    <section className="home-page">
+    <HomePage>
       <div className="title">
         <h1>GAMETASK</h1>
       </div>
+
       <div className="container">
-        <div className="form-toggle">
-          <button
-            className={formToggle ? 'active' : ''}
+        <FormToggle.Container>
+          <FormToggle.Button
+            active={formToggle}
             onClick={() => setFormToggle(true)}
           >
             Entre
-          </button>
-          <button
-            className={formToggle ? '' : 'active'}
+          </FormToggle.Button>
+
+          <FormToggle.Button
+            active={!formToggle}
             onClick={() => setFormToggle(false)}
           >
             Cadastre-se
-          </button>
-        </div>
+          </FormToggle.Button>
+        </FormToggle.Container>
         <Formik
           initialValues={{
             email: '',
@@ -78,25 +83,28 @@ const Home: React.FC = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={formToggle ? 'active' : ''}>
+            <Form active={formToggle}>
               <h2>Entre</h2>
+
               <div className="form-group">
                 <div className="input-group">
                   <Field type="email" name="email" placeholder="E-mail" />
                   {errors.email && touched.email ? (
-                    <div className="error-field">{errors.email}</div>
+                    <ErrorField>{errors.email}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
                   <Field type="password" name="password" placeholder="Senha" />
                   {errors.password && touched.password ? (
-                    <div className="error-field">{errors.password}</div>
+                    <ErrorField>{errors.password}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
-                  <button type="submit" disabled={loginButtonDisabled}>
+                  <Button type="submit" disabled={loginButtonDisabled}>
                     Entrar
-                  </button>
+                  </Button>
                 </div>
               </div>
             </Form>
@@ -133,33 +141,38 @@ const Home: React.FC = () => {
           }}
         >
           {({ errors, touched }) => (
-            <Form className={formToggle ? '' : 'active'}>
+            <Form active={!formToggle}>
               <h2>Cadastre-se</h2>
+
               <div className="form-group">
                 <div className="input-group">
                   <Field type="text" name="firstname" placeholder="Nome" />
                   {errors.firstname && touched.firstname ? (
-                    <div className="error-field">{errors.firstname}</div>
+                    <ErrorField>{errors.firstname}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
                   <Field type="text" name="lastname" placeholder="Sobrenome" />
                   {errors.lastname && touched.lastname ? (
-                    <div className="error-field">{errors.lastname}</div>
+                    <ErrorField>{errors.lastname}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
                   <Field type="email" name="email" placeholder="E-mail" />
                   {errors.email && touched.email ? (
-                    <div className="error-field">{errors.email}</div>
+                    <ErrorField>{errors.email}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
                   <Field type="password" name="password" placeholder="Senha" />
                   {errors.password && touched.password ? (
-                    <div className="error-field">{errors.password}</div>
+                    <ErrorField>{errors.password}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
                   <Field
                     type="password"
@@ -167,20 +180,21 @@ const Home: React.FC = () => {
                     placeholder="Confirme a senha"
                   />
                   {errors.confirmPassword && touched.confirmPassword ? (
-                    <div className="error-field">{errors.confirmPassword}</div>
+                    <ErrorField>{errors.confirmPassword}</ErrorField>
                   ) : null}
                 </div>
+
                 <div className="input-group">
-                  <button type="submit" disabled={signupButtonDisabled}>
+                  <Button type="submit" disabled={signupButtonDisabled}>
                     Cadastrar
-                  </button>
+                  </Button>
                 </div>
               </div>
             </Form>
           )}
         </Formik>
       </div>
-    </section>
+    </HomePage>
   );
 };
 

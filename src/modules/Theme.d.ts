@@ -7,7 +7,11 @@ declare module 'theme' {
   }
 
   export interface ChangeThemeProps {
-    primary: string;
-    secondary: string;
+    primary?: string;
+    secondary?: string;
+  }
+
+  export interface ITheme {
+    changeTheme: (theme: ChangeThemeProps) => void;
   }
 }

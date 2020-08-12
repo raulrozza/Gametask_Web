@@ -8,10 +8,6 @@ export const Container = styled.main`
     overflow-x: hidden;
     overflow-y: auto;
 
-    nav {
-      height: 32px;
-    }
-
     section.games-container {
       height: calc(100% - 32px);
       width: 100%;

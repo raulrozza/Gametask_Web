@@ -2,12 +2,15 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import api from '../services/api';
-import setTheme from '../utils/setTheme';
+import { useTheme } from './Theme';
 import { IUser, IAuth } from 'authorization';
 
 const AuthorizationContext = createContext({});
 
 const Authorization: React.FC = ({ children }) => {
+  const { changeTheme } = useTheme();
+
+  // States management
   const [user, setUser] = useState<IUser>({} as IUser);
   const [logged, setLogged] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -34,7 +37,7 @@ const Authorization: React.FC = ({ children }) => {
   const signOut = () => {
     localStorage.clear();
     setUser({} as IUser);
-    setTheme();
+    changeTheme({});
     setLogged(false);
   };
 

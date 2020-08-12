@@ -1,8 +1,14 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import tinyColor from 'tinycolor2';
-import { IColorPallete, ChangeThemeProps } from 'theme';
+import { IColorPallete, ChangeThemeProps, ITheme } from 'theme';
 
 import Global from '../styles/Global';
 
@@ -74,6 +80,10 @@ const Theme: React.FC = ({ children }) => {
     [],
   );
 
+  useEffect(() => {
+    changeTheme({});
+  }, [changeTheme]);
+
   return (
     <ThemeContext.Provider value={{ changeTheme }}>
       <ThemeProvider theme={theme}>
@@ -95,6 +105,12 @@ export const getTextColor: (color: string) => string = color => {
 
   if (colorObj.isLight()) return '#1F1F1F';
   return '#FFF';
+};
+
+export const useTheme: () => ITheme = () => {
+  const theme = useContext(ThemeContext) as ITheme;
+
+  return theme;
 };
 
 export default Theme;
