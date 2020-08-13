@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 // Components
-import Loading from '../../Loading';
-import Modal from '../../Modal';
+import Loading from '../../../components/Loading';
+import Modal from '../../../components/Modal';
+import RequestModal from './RequestModal';
 
 // Icons
-import { FaCheck, FaTrashAlt, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 import { BsController } from 'react-icons/bs';
 
 // Services
@@ -18,137 +18,11 @@ import { removeItemFromArray } from '../../../utils/arrayMethods';
 // Assets
 import userPlaceholder from '../../../assets/img/users/placeholder.png';
 
-import './styles.css';
+// Types
+import { IRequest } from '../types';
 
-interface IRequest {
-  _id: string;
-  requester: {
-    _id: string;
-    firstname: string;
-    lastname: string;
-    image?: string | null;
-    profile_url: string;
-  };
-  activity: {
-    _id: string;
-    name: string;
-    experience: number;
-    dmRules?: string | null;
-  };
-  completionDate: string;
-  information: string;
-  requestDate: string;
-}
-
-interface ModalProps {
-  request: IRequest;
-  deleteRequest: (id: string) => void;
-  acceptRequest: (id: string) => void;
-}
-
-const RequestModal: React.FC<ModalProps> = ({
-  request,
-  deleteRequest,
-  acceptRequest,
-}) => (
-  <div className="request-modal">
-    <header>
-      <img
-        src={
-          request.requester.image
-            ? request.requester.profile_url
-            : userPlaceholder
-        }
-        alt={request.requester.firstname}
-      />
-      <strong>
-        {request.activity.name} ({request.activity.experience} XP)
-      </strong>
-      <span>
-        concluído por{' '}
-        <strong>
-          {request.requester.firstname} {request.requester.lastname}
-        </strong>{' '}
-        em {new Date(request.completionDate).toLocaleDateString()}
-      </span>
-    </header>
-    <section>
-      <span>{request.requester.firstname} informa: </span>
-      <span>{request.information}</span>
-      {request.activity.dmRules && (
-        <cite>Recomendações: &quot;{request.activity.dmRules}&quot;</cite>
-      )}
-    </section>
-    <footer>
-      <cite>
-        Requisição feita em {new Date(request.requestDate).toLocaleDateString()}
-        , {new Date(request.requestDate).toLocaleTimeString()}
-      </cite>
-      <div>
-        <button
-          className="confirm"
-          type="button"
-          title="Aceitar Requisição"
-          onClick={() => acceptRequest(request._id)}
-        >
-          <FaCheck />
-        </button>
-        <button
-          className="delete"
-          type="button"
-          title="Remover Requisição"
-          onClick={() => deleteRequest(request._id)}
-        >
-          <FaTrash />
-        </button>
-      </div>
-    </footer>
-  </div>
-);
-
-RequestModal.propTypes = {
-  request: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    requester: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      firstname: PropTypes.string.isRequired,
-      lastname: PropTypes.string.isRequired,
-      image: PropTypes.string,
-      profile_url: PropTypes.string.isRequired,
-    }).isRequired,
-    activity: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      experience: PropTypes.number.isRequired,
-      dmRules: PropTypes.string,
-    }).isRequired,
-    completionDate: PropTypes.string.isRequired,
-    requestDate: PropTypes.string.isRequired,
-    information: PropTypes.string.isRequired,
-  }).isRequired,
-  deleteRequest: PropTypes.func.isRequired,
-  acceptRequest: PropTypes.func.isRequired,
-};
-
-RequestModal.defaultProps = {
-  request: {
-    _id: '',
-    requester: {
-      _id: '',
-      firstname: '',
-      lastname: '',
-      profile_url: '',
-    },
-    activity: {
-      _id: '',
-      name: '',
-      experience: 0,
-    },
-    completionDate: '',
-    requestDate: '',
-    information: '',
-  },
-};
+// Styles
+import { RequestsContainer } from './styles';
 
 const ActivityRegister: React.FC = () => {
   // States
@@ -224,7 +98,7 @@ const ActivityRegister: React.FC = () => {
   };
 
   return (
-    <div className="requests-container">
+    <RequestsContainer>
       {loading ? (
         <Loading />
       ) : (
@@ -308,7 +182,7 @@ const ActivityRegister: React.FC = () => {
           )}
         </>
       )}
-    </div>
+    </RequestsContainer>
   );
 };
 

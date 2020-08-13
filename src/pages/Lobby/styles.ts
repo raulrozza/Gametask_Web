@@ -9,7 +9,7 @@ export const Container = styled.main`
     overflow-y: auto;
 
     section.games-container {
-      height: calc(100% - 32px);
+      height: calc(100% - 56px);
       width: 100%;
       padding: 0 8px 0 32px;
 

@@ -10,8 +10,8 @@ import {
 } from 'react-router-dom';
 
 // Component
-import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
+import PageWrapper from '../../components/PageWrapper';
 
 // Libs
 import { FaBars } from 'react-icons/fa';
@@ -19,7 +19,7 @@ import { FaBars } from 'react-icons/fa';
 // Contexts
 import { useGame } from '../../contexts/Game';
 
-import './styles.css';
+import { Row, SideNav, TabItem, Content } from './styles';
 
 // Subpages
 const InfoForm = lazy(() => import('../../components/Game/InfoForm'));
@@ -58,11 +58,12 @@ const Game: React.FC = () => {
         <title>Configurações - GameTask</title>
       </Helmet>
       <PageWrapper title="Configurações">
-        <div className="row always-row">
-          <aside className={`sidenav ${showMenu ? 'shown' : ''}`}>
+        <Row>
+          <SideNav shown={showMenu}>
             <button type="button" onClick={() => setShowMenu(!showMenu)}>
               <FaBars />
             </button>
+
             <ul>
               {sidenavItems.map(item => (
                 <Link
@@ -70,34 +71,36 @@ const Game: React.FC = () => {
                   key={item.key}
                   onClick={() => setShowMenu(false)}
                 >
-                  <li
-                    className={item.url === location.pathname ? 'active' : ''}
-                  >
+                  <TabItem active={item.url === location.pathname}>
                     {item.title}
-                  </li>
+                  </TabItem>
                 </Link>
               ))}
             </ul>
-          </aside>
-          <main className="content">
+          </SideNav>
+
+          <Content>
             <Suspense fallback={<Loading />}>
               <Switch>
                 <Route path={`${match.path}/info`} exact>
                   <InfoForm />
                 </Route>
+
                 <Route path={`${match.path}/leveling`} exact>
                   <LevelConfig />
                 </Route>
+
                 <Route path={`${match.path}/ranks`} exact>
                   <RankConfig />
                 </Route>
+
                 <Route path={`${match.path}*`}>
                   <Redirect to={`${match.url}/info`} />
                 </Route>
               </Switch>
             </Suspense>
-          </main>
-        </div>
+          </Content>
+        </Row>
       </PageWrapper>
     </>
   );

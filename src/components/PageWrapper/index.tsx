@@ -6,16 +6,15 @@ import PropTypes from 'prop-types';
 // Font Awesome
 import { FaArrowCircleLeft } from 'react-icons/fa';
 
-import './styles.css';
+// Types
+import { PageWrapperProps } from './types';
 
-interface PageWrapperProps {
-  title: string;
-  children: React.ReactNode;
-}
+// Styles
+import { PageWrapperContainer } from './styles';
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ title, children }) => {
   return (
-    <main className="page-wrapper">
+    <PageWrapperContainer>
       <Helmet>
         <title>{title} - GameTask</title>
       </Helmet>
@@ -28,7 +27,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ title, children }) => {
         </header>
         {children}
       </div>
-    </main>
+    </PageWrapperContainer>
   );
 };
 

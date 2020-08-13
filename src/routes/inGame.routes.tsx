@@ -1,6 +1,10 @@
 import React, { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+
+// Contexts
 import { useGame } from '../contexts/Game';
+
+// Components
 import Loading from '../components/Loading';
 
 // Pages
@@ -35,7 +39,10 @@ const InGameRoutes: React.FC = () => {
           <Route path="/activities" exact component={Activities} />
           <Route path="/game" component={Game} />
           <Route path="/players" component={Players} />
-          <Route path="*" exact>
+          <Route path="/" exact>
+            <Redirect to="/dashboard" />
+          </Route>
+          <Route path="/lobby" exact>
             <Redirect to="/dashboard" />
           </Route>
         </>

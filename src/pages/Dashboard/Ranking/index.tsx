@@ -4,19 +4,20 @@ import { Link } from 'react-router-dom';
 // Contexts
 import { useGame } from '../../../contexts/Game';
 
+// Icons
 import { FaFrown } from 'react-icons/fa';
 
 // Utils
 import { getTextColor } from '../../../utils/setTheme';
 
 // Styles
-import './styles.css';
+import { RankingContainer } from './styles';
 
 const Ranking: React.FC = () => {
   const { game } = useGame();
 
   return (
-    <div className="info-box ranking">
+    <RankingContainer>
       <ul>
         <li className="list-title">
           <div className="points">Pontuação</div>
@@ -59,14 +60,15 @@ const Ranking: React.FC = () => {
           })
         ) : (
           <span>
-            Ninguém pontuou ainda <FaFrown />{' '}
+            Ninguém pontuou ainda
+            <FaFrown />
           </span>
         )}
       </ul>
       <footer>
         <Link to="/players">Gerenciar Jogadores</Link>
       </footer>
-    </div>
+    </RankingContainer>
   );
 };
 

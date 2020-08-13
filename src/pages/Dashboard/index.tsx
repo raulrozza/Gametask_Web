@@ -2,16 +2,16 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 // Custom Components
-import AchievementContainer from '../../components/Dashboard/AchievementContainer';
-import ActivityContainer from '../../components/Dashboard/ActivityContainer';
-import GameContainer from '../../components/Dashboard/GameContainer';
+import AchievementContainer from './AchievementContainer';
+import ActivityContainer from './ActivityContainer';
+import GameContainer from './GameContainer';
 import Loading from '../../components/Loading';
-import Ranking from '../../components/Dashboard/Ranking';
+import Ranking from './Ranking';
 
 // Contexts
 import { useGame } from '../../contexts/Game';
 
-import './styles.css';
+import { Main } from './styles';
 
 const Dashboard: React.FC = () => {
   const { loading, game } = useGame();
@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
   const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
 
   return (
-    <main className="dashboard">
+    <Main>
       <Helmet>
         <title>{registerTitle}Dashboard - GameTask</title>
       </Helmet>
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
         <ActivityContainer />
       </div>
       <GameContainer />
-    </main>
+    </Main>
   );
 };
 
