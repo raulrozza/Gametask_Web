@@ -21,7 +21,7 @@ export const Main = styled.main`
 `;
 
 export const InfoBox = styled.div`
-  background-color: var(--primary);
+  background-color: ${({ theme }) => theme.primary};
   padding: 10px;
   border-radius: 10px;
   margin: 10px;
