@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-// Custom components
-import Form from '../../Form';
-import ColorInput from '../../ColorInput';
-import ImageInput from '../../ImageInput';
+// Components
+import ColorInput from '../../../components/ColorInput';
+import ImageInput from '../../../components/ImageInput';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
 
-// Components
+// Libraries
 import { FaEdit } from 'react-icons/fa';
 import { useFormik, FormikValues } from 'formik';
 import * as Yup from 'yup';
@@ -16,11 +15,14 @@ import * as Yup from 'yup';
 // Services
 import api from '../../../services/api';
 
-// Utils
-import setTheme, { defaultTheme } from '../../../utils/setTheme';
+// Types
+import { InfoFormValues } from '../types';
 
-import './styles.css';
-import { IColorPallete } from 'theme';
+// Styles
+import Button from '../../../styles/Button';
+import { Form } from './styles';
+import { useTheme, defaultTheme } from '../../../contexts/Theme';
+import { ErrorField } from '../../../styles/Form';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome do jogo.'),
@@ -31,22 +33,18 @@ const GameSchema = Yup.object().shape({
   image: Yup.mixed(),
 });
 
-interface FormValues {
-  name: string;
-  description: string;
-  theme: IColorPallete;
-  image: string | null;
-}
-
 const InfoForm: React.FC = () => {
-  const { game } = useGame();
+  const { game, refreshGame } = useGame();
+  const { changeTheme } = useTheme();
 
   // Form management
-  const initialValues: FormValues = {
-    name: '',
-    description: '',
-    theme: defaultTheme,
-    image: null,
+  const initialValues: InfoFormValues = {
+    name: game.name ? game.name : '',
+    description: game.description ? game.description : '',
+    theme: game.theme
+      ? game.theme
+      : { primary: defaultTheme.primary, secondary: defaultTheme.secondary },
+    image: game.image_url,
   };
   const [disabledBtn, setDisabledBtn] = useState(false);
 
@@ -65,7 +63,7 @@ const InfoForm: React.FC = () => {
 
       await api.put(`/game/${game._id}`, data);
 
-      window.location.reload();
+      await refreshGame();
     } catch (error) {
       if (error.response) console.error(error.response.data);
       console.error(error);
@@ -80,28 +78,19 @@ const InfoForm: React.FC = () => {
     onSubmit: submitForm,
   });
 
-  useEffect(() => {
-    setValues({
-      name: game.name ? game.name : '',
-      description: game.description ? game.description : '',
-      theme: game.theme ? game.theme : ({} as IColorPallete),
-      image: game.image_url,
-    });
-  }, [setValues, game]);
-
   const handleColorChange = (key: string, color: string) => {
     const newTheme = {
       ...form.values.theme,
     };
     newTheme[key] = color;
 
-    setTheme(newTheme);
+    changeTheme(newTheme);
     form.setFieldValue('theme', newTheme);
   };
 
   return (
-    <Form onSubmit={form.handleSubmit}>
-      <div className="form-group image-group">
+    <Form as="form" onSubmit={form.handleSubmit}>
+      <div className="input-group image-group">
         <ImageInput
           name="image"
           value={form.values ? form.values.image : null}
@@ -112,10 +101,11 @@ const InfoForm: React.FC = () => {
           </button>
         </ImageInput>
         {form.errors.image && form.touched.image ? (
-          <div className="error-field">{form.errors.image}</div>
+          <ErrorField>{form.errors.image}</ErrorField>
         ) : null}
       </div>
-      <div className="form-group">
+
+      <div className="input-group">
         <input
           name="name"
           placeholder="Nome do jogo"
@@ -124,10 +114,11 @@ const InfoForm: React.FC = () => {
           value={form.values.name}
         />
         {form.errors.name && form.touched.name ? (
-          <div className="error-field">{form.errors.name}</div>
+          <ErrorField>{form.errors.name}</ErrorField>
         ) : null}
       </div>
-      <div className="form-group">
+
+      <div className="input-group">
         <textarea
           name="description"
           placeholder="Descreva seu jogo"
@@ -136,29 +127,33 @@ const InfoForm: React.FC = () => {
           value={form.values.description}
         />
         {form.errors.description && form.touched.description ? (
-          <div className="error-field">{form.errors.description}</div>
+          <ErrorField>{form.errors.description}</ErrorField>
         ) : null}
       </div>
-      <div className="form-group">
+
+      <div className="input-group">
         <h3>Tema</h3>
+
         <ColorInput
           label="Cor de fundo"
           value={form.values.theme.primary}
           onChange={color => handleColorChange('primary', color.hex)}
-          onShowPanel={() => setTheme(form.values.theme)}
-          onHidePanel={() => setTheme(game.theme)}
+          onShowPanel={() => changeTheme(form.values.theme)}
+          onHidePanel={() => changeTheme(game.theme)}
         />
+
         <ColorInput
           label="Cor dos botões"
           value={form.values.theme.secondary}
           onChange={color => handleColorChange('secondary', color.hex)}
-          onShowPanel={() => setTheme(form.values.theme)}
-          onHidePanel={() => setTheme(game.theme)}
+          onShowPanel={() => changeTheme(form.values.theme)}
+          onHidePanel={() => changeTheme(game.theme)}
         />
+
         <button
           type="reset"
           onClick={() => {
-            setTheme(defaultTheme);
+            changeTheme(defaultTheme);
             setValues({
               ...form.values,
               theme: defaultTheme,
@@ -168,9 +163,10 @@ const InfoForm: React.FC = () => {
           Restaurar tema padrão
         </button>
       </div>
-      <button className="submit" type="submit" disabled={disabledBtn}>
+
+      <Button outline type="submit" disabled={disabledBtn}>
         Atualizar
-      </button>
+      </Button>
     </Form>
   );
 };

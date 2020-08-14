@@ -4,14 +4,10 @@ import PropTypes from 'prop-types';
 // Assets
 import placeholder from '../../assets/img/achievements/placeholder.png';
 
-import './styles.css';
+// Types
+import { ImageInputProps } from './types';
 
-interface ImageInputProps {
-  name: string;
-  value?: string | File | null;
-  setInput: (name: string, file: File | null) => void;
-  children?: React.ReactNode;
-}
+import { InputWrapper } from './styles';
 
 const ImageInput: React.FC<ImageInputProps> = ({
   name,
@@ -26,11 +22,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
   }, [value]);
 
   return (
-    <label
-      style={{ backgroundImage: `url(${preview})` }}
-      className={`image-input ${value ? 'has-thumbnail' : ''}`}
-      title="Selecione uma imagem!"
-    >
+    <InputWrapper thumbnail={preview} title="Selecione uma imagem!">
       <input
         type="file"
         name={name}
@@ -44,7 +36,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
       />
       <img src={placeholder} alt="Select achievement icon" />
       {children}
-    </label>
+    </InputWrapper>
   );
 };
 
@@ -56,7 +48,6 @@ ImageInput.propTypes = {
 };
 
 ImageInput.defaultProps = {
-  name: '',
   value: null,
 };
 

@@ -9,6 +9,29 @@ declare module 'game' {
     tag: string;
   }
 
+  export interface ITitle {
+    _id: string;
+    name: string;
+  }
+
+  export interface IActivity {
+    _id: string;
+    name: string;
+    experience: number;
+    description: string;
+    dmRules?: string;
+  }
+
+  export interface IAchievement {
+    _id: string;
+    name: string;
+    description: string;
+    image: string | undefined;
+    image_url: string;
+    title?: ITitle;
+    obtained?: boolean;
+  }
+
   export interface IPlayer {
     _id: string;
     experience: number;
@@ -48,32 +71,10 @@ declare module 'game' {
     newRegisters: number;
   }
 
-  export interface ITitle {
-    _id: string;
-    name: string;
-  }
-
-  export interface IActivity {
-    _id: string;
-    name: string;
-    experience: number;
-    description: string;
-    dmRules?: string;
-  }
-
-  export interface IAchievement {
-    _id: string;
-    name: string;
-    description: string;
-    image: string | undefined;
-    image_url: string;
-    title?: ITitle;
-    obtained?: boolean;
-  }
-
   export interface IGameHook {
     game: IGame;
     loading: boolean;
     switchGame: (game?: IGame) => void;
+    refreshGame: () => Promise<void>;
   }
 }

@@ -9,9 +9,12 @@ import PropTypes from 'prop-types';
 
 // Contexts
 import { useAuth } from './Authorization';
+import { useTheme } from './Theme';
 
+// Services
 import api from '../services/api';
-import setTheme from '../utils/setTheme';
+
+// Types
 import { IGameHook, IGame } from 'game';
 
 const GameContext = createContext({});
@@ -20,6 +23,7 @@ const Game: React.FC = ({ children }) => {
   const [game, setGame] = useState<IGame | null>(null);
   const [loading, setLoading] = useState(true);
   const { signOut } = useAuth();
+  const { changeTheme } = useTheme();
 
   const getGameInfo = useCallback(
     async (gameId: string) => {
@@ -27,7 +31,7 @@ const Game: React.FC = ({ children }) => {
         const { data: game } = await api.get(`/game/${gameId}`);
 
         setGame(game);
-        setTheme(game.theme);
+        changeTheme(game.theme);
         setLoading(false);
         localStorage.setItem('storedGame', JSON.stringify(game));
       } catch (error) {
@@ -42,8 +46,13 @@ const Game: React.FC = ({ children }) => {
         }
       }
     },
-    [signOut],
+    [signOut, changeTheme],
   );
+
+  const refreshGame = useCallback(() => {
+    if (game) return getGameInfo(game._id);
+    else return Promise.resolve();
+  }, [game, getGameInfo]);
 
   useEffect(() => {
     const storedGame = localStorage.getItem('storedGame');
@@ -53,11 +62,11 @@ const Game: React.FC = ({ children }) => {
 
       api.defaults.headers['X-Game-ID'] = parsedGame._id;
       setGame(parsedGame);
-      setTheme(parsedGame.theme);
+      changeTheme(parsedGame.theme);
       getGameInfo(parsedGame._id);
     }
     setLoading(false);
-  }, [getGameInfo]);
+  }, [getGameInfo, changeTheme]);
 
   const switchGame = (game?: IGame) => {
     setLoading(true);
@@ -66,10 +75,10 @@ const Game: React.FC = ({ children }) => {
 
       api.defaults.headers['X-Game-ID'] = game._id;
       setGame(game);
-      setTheme(game.theme);
+      changeTheme(game.theme);
       getGameInfo(game._id);
     } else {
-      setTheme();
+      changeTheme({});
       localStorage.removeItem('storedGame');
       setGame(null);
     }
@@ -78,7 +87,14 @@ const Game: React.FC = ({ children }) => {
   };
 
   return (
-    <GameContext.Provider value={{ game, loading, switchGame }}>
+    <GameContext.Provider
+      value={{
+        game,
+        loading,
+        switchGame,
+        refreshGame,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

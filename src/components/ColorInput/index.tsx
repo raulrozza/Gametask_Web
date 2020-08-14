@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { ChromePicker, ColorChangeHandler } from 'react-color';
+import { ChromePicker } from 'react-color';
 
-import './styles.css';
+// Types
+import { ColorInputProps } from './types';
 
-interface ColorInputAttributes {
-  label?: string;
-  value?: string;
-  onChange: ColorChangeHandler;
-  onShowPanel?: () => void;
-  onHidePanel?: () => void;
-}
+// Styles
+import { ColorInputWrapper } from './styles';
 
-const ColorInput: React.FC<ColorInputAttributes> = ({
+const ColorInput: React.FC<ColorInputProps> = ({
   label,
   value,
   onChange,
@@ -24,11 +20,10 @@ const ColorInput: React.FC<ColorInputAttributes> = ({
   const [mouseOnPicker, setMouseOnPicker] = useState(false);
 
   return (
-    <div className="color-input">
+    <ColorInputWrapper color={value || '#000'} showPicker={showPicker}>
       {label && <label>{label}:</label>}
       <div
         className="color-viewer"
-        style={{ backgroundColor: value }}
         onClick={() => {
           if (onShowPanel) onShowPanel();
           setShowPicker(true);
@@ -42,15 +37,19 @@ const ColorInput: React.FC<ColorInputAttributes> = ({
         tabIndex={1}
       >
         <div
-          className={`color-picker ${showPicker ? 'show' : ''}`}
+          className={`color-picker`}
           onMouseOver={() => setMouseOnPicker(true)}
           onMouseLeave={() => setMouseOnPicker(false)}
           tabIndex={1}
         >
-          <ChromePicker disableAlpha color={value} onChange={onChange} />
+          <ChromePicker
+            disableAlpha
+            color={value}
+            onChangeComplete={onChange}
+          />
         </div>
       </div>
-    </div>
+    </ColorInputWrapper>
   );
 };
 

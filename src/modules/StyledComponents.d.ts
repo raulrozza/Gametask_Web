@@ -9,6 +9,7 @@ declare module 'styled-components' {
     primaryExtraIntense: string;
     primaryLowShade: string;
     primaryShade: string;
+    primaryExtraShade: string;
     primaryContrast: string;
     secondary: string;
     secondaryTransparent: string;
@@ -16,6 +17,7 @@ declare module 'styled-components' {
     secondaryExtraIntense: string;
     secondaryLowShade: string;
     secondaryShade: string;
+    secondaryExtraShade: string;
     secondaryContrast: string;
   }
 }

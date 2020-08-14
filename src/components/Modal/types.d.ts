@@ -1,7 +1,9 @@
+import { ReactNode } from 'react';
+
 export interface ModalProps {
   title?: string;
   closeModal?: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
   size?: 'md' | 'sm' | 'lg';
 }
 

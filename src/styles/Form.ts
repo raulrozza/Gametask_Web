@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Form as FormikForm } from 'formik';
 
+// If using a regular form, pass the 'as="form"' property
 const Form = styled(FormikForm)`
   ${({ theme }) => css`
     display: flex;
@@ -33,6 +34,7 @@ const Form = styled(FormikForm)`
 
     textarea {
       resize: vertical;
+      min-height: 72px;
     }
   `}
 `;

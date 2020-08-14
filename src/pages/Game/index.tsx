@@ -22,7 +22,7 @@ import { useGame } from '../../contexts/Game';
 import { Row, SideNav, TabItem, Content } from './styles';
 
 // Subpages
-const InfoForm = lazy(() => import('../../components/Game/InfoForm'));
+const InfoForm = lazy(() => import('./InfoForm'));
 const LevelConfig = lazy(() => import('../../components/Game/LevelConfig'));
 const RankConfig = lazy(() => import('../../components/Game/RankConfig'));
 
