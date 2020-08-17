@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { ColorInputWrapperProps } from './types';
 
 export const ColorInputWrapper = styled.div<ColorInputWrapperProps>`
-  ${({ theme, color, showPicker }) => css`
+  ${({ theme, color, showPicker, hasLabel }) => css`
     position: relative;
     display: flex;
     margin-bottom: 5px;
@@ -14,7 +14,7 @@ export const ColorInputWrapper = styled.div<ColorInputWrapperProps>`
     }
 
     .color-viewer {
-      width: 50%;
+      width: ${hasLabel ? '50%' : '100%'};
       height: 36px;
       border-radius: 5px;
       border: 1px solid ${theme.primaryShade};

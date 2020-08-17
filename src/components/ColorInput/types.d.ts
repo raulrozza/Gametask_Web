@@ -11,4 +11,5 @@ export interface ColorInputProps {
 export interface ColorInputWrapperProps {
   color: string;
   showPicker: bool;
+  hasLabel: boolean;
 }

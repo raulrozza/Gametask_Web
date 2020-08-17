@@ -16,16 +16,15 @@ import {
   updateItemInArray,
 } from '../../../utils/arrayMethods';
 
-import './styles.css';
+// Styles
+import Button from '../../../styles/Button';
+import { LevelConfigContainer } from './styles';
 
-interface ILevelInfo {
-  requiredExperience: number;
-  title: string;
-  [key: string]: number | string;
-}
+// Types
+import { ILevelInfo } from '../types';
 
 const LevelConfig: React.FC = () => {
-  const { game } = useGame();
+  const { game, refreshGame } = useGame();
   const [disabledBtn, disableButton] = useState(false);
   const [levelInfo, setLevelInfo] = useState<ILevelInfo[]>(
     game.levelInfo.map(level => {
@@ -73,7 +72,7 @@ const LevelConfig: React.FC = () => {
     try {
       await api.put(`/level/${game._id}`, { levelInfo: newLevelInfo });
 
-      window.location.reload();
+      await refreshGame();
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +81,7 @@ const LevelConfig: React.FC = () => {
   };
 
   return (
-    <section className="level-config">
+    <LevelConfigContainer>
       <div>
         <h2>Configurar níveis</h2>
         <p>
@@ -115,7 +114,7 @@ const LevelConfig: React.FC = () => {
                 placeholder="Título do nível"
                 className="title"
                 name="title"
-                value={info.title}
+                value={info.title || ''}
                 onChange={({ target }) => handleChangeItem(target, index)}
               />
             </div>
@@ -124,18 +123,18 @@ const LevelConfig: React.FC = () => {
             <FaPlus />
           </button>
           <footer>
-            <button
+            <Button
               type="button"
               className="save"
               onClick={handleSubmit}
               disabled={disabledBtn}
             >
               Salvar
-            </button>
+            </Button>
           </footer>
         </div>
       </div>
-    </section>
+    </LevelConfigContainer>
   );
 };
 

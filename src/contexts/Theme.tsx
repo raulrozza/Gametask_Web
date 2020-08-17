@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useCallback,
-  useContext,
-  useEffect,
-} from 'react';
+import React, { createContext, useState, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import tinyColor from 'tinycolor2';
@@ -82,10 +76,6 @@ const Theme: React.FC = ({ children }) => {
     },
     [],
   );
-
-  useEffect(() => {
-    changeTheme({});
-  }, [changeTheme]);
 
   return (
     <ThemeContext.Provider value={{ changeTheme }}>

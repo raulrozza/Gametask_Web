@@ -23,8 +23,8 @@ import { Row, SideNav, TabItem, Content } from './styles';
 
 // Subpages
 const InfoForm = lazy(() => import('./InfoForm'));
-const LevelConfig = lazy(() => import('../../components/Game/LevelConfig'));
-const RankConfig = lazy(() => import('../../components/Game/RankConfig'));
+const LevelConfig = lazy(() => import('./LevelConfig'));
+const RankConfig = lazy(() => import('./RankConfig'));
 
 const Game: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);

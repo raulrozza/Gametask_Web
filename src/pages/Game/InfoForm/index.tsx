@@ -58,7 +58,11 @@ const InfoForm: React.FC = () => {
       if (name !== game.name) data.append('name', name);
       if (description !== game.description)
         data.append('description', description);
-      if (theme !== game.theme) data.append('theme', JSON.stringify(theme));
+      if (
+        theme.primary !== game.theme.primary ||
+        theme.secondary !== game.theme.secondary
+      )
+        data.append('theme', JSON.stringify(theme));
       if (image !== game.image_url) data.append('image', image);
 
       await api.put(`/game/${game._id}`, data);

@@ -20,7 +20,11 @@ const ColorInput: React.FC<ColorInputProps> = ({
   const [mouseOnPicker, setMouseOnPicker] = useState(false);
 
   return (
-    <ColorInputWrapper color={value || '#000'} showPicker={showPicker}>
+    <ColorInputWrapper
+      color={value || '#000'}
+      showPicker={showPicker}
+      hasLabel={Boolean(label)}
+    >
       {label && <label>{label}:</label>}
       <div
         className="color-viewer"

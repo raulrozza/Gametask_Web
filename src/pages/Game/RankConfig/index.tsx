@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
-import { IRank } from 'game';
-
-// Components
-import ColorInput from '../../ColorInput';
+import { getTextColor } from '../../../contexts/Theme';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
@@ -19,16 +16,16 @@ import {
   removeItemFromArray,
   updateItemInArray,
 } from '../../../utils/arrayMethods';
-import { getTextColor } from '../../../utils/setTheme';
 
-import './styles.css';
+// Styles
+import Button from '../../../styles/Button';
+import { RankConfigContainer, RankItem, ColorInput } from './styles';
 
-interface IndexableRank extends IRank {
-  [key: string]: string | number;
-}
+// Types
+import { IndexableRank } from '../types';
 
 const RankConfig: React.FC = () => {
-  const { game } = useGame();
+  const { game, refreshGame } = useGame();
   const [disabledBtn, disableButton] = useState(false);
   const [ranks, setRanks] = useState<IndexableRank[]>(
     game.ranks as IndexableRank[],
@@ -39,7 +36,7 @@ const RankConfig: React.FC = () => {
       level: game.levelInfo[game.levelInfo.length - 1].level,
       tag: '',
       name: '',
-      color: 'transparent',
+      color: '',
     };
 
     setRanks(addItemToArray(ranks, newLevel));
@@ -82,7 +79,7 @@ const RankConfig: React.FC = () => {
     try {
       await api.put(`/rank/${game._id}`, { ranks });
 
-      window.location.reload();
+      await refreshGame();
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +88,7 @@ const RankConfig: React.FC = () => {
   };
 
   return (
-    <section className="rank-config">
+    <RankConfigContainer>
       <h2>Configurar patentes</h2>
       <p>
         Crie, edite e remova patentes. Defina uma cor e a partir de qual nível
@@ -99,13 +96,13 @@ const RankConfig: React.FC = () => {
       </p>
       <div className="rank-container">
         {ranks.map((rank, index) => {
-          const textColor = getTextColor(rank.color);
+          const textColor = getTextColor(rank.color || game.theme.primary);
 
           return (
-            <div
-              className="item"
+            <RankItem
               key={`${index}-${rank.level}`}
-              style={{ backgroundColor: rank.color, color: textColor }}
+              backgroundColor={rank.color || 'transparent'}
+              textColor={textColor}
             >
               <button
                 type="button"
@@ -117,6 +114,7 @@ const RankConfig: React.FC = () => {
               </button>
               <div className="select">
                 <label htmlFor="level">Nível: </label>
+
                 <select
                   name="level"
                   value={rank.level}
@@ -131,6 +129,7 @@ const RankConfig: React.FC = () => {
                   ))}
                 </select>
               </div>
+
               <input
                 type="text"
                 placeholder="Tag"
@@ -138,8 +137,8 @@ const RankConfig: React.FC = () => {
                 name="tag"
                 value={rank.tag}
                 onChange={({ target }) => handleChangeItem(target, index)}
-                style={{ color: textColor }}
               />
+
               <input
                 type="text"
                 placeholder="Nome da patente"
@@ -147,30 +146,31 @@ const RankConfig: React.FC = () => {
                 name="name"
                 value={rank.name}
                 onChange={({ target }) => handleChangeItem(target, index)}
-                style={{ color: textColor }}
               />
+
               <ColorInput
                 value={rank.color}
                 onChange={color => handleColorChange(color.hex, index)}
               />
-            </div>
+            </RankItem>
           );
         })}
         <button type="button" onClick={handleAddItem} className="add-item">
           <FaPlus />
         </button>
+
         <footer>
-          <button
+          <Button
             type="button"
             className="save"
             onClick={handleSubmit}
             disabled={disabledBtn}
           >
             Salvar
-          </button>
+          </Button>
         </footer>
       </div>
-    </section>
+    </RankConfigContainer>
   );
 };
 

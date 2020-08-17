@@ -36,7 +36,7 @@ export const SideNav = styled.aside<SideNavProps>`
         cursor: pointer;
         margin: 0 10px;
         background-color: transparent;
-        color: var(--secondary);
+        color: ${theme.secondary};
         border: none;
         border-radius: 5px;
         font-size: 18px;

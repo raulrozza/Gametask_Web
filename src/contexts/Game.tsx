@@ -68,12 +68,10 @@ const Game: React.FC = ({ children }) => {
       try {
         const { data } = await api.get(`/game/${gameId}`);
 
-        if (!isEqual(data, game)) {
-          localStorage.setItem('storedGame', JSON.stringify(game));
+        localStorage.setItem('storedGame', JSON.stringify(data));
 
-          setGame(data);
-          changeTheme(data.theme);
-        }
+        setGame(data);
+        changeTheme(data.theme);
       } catch (error) {
         console.error(error);
         if (!error.response) return;
@@ -86,7 +84,7 @@ const Game: React.FC = ({ children }) => {
         }
       }
     },
-    [signOut, changeTheme, game],
+    [signOut, changeTheme],
   );
 
   // Get the game's info

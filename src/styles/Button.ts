@@ -29,7 +29,7 @@ const Button = styled.button<ButtonProps>`
             color: ${theme.secondaryContrast};
           `
         : css`
-            background-color: var(--secondary-shade);
+            background-color: ${theme.secondaryShade};
           `}
     }
 
