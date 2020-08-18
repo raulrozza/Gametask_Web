@@ -51,26 +51,6 @@ export const LevelConfigContainer = styled.section`
         background-color: ${theme.primaryShade};
       }
 
-      .delete-item {
-        position: absolute;
-        border: none;
-        border-radius: 50%;
-        color: #fff;
-        top: 2px;
-        left: 2px;
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-        background-color: darkred;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &:hover {
-          background-color: rgb(180, 31, 31);
-        }
-      }
-
       span {
         color: ${theme.primaryContrast};
         display: flex;

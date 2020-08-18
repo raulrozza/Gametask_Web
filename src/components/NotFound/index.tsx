@@ -4,24 +4,23 @@ import { Helmet } from 'react-helmet';
 import { FaFrown } from 'react-icons/fa';
 
 // Styles
-import './styles.css';
+import { Container } from './styles';
 
-interface NotFoundProps {
-  message: React.ReactNode;
-}
+// Types
+import { NotFoundProps } from './types';
 
 // This is the default Not Found component, showing a sad face and a custom message
 const NotFound: React.FC<NotFoundProps> = ({ message }) => {
   return (
-    <div id="not-found-container">
+    <Container>
       <Helmet>
-        <title>Página não encontrada</title>
+        <title>Página não encontrada - GameTask</title>
       </Helmet>
       <div>
         <FaFrown />
         <h1>{message}</h1>
       </div>
-    </div>
+    </Container>
   );
 };
 

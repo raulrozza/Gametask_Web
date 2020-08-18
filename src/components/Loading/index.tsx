@@ -9,10 +9,10 @@ import ReactLoading from 'react-loading';
 import { LoadingContainer } from './styles';
 
 // Types
-import { LoadingProps } from './types';
+import { IThemedComponent } from 'theme';
 
 // This is the component displayed when something is loading.
-const Loading: React.FC<LoadingProps> = ({ theme }) => (
+const Loading: React.FC<IThemedComponent> = ({ theme }) => (
   <LoadingContainer>
     <ReactLoading type="bars" color={theme.secondary} height={32} width={32} />
   </LoadingContainer>

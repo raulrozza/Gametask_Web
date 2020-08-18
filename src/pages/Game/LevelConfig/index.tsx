@@ -18,6 +18,7 @@ import {
 
 // Styles
 import Button from '../../../styles/Button';
+import { RemoveButton } from '../../../styles/RemoveButton';
 import { LevelConfigContainer } from './styles';
 
 // Types
@@ -92,14 +93,13 @@ const LevelConfig: React.FC = () => {
         <div className="level-info-container">
           {levelInfo.map((info, index) => (
             <div className="info-item" key={`info-${index}`} tabIndex={1}>
-              <button
+              <RemoveButton
                 type="button"
-                className="delete-item"
                 title="Remover"
                 onClick={() => handleRemoveItem(index)}
               >
                 <FaTimes />
-              </button>
+              </RemoveButton>
               <span className="level">Nível {index + 1}</span>
               <input
                 type="number"

@@ -19,6 +19,7 @@ import {
 
 // Styles
 import Button from '../../../styles/Button';
+import { RemoveButton } from '../../../styles/RemoveButton';
 import { RankConfigContainer, RankItem, ColorInput } from './styles';
 
 // Types
@@ -104,14 +105,13 @@ const RankConfig: React.FC = () => {
               backgroundColor={rank.color || 'transparent'}
               textColor={textColor}
             >
-              <button
+              <RemoveButton
                 type="button"
-                className="delete-item"
                 title="Remover"
                 onClick={() => handleRemoveItem(index)}
               >
                 <FaTimes />
-              </button>
+              </RemoveButton>
               <div className="select">
                 <label htmlFor="level">Nível: </label>
 

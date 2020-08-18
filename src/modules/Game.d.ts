@@ -26,9 +26,9 @@ declare module 'game' {
     _id: string;
     name: string;
     description: string;
-    image: string | undefined;
+    image?: string | null;
     image_url: string;
-    title?: ITitle;
+    title?: ITitle | null;
     obtained?: boolean;
   }
 

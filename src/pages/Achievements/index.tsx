@@ -8,12 +8,9 @@ import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
 
 // Contexts
 import { useAuth } from '../../contexts/Authorization';
-import { IAchievement } from 'game';
 
 // Custom components
-import AchievementForm, {
-  ISubmit,
-} from '../../components/Achievements/AchievementForm';
+import AchievementForm from './AchievementForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
@@ -27,7 +24,19 @@ import {
   removeItemFromArray,
 } from '../../utils/arrayMethods';
 
-import './styles.css';
+// Styles
+import { Container } from './styles';
+import { RemoveButton } from '../../styles/RemoveButton';
+import {
+  EmptyContainer,
+  Footer,
+  Loader,
+  Editor,
+  Row,
+} from '../../components/PageWrapper/styles';
+
+// Types
+import { IAchievement } from 'game';
 
 const Achievements: React.FC = () => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -110,26 +119,17 @@ const Achievements: React.FC = () => {
     })();
   }, [signOut]);
 
-  const onSubmit: ISubmit = async ({ achievementId, type }) => {
-    switch (type) {
-      case 'create':
-        setAchievements(addItemToArray(achievements, achievementId));
-        setShowPanel(false);
-        break;
-      case 'update':
-        try {
-          const { data } = await api.get(`/achievement/${achievementId}`);
+  const onSubmit = async (id: string) => {
+    try {
+      const { data } = await api.get(`/achievement/${id}`);
 
-          const index = achievements.findIndex(
-            item => item._id === achievementId,
-          );
-          setAchievements(updateItemInArray(achievements, data, index));
-          setShowPanel(false);
-        } catch (error) {
-          console.error(error);
-        }
-        break;
-      default:
+      const index = achievements.findIndex(item => item._id === id);
+
+      if (index === -1) setAchievements(addItemToArray(achievements, data));
+      else setAchievements(updateItemInArray(achievements, data, index));
+      setShowPanel(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -137,73 +137,91 @@ const Achievements: React.FC = () => {
     <PageWrapper title="Conquistas">
       {!loading ? (
         <>
-          <div className="row">
-            <div className={`${showPanel ? 'reduced' : ''}`}>
-              <div className={`achievement-container`}>
-                {achievements.map(achievement => (
-                  <div key={achievement._id} className="achievement">
-                    <picture>
-                      <source
-                        srcSet={achievement.image && achievement.image_url}
-                      />
-                      <img
-                        className="achievement-image"
-                        src={placeholder}
-                        alt={`achievement-${achievement._id}-img`}
-                      />
-                    </picture>
-                    <div className="achievement-name">
-                      {achievement.name}
-                      {achievement.title ? (
-                        <span className="title">
-                          {' '}
-                          [{achievement.title.name}]
-                        </span>
-                      ) : (
-                        ''
-                      )}
+          <Row>
+            {achievements.length > 0 ? (
+              <div>
+                <Container reduced={showPanel}>
+                  {achievements.map(achievement => (
+                    <div key={achievement._id} className="achievement">
+                      <picture>
+                        <source
+                          srcSet={
+                            achievement.image
+                              ? achievement.image_url
+                              : undefined
+                          }
+                        />
+
+                        <img
+                          className="achievement-image"
+                          src={placeholder}
+                          alt={`achievement-${achievement._id}`}
+                        />
+                      </picture>
+
+                      <div className="achievement-name">
+                        {achievement.name}
+
+                        {achievement.title ? (
+                          <span className="title">
+                            {' '}
+                            [{achievement.title.name}]
+                          </span>
+                        ) : (
+                          ''
+                        )}
+                      </div>
+
+                      <div className="achievement-description">
+                        {achievement.description}
+                      </div>
+
+                      <RemoveButton
+                        horizontalPosition="right"
+                        title="Excluir conquista"
+                        onClick={() => deleteAchievement(achievement._id)}
+                      >
+                        <FaTimes />
+                      </RemoveButton>
+
+                      <button
+                        className="edit-button"
+                        title="Editar conquista"
+                        onClick={() => editAchievement(achievement._id)}
+                      >
+                        <FaEdit />
+                      </button>
                     </div>
-                    <div className="achievement-description">
-                      {achievement.description}
-                    </div>
-                    <button
-                      className="delete-button"
-                      title="Excluir conquista"
-                      onClick={() => deleteAchievement(achievement._id)}
-                    >
-                      <FaTimes />
-                    </button>
-                    <button
-                      className="edit-button"
-                      title="Editar conquista"
-                      onClick={() => editAchievement(achievement._id)}
-                    >
-                      <FaEdit />
-                    </button>
-                  </div>
-                ))}
+                  ))}
+                </Container>
               </div>
-            </div>
-            <div className={`editor ${showPanel ? 'shown' : ''}`}>
+            ) : (
+              <EmptyContainer reduced={showPanel}>
+                Não há conquistas ainda.
+              </EmptyContainer>
+            )}
+
+            <Editor shown={showPanel}>
               <AchievementForm
                 achievement={selectedAchievement}
                 submitCallback={onSubmit}
               />
-            </div>
-          </div>
-          <footer className="footer">
+            </Editor>
+          </Row>
+
+          <Footer>
             <button onClick={createAchievement}>
               <span>Nova Conquista</span>
               <span className="plus-icon">
                 <FaPlus />
               </span>
             </button>
-          </footer>
+          </Footer>
         </>
       ) : (
-        <div className="loader">
+        <Loader>
           <Loading />
-        </div>
+        </Loader>
       )}
     </PageWrapper>
   );

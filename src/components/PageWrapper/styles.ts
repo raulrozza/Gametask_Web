@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { ReducingDivProps, EditorProps } from './types';
 
 export const PageWrapperContainer = styled.main`
   ${({ theme }) => css`
@@ -45,116 +46,134 @@ export const PageWrapperContainer = styled.main`
 
     /* CHILDREN STYLING */
 
-    /* Loading */
-    .loader {
-      width: 100%;
-      height: 80vh;
-    }
-
-    /* Full container */
-    .row {
-      display: flex;
-
-      > div {
-        transition: all 0.5s;
-      }
-    }
-
     /* Shower */
     > div > div {
       transition: width 0.5s;
       width: 100%;
       margin: 10px 0;
     }
+  `}
+`;
 
-    .reduced {
-      width: 60%;
+export const Row = styled.div`
+  display: flex;
+
+  > div {
+    transition: all 0.5s;
+  }
+
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    transition: height 0.3s;
+  }
+`;
+
+export const ReducingDiv = styled.div<ReducingDivProps>`
+  ${({ reduced = false }) =>
+    reduced
+      ? css`
+          width: 60%;
+        `
+      : css`
+          width: 100%;
+        `}
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const EmptyContainer = styled(ReducingDiv)`
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: ${({ theme }) => theme.primaryContrast};
+`;
+
+export const Editor = styled.div<EditorProps>`
+  border-left: 1px solid transparent;
+  min-height: 100%;
+  ${({ theme, shown }) => css`
+    ${shown
+      ? css`
+          width: 40%;
+          border-color: ${theme.primaryShade};
+          overflow: auto;
+          margin-left: 8px;
+        `
+      : css`
+          width: 0%;
+          overflow: hidden;
+        `}
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      width: 100%;
+      border: none;
+      transition: height 0.5s;
+      margin-left: 0;
+
+      ${shown
+        ? css`
+            height: auto;
+            overflow: auto;
+          `
+        : css`
+            height: 0;
+            overflow: hidden;
+          `}
+    }
+  `}
+`;
+
+export const Footer = styled.footer`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      cursor: pointer;
+      background-color: ${theme.secondary};
+      color: ${theme.secondaryContrast};
+      border: none;
+      border-radius: 2px;
+      line-height: 24px;
+      font-size: 16px;
+      padding: 8px 12px;
+      transition: all 0.2s;
+
+      &:hover:not(:disabled) {
+        background-color: ${theme.secondaryShade};
+      }
     }
 
-    /* Editor */
-    .editor {
-      width: 0%;
-      border-left: 1px solid transparent;
-      min-height: 100%;
-      overflow: hidden;
-
-      &.shown {
-        width: 40%;
-        border-color: ${theme.primaryShade};
-        overflow: auto;
-      }
-    }
-
-    .footer {
-      display: flex;
-      justify-content: flex-end;
-
-      button {
-        cursor: pointer;
-        background-color: ${theme.secondary};
-        color: ${theme.secondaryContrast};
-        border: none;
-        border-radius: 2px;
-        line-height: 24px;
-        font-size: 16px;
-        padding: 8px 12px;
-        transition: all 0.2s;
-
-        &:hover:not(:disabled) {
-          background-color: ${theme.secondaryShade};
-        }
-      }
-
-      .plus-icon {
-        display: none;
-      }
+    .plus-icon {
+      display: none;
     }
 
     /* Responsiveness */
     @media (max-width: 768px) {
-      .row:not(.always-row) {
-        flex-direction: column-reverse;
-        transition: height 0.3s;
-      }
-
-      .reduced {
-        width: 100%;
-      }
-
-      .editor {
-        width: 100%;
-        height: 0;
-        overflow: hidden;
-        border: none;
-        transition: height 0.5s;
-
-        &.shown {
-          width: 100%;
-          height: auto;
-          border: none;
-          overflow: auto;
-          transition: height 0.5s;
-        }
-      }
-
-      .footer {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-      }
+      position: absolute;
+      top: 30px;
+      right: 30px;
     }
 
-    /* Responsiveness */
     @media (max-width: 576px) {
-      .footer {
-        button span {
-          display: none;
-        }
+      button span {
+        display: none;
+      }
 
-        .plus-icon {
-          display: inline;
-        }
+      .plus-icon {
+        display: inline;
       }
     }
   `}
+`;
+
+export const Loader = styled.div`
+  width: 100%;
+  height: 80vh;
 `;

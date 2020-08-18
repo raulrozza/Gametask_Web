@@ -6,6 +6,10 @@ declare module 'theme' {
     [key: string]: string;
   }
 
+  export interface IThemedComponent {
+    theme: IColorPallete;
+  }
+
   export interface ChangeThemeProps {
     primary?: string;
     secondary?: string;

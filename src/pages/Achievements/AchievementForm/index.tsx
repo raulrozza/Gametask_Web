@@ -2,8 +2,7 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 import PropTypes from 'prop-types';
 
 // Custom Components
-import Form from '../../Form';
-import ImageInput from '../../ImageInput';
+import ImageInput from '../../../components/ImageInput';
 
 // Components
 import { FaEdit } from 'react-icons/fa';
@@ -13,10 +12,14 @@ import * as Yup from 'yup';
 // Services
 import api from '../../../services/api';
 
-// Types
-import { IAchievement, ITitle } from 'game';
+// Styles
+import Button from '../../../styles/Button';
+import Form, { ErrorField } from '../../../styles/Form';
+import { TitleOptions } from './styles';
 
-import './styles.css';
+// Types
+import { ITitle } from 'game';
+import { AchievementFormProps, FormValues } from '../types';
 
 const AchievementSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome da conquista.'),
@@ -24,35 +27,6 @@ const AchievementSchema = Yup.object().shape({
   title: Yup.string(),
   image: Yup.mixed(),
 });
-
-interface ISubmitProps {
-  achievementId: string;
-  type: 'create' | 'update';
-}
-
-export type ISubmit = (response: ISubmitProps) => void;
-
-interface AchievementFormProps {
-  achievement: {
-    _id: string;
-    name: string;
-    description: string;
-    title?: {
-      _id: string;
-      name: string;
-    } | null;
-    image?: string | null;
-    image_url: string;
-  } | null;
-  submitCallback: ISubmit;
-}
-
-interface FormValues {
-  name: string;
-  description: string;
-  title: string;
-  image?: string | null;
-}
 
 const AchievementForm: React.FC<AchievementFormProps> = ({
   achievement,
@@ -67,6 +41,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
     title: '',
     image: null,
   };
+
   // Title suggestions
   const [titleList, setTitleList] = useState<ITitle[]>([]);
   const [showTitleList, setShowTitleList] = useState(false);
@@ -86,7 +61,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
     try {
       const params = value.length > 0 ? { name: value } : {};
       api
-        .get('/titles', {
+        .get('/title', {
           params,
         })
         .then(({ data }) => {
@@ -129,29 +104,18 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
         if (image !== achievement.image) data.append('image', image);
         data.append('title', title ? String(title._id) : '');
 
-        const response = await api.put(`/achievement/${achievement._id}`, data);
+        await api.put(`/achievement/${achievement._id}`, data);
 
-        if (response.data.nModified > 0) {
-          submitCallback({
-            achievementId: achievement._id,
-            type: 'update',
-          });
-        }
+        submitCallback(achievement._id);
       } else {
         data.append('name', name);
         data.append('description', description);
         if (image) data.append('image', image);
         if (title) data.append('title', title._id);
 
-        const response: { data: IAchievement } = await api.post(
-          '/achievement',
-          data,
-        );
+        const response = await api.post('/achievement', data);
 
-        submitCallback({
-          achievementId: response.data._id,
-          type: 'create',
-        });
+        submitCallback(response.data._id);
       }
 
       setDisabledBtn(false);
@@ -166,6 +130,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
     validationSchema: AchievementSchema,
     validate: values => {
       const error = {} as FormikErrors<FormikValues>;
+
       if (values.title.length > 0 && !title) {
         error.title = 'Adicione um título existente.';
       }
@@ -178,6 +143,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
   useEffect(() => {
     if (achievement) {
       setTitle(achievement.title ? achievement.title : null);
+
       setValues({
         name: achievement.name,
         description: achievement.description,
@@ -189,8 +155,8 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
 
   return (
     <div className="achievement-form">
-      <Form onSubmit={form.handleSubmit}>
-        <div className="form-group image-group">
+      <Form as="form" onSubmit={form.handleSubmit}>
+        <div className="input-group image-group">
           <ImageInput
             name="image"
             value={form.values ? form.values.image : null}
@@ -200,11 +166,13 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
               <FaEdit />
             </button>
           </ImageInput>
+
           {form.errors.image && form.touched.image ? (
-            <div className="error-field">{form.errors.image}</div>
+            <ErrorField>{form.errors.image}</ErrorField>
           ) : null}
         </div>
-        <div className="form-group">
+
+        <div className="input-group">
           <input
             type="text"
             name="name"
@@ -213,11 +181,13 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
             onBlur={form.handleBlur}
             value={form.values.name}
           />
+
           {form.errors.name && form.touched.name ? (
-            <div className="error-field">{form.errors.name}</div>
+            <ErrorField>{form.errors.name}</ErrorField>
           ) : null}
         </div>
-        <div className="form-group">
+
+        <div className="input-group">
           <textarea
             name="description"
             placeholder="Como obter a conquista?"
@@ -225,12 +195,14 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
             onBlur={form.handleBlur}
             value={form.values.description}
           />
+
           {form.errors.description && form.touched.description ? (
-            <div className="error-field">{form.errors.description}</div>
+            <ErrorField>{form.errors.description}</ErrorField>
           ) : null}
         </div>
+
         <div
-          className="form-group"
+          className="input-group"
           onFocus={() => setShowTitleList(true)}
           onBlur={event => {
             form.handleBlur(event);
@@ -246,10 +218,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
             onChange={setTitleValue}
             value={form.values.title}
           />
-          <div
-            className="title-options"
-            style={{ visibility: showTitleList ? 'visible' : 'hidden' }}
-          >
+          <TitleOptions visible={showTitleList}>
             {titleList && titleList.length > 0 && (
               <ul>
                 {titleList.map(title => (
@@ -266,19 +235,22 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
                 ))}
               </ul>
             )}
+
             {titleList && titleList.length === 0 && (
               <button type="button" onClick={() => addTitle(form.values.title)}>
                 Adicionar título: {form.values.title}
               </button>
             )}
-          </div>
+          </TitleOptions>
+
           {form.errors.title && form.touched.title ? (
-            <div className="error-field">{form.errors.title}</div>
+            <ErrorField>{form.errors.title}</ErrorField>
           ) : null}
         </div>
-        <button className="submit" type="submit" disabled={disabledBtn}>
+
+        <Button outline type="submit" disabled={disabledBtn}>
           {achievement ? 'Atualizar' : 'Criar'}
-        </button>
+        </Button>
       </Form>
     </div>
   );

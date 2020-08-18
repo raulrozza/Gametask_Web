@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-// Custom Components
-import Form from '../../Form';
-
 // Components
 import { useFormik, FormikValues, FormikErrors } from 'formik';
 import * as Yup from 'yup';
@@ -11,10 +8,12 @@ import * as Yup from 'yup';
 // Services
 import api from '../../../services/api';
 
-// Types
-import { IActivity } from 'game';
+// Styles
+import Button from '../../../styles/Button';
+import Form, { ErrorField } from '../../../styles/Form';
 
-import './styles.css';
+// Types
+import { ActivityFormProps } from '../types';
 
 const ActivitySchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome da atividade.'),
@@ -22,18 +21,6 @@ const ActivitySchema = Yup.object().shape({
   dmRules: Yup.string(),
   experience: Yup.string().required('Quanto de experiência a atividade dá?'),
 });
-
-interface ISubmitProps {
-  activityId: string;
-  type: 'create' | 'update';
-}
-
-export type ISubmit = (response: ISubmitProps) => void;
-
-interface ActivityFormProps {
-  activity: IActivity | null;
-  submitCallback: ISubmit;
-}
 
 const ActivityForm: React.FC<ActivityFormProps> = ({
   activity,
@@ -51,31 +38,23 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
       setDisabledBtn(true);
 
       if (activity) {
-        const response = await api.put(`/activity/${activity._id}`, {
+        await api.put(`/activity/${activity._id}`, {
           name,
           description,
           experience,
           dmRules,
         });
 
-        if (response.data.nModified > 0) {
-          submitCallback({
-            activityId: activity._id,
-            type: 'update',
-          });
-        }
+        submitCallback(activity._id);
       } else {
-        const { data }: { data: IActivity } = await api.post('/activity', {
+        const { data } = await api.post('/activity', {
           name,
           description,
           experience: parseInt(experience),
           dmRules,
         });
 
-        submitCallback({
-          activityId: data._id,
-          type: 'create',
-        });
+        submitCallback(data._id);
       }
 
       setDisabledBtn(false);
@@ -117,9 +96,9 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   }, [setValues, resetForm, activity]);
 
   return (
-    <div className="activity-form">
-      <Form onSubmit={form.handleSubmit}>
-        <div className="form-group">
+    <div>
+      <Form as="form" onSubmit={form.handleSubmit}>
+        <div className="input-group">
           <input
             type="text"
             name="name"
@@ -129,10 +108,10 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             value={form.values.name}
           />
           {form.errors.name && form.touched.name ? (
-            <div className="error-field">{form.errors.name}</div>
+            <ErrorField>{form.errors.name}</ErrorField>
           ) : null}
         </div>
-        <div className="form-group">
+        <div className="input-group">
           <input
             type="text"
             name="experience"
@@ -142,10 +121,10 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             value={form.values.experience}
           />
           {form.errors.experience && form.touched.experience ? (
-            <div className="error-field">{form.errors.experience}</div>
+            <ErrorField>{form.errors.experience}</ErrorField>
           ) : null}
         </div>
-        <div className="form-group">
+        <div className="input-group">
           <textarea
             name="description"
             placeholder="Como pontuar?"
@@ -154,10 +133,10 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             value={form.values.description}
           />
           {form.errors.description && form.touched.description ? (
-            <div className="error-field">{form.errors.description}</div>
+            <ErrorField>{form.errors.description}</ErrorField>
           ) : null}
         </div>
-        <div className="form-group">
+        <div className="input-group">
           <textarea
             name="dmRules"
             placeholder="Existem regras especiais que os administradores devem levar em conta?"
@@ -166,12 +145,12 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             value={form.values.dmRules}
           />
           {form.errors.dmRules && form.touched.dmRules ? (
-            <div className="error-field">{form.errors.dmRules}</div>
+            <ErrorField>{form.errors.dmRules}</ErrorField>
           ) : null}
         </div>
-        <button className="submit" type="submit" disabled={disabledBtn}>
+        <Button type="submit" disabled={disabledBtn}>
           {activity ? 'Atualizar' : 'Criar'}
-        </button>
+        </Button>
       </Form>
     </div>
   );

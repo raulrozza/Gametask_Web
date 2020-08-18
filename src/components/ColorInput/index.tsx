@@ -12,6 +12,7 @@ import { ColorInputWrapper } from './styles';
 const ColorInput: React.FC<ColorInputProps> = ({
   label,
   value,
+  className = '',
   onChange,
   onShowPanel,
   onHidePanel,
@@ -24,6 +25,7 @@ const ColorInput: React.FC<ColorInputProps> = ({
       color={value || '#000'}
       showPicker={showPicker}
       hasLabel={Boolean(label)}
+      className={className}
     >
       {label && <label>{label}:</label>}
       <div
@@ -60,6 +62,7 @@ const ColorInput: React.FC<ColorInputProps> = ({
 ColorInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
+  className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onShowPanel: PropTypes.func,
   onHidePanel: PropTypes.func,

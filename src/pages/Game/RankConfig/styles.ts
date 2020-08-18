@@ -91,26 +91,6 @@ export const RankItem = styled.div<RankItemProps>`
       }
     }
 
-    .delete-item {
-      position: absolute;
-      border: none;
-      border-radius: 50%;
-      color: #fff;
-      top: 2px;
-      left: 2px;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      background-color: darkred;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &:hover {
-        background-color: rgb(180, 31, 31);
-      }
-    }
-
     @media (max-width: 576px) {
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows: 1fr 1fr;
@@ -145,7 +125,6 @@ export const ColorInput = styled(ColorInputDefault)`
   ${({ theme }) => css`
     border: 2px groove ${theme.secondary};
     transition: all 0.3s;
-    width: 100%;
 
     &::after {
       content: 'Cor';
@@ -168,7 +147,7 @@ export const ColorInput = styled(ColorInputDefault)`
     }
 
     @media (max-width: 400px) {
-      flex: 1;
+      width: 90%;
     }
   `}
 `;

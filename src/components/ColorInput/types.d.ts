@@ -3,6 +3,7 @@ import { ColorChangeHandler } from 'react-color';
 export interface ColorInputProps {
   label?: string;
   value?: string;
+  className?: string;
   onChange: ColorChangeHandler;
   onShowPanel?: () => void;
   onHidePanel?: () => void;

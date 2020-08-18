@@ -53,6 +53,7 @@ const GameContext = createContext({});
 
 const Game: React.FC = ({ children }) => {
   const [game, setGame] = useState<IGame | null>(null);
+  const [verifiedGameAuthenticity, setVerifyGameAuthenticity] = useState(false);
   const [loading, setLoading] = useState(true);
   const { signOut } = useAuth();
   const { changeTheme } = useTheme();
@@ -70,6 +71,7 @@ const Game: React.FC = ({ children }) => {
 
         localStorage.setItem('storedGame', JSON.stringify(data));
 
+        setVerifyGameAuthenticity(true);
         setGame(data);
         changeTheme(data.theme);
       } catch (error) {
@@ -106,11 +108,13 @@ const Game: React.FC = ({ children }) => {
           setGame(parsedGame);
           changeTheme(parsedGame.theme);
         }
+
+        if (!verifiedGameAuthenticity) getGameInfo(parsedGame._id);
       }
     }
 
     setLoading(false);
-  }, [changeTheme, resetGame, game]);
+  }, [changeTheme, resetGame, getGameInfo, verifiedGameAuthenticity, game]);
 
   const switchGame = (game?: IGame) => {
     setLoading(true);

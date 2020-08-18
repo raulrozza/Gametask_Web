@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Assets
@@ -15,11 +16,13 @@ import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 // Types
 import { IAchievement } from 'game';
+import { IThemedComponent } from 'theme';
 
 // Styles
 import { AchievementBox } from './styles';
+import { withTheme } from 'styled-components';
 
-const AchievementContainer: React.FC = () => {
+const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [minmax, setMinmax] = useState(false);
@@ -53,7 +56,9 @@ const AchievementContainer: React.FC = () => {
                 >
                   <picture>
                     <source
-                      srcSet={achievement.image && achievement.image_url}
+                      srcSet={
+                        achievement.image ? achievement.image_url : undefined
+                      }
                     />
                     <img
                       className="achievement-image"
@@ -71,14 +76,14 @@ const AchievementContainer: React.FC = () => {
                 >
                   <div className="achievement-image">
                     <SkeletonLoader
-                      background="var(--primary-shade)"
+                      background={theme.primaryShade}
                       height="80px"
                       circle
                     />
                   </div>
                   <div className="achievement-name">
                     <SkeletonLoader
-                      background="var(--primary-shade)"
+                      background={theme.primaryShade}
                       height="100%"
                     />
                   </div>
@@ -110,4 +115,25 @@ const AchievementContainer: React.FC = () => {
   );
 };
 
-export default AchievementContainer;
+AchievementContainer.propTypes = {
+  theme: PropTypes.shape({
+    primary: PropTypes.string.isRequired,
+    primaryTransparent: PropTypes.string.isRequired,
+    primaryContrast: PropTypes.string.isRequired,
+    primaryLowShade: PropTypes.string.isRequired,
+    primaryShade: PropTypes.string.isRequired,
+    primaryExtraShade: PropTypes.string.isRequired,
+    primaryIntense: PropTypes.string.isRequired,
+    primaryExtraIntense: PropTypes.string.isRequired,
+    secondary: PropTypes.string.isRequired,
+    secondaryTransparent: PropTypes.string.isRequired,
+    secondaryContrast: PropTypes.string.isRequired,
+    secondaryLowShade: PropTypes.string.isRequired,
+    secondaryShade: PropTypes.string.isRequired,
+    secondaryExtraShade: PropTypes.string.isRequired,
+    secondaryIntense: PropTypes.string.isRequired,
+    secondaryExtraIntense: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default withTheme(AchievementContainer);
