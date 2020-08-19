@@ -13,7 +13,6 @@ import { useTheme } from './Theme';
 
 // Services
 import api from '../services/api';
-// import setTheme from '../utils/setTheme';
 
 // Types
 import { IGameHook, IGame } from 'game';
@@ -53,7 +52,9 @@ const GameContext = createContext({});
 
 const Game: React.FC = ({ children }) => {
   const [game, setGame] = useState<IGame | null>(null);
-  const [verifiedGameAuthenticity, setVerifyGameAuthenticity] = useState(false);
+  const [verifiedGameAuthenticity, setVerifiedGameAuthenticity] = useState(
+    false,
+  );
   const [loading, setLoading] = useState(true);
   const { signOut } = useAuth();
   const { changeTheme } = useTheme();
@@ -71,7 +72,7 @@ const Game: React.FC = ({ children }) => {
 
         localStorage.setItem('storedGame', JSON.stringify(data));
 
-        setVerifyGameAuthenticity(true);
+        setVerifiedGameAuthenticity(true);
         setGame(data);
         changeTheme(data.theme);
       } catch (error) {

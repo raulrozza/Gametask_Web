@@ -6,13 +6,7 @@ declare module 'authorization' {
     token: string;
     firstname: string;
     lastname: string;
-    experience: number;
-    level: number;
     email: string;
-    currentTitle: {
-      name: string;
-    };
-    achievements: IAchievement[];
     image?: string;
     profile_url: string;
     [key: string]: string;

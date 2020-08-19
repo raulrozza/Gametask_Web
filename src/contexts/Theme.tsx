@@ -53,6 +53,13 @@ const fillPallete = (key: string, value: string) => {
   return pallete;
 };
 
+export const getTextColor: (color: string) => string = color => {
+  const colorObj = tinyColor(color);
+
+  if (colorObj.isLight()) return '#1F1F1F';
+  return '#FFF';
+};
+
 const Theme: React.FC = ({ children }) => {
   const [theme, setTheme] = useState<IColorPallete>(defaultTheme);
 
@@ -91,13 +98,6 @@ const Theme: React.FC = ({ children }) => {
 
 Theme.propTypes = {
   children: PropTypes.node,
-};
-
-export const getTextColor: (color: string) => string = color => {
-  const colorObj = tinyColor(color);
-
-  if (colorObj.isLight()) return '#1F1F1F';
-  return '#FFF';
 };
 
 export const useTheme: () => ITheme = () => {

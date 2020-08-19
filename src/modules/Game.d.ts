@@ -29,7 +29,6 @@ declare module 'game' {
     image?: string | null;
     image_url: string;
     title?: ITitle | null;
-    obtained?: boolean;
   }
 
   export interface IPlayer {
