@@ -55,11 +55,19 @@ export const PageWrapperContainer = styled.main`
   `}
 `;
 
-export const Row = styled.div`
+export const Row = styled.div<ReducingDivProps>`
   display: flex;
 
   > div {
     transition: all 0.5s;
+  }
+
+  &:first-child {
+    ${({ reduced = false }) =>
+      reduced &&
+      css`
+        width: 80%;
+      `}
   }
 
   /* Responsiveness */
@@ -96,6 +104,7 @@ export const EmptyContainer = styled(ReducingDiv)`
 export const Editor = styled.div<EditorProps>`
   border-left: 1px solid transparent;
   min-height: 100%;
+  flex-shrink: 0;
   ${({ theme, shown }) => css`
     ${shown
       ? css`

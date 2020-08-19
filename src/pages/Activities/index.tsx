@@ -123,7 +123,7 @@ const Activities: React.FC = () => {
     <PageWrapper title="Atividades">
       {!loading ? (
         <>
-          <Row>
+          <Row reduced={showPanel}>
             {activities.length > 0 ? (
               <div>
                 <Container reduced={showPanel}>

@@ -34,9 +34,8 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
   const submitForm = async (values: FormikValues) => {
     const { name, description, experience, dmRules } = values;
 
+    setDisabledBtn(true);
     try {
-      setDisabledBtn(true);
-
       if (activity) {
         await api.put(`/activity/${activity._id}`, {
           name,
@@ -56,12 +55,12 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
         submitCallback(data._id);
       }
-
-      setDisabledBtn(false);
     } catch (error) {
       if (error.response) console.error(error.response.data);
       console.error(error);
     }
+
+    setDisabledBtn(false);
   };
 
   const { setValues, resetForm, ...form } = useFormik({
@@ -148,7 +147,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
             <ErrorField>{form.errors.dmRules}</ErrorField>
           ) : null}
         </div>
-        <Button type="submit" disabled={disabledBtn}>
+        <Button outline type="submit" disabled={disabledBtn}>
           {activity ? 'Atualizar' : 'Criar'}
         </Button>
       </Form>
