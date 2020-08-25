@@ -82,8 +82,8 @@ export const Form = styled(DefaultForm)<FormProps>`
   @media (max-width: 768px) {
     transition: all 0.5s;
 
-    ${({ active }) =>
-      !active &&
+    ${({ shown = false }) =>
+      !shown &&
       css`
         height: 0px;
         overflow: hidden;

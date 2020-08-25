@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { FaPlus } from 'react-icons/fa';
 
 // Contexts
+import { useAuth } from '../../contexts/Authorization';
 import { useGame } from '../../contexts/Game';
 
 // Components
@@ -21,11 +22,15 @@ import { Container, GameCard } from './styles';
 import Button from '../../styles/Button';
 import GameForm from './GameForm';
 
+// Utils
+import handleErrors from '../../utils/handleErrors';
+
 const Lobby: React.FC = () => {
   const [games, setGames] = useState<IGame[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const { signOut } = useAuth();
   const { switchGame } = useGame();
 
   const loadGames = useCallback(async () => {
@@ -35,9 +40,9 @@ const Lobby: React.FC = () => {
       setGames(data);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      handleErrors(error, signOut);
     }
-  }, []);
+  }, [signOut]);
 
   useEffect(() => {
     loadGames();
