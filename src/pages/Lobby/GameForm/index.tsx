@@ -17,7 +17,7 @@ import { Container } from './styles';
 import ImageInput from '../../../components/ImageInput';
 
 // Types
-import { GameFormProps, GameFormValues } from '../types';
+import { IGameForm, IGameValues } from '../types';
 
 // Utils
 import handleErrors from '../../../utils/handleErrors';
@@ -28,10 +28,10 @@ const GameSchema = Yup.object().shape({
   image: Yup.mixed(),
 });
 
-const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
+const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
   const [disabledButton, setDisabledButton] = useState(false);
 
-  const initialValues: GameFormValues = {
+  const initialValues: IGameValues = {
     name: '',
     description: '',
     image: null,
