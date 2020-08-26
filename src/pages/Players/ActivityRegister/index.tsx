@@ -18,11 +18,14 @@ import { removeItemFromArray } from '../../../utils/arrayMethods';
 // Assets
 import userPlaceholder from '../../../assets/img/users/placeholder.png';
 
+// Styles
+import { RequestsContainer } from './styles';
+
 // Types
 import { IRequest } from '../types';
 
-// Styles
-import { RequestsContainer } from './styles';
+// Utils
+import handleErrors from '../../../utils/handleErrors';
 
 const ActivityRegister: React.FC = () => {
   // States
@@ -39,7 +42,7 @@ const ActivityRegister: React.FC = () => {
         setRequests(response.data);
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        handleErrors(error);
       }
     })();
   }, []);
@@ -56,7 +59,7 @@ const ActivityRegister: React.FC = () => {
           ),
         );
       } catch (error) {
-        console.error(error);
+        handleErrors(error);
       }
     }
   };
@@ -87,7 +90,7 @@ const ActivityRegister: React.FC = () => {
 
         setShowModal(false);
       } catch (error) {
-        console.error(error, error.response?.data);
+        handleErrors(error);
       }
     }
   };

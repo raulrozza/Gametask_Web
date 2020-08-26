@@ -17,13 +17,6 @@ import Loading from '../../components/Loading';
 // Services
 import api from '../../services/api';
 
-// Utils
-import {
-  addItemToArray,
-  updateItemInArray,
-  removeItemFromArray,
-} from '../../utils/arrayMethods';
-
 // Styles
 import { Container } from './styles';
 import { RemoveButton } from '../../styles/RemoveButton';
@@ -37,6 +30,14 @@ import {
 
 // Types
 import { IAchievement } from 'game';
+
+// Utils
+import {
+  addItemToArray,
+  updateItemInArray,
+  removeItemFromArray,
+} from '../../utils/arrayMethods';
+import handleErrors from '../../utils/handleErrors';
 
 const Achievements: React.FC = () => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -91,7 +92,7 @@ const Achievements: React.FC = () => {
         const index = achievements.findIndex(item => item._id === id);
         setAchievements(removeItemFromArray(achievements, index));
       } catch (error) {
-        console.error(error);
+        handleErrors(error);
       }
 
       setLoading(false);
@@ -106,15 +107,7 @@ const Achievements: React.FC = () => {
         setAchievements(data);
         setLoading(false);
       } catch (error) {
-        if (error.response) {
-          const { data } = error.response;
-          console.error(data);
-
-          if (data.error === 'TokenExpiredError: jwt expired') {
-            signOut();
-          }
-        }
-        console.error(error);
+        handleErrors(error, signOut);
       }
     })();
   }, [signOut]);
@@ -129,7 +122,7 @@ const Achievements: React.FC = () => {
       else setAchievements(updateItemInArray(achievements, data, index));
       setShowPanel(false);
     } catch (error) {
-      console.error(error);
+      handleErrors(error);
     }
   };
 

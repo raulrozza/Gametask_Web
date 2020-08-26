@@ -38,6 +38,9 @@ const handleErrors: (
           case 200:
             return toast.error('Usuário ou senha incorretos.');
 
+          case 300:
+            return toast.error('Dados ausentes na sua requisição.');
+
           default:
             return toast.error('Houve um erro com a requisição');
         }
