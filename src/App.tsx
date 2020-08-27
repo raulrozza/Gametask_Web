@@ -2,7 +2,7 @@ import React from 'react';
 import Routes from './routes/index.routes';
 
 // Components
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 
 // Contexts
 import Authorization from './contexts/Authorization';
@@ -23,8 +23,9 @@ const App: React.FC = () => {
         newestOnTop
         closeOnClick
         pauseOnFocusLoss
-        draggable
+        transition={Slide}
         pauseOnHover={false}
+        limit={3}
       />
     </Theme>
   );
