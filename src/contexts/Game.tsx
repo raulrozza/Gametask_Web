@@ -17,36 +17,9 @@ import api from '../services/api';
 // Types
 import { IGameHook, IGame } from 'game';
 
-function isEqual(object1: IGame | null, object2: IGame | null) {
-  if ((object1 && !object2) || (!object1 && object2)) return false;
-
-  if (typeof object1 !== 'object' || typeof object2 !== 'object') return false;
-
-  if (object1 && object2) {
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
-
-    if (keys1.length !== keys2.length) return false;
-
-    const values1 = Object.values(object1);
-    const values2 = Object.values(object2);
-
-    for (const index in keys1) {
-      if (keys1[index] !== keys2[index]) return false;
-
-      if (
-        typeof values1[index] !== 'object' &&
-        typeof values2[index] !== 'object'
-      ) {
-        if (values1[index] !== values2[index]) return false;
-      } else {
-        if (!isEqual(values1[index], values2[index])) return false;
-      }
-    }
-  }
-
-  return true;
-}
+// Utils
+import handleErrors from '../utils/handleErrors';
+import isEqual from '../utils/isEqual';
 
 const GameContext = createContext({});
 
@@ -76,15 +49,7 @@ const Game: React.FC = ({ children }) => {
         setGame(data);
         changeTheme(data.theme);
       } catch (error) {
-        console.error(error);
-        if (!error.response) return;
-        const {
-          response: { data },
-        } = error;
-
-        if (data.error === 'TokenExpiredError: jwt expired') {
-          signOut();
-        }
+        handleErrors(error, signOut);
       }
     },
     [signOut, changeTheme],

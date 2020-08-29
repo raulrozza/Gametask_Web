@@ -14,13 +14,16 @@ import api from '../../../services/api';
 // Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
+// Styles
+import { AchievementBox } from './styles';
+import { withTheme } from 'styled-components';
+
 // Types
 import { IAchievement } from 'game';
 import { IThemedComponent } from 'theme';
 
-// Styles
-import { AchievementBox } from './styles';
-import { withTheme } from 'styled-components';
+// Utils
+import handleErrors from '../../../utils/handleErrors';
 
 const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -35,7 +38,7 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
         setAchievements(data);
         setLoadingData(false);
       } catch (error) {
-        console.error(error);
+        handleErrors(error);
       }
     })();
   }, []);

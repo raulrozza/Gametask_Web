@@ -15,13 +15,6 @@ import Loading from '../../components/Loading';
 // Services
 import api from '../../services/api';
 
-// Utils
-import {
-  addItemToArray,
-  updateItemInArray,
-  removeItemFromArray,
-} from '../../utils/arrayMethods';
-
 // Styles
 import { Container } from './styles';
 import { RemoveButton } from '../../styles/RemoveButton';
@@ -32,6 +25,14 @@ import {
   Editor,
   Row,
 } from '../../components/PageWrapper/styles';
+
+// Utils
+import {
+  addItemToArray,
+  updateItemInArray,
+  removeItemFromArray,
+} from '../../utils/arrayMethods';
+import handleErrors from '../../utils/handleErrors';
 
 const Activities: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -77,7 +78,7 @@ const Activities: React.FC = () => {
         const index = activities.findIndex(item => item._id === id);
         setActivities(removeItemFromArray(activities, index));
       } catch (error) {
-        console.error(error);
+        handleErrors(error);
       }
 
       setLoading(false);
@@ -92,15 +93,7 @@ const Activities: React.FC = () => {
         setActivities(data);
         setLoading(false);
       } catch (error) {
-        if (error.response) {
-          const { data } = error.response;
-          console.error(data);
-
-          if (data.error === 'TokenExpiredError: jwt expired') {
-            signOut();
-          }
-        }
-        console.error(error);
+        handleErrors(error, signOut);
       }
     })();
   }, [signOut]);
@@ -115,7 +108,7 @@ const Activities: React.FC = () => {
       else setActivities(updateItemInArray(activities, data, index));
       setShowPanel(false);
     } catch (error) {
-      console.error(error);
+      handleErrors(error);
     }
   };
 

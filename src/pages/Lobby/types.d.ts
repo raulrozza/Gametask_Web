@@ -1,14 +1,18 @@
-export interface GameCardProps {
+export interface IGameCard {
   hasInfo?: bool;
 }
 
-export interface GameFormProps {
+export interface IGameForm {
   onSuccess: () => Promise<void>;
   closeModal: () => void;
 }
 
-export interface GameFormValues {
+export interface IGameValues {
   name: string;
   description: string;
   image: string | null;
+}
+
+export interface IShare {
+  gameId: string;
 }

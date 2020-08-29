@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaLink } from 'react-icons/fa';
 
 // Contexts
+import { useAuth } from '../../contexts/Authorization';
 import { useGame } from '../../contexts/Game';
 
 // Components
 import Loading from '../../components/Loading';
 import Modal from '../../components/Modal';
+import GameForm from './GameForm';
 import Navbar from './Navbar';
+import Share from './Share';
 
 // Types
 import { IGame } from 'game';
@@ -19,13 +22,18 @@ import api from '../../services/api';
 // Styles
 import { Container, GameCard } from './styles';
 import Button from '../../styles/Button';
-import GameForm from './GameForm';
+
+// Utils
+import handleErrors from '../../utils/handleErrors';
 
 const Lobby: React.FC = () => {
   const [games, setGames] = useState<IGame[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showGameModal, setShowGameModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [selectedGame, setSelectedGame] = useState('');
 
+  const { signOut } = useAuth();
   const { switchGame } = useGame();
 
   const loadGames = useCallback(async () => {
@@ -35,9 +43,9 @@ const Lobby: React.FC = () => {
       setGames(data);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      handleErrors(error, signOut);
     }
-  }, []);
+  }, [signOut]);
 
   useEffect(() => {
     loadGames();
@@ -60,30 +68,49 @@ const Lobby: React.FC = () => {
               <img src={game.image_url} alt={game.name} />
               <span>{game.description}</span>
 
-              <Button outline onClick={() => switchGame(game)}>
-                Entrar
-              </Button>
+              <div>
+                <Button outline onClick={() => switchGame(game)}>
+                  Entrar
+                </Button>
+                <Button
+                  onClick={() => {
+                    setSelectedGame(game._id);
+                    setShowShareModal(true);
+                  }}
+                >
+                  <FaLink />
+                </Button>
+              </div>
             </GameCard>
           ))}
 
           <GameCard>
-            <button type="button" onClick={() => setShowModal(true)}>
+            <button type="button" onClick={() => setShowGameModal(true)}>
               <FaPlus />
               <span>Criar Jogo</span>
             </button>
           </GameCard>
         </div>
       </section>
-      {showModal && (
+      {showGameModal && (
         <Modal
           title="Criar Jogo"
           size="sm"
-          closeModal={() => setShowModal(false)}
+          closeModal={() => setShowGameModal(false)}
         >
           <GameForm
             onSuccess={loadGames}
-            closeModal={() => setShowModal(false)}
+            closeModal={() => setShowGameModal(false)}
           />
+        </Modal>
+      )}
+      {showShareModal && (
+        <Modal
+          title="Compartilhar"
+          size="sm"
+          closeModal={() => setShowShareModal(false)}
+        >
+          <Share gameId={selectedGame} />
         </Modal>
       )}
     </Container>

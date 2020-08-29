@@ -16,6 +16,8 @@ import api from '../../services/api';
 import Button from '../../styles/Button';
 import { ErrorField } from '../../styles/Form';
 import { HomePage, FormToggle, Form } from './styles';
+import { toast } from 'react-toastify';
+import handleErrors from '../../utils/handleErrors';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -74,16 +76,16 @@ const Home: React.FC = () => {
             try {
               const response = await api.post('/login', values);
 
-              signIn(response.data);
+              return signIn(response.data);
             } catch (error) {
-              console.error(error, error.response?.data);
+              handleErrors(error);
             }
 
-            setLoginButtonDisabled(false);
+            return setLoginButtonDisabled(false);
           }}
         >
           {({ errors, touched }) => (
-            <Form active={formToggle}>
+            <Form shown={formToggle}>
               <h2>Entre</h2>
 
               <div className="form-group">
@@ -132,16 +134,16 @@ const Home: React.FC = () => {
             try {
               await api.post('/user/signup', values);
 
-              window.location.reload();
+              toast.success('Cadastro efetuado com sucesso!');
             } catch (error) {
-              console.error(error);
+              handleErrors(error);
             }
 
-            setSignupButtonDisabled(false);
+            return setSignupButtonDisabled(false);
           }}
         >
           {({ errors, touched }) => (
-            <Form active={!formToggle}>
+            <Form shown={!formToggle}>
               <h2>Cadastre-se</h2>
 
               <div className="form-group">

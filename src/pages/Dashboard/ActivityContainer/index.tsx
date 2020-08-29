@@ -11,13 +11,16 @@ import api from '../../../services/api';
 // Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
+// Styles
+import { ActivityBox } from './styles';
+import { withTheme } from 'styled-components';
+
 // Types
 import { IActivity } from 'game';
 import { IThemedComponent } from 'theme';
 
-// Styles
-import { ActivityBox } from './styles';
-import { withTheme } from 'styled-components';
+// Utils
+import handleErrors from '../../../utils/handleErrors';
 
 const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -32,7 +35,7 @@ const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
         setActivities(data);
         setLoadingData(false);
       } catch (error) {
-        console.error(error);
+        handleErrors(error);
       }
     })();
   }, []);

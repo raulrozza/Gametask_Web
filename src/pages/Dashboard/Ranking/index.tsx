@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
+import { getTextColor } from '../../../contexts/Theme';
 
 // Icons
 import { FaFrown } from 'react-icons/fa';
-
-// Utils
-import { getTextColor } from '../../../utils/setTheme';
 
 // Styles
 import { RankingContainer } from './styles';

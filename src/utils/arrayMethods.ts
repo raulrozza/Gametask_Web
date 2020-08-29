@@ -1,6 +1,4 @@
-type AddArray<T> = (array: T[], item: T) => T[];
-type UpdateArray<T> = (array: T[], item: T, index: number) => T[];
-type RemoveArray<T> = (array: T[], index: number) => T[];
+import { AddArray, UpdateArray, RemoveArray } from './types';
 
 export const addItemToArray: AddArray<any> = (array, item) => {
   return [...array, item];

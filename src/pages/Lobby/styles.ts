@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { GameCardProps } from './types';
+import { IGameCard } from './types';
 
 export const Container = styled.main`
   ${({ theme }) => css`
@@ -34,7 +34,7 @@ export const Container = styled.main`
   `}
 `;
 
-export const GameCard = styled.div<GameCardProps>`
+export const GameCard = styled.div<IGameCard>`
   width: 280px;
   height: 100%;
   display: flex;
@@ -65,6 +65,13 @@ export const GameCard = styled.div<GameCardProps>`
             height: 72px;
             width: 72px;
             border-radius: 50%;
+          }
+
+          div {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
           }
 
           &:hover {

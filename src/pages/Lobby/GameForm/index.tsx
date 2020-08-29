@@ -7,9 +7,6 @@ import { Formik, Field } from 'formik';
 // Yup
 import * as Yup from 'yup';
 
-// Types
-import { GameFormProps, GameFormValues } from '../types';
-
 // Services
 import api from '../../../services/api';
 
@@ -19,16 +16,22 @@ import Form, { ErrorField } from '../../../styles/Form';
 import { Container } from './styles';
 import ImageInput from '../../../components/ImageInput';
 
+// Types
+import { IGameForm, IGameValues } from '../types';
+
+// Utils
+import handleErrors from '../../../utils/handleErrors';
+
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Dê um nome ao seu jogo.'),
   description: Yup.string().required('Descreva seu jogo.'),
   image: Yup.mixed(),
 });
 
-const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
+const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
   const [disabledButton, setDisabledButton] = useState(false);
 
-  const initialValues: GameFormValues = {
+  const initialValues: IGameValues = {
     name: '',
     description: '',
     image: null,
@@ -54,7 +57,7 @@ const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
 
             onSuccess();
           } catch (error) {
-            console.error(error);
+            handleErrors(error);
           } finally {
             closeModal();
           }
