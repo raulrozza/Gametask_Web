@@ -2,52 +2,44 @@ import React, { useState, useEffect } from 'react';
 
 // Assets
 import userPlaceholder from '../../../assets/img/users/placeholder.png';
+import achievementPlaceholder from '../../../assets/img/achievements/placeholder.png';
 
 // Components
 import Loading from '../../../components/Loading';
 import Modal from '../../../components/Modal';
 import RequestModal from './RequestModal';
 
-// Contexts
-import { useAuth } from '../../../contexts/Authorization';
-
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
-import { BsController } from 'react-icons/bs';
-
-// Libs
-import { toast } from 'react-toastify';
-
-// Services
-import api from '../../../services/api';
 
 // Styles
 import { NoRequests, RequestsContainer, RequestFooter } from '../styles';
 
-// Types
-import { IActivityRequest } from '../types';
+// Services
+import api from '../../../services/api';
 
 // Utils
 import { removeItemFromArray } from '../../../utils/arrayMethods';
 import handleErrors from '../../../utils/handleErrors';
 
-const ActivityRegister: React.FC = () => {
+// Types
+import { IAchievementRequest } from '../types';
+import { BsController } from 'react-icons/bs';
+
+const AchievementRegister: React.FC = () => {
   // States
-  const [requests, setRequests] = useState<IActivityRequest[]>([]);
+  const [requests, setRequests] = useState<IAchievementRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [
     selectedRequest,
     setSelectedRequest,
-  ] = useState<IActivityRequest | null>(null);
+  ] = useState<IAchievementRequest | null>(null);
   const [showModal, setShowModal] = useState(false);
-
-  // Hooks
-  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await api.get('activityRegister');
+        const response = await api.get('achievementRegister');
 
         setRequests(response.data);
         setLoading(false);
@@ -60,7 +52,7 @@ const ActivityRegister: React.FC = () => {
   const handleDeleteRegister = (id: string) => {
     if (window.confirm('Deseja realmente excluir esta requisição?')) {
       try {
-        api.delete(`/activityRegister/${id}`);
+        api.delete(`/achievementRegister/${id}`);
 
         setRequests(
           removeItemFromArray(
@@ -74,7 +66,7 @@ const ActivityRegister: React.FC = () => {
     }
   };
 
-  const handleAcceptRegister = async (id: string) => {
+  const handleAcceptRegister = (id: string) => {
     const request = requests.find(item => item._id === id);
 
     if (!request) return;
@@ -82,24 +74,19 @@ const ActivityRegister: React.FC = () => {
     if (window.confirm('Confirmar pontuação?')) {
       try {
         const data = {
-          userId: user._id,
-          playerId: request.requester._id,
-          activityId: request.activity._id,
+          userId: request.requester._id,
+          achievementId: request.achievement._id,
           registerId: id,
-          experience: request.activity.experience,
-          completionDate: request.completionDate,
         };
+
+        /* api.post('/experience', data);
 
         setRequests(
           removeItemFromArray(
             requests,
             requests.findIndex(request => request._id === id),
           ),
-        );
-
-        await api.post('/experience', data);
-
-        toast.success('Requisição aceita!');
+        ); */
 
         setShowModal(false);
       } catch (error) {
@@ -108,7 +95,7 @@ const ActivityRegister: React.FC = () => {
     }
   };
 
-  const handleShowDetails = (request: IActivityRequest) => {
+  const handleShowDetails = (request: IAchievementRequest) => {
     setSelectedRequest(request);
     setShowModal(true);
   };
@@ -121,7 +108,7 @@ const ActivityRegister: React.FC = () => {
         <>
           <ul className="request-list">
             {requests.length > 0 ? (
-              requests.map(({ requester: user, activity, ...request }) => (
+              requests.map(({ requester: user, achievement, ...request }) => (
                 <li className="request" key={request._id}>
                   <section className="main">
                     <img
@@ -129,13 +116,20 @@ const ActivityRegister: React.FC = () => {
                       alt={user.firstname}
                     />
 
+                    <img
+                      src={
+                        achievement.image
+                          ? achievement.image_url
+                          : achievementPlaceholder
+                      }
+                      alt={achievement.name}
+                    />
+
                     <div>
                       <span className="title">
                         <strong>{user.firstname}</strong>
                         {` | `}
-                        <strong>
-                          {activity.name} ({activity.experience} XP)
-                        </strong>
+                        <strong>{achievement.name}</strong>
                       </span>
 
                       <span className="info">{request.information}</span>
@@ -154,7 +148,7 @@ const ActivityRegister: React.FC = () => {
                           handleShowDetails({
                             ...request,
                             requester: user,
-                            activity,
+                            achievement,
                           })
                         }
                       >
@@ -188,7 +182,7 @@ const ActivityRegister: React.FC = () => {
             )}
           </ul>
           {showModal && selectedRequest && (
-            <Modal closeModal={() => setShowModal(false)} title="Atividade">
+            <Modal closeModal={() => setShowModal(false)} title="Conquista">
               <RequestModal
                 request={selectedRequest}
                 deleteRequest={handleDeleteRegister}
@@ -202,4 +196,4 @@ const ActivityRegister: React.FC = () => {
   );
 };
 
-export default ActivityRegister;
+export default AchievementRegister;

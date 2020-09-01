@@ -5,15 +5,16 @@ import { FaCheck, FaTrash } from 'react-icons/fa';
 
 // Assets
 import userPlaceholder from '../../../../assets/img/users/placeholder.png';
+import achievementPlaceholder from '../../../../assets/img/achievements/placeholder.png';
 
 // Types
-import { ActivityRequestModalProps } from '../../types';
+import { AchievementRequestModalProps } from '../../types';
 
 // Styles
 import { ModalContainer } from './styles';
 import { RequestFooter } from '../../styles';
 
-const RequestModal: React.FC<ActivityRequestModalProps> = ({
+const RequestModal: React.FC<AchievementRequestModalProps> = ({
   request,
   deleteRequest,
   acceptRequest,
@@ -21,6 +22,7 @@ const RequestModal: React.FC<ActivityRequestModalProps> = ({
   <ModalContainer>
     <header>
       <img
+        className="user-image"
         src={
           request.requester.image
             ? request.requester.profile_url
@@ -28,17 +30,25 @@ const RequestModal: React.FC<ActivityRequestModalProps> = ({
         }
         alt={request.requester.firstname}
       />
+      <img
+        className="achievement-image"
+        src={
+          request.achievement.image
+            ? request.achievement.image_url
+            : achievementPlaceholder
+        }
+        alt={request.achievement.name}
+      />
 
-      <strong>
-        {request.activity.name} ({request.activity.experience} XP)
-      </strong>
+      <strong>{request.achievement.name}</strong>
 
-      <span>
-        concluído por{' '}
+      <span className="description">{request.achievement.description}</span>
+
+      <span className="obtained-by">
+        obtida por{' '}
         <strong>
           {request.requester.firstname} {request.requester.lastname}
-        </strong>{' '}
-        em {new Date(request.completionDate).toLocaleDateString()}
+        </strong>
       </span>
     </header>
 
@@ -46,10 +56,6 @@ const RequestModal: React.FC<ActivityRequestModalProps> = ({
       <span>{request.requester.firstname} informa: </span>
 
       <span>{request.information}</span>
-
-      {request.activity.dmRules && (
-        <cite>Recomendações: &quot;{request.activity.dmRules}&quot;</cite>
-      )}
     </section>
 
     <RequestFooter>

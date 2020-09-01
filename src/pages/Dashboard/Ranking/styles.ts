@@ -23,21 +23,26 @@ export const RankingContainer = styled(InfoBox)`
             width: 65%;
           }
 
-          &:not(.list-title) {
-            justify-content: center;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-            .name {
-              font-size: 14px;
-            }
-          }
-
           &.registers-box {
             background-color: ${theme.secondaryShade};
             color: ${theme.secondaryContrast};
+
+            height: 20px;
             padding: 4px;
             border-radius: 4px;
-            height: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+
+        &:not(.list-title) {
+          justify-content: center;
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+          .name {
+            font-size: 14px;
           }
         }
 

@@ -5,7 +5,9 @@ import { AxiosError } from 'axios';
  * Errors mapping
  *
  * 100: User already exists
+ * 101: Player already exists
  * 200: User and password don't match
+ * 300: Missing parameters
  *
  * *****/
 
