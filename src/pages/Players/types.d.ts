@@ -1,18 +1,9 @@
+import { IPlayer, IActivity, IAchievement } from 'game';
+
 export interface IActivityRequest {
   _id: string;
-  requester: {
-    _id: string;
-    firstname: string;
-    lastname: string;
-    image?: string | null;
-    profile_url: string;
-  };
-  activity: {
-    _id: string;
-    name: string;
-    experience: number;
-    dmRules?: string | null;
-  };
+  requester: IPlayer;
+  activity: IActivity;
   completionDate: string;
   information: string;
   requestDate: string;
@@ -20,20 +11,8 @@ export interface IActivityRequest {
 
 export interface IAchievementRequest {
   _id: string;
-  requester: {
-    _id: string;
-    firstname: string;
-    lastname: string;
-    image?: string | null;
-    profile_url: string;
-  };
-  achievement: {
-    _id: string;
-    name: string;
-    description: string;
-    image?: string;
-    image_url: string;
-  };
+  requester: IPlayer;
+  achievement: IAchievement;
   information: string;
   requestDate: string;
 }

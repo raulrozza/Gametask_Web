@@ -62,6 +62,7 @@ const ActivityRegister: React.FC = () => {
       try {
         api.delete(`/activityRegister/${id}`);
 
+        toast.update('Requisição excluída');
         setRequests(
           removeItemFromArray(
             requests,
@@ -121,17 +122,21 @@ const ActivityRegister: React.FC = () => {
         <>
           <ul className="request-list">
             {requests.length > 0 ? (
-              requests.map(({ requester: user, activity, ...request }) => (
+              requests.map(({ requester, activity, ...request }) => (
                 <li className="request" key={request._id}>
                   <section className="main">
                     <img
-                      src={user.image ? user.profile_url : userPlaceholder}
-                      alt={user.firstname}
+                      src={
+                        requester.user.image
+                          ? requester.user.profile_url
+                          : userPlaceholder
+                      }
+                      alt={requester.user.firstname}
                     />
 
                     <div>
                       <span className="title">
-                        <strong>{user.firstname}</strong>
+                        <strong>{requester.user.firstname}</strong>
                         {` | `}
                         <strong>
                           {activity.name} ({activity.experience} XP)
@@ -153,7 +158,7 @@ const ActivityRegister: React.FC = () => {
                         onClick={() =>
                           handleShowDetails({
                             ...request,
-                            requester: user,
+                            requester,
                             activity,
                           })
                         }

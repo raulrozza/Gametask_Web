@@ -108,12 +108,16 @@ const AchievementRegister: React.FC = () => {
         <>
           <ul className="request-list">
             {requests.length > 0 ? (
-              requests.map(({ requester: user, achievement, ...request }) => (
+              requests.map(({ requester, achievement, ...request }) => (
                 <li className="request" key={request._id}>
                   <section className="main">
                     <img
-                      src={user.image ? user.profile_url : userPlaceholder}
-                      alt={user.firstname}
+                      src={
+                        requester.user.image
+                          ? requester.user.profile_url
+                          : userPlaceholder
+                      }
+                      alt={requester.user.firstname}
                     />
 
                     <img
@@ -127,7 +131,7 @@ const AchievementRegister: React.FC = () => {
 
                     <div>
                       <span className="title">
-                        <strong>{user.firstname}</strong>
+                        <strong>{requester.user.firstname}</strong>
                         {` | `}
                         <strong>{achievement.name}</strong>
                       </span>
@@ -147,7 +151,7 @@ const AchievementRegister: React.FC = () => {
                         onClick={() =>
                           handleShowDetails({
                             ...request,
-                            requester: user,
+                            requester,
                             achievement,
                           })
                         }

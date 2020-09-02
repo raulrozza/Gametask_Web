@@ -14,6 +14,12 @@ export const PlayersContainer = styled.div`
     left: 8px;
     font-size: 28px;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+  }
 `;
 
 export const RequestsContainer = styled.div`
@@ -22,8 +28,7 @@ export const RequestsContainer = styled.div`
     padding: 10px;
     border-radius: 10px;
     margin: 10px;
-    width: 100%;
-    max-width: 500px;
+    width: 500px;
 
     ul {
       list-style: none;
@@ -66,6 +71,10 @@ export const RequestsContainer = styled.div`
         font-size: 14px;
         margin-top: 4px;
       }
+    }
+
+    @media (max-width: 768px) {
+      width: calc(100% - 20px);
     }
   `}
 `;

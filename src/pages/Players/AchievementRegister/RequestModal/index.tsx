@@ -24,11 +24,11 @@ const RequestModal: React.FC<AchievementRequestModalProps> = ({
       <img
         className="user-image"
         src={
-          request.requester.image
-            ? request.requester.profile_url
+          request.requester.user.image
+            ? request.requester.user.profile_url
             : userPlaceholder
         }
-        alt={request.requester.firstname}
+        alt={request.requester.user.firstname}
       />
       <img
         className="achievement-image"
@@ -40,20 +40,25 @@ const RequestModal: React.FC<AchievementRequestModalProps> = ({
         alt={request.achievement.name}
       />
 
-      <strong>{request.achievement.name}</strong>
+      <strong>
+        {request.achievement.name}
+        {request.achievement.title && (
+          <span> [{request.achievement.title.name}]</span>
+        )}
+      </strong>
 
       <span className="description">{request.achievement.description}</span>
 
       <span className="obtained-by">
         obtida por{' '}
         <strong>
-          {request.requester.firstname} {request.requester.lastname}
+          {request.requester.user.firstname} {request.requester.user.lastname}
         </strong>
       </span>
     </header>
 
     <section>
-      <span>{request.requester.firstname} informa: </span>
+      <span>{request.requester.user.firstname} informa: </span>
 
       <span>{request.information}</span>
     </section>

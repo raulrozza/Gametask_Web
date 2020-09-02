@@ -22,11 +22,11 @@ const RequestModal: React.FC<ActivityRequestModalProps> = ({
     <header>
       <img
         src={
-          request.requester.image
-            ? request.requester.profile_url
+          request.requester.user.image
+            ? request.requester.user.profile_url
             : userPlaceholder
         }
-        alt={request.requester.firstname}
+        alt={request.requester.user.firstname}
       />
 
       <strong>
@@ -36,14 +36,14 @@ const RequestModal: React.FC<ActivityRequestModalProps> = ({
       <span>
         concluído por{' '}
         <strong>
-          {request.requester.firstname} {request.requester.lastname}
+          {request.requester.user.firstname} {request.requester.user.lastname}
         </strong>{' '}
         em {new Date(request.completionDate).toLocaleDateString()}
       </span>
     </header>
 
     <section>
-      <span>{request.requester.firstname} informa: </span>
+      <span>{request.requester.user.firstname} informa: </span>
 
       <span>{request.information}</span>
 

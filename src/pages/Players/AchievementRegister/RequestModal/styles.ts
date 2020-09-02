@@ -33,6 +33,11 @@ export const ModalContainer = styled.div`
       text-transform: capitalize;
       grid-area: title;
       font-size: 24px;
+
+      span {
+        font-size: 20px;
+        color: ${({ theme }) => theme.primaryExtraShade};
+      }
     }
 
     .description {
