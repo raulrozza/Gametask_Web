@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 // Components
@@ -102,25 +101,4 @@ const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
   );
 };
 
-ActivityContainer.propTypes = {
-  theme: PropTypes.shape({
-    primary: PropTypes.string.isRequired,
-    primaryTransparent: PropTypes.string.isRequired,
-    primaryContrast: PropTypes.string.isRequired,
-    primaryLowShade: PropTypes.string.isRequired,
-    primaryShade: PropTypes.string.isRequired,
-    primaryExtraShade: PropTypes.string.isRequired,
-    primaryIntense: PropTypes.string.isRequired,
-    primaryExtraIntense: PropTypes.string.isRequired,
-    secondary: PropTypes.string.isRequired,
-    secondaryTransparent: PropTypes.string.isRequired,
-    secondaryContrast: PropTypes.string.isRequired,
-    secondaryLowShade: PropTypes.string.isRequired,
-    secondaryShade: PropTypes.string.isRequired,
-    secondaryExtraShade: PropTypes.string.isRequired,
-    secondaryIntense: PropTypes.string.isRequired,
-    secondaryExtraIntense: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-export default withTheme(ActivityContainer);
+export default memo(withTheme(ActivityContainer));
