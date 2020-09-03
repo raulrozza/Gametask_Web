@@ -5,9 +5,15 @@ import { useGame } from '../../../contexts/Game';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 // Services
 import api from '../../../services/api';
+
+// Styles
+import Button from '../../../styles/Button';
+import { RemoveButton } from '../../../styles/RemoveButton';
+import { LevelConfigContainer } from './styles';
 
 // Utils
 import {
@@ -15,11 +21,6 @@ import {
   removeItemFromArray,
   updateItemInArray,
 } from '../../../utils/arrayMethods';
-
-// Styles
-import Button from '../../../styles/Button';
-import { RemoveButton } from '../../../styles/RemoveButton';
-import { LevelConfigContainer } from './styles';
 
 // Types
 import { ILevelInfo } from '../types';
@@ -72,6 +73,8 @@ const LevelConfig: React.FC = () => {
 
     try {
       await api.put(`/level/${game._id}`, { levelInfo: newLevelInfo });
+
+      toast.success('Níveis alterados com sucesso.');
 
       await refreshGame();
     } catch (error) {

@@ -9,8 +9,15 @@ import Loading from '../../../components/Loading';
 import Modal from '../../../components/Modal';
 import RequestModal from './RequestModal';
 
+// Contexts
+import { useAuth } from '../../../contexts/Authorization';
+import { useGame } from '../../../contexts/Game';
+
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
+
+// Libs
+import { toast } from 'react-toastify';
 
 // Styles
 import { NoRequests, RequestsContainer, RequestFooter } from '../styles';
@@ -36,6 +43,10 @@ const AchievementRegister: React.FC = () => {
   ] = useState<IAchievementRequest | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  // Hooks
+  const { user } = useAuth();
+  const { refreshGame } = useGame();
+
   useEffect(() => {
     (async () => {
       try {
@@ -49,10 +60,38 @@ const AchievementRegister: React.FC = () => {
     })();
   }, []);
 
-  const handleDeleteRegister = (id: string) => {
+  const handleDeleteRegister = async (id: string) => {
     if (window.confirm('Deseja realmente excluir esta requisição?')) {
       try {
-        api.delete(`/achievementRegister/${id}`);
+        setRequests(
+          removeItemFromArray(
+            requests,
+            requests.findIndex(request => request._id === id),
+          ),
+        );
+
+        await api.delete(`/achievementRegister/${id}`);
+
+        toast.update('Requisição excluída');
+      } catch (error) {
+        handleErrors(error);
+      }
+    }
+  };
+
+  const handleAcceptRegister = async (id: string) => {
+    const request = requests.find(item => item._id === id);
+
+    if (!request) return;
+
+    if (window.confirm('Garantir conquista?')) {
+      try {
+        const data = {
+          userId: user._id,
+          playerId: request.requester._id,
+          achievementId: request.achievement._id,
+          registerId: id,
+        };
 
         setRequests(
           removeItemFromArray(
@@ -60,33 +99,12 @@ const AchievementRegister: React.FC = () => {
             requests.findIndex(request => request._id === id),
           ),
         );
-      } catch (error) {
-        handleErrors(error);
-      }
-    }
-  };
 
-  const handleAcceptRegister = (id: string) => {
-    const request = requests.find(item => item._id === id);
+        await api.post('/unlockAchievement', data);
 
-    if (!request) return;
+        toast.success('Conquista garantida.');
 
-    if (window.confirm('Confirmar pontuação?')) {
-      try {
-        const data = {
-          userId: request.requester._id,
-          achievementId: request.achievement._id,
-          registerId: id,
-        };
-
-        /* api.post('/experience', data);
-
-        setRequests(
-          removeItemFromArray(
-            requests,
-            requests.findIndex(request => request._id === id),
-          ),
-        ); */
+        refreshGame();
 
         setShowModal(false);
       } catch (error) {
@@ -139,10 +157,12 @@ const AchievementRegister: React.FC = () => {
                       <span className="info">{request.information}</span>
                     </div>
                   </section>
+
                   <RequestFooter>
                     <span>
                       {new Date(request.requestDate).toLocaleDateString()}
                     </span>
+
                     <div>
                       <button
                         className="details"
@@ -158,6 +178,7 @@ const AchievementRegister: React.FC = () => {
                       >
                         Ver Mais
                       </button>
+
                       <button
                         className="confirm"
                         type="button"
@@ -166,6 +187,7 @@ const AchievementRegister: React.FC = () => {
                       >
                         <FaCheck />
                       </button>
+
                       <button
                         className="delete"
                         type="button"

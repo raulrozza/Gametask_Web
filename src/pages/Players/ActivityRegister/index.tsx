@@ -10,6 +10,7 @@ import RequestModal from './RequestModal';
 
 // Contexts
 import { useAuth } from '../../../contexts/Authorization';
+import { useGame } from '../../../contexts/Game';
 
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
@@ -43,6 +44,7 @@ const ActivityRegister: React.FC = () => {
 
   // Hooks
   const { user } = useAuth();
+  const { refreshGame } = useGame();
 
   useEffect(() => {
     (async () => {
@@ -57,18 +59,19 @@ const ActivityRegister: React.FC = () => {
     })();
   }, []);
 
-  const handleDeleteRegister = (id: string) => {
+  const handleDeleteRegister = async (id: string) => {
     if (window.confirm('Deseja realmente excluir esta requisição?')) {
       try {
-        api.delete(`/activityRegister/${id}`);
-
-        toast.update('Requisição excluída');
         setRequests(
           removeItemFromArray(
             requests,
             requests.findIndex(request => request._id === id),
           ),
         );
+
+        await api.delete(`/activityRegister/${id}`);
+
+        toast.update('Requisição excluída');
       } catch (error) {
         handleErrors(error);
       }
@@ -101,6 +104,8 @@ const ActivityRegister: React.FC = () => {
         await api.post('/experience', data);
 
         toast.success('Requisição aceita!');
+
+        refreshGame();
 
         setShowModal(false);
       } catch (error) {

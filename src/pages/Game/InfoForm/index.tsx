@@ -11,18 +11,19 @@ import { useGame } from '../../../contexts/Game';
 import { FaEdit } from 'react-icons/fa';
 import { useFormik, FormikValues } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 // Services
 import api from '../../../services/api';
-
-// Types
-import { InfoFormValues } from '../types';
 
 // Styles
 import Button from '../../../styles/Button';
 import { Form } from './styles';
 import { useTheme, defaultTheme } from '../../../contexts/Theme';
 import { ErrorField } from '../../../styles/Form';
+
+// Types
+import { InfoFormValues } from '../types';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome do jogo.'),
@@ -66,6 +67,8 @@ const InfoForm: React.FC = () => {
       if (image !== game.image_url) data.append('image', image);
 
       await api.put(`/game/${game._id}`, data);
+
+      toast.success('Informações alteradas com sucesso.');
 
       await refreshGame();
     } catch (error) {

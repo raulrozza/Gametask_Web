@@ -6,6 +6,7 @@ import { getTextColor } from '../../../contexts/Theme';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 // Services
 import api from '../../../services/api';
@@ -79,6 +80,8 @@ const RankConfig: React.FC = () => {
 
     try {
       await api.put(`/rank/${game._id}`, { ranks });
+
+      toast.success('Patente alterada com sucesso.');
 
       await refreshGame();
     } catch (error) {
