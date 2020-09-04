@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "crypto-js": "^4.0.0",
     "formik": "^2.1.5",
+    "lodash": "^4.17.20",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@types/crypto-js": "^3.1.47",
+    "@types/lodash": "^4.14.161",
     "@types/react": "^16.9.43",
     "@types/react-color": "^3.0.4",
     "@types/react-helmet": "^6.0.0",

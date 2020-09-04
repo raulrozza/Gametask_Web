@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 // Custom Components
@@ -8,6 +8,9 @@ import ImageInput from '../../../components/ImageInput';
 import { FaEdit } from 'react-icons/fa';
 import { useFormik, FormikValues, FormikErrors } from 'formik';
 import * as Yup from 'yup';
+
+// Libs
+import lodash from 'lodash';
 
 // Services
 import api from '../../../services/api';
@@ -125,9 +128,8 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
 
   // OnChange method that changes the string in the title form, but also checks the API for existing titles
   // and adds them to a suggestion list
-  const setTitleValue = useCallback(
-    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-      form.setFieldValue('title', value);
+  const getTitleFromAPI = useCallback(
+    lodash.debounce(value => {
       try {
         const params = value.length > 0 ? { name: value } : {};
         api
@@ -141,8 +143,16 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
       } catch (error) {
         handleErrors(error);
       }
+    }, 500),
+    [],
+  );
+
+  const setTitleValue = useCallback(
+    (value: string) => {
+      form.setFieldValue('title', value);
+      getTitleFromAPI(value);
     },
-    [form],
+    [form, getTitleFromAPI],
   );
 
   // Method used on the suggestion list that adds a new title to the existing ones, while also adding it to the
@@ -221,7 +231,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
             type="text"
             name="title"
             placeholder="Sua conquista dará um título?"
-            onChange={setTitleValue}
+            onChange={event => setTitleValue(event.target.value)}
             value={form.values.title}
           />
           <TitleOptions visible={showTitleList}>
