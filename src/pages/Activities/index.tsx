@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 // Components
 import { FaEdit, FaTimes, FaPlus } from 'react-icons/fa';
@@ -45,28 +45,31 @@ const Activities: React.FC = () => {
   // Context
   const { signOut } = useAuth();
 
-  const createActivity = () => {
+  const createActivity = useCallback(() => {
     setSelectedActivity(null);
     setShowPanel(true);
-  };
+  }, []);
 
-  const editActivity = (id: string) => {
-    const activity = activities.find(activity => activity._id === id);
+  const editActivity = useCallback(
+    (id: string) => {
+      const activity = activities.find(activity => activity._id === id);
 
-    if (activity) {
-      if (
-        showPanel &&
-        (!selectedActivity || activity._id !== selectedActivity._id)
-      ) {
+      if (activity) {
+        if (
+          showPanel &&
+          (!selectedActivity || activity._id !== selectedActivity._id)
+        ) {
+          setSelectedActivity(activity);
+          return;
+        }
         setSelectedActivity(activity);
-        return;
+        setShowPanel(!showPanel);
       }
-      setSelectedActivity(activity);
-      setShowPanel(!showPanel);
-    }
-  };
+    },
+    [activities, showPanel, selectedActivity],
+  );
 
-  const deleteActivity = async (id: string) => {
+  const deleteActivity = useCallback(async (id: string) => {
     const response = window.confirm(
       'Deseja mesmo excluir esta atividade? Esta ação não pode ser desfeita.',
     );
@@ -75,15 +78,18 @@ const Activities: React.FC = () => {
       try {
         await api.delete(`/activity/${id}`);
 
-        const index = activities.findIndex(item => item._id === id);
-        setActivities(removeItemFromArray(activities, index));
+        setActivities(activities => {
+          const index = activities.findIndex(item => item._id === id);
+
+          return removeItemFromArray(activities, index);
+        });
       } catch (error) {
         handleErrors(error);
       }
 
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -98,19 +104,23 @@ const Activities: React.FC = () => {
     })();
   }, [signOut]);
 
-  const onSubmit = async (id: string) => {
+  const onSubmit = useCallback(async (id: string) => {
     try {
       const { data } = await api.get(`/activity/${id}`);
 
-      const index = activities.findIndex(item => item._id === id);
+      setActivities(activities => {
+        const index = activities.findIndex(item => item._id === id);
 
-      if (index === -1) setActivities(addItemToArray(activities, data));
-      else setActivities(updateItemInArray(activities, data, index));
+        if (index === -1) return addItemToArray(activities, data);
+
+        return updateItemInArray(activities, data, index);
+      });
+
       setShowPanel(false);
     } catch (error) {
       handleErrors(error);
     }
-  };
+  }, []);
 
   return (
     <PageWrapper title="Atividades">

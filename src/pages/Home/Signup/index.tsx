@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // Libs
 import { Formik, Field } from 'formik';
@@ -39,30 +39,32 @@ const Signup: React.FC<FormContainerProps> = ({ shown }) => {
   // States
   const [signupButtonDisabled, setSignupButtonDisabled] = useState(false);
 
+  const onSubmit = useCallback(async (values, actions) => {
+    if (values.password !== values.confirmPassword) {
+      actions.setErrors({
+        confirmPassword: 'As senhas não são iguais',
+      });
+      return;
+    }
+    setSignupButtonDisabled(true);
+
+    // Post user in the API
+    try {
+      await api.post('/user/signup', values);
+
+      toast.success('Cadastro efetuado com sucesso!');
+    } catch (error) {
+      handleErrors(error);
+    }
+
+    return setSignupButtonDisabled(false);
+  }, []);
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={SignupSchema}
-      onSubmit={async (values, actions) => {
-        if (values.password !== values.confirmPassword) {
-          actions.setErrors({
-            confirmPassword: 'As senhas não são iguais',
-          });
-          return;
-        }
-        setSignupButtonDisabled(true);
-
-        // Post user in the API
-        try {
-          await api.post('/user/signup', values);
-
-          toast.success('Cadastro efetuado com sucesso!');
-        } catch (error) {
-          handleErrors(error);
-        }
-
-        return setSignupButtonDisabled(false);
-      }}
+      onSubmit={onSubmit}
     >
       {({ errors, touched }) => (
         <Form shown={shown}>

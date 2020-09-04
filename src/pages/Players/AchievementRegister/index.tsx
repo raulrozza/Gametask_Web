@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 // Assets
 import userPlaceholder from '../../../assets/img/users/placeholder.png';
@@ -60,10 +60,10 @@ const AchievementRegister: React.FC = () => {
     })();
   }, []);
 
-  const handleDeleteRegister = async (id: string) => {
+  const handleDeleteRegister = useCallback(async (id: string) => {
     if (window.confirm('Deseja realmente excluir esta requisição?')) {
       try {
-        setRequests(
+        setRequests(requests =>
           removeItemFromArray(
             requests,
             requests.findIndex(request => request._id === id),
@@ -77,46 +77,49 @@ const AchievementRegister: React.FC = () => {
         handleErrors(error);
       }
     }
-  };
+  }, []);
 
-  const handleAcceptRegister = async (id: string) => {
-    const request = requests.find(item => item._id === id);
+  const handleAcceptRegister = useCallback(
+    async (id: string) => {
+      const request = requests.find(item => item._id === id);
 
-    if (!request) return;
+      if (!request) return;
 
-    if (window.confirm('Garantir conquista?')) {
-      try {
-        const data = {
-          userId: user._id,
-          playerId: request.requester._id,
-          achievementId: request.achievement._id,
-          registerId: id,
-        };
+      if (window.confirm('Garantir conquista?')) {
+        try {
+          const data = {
+            userId: user._id,
+            playerId: request.requester._id,
+            achievementId: request.achievement._id,
+            registerId: id,
+          };
 
-        setRequests(
-          removeItemFromArray(
-            requests,
-            requests.findIndex(request => request._id === id),
-          ),
-        );
+          setRequests(
+            removeItemFromArray(
+              requests,
+              requests.findIndex(request => request._id === id),
+            ),
+          );
 
-        await api.post('/unlockAchievement', data);
+          await api.post('/unlockAchievement', data);
 
-        toast.success('Conquista garantida.');
+          toast.success('Conquista garantida.');
 
-        refreshGame();
+          refreshGame();
 
-        setShowModal(false);
-      } catch (error) {
-        handleErrors(error);
+          setShowModal(false);
+        } catch (error) {
+          handleErrors(error);
+        }
       }
-    }
-  };
+    },
+    [requests, refreshGame, user._id],
+  );
 
-  const handleShowDetails = (request: IAchievementRequest) => {
+  const handleShowDetails = useCallback((request: IAchievementRequest) => {
     setSelectedRequest(request);
     setShowModal(true);
-  };
+  }, []);
 
   return (
     <RequestsContainer>

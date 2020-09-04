@@ -1,13 +1,26 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  memo,
+} from 'react';
 
-import api from '../services/api';
+// Contexts
 import { useTheme } from './Theme';
+
+// Services
+import api from '../services/api';
+
+// Tyoes
 import { IUser, IAuth } from 'authorization';
 
 const AuthorizationContext = createContext({});
 
-const Authorization: React.FC = ({ children }) => {
+const Authorization: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { changeTheme } = useTheme();
 
   // States management
@@ -20,26 +33,27 @@ const Authorization: React.FC = ({ children }) => {
     if (!storedUser) setLogged(false);
     else {
       const parsedUser = JSON.parse(storedUser);
-      api.defaults.headers.Authorization = 'Bearer ' + parsedUser.token;
+
+      api.defaults.headers.Authorization = `Bearer ${parsedUser.token}`;
       setUser(parsedUser);
       setLogged(true);
     }
     setLoading(false);
   }, []);
 
-  const signIn = (user: IUser) => {
+  const signIn = useCallback((user: IUser) => {
     localStorage.setItem('loggedUser', JSON.stringify(user));
-    api.defaults.headers.Authorization = 'Bearer ' + user.token;
+    api.defaults.headers.Authorization = `Bearer ${user.token}`;
     setUser(user);
     setLogged(true);
-  };
+  }, []);
 
-  const signOut = () => {
+  const signOut = useCallback(() => {
     localStorage.clear();
     setUser({} as IUser);
     changeTheme({});
     setLogged(false);
-  };
+  }, [changeTheme]);
 
   return (
     <AuthorizationContext.Provider
@@ -56,8 +70,4 @@ export const useAuth: () => IAuth = () => {
   return auth;
 };
 
-Authorization.propTypes = {
-  children: PropTypes.node,
-};
-
-export default Authorization;
+export default memo(Authorization);

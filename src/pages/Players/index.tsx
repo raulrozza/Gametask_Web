@@ -1,12 +1,5 @@
 import React from 'react';
 
-// Libs
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
-
-// Icons
-import { FaArrowCircleLeft } from 'react-icons/fa';
-
 // Contexts
 import { useGame } from '../../contexts/Game';
 
@@ -14,6 +7,13 @@ import { useGame } from '../../contexts/Game';
 import Loading from '../../components/Loading';
 import ActivityRegister from './ActivityRegister';
 import AchievementRegister from './AchievementRegister';
+
+// Icons
+import { FaArrowCircleLeft } from 'react-icons/fa';
+
+// Libs
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 // Styles
 import { PlayersContainer } from './styles';

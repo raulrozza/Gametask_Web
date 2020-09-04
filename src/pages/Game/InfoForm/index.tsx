@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // Components
 import ColorInput from '../../../components/ColorInput';
@@ -25,6 +25,9 @@ import { ErrorField } from '../../../styles/Form';
 // Types
 import { InfoFormValues } from '../types';
 
+// Utils
+import handleErrors from '../../../utils/handleErrors';
+
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome do jogo.'),
   description: Yup.string().required(
@@ -49,35 +52,37 @@ const InfoForm: React.FC = () => {
   };
   const [disabledBtn, setDisabledBtn] = useState(false);
 
-  const submitForm = async (values: FormikValues) => {
-    const { name, description, theme, image } = values;
-    setDisabledBtn(true);
+  const submitForm = useCallback(
+    async (values: FormikValues) => {
+      const { name, description, theme, image } = values;
+      setDisabledBtn(true);
 
-    try {
-      const data = new FormData();
+      try {
+        const data = new FormData();
 
-      if (name !== game.name) data.append('name', name);
-      if (description !== game.description)
-        data.append('description', description);
-      if (
-        theme.primary !== game.theme.primary ||
-        theme.secondary !== game.theme.secondary
-      )
-        data.append('theme', JSON.stringify(theme));
-      if (image !== game.image_url) data.append('image', image);
+        if (name !== game.name) data.append('name', name);
+        if (description !== game.description)
+          data.append('description', description);
+        if (
+          theme.primary !== game.theme.primary ||
+          theme.secondary !== game.theme.secondary
+        )
+          data.append('theme', JSON.stringify(theme));
+        if (image !== game.image_url) data.append('image', image);
 
-      await api.put(`/game/${game._id}`, data);
+        await api.put(`/game/${game._id}`, data);
 
-      toast.success('Informações alteradas com sucesso.');
+        toast.success('Informações alteradas com sucesso.');
 
-      await refreshGame();
-    } catch (error) {
-      if (error.response) console.error(error.response.data);
-      console.error(error);
-    }
+        await refreshGame();
+      } catch (error) {
+        handleErrors(error);
+      }
 
-    setDisabledBtn(false);
-  };
+      setDisabledBtn(false);
+    },
+    [game, refreshGame],
+  );
 
   const { setValues, ...form } = useFormik({
     initialValues,
@@ -85,15 +90,18 @@ const InfoForm: React.FC = () => {
     onSubmit: submitForm,
   });
 
-  const handleColorChange = (key: string, color: string) => {
-    const newTheme = {
-      ...form.values.theme,
-    };
-    newTheme[key] = color;
+  const handleColorChange = useCallback(
+    (key: string, color: string) => {
+      const newTheme = {
+        ...form.values.theme,
+      };
+      newTheme[key] = color;
 
-    changeTheme(newTheme);
-    form.setFieldValue('theme', newTheme);
-  };
+      changeTheme(newTheme);
+      form.setFieldValue('theme', newTheme);
+    },
+    [form, changeTheme],
+  );
 
   return (
     <Form as="form" onSubmit={form.handleSubmit}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
 import PropTypes from 'prop-types';
 
 // Custom Components
@@ -55,77 +55,45 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
     if (achievement) setTitle(achievement.title ? achievement.title : null);
   }, [achievement]);
 
-  // OnChange method that changes the string in the title form, but also checks the API for existing titles
-  // and adds them to a suggestion list
-  const setTitleValue = ({
-    target: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
-    form.setFieldValue('title', value);
-    try {
-      const params = value.length > 0 ? { name: value } : {};
-      api
-        .get('/title', {
-          params,
-        })
-        .then(({ data }) => {
-          setTitleList(data);
-        });
-      setTitle(null);
-    } catch (error) {
-      handleErrors(error);
-    }
-  };
-
-  // Method used on the suggestion list that adds a new title to the existing ones, while also adding it to the
-  // selected title on the form.
-  const addTitle = async (name: string) => {
-    try {
-      const response = await api.post('/title', {
-        name,
-      });
-      setTitle(response.data);
-      setShowTitleList(false);
-    } catch (error) {
-      handleErrors(error);
-    }
-  };
-
   // Method varies dependending whether it is and update (if the achievement prop exists) or a new achievement
   // (if the prop doesn't exist). On submiting, summons the submitCallback to warn the parent about the changes
-  const submitForm = async (values: FormikValues) => {
-    const { name, description, image } = values;
+  const submitForm = useCallback(
+    async (values: FormikValues) => {
+      const { name, description, image } = values;
 
-    try {
-      setDisabledBtn(true);
+      try {
+        setDisabledBtn(true);
 
-      const data = new FormData();
+        const data = new FormData();
 
-      if (achievement) {
-        if (name !== achievement.name) data.append('name', name);
-        if (description !== achievement.description)
+        if (achievement) {
+          if (name !== achievement.name) data.append('name', name);
+          if (description !== achievement.description)
+            data.append('description', description);
+          if (image !== achievement.image) data.append('image', image);
+          data.append('title', title ? String(title._id) : '');
+
+          await api.put(`/achievement/${achievement._id}`, data);
+
+          submitCallback(achievement._id);
+        } else {
+          data.append('name', name);
           data.append('description', description);
-        if (image !== achievement.image) data.append('image', image);
-        data.append('title', title ? String(title._id) : '');
+          if (image) data.append('image', image);
+          if (title) data.append('title', title._id);
 
-        await api.put(`/achievement/${achievement._id}`, data);
+          const response = await api.post('/achievement', data);
 
-        submitCallback(achievement._id);
-      } else {
-        data.append('name', name);
-        data.append('description', description);
-        if (image) data.append('image', image);
-        if (title) data.append('title', title._id);
+          submitCallback(response.data._id);
+        }
 
-        const response = await api.post('/achievement', data);
-
-        submitCallback(response.data._id);
+        setDisabledBtn(false);
+      } catch (error) {
+        handleErrors(error);
       }
-
-      setDisabledBtn(false);
-    } catch (error) {
-      handleErrors(error);
-    }
-  };
+    },
+    [achievement, title, submitCallback],
+  );
 
   const { setValues, resetForm, ...form } = useFormik({
     initialValues,
@@ -154,6 +122,42 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
       });
     } else resetForm();
   }, [setValues, resetForm, achievement]);
+
+  // OnChange method that changes the string in the title form, but also checks the API for existing titles
+  // and adds them to a suggestion list
+  const setTitleValue = useCallback(
+    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+      form.setFieldValue('title', value);
+      try {
+        const params = value.length > 0 ? { name: value } : {};
+        api
+          .get('/title', {
+            params,
+          })
+          .then(({ data }) => {
+            setTitleList(data);
+          });
+        setTitle(null);
+      } catch (error) {
+        handleErrors(error);
+      }
+    },
+    [form],
+  );
+
+  // Method used on the suggestion list that adds a new title to the existing ones, while also adding it to the
+  // selected title on the form.
+  const addTitle = useCallback(async (name: string) => {
+    try {
+      const response = await api.post('/title', {
+        name,
+      });
+      setTitle(response.data);
+      setShowTitleList(false);
+    } catch (error) {
+      handleErrors(error);
+    }
+  }, []);
 
   return (
     <div className="achievement-form">

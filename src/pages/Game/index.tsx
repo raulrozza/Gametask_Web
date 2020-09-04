@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, useMemo, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   Switch,
@@ -33,23 +33,26 @@ const Game: React.FC = () => {
   const location = useLocation();
   const { loading } = useGame();
 
-  const sidenavItems = [
-    {
-      key: 'info',
-      title: 'Informações gerais',
-      url: `${match.url}/info`,
-    },
-    {
-      key: 'leveling',
-      title: 'Gerenciar níveis',
-      url: `${match.url}/leveling`,
-    },
-    {
-      key: 'ranks',
-      title: 'Gerenciar patentes',
-      url: `${match.url}/ranks`,
-    },
-  ];
+  const sidenavItems = useMemo(
+    () => [
+      {
+        key: 'info',
+        title: 'Informações gerais',
+        url: `${match.url}/info`,
+      },
+      {
+        key: 'leveling',
+        title: 'Gerenciar níveis',
+        url: `${match.url}/leveling`,
+      },
+      {
+        key: 'ranks',
+        title: 'Gerenciar patentes',
+        url: `${match.url}/ranks`,
+      },
+    ],
+    [match.url],
+  );
 
   if (loading) return <Loading />;
   return (

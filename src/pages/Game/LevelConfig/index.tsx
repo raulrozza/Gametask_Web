@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
@@ -15,15 +15,16 @@ import Button from '../../../styles/Button';
 import { RemoveButton } from '../../../styles/RemoveButton';
 import { LevelConfigContainer } from './styles';
 
+// Types
+import { ILevelInfo } from '../types';
+
 // Utils
 import {
   addItemToArray,
   removeItemFromArray,
   updateItemInArray,
 } from '../../../utils/arrayMethods';
-
-// Types
-import { ILevelInfo } from '../types';
+import handleErrors from '../../../utils/handleErrors';
 
 const LevelConfig: React.FC = () => {
   const { game, refreshGame } = useGame();
@@ -37,31 +38,36 @@ const LevelConfig: React.FC = () => {
     }),
   );
 
-  const handleAddItem = () => {
+  const handleAddItem = useCallback(() => {
     const newLevel = {
       requiredExperience: 0,
       title: '',
     };
 
-    setLevelInfo(addItemToArray(levelInfo, newLevel));
-  };
+    setLevelInfo(levelInfo => addItemToArray(levelInfo, newLevel));
+  }, []);
 
-  const handleRemoveItem = (index: number) => {
+  const handleRemoveItem = useCallback((index: number) => {
     if (window.confirm('Deseja mesmo remover este nível?'))
-      setLevelInfo(removeItemFromArray(levelInfo, index));
-  };
+      setLevelInfo(levelInfo => removeItemFromArray(levelInfo, index));
+  }, []);
 
-  const handleChangeItem = (target: HTMLInputElement, index: number) => {
-    const item = levelInfo[index];
-    const selector = target.name;
+  const handleChangeItem = useCallback(
+    (target: HTMLInputElement, index: number) => {
+      setLevelInfo(levelInfo => {
+        const item = levelInfo[index];
+        const selector = target.name;
 
-    if (target.type === 'number') item[selector] = parseInt(target.value);
-    else item[target.name] = target.value;
+        if (target.type === 'number') item[selector] = parseInt(target.value);
+        else item[target.name] = target.value;
 
-    setLevelInfo(updateItemInArray(levelInfo, item, index));
-  };
+        return updateItemInArray(levelInfo, item, index);
+      });
+    },
+    [],
+  );
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     disableButton(true);
 
     const newLevelInfo = levelInfo.map((info, index) => {
@@ -78,11 +84,11 @@ const LevelConfig: React.FC = () => {
 
       await refreshGame();
     } catch (error) {
-      console.error(error);
+      handleErrors(error);
     }
 
     disableButton(false);
-  };
+  }, [game._id, levelInfo, refreshGame]);
 
   return (
     <LevelConfigContainer>

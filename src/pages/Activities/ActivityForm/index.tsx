@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 // Components
@@ -34,36 +34,39 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
   // Method varies dependending whether it is and update (if the activity prop exists) or a new activity
   // (if the prop doesn't exist). On submiting, summons the submitCallback to warn the parent about the changes
-  const submitForm = async (values: FormikValues) => {
-    const { name, description, experience, dmRules } = values;
+  const submitForm = useCallback(
+    async (values: FormikValues) => {
+      const { name, description, experience, dmRules } = values;
 
-    setDisabledBtn(true);
-    try {
-      if (activity) {
-        await api.put(`/activity/${activity._id}`, {
-          name,
-          description,
-          experience,
-          dmRules,
-        });
+      setDisabledBtn(true);
+      try {
+        if (activity) {
+          await api.put(`/activity/${activity._id}`, {
+            name,
+            description,
+            experience,
+            dmRules,
+          });
 
-        submitCallback(activity._id);
-      } else {
-        const { data } = await api.post('/activity', {
-          name,
-          description,
-          experience: parseInt(experience),
-          dmRules,
-        });
+          submitCallback(activity._id);
+        } else {
+          const { data } = await api.post('/activity', {
+            name,
+            description,
+            experience: parseInt(experience),
+            dmRules,
+          });
 
-        submitCallback(data._id);
+          submitCallback(data._id);
+        }
+      } catch (error) {
+        handleErrors(error);
       }
-    } catch (error) {
-      handleErrors(error);
-    }
 
-    setDisabledBtn(false);
-  };
+      setDisabledBtn(false);
+    },
+    [activity, submitCallback],
+  );
 
   const { setValues, resetForm, ...form } = useFormik({
     initialValues: {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import crypto from 'crypto-js';
@@ -26,14 +26,14 @@ const Share: React.FC<IShare> = ({ gameId }) => {
     SECRET,
   ).toString();
 
-  const handleCopyToClipboard = () => {
+  const handleCopyToClipboard = useCallback(() => {
     if (inputRef.current !== null) {
       inputRef.current.select();
       document.execCommand('copy');
 
       toast.info('Copiado para a área de transferência.');
     }
-  };
+  }, []);
 
   return (
     <Container>

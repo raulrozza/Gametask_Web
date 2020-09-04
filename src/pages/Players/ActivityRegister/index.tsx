@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 // Assets
 import userPlaceholder from '../../../assets/img/users/placeholder.png';
@@ -59,10 +59,10 @@ const ActivityRegister: React.FC = () => {
     })();
   }, []);
 
-  const handleDeleteRegister = async (id: string) => {
+  const handleDeleteRegister = useCallback(async (id: string) => {
     if (window.confirm('Deseja realmente excluir esta requisição?')) {
       try {
-        setRequests(
+        setRequests(requests =>
           removeItemFromArray(
             requests,
             requests.findIndex(request => request._id === id),
@@ -76,48 +76,51 @@ const ActivityRegister: React.FC = () => {
         handleErrors(error);
       }
     }
-  };
+  }, []);
 
-  const handleAcceptRegister = async (id: string) => {
-    const request = requests.find(item => item._id === id);
+  const handleAcceptRegister = useCallback(
+    async (id: string) => {
+      const request = requests.find(item => item._id === id);
 
-    if (!request) return;
+      if (!request) return;
 
-    if (window.confirm('Confirmar pontuação?')) {
-      try {
-        const data = {
-          userId: user._id,
-          playerId: request.requester._id,
-          activityId: request.activity._id,
-          registerId: id,
-          experience: request.activity.experience,
-          completionDate: request.completionDate,
-        };
+      if (window.confirm('Confirmar pontuação?')) {
+        try {
+          const data = {
+            userId: user._id,
+            playerId: request.requester._id,
+            activityId: request.activity._id,
+            registerId: id,
+            experience: request.activity.experience,
+            completionDate: request.completionDate,
+          };
 
-        setRequests(
-          removeItemFromArray(
-            requests,
-            requests.findIndex(request => request._id === id),
-          ),
-        );
+          setRequests(
+            removeItemFromArray(
+              requests,
+              requests.findIndex(request => request._id === id),
+            ),
+          );
 
-        await api.post('/experience', data);
+          await api.post('/experience', data);
 
-        toast.success('Requisição aceita!');
+          toast.success('Requisição aceita!');
 
-        refreshGame();
+          refreshGame();
 
-        setShowModal(false);
-      } catch (error) {
-        handleErrors(error);
+          setShowModal(false);
+        } catch (error) {
+          handleErrors(error);
+        }
       }
-    }
-  };
+    },
+    [requests, refreshGame, user._id],
+  );
 
-  const handleShowDetails = (request: IActivityRequest) => {
+  const handleShowDetails = useCallback((request: IActivityRequest) => {
     setSelectedRequest(request);
     setShowModal(true);
-  };
+  }, []);
 
   return (
     <RequestsContainer>

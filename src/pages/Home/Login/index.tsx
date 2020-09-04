@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // Contexts
 import { useAuth } from '../../../contexts/Authorization';
@@ -40,24 +40,29 @@ const Login: React.FC<FormContainerProps> = ({ shown }) => {
   // Hooks
   const { signIn } = useAuth();
 
+  const onSubmit = useCallback(
+    async values => {
+      setButtonDisabled(true);
+
+      // Login
+      try {
+        const response = await api.post('/login', values);
+
+        return signIn(response.data);
+      } catch (error) {
+        handleErrors(error);
+      }
+
+      return setButtonDisabled(false);
+    },
+    [signIn],
+  );
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={LoginSchema}
-      onSubmit={async values => {
-        setButtonDisabled(true);
-
-        // Login
-        try {
-          const response = await api.post('/login', values);
-
-          return signIn(response.data);
-        } catch (error) {
-          handleErrors(error);
-        }
-
-        return setButtonDisabled(false);
-      }}
+      onSubmit={onSubmit}
     >
       {({ errors, touched }) => (
         <Form shown={shown}>
