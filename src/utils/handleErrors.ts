@@ -20,6 +20,7 @@ const toastIds = {
   MISSING_PARAMETERS: 5,
   DEFAULT_TOAST: 6,
   NO_DATA_RESPONSE: 7,
+  UNABLE_TO_DELETE_TITLE: 8,
 };
 
 const isAxiosError = (error: any): error is AxiosError =>
@@ -60,6 +61,11 @@ const handleErrors: (
           case 200:
             return toast.error('Usuário ou senha incorretos.', {
               toastId: toastIds.USER_PASSWORD_DONT_MATCH,
+            });
+
+          case 201:
+            return toast.error('Não é possível excluir títulos já obtidos.', {
+              toastId: toastIds.UNABLE_TO_DELETE_TITLE,
             });
 
           case 300:

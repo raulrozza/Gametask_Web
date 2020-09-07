@@ -7,6 +7,7 @@ import { useGame } from '../../contexts/Game';
 import Loading from '../../components/Loading';
 import ActivityRegister from './ActivityRegister';
 import AchievementRegister from './AchievementRegister';
+import TitleManager from './TitleManager';
 
 // Icons
 import { FaArrowCircleLeft } from 'react-icons/fa';
@@ -38,6 +39,8 @@ const Players: React.FC = () => {
       <ActivityRegister />
 
       <AchievementRegister />
+
+      <TitleManager />
     </PlayersContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { IPlayer, IActivity, IAchievement } from 'game';
+import { IPlayer, IActivity, IAchievement, ITitle } from 'game';
 
 export interface IActivityRequest {
   _id: string;
@@ -27,4 +27,13 @@ export interface AchievementRequestModalProps {
   request: IAchievementRequest;
   deleteRequest: (id: string) => void;
   acceptRequest: (id: string) => void;
+}
+
+export interface TitleElementProps {
+  title: ITitle;
+  onDelete: (id: string) => void;
+}
+
+export interface TitleElementContainerProps {
+  editing: boolean;
 }
