@@ -23,7 +23,8 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 
 // Styles
-import { NoRequests, RequestsContainer, RequestFooter } from '../styles';
+import { RequestsContainer } from './styles';
+import { NoRequests, RequestFooter } from '../styles';
 
 // Types
 import { IActivityRequest } from '../types';

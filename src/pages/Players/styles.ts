@@ -28,7 +28,7 @@ export const RequestsContainer = styled.div`
     padding: 10px;
     border-radius: 10px;
     margin: 10px;
-    width: 500px;
+    width: 480px;
 
     ul {
       list-style: none;
