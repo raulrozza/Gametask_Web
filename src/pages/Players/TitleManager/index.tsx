@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import TitleElement from './TitleElement';
 
 // Icons
-import { FaEdit } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 
 // Services
 import api from '../../../services/api';
@@ -59,8 +59,8 @@ const TitleManager: React.FC = () => {
     <Container>
       <header>
         <h3>Gerenciar Títulos</h3>
-        <button type="button" onClick={handleAddTitle}>
-          <FaEdit />
+        <button type="button" title="Adicionar título" onClick={handleAddTitle}>
+          <FaPlus />
         </button>
       </header>
       <ul>
