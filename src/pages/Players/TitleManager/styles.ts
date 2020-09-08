@@ -37,3 +37,12 @@ export const Container = styled(RequestsContainer)`
     background-color: ${({ theme }) => theme.primaryLowShade};
   }
 `;
+
+export const NoTitles = styled.div`
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+`;

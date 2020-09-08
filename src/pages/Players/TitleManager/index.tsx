@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 // Components
+import Loading from '../../../components/Loading';
 import TitleElement from './TitleElement';
 
 // Icons
@@ -10,7 +11,7 @@ import { FaPlus } from 'react-icons/fa';
 import api from '../../../services/api';
 
 // Styles
-import { Container } from './styles';
+import { Container, NoTitles } from './styles';
 
 // Types
 import { ITitle } from 'game';
@@ -24,6 +25,7 @@ import {
 
 const TitleManager: React.FC = () => {
   const [titles, setTitles] = useState<ITitle[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -33,6 +35,8 @@ const TitleManager: React.FC = () => {
         setTitles(data);
       } catch (error) {
         handleApiErrors(error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -63,15 +67,22 @@ const TitleManager: React.FC = () => {
           <FaPlus />
         </button>
       </header>
-      <ul>
-        {titles.map(title => (
-          <TitleElement
-            key={title._id}
-            title={title}
-            onDelete={deleteCallback}
-          />
-        ))}
-      </ul>
+      {loading ? (
+        <Loading />
+      ) : (
+        <ul>
+          {titles.map(title => (
+            <TitleElement
+              key={title._id}
+              title={title}
+              onDelete={deleteCallback}
+            />
+          ))}
+          {titles.length === 0 && (
+            <NoTitles>Não há nenhum título cadastrado.</NoTitles>
+          )}
+        </ul>
+      )}
     </Container>
   );
 };
