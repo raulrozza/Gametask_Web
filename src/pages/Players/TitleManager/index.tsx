@@ -16,7 +16,7 @@ import { Container } from './styles';
 import { ITitle } from 'game';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 import {
   addItemToArray,
   removeItemFromArray,
@@ -32,7 +32,7 @@ const TitleManager: React.FC = () => {
 
         setTitles(data);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);
@@ -43,7 +43,7 @@ const TitleManager: React.FC = () => {
 
       setTitles(titles => addItemToArray(titles, data));
     } catch (error) {
-      handleErrors(error);
+      handleApiErrors(error);
     }
   }, []);
 

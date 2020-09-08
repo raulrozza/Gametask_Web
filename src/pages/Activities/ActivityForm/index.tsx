@@ -16,7 +16,7 @@ import Form, { ErrorField } from '../../../styles/Form';
 import { ActivityFormProps } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const ActivitySchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome da atividade.'),
@@ -60,7 +60,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
           submitCallback(data._id);
         }
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
 
       setDisabledBtn(false);

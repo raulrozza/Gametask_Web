@@ -32,7 +32,7 @@ import {
   updateItemInArray,
   removeItemFromArray,
 } from '../../utils/arrayMethods';
-import handleErrors from '../../utils/handleErrors';
+import handleApiErrors from '../../utils/handleApiErrors';
 
 const Activities: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -84,7 +84,7 @@ const Activities: React.FC = () => {
           return removeItemFromArray(activities, index);
         });
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
 
       setLoading(false);
@@ -99,7 +99,7 @@ const Activities: React.FC = () => {
         setActivities(data);
         setLoading(false);
       } catch (error) {
-        handleErrors(error, signOut);
+        handleApiErrors(error, signOut);
       }
     })();
   }, [signOut]);
@@ -118,7 +118,7 @@ const Activities: React.FC = () => {
 
       setShowPanel(false);
     } catch (error) {
-      handleErrors(error);
+      handleApiErrors(error);
     }
   }, []);
 

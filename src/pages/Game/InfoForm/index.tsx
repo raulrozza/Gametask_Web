@@ -26,7 +26,7 @@ import { ErrorField } from '../../../styles/Form';
 import { InfoFormValues } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome do jogo.'),
@@ -76,7 +76,7 @@ const InfoForm: React.FC = () => {
 
         await refreshGame();
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
 
       setDisabledBtn(false);

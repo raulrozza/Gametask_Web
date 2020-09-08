@@ -25,7 +25,7 @@ import { ITitle } from 'game';
 import { AchievementFormProps, FormValues } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const AchievementSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome da conquista.'),
@@ -92,7 +92,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
 
         setDisabledBtn(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     },
     [achievement, title, submitCallback],
@@ -141,7 +141,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
           });
         setTitle(null);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     }, 500),
     [],
@@ -165,7 +165,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
       setTitle(response.data);
       setShowTitleList(false);
     } catch (error) {
-      handleErrors(error);
+      handleApiErrors(error);
     }
   }, []);
 

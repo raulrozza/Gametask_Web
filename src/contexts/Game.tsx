@@ -18,7 +18,7 @@ import api from '../services/api';
 import { IGameHook, IGame } from 'game';
 
 // Utils
-import handleErrors from '../utils/handleErrors';
+import handleApiErrors from '../utils/handleApiErrors';
 import isEqual from '../utils/isEqual';
 
 const GameContext = createContext({});
@@ -49,7 +49,7 @@ const Game: React.FC = ({ children }) => {
         setGame(data);
         changeTheme(data.theme);
       } catch (error) {
-        handleErrors(error, signOut);
+        handleApiErrors(error, signOut);
       }
     },
     [signOut, changeTheme],

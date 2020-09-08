@@ -24,7 +24,7 @@ import { Container, GameCard } from './styles';
 import Button from '../../styles/Button';
 
 // Utils
-import handleErrors from '../../utils/handleErrors';
+import handleApiErrors from '../../utils/handleApiErrors';
 
 const Lobby: React.FC = () => {
   const [games, setGames] = useState<IGame[]>([]);
@@ -43,7 +43,7 @@ const Lobby: React.FC = () => {
       setGames(data);
       setLoading(false);
     } catch (error) {
-      handleErrors(error, signOut);
+      handleApiErrors(error, signOut);
     }
   }, [signOut]);
 

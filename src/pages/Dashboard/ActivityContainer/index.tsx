@@ -19,7 +19,7 @@ import { IActivity } from 'game';
 import { IThemedComponent } from 'theme';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -34,7 +34,7 @@ const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
         setActivities(data);
         setLoadingData(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);

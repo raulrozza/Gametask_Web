@@ -37,7 +37,7 @@ import {
   updateItemInArray,
   removeItemFromArray,
 } from '../../utils/arrayMethods';
-import handleErrors from '../../utils/handleErrors';
+import handleApiErrors from '../../utils/handleApiErrors';
 
 const Achievements: React.FC = () => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -92,7 +92,7 @@ const Achievements: React.FC = () => {
         const index = achievements.findIndex(item => item._id === id);
         setAchievements(removeItemFromArray(achievements, index));
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
 
       setLoading(false);
@@ -107,7 +107,7 @@ const Achievements: React.FC = () => {
         setAchievements(data);
         setLoading(false);
       } catch (error) {
-        handleErrors(error, signOut);
+        handleApiErrors(error, signOut);
       }
     })();
   }, [signOut]);
@@ -122,7 +122,7 @@ const Achievements: React.FC = () => {
       else setAchievements(updateItemInArray(achievements, data, index));
       setShowPanel(false);
     } catch (error) {
-      handleErrors(error);
+      handleApiErrors(error);
     }
   };
 

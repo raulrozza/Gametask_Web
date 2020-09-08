@@ -25,7 +25,7 @@ import {
   removeItemFromArray,
   updateItemInArray,
 } from '../../../utils/arrayMethods';
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const RankConfig: React.FC = () => {
   const { game, refreshGame } = useGame();
@@ -95,7 +95,7 @@ const RankConfig: React.FC = () => {
 
       await refreshGame();
     } catch (error) {
-      handleErrors(error);
+      handleApiErrors(error);
     }
 
     disableButton(false);

@@ -27,7 +27,7 @@ import api from '../../../services/api';
 
 // Utils
 import { removeItemFromArray } from '../../../utils/arrayMethods';
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 // Types
 import { IAchievementRequest } from '../types';
@@ -55,7 +55,7 @@ const AchievementRegister: React.FC = () => {
         setRequests(response.data);
         setLoading(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);
@@ -74,7 +74,7 @@ const AchievementRegister: React.FC = () => {
 
         toast.update('Requisição excluída');
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     }
   }, []);
@@ -109,7 +109,7 @@ const AchievementRegister: React.FC = () => {
 
           setShowModal(false);
         } catch (error) {
-          handleErrors(error);
+          handleApiErrors(error);
         }
       }
     },

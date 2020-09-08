@@ -31,7 +31,7 @@ import { IActivityRequest } from '../types';
 
 // Utils
 import { removeItemFromArray } from '../../../utils/arrayMethods';
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const ActivityRegister: React.FC = () => {
   // States
@@ -55,7 +55,7 @@ const ActivityRegister: React.FC = () => {
         setRequests(response.data);
         setLoading(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);
@@ -74,7 +74,7 @@ const ActivityRegister: React.FC = () => {
 
         toast.update('Requisição excluída');
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     }
   }, []);
@@ -111,7 +111,7 @@ const ActivityRegister: React.FC = () => {
 
           setShowModal(false);
         } catch (error) {
-          handleErrors(error);
+          handleApiErrors(error);
         }
       }
     },

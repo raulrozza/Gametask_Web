@@ -19,7 +19,7 @@ import { ErrorField } from '../../../styles/Form';
 import { FormContainerProps } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -50,7 +50,7 @@ const Login: React.FC<FormContainerProps> = ({ shown }) => {
 
         return signIn(response.data);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
 
       return setButtonDisabled(false);

@@ -18,7 +18,7 @@ import ImageInput from '../../../components/ImageInput';
 import { IGameForm, IGameValues } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Dê um nome ao seu jogo.'),
@@ -51,7 +51,7 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
 
         onSuccess();
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       } finally {
         closeModal();
       }

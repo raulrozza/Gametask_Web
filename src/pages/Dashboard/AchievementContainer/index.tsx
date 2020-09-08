@@ -22,7 +22,7 @@ import { IAchievement } from 'game';
 import { IThemedComponent } from 'theme';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -37,7 +37,7 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
         setAchievements(data);
         setLoadingData(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);

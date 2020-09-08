@@ -10,7 +10,7 @@ import { Container } from './styles';
 import { TitleElementProps } from '../../types';
 
 // Utils
-import handleErrors from '../../../../utils/handleErrors';
+import handleApiErrors from '../../../../utils/handleApiErrors';
 import api from '../../../../services/api';
 
 const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
@@ -31,7 +31,7 @@ const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
         try {
           await api.put(`/title/${title._id}`, { name });
         } catch (error) {
-          handleErrors(error);
+          handleApiErrors(error);
         }
       }
     },
@@ -45,7 +45,7 @@ const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
 
         onDelete(title._id);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
   }, [onDelete, title._id]);
 

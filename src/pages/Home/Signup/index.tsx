@@ -17,7 +17,7 @@ import { Form } from '../styles';
 import { FormContainerProps } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const SignupSchema = Yup.object().shape({
   firstname: Yup.string().required('Digite seu nome'),
@@ -54,7 +54,7 @@ const Signup: React.FC<FormContainerProps> = ({ shown }) => {
 
       toast.success('Cadastro efetuado com sucesso!');
     } catch (error) {
-      handleErrors(error);
+      handleApiErrors(error);
     }
 
     return setSignupButtonDisabled(false);
