@@ -7,8 +7,8 @@ import React, {
   memo,
 } from 'react';
 
-// Contexts
-import { useTheme } from './Theme';
+// Hooks
+import { useTheme } from '../hooks/contexts/useTheme';
 
 // Services
 import api from '../services/api';

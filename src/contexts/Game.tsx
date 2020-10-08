@@ -9,7 +9,9 @@ import PropTypes from 'prop-types';
 
 // Contexts
 import { useAuth } from './Authorization';
-import { useTheme } from './Theme';
+
+// Hooks
+import { useTheme } from '../hooks/contexts/useTheme';
 
 // Services
 import api from '../services/api';

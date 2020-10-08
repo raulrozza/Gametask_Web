@@ -4,8 +4,14 @@ import React, { useState, useCallback } from 'react';
 import ColorInput from '../../../components/ColorInput';
 import ImageInput from '../../../components/ImageInput';
 
+// Config
+import { defaultTheme } from '../../../config/defaultTheme';
+
 // Contexts
 import { useGame } from '../../../contexts/Game';
+
+// Hooks
+import { useTheme } from '../../../hooks/contexts/useTheme';
 
 // Libraries
 import { FaEdit } from 'react-icons/fa';
@@ -19,7 +25,6 @@ import api from '../../../services/api';
 // Styles
 import Button from '../../../styles/Button';
 import { Form } from './styles';
-import { useTheme, defaultTheme } from '../../../contexts/Theme';
 import { ErrorField } from '../../../styles/Form';
 
 // Types

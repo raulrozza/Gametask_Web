@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
-import { getTextColor } from '../../../contexts/Theme';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
@@ -26,6 +25,7 @@ import {
   updateItemInArray,
 } from '../../../utils/arrayMethods';
 import handleApiErrors from '../../../utils/handleApiErrors';
+import { getTextColor } from '../../../utils/theme/getTextColor';
 
 const RankConfig: React.FC = () => {
   const { game, refreshGame } = useGame();

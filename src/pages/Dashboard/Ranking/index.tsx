@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 
 // Contexts
 import { useGame } from '../../../contexts/Game';
-import { getTextColor } from '../../../contexts/Theme';
 
 // Icons
 import { FaFrown } from 'react-icons/fa';
 
 // Styles
 import { RankingContainer } from './styles';
+
+// Utils
+import { getTextColor } from '../../../utils/theme/getTextColor';
 
 const Ranking: React.FC = () => {
   const { game } = useGame();

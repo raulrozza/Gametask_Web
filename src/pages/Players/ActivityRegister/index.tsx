@@ -128,89 +128,87 @@ const ActivityRegister: React.FC = () => {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <ul className="request-list">
-            {requests.length > 0 ? (
-              requests.map(({ requester, activity, ...request }) => (
-                <li className="request" key={request._id}>
-                  <section className="main">
-                    <img
-                      src={
-                        requester.user.image
-                          ? requester.user.profile_url
-                          : userPlaceholder
-                      }
-                      alt={requester.user.firstname}
-                    />
+        <ul className="request-list">
+          {requests.length > 0 ? (
+            requests.map(({ requester, activity, ...request }) => (
+              <li className="request" key={request._id}>
+                <section className="main">
+                  <img
+                    src={
+                      requester.user.image
+                        ? requester.user.profile_url
+                        : userPlaceholder
+                    }
+                    alt={requester.user.firstname}
+                  />
 
-                    <div>
-                      <span className="title">
-                        <strong>{requester.user.firstname}</strong>
-                        {` | `}
-                        <strong>
-                          {activity.name} ({activity.experience} XP)
-                        </strong>
-                      </span>
-
-                      <span className="info">{request.information}</span>
-                    </div>
-                  </section>
-                  <RequestFooter>
-                    <span>
-                      {new Date(request.requestDate).toLocaleDateString()}
+                  <div>
+                    <span className="title">
+                      <strong>{requester.user.firstname}</strong>
+                      {` | `}
+                      <strong>
+                        {activity.name} ({activity.experience} XP)
+                      </strong>
                     </span>
-                    <div>
-                      <button
-                        className="details"
-                        type="button"
-                        title="Detalhes da Requisição"
-                        onClick={() =>
-                          handleShowDetails({
-                            ...request,
-                            requester,
-                            activity,
-                          })
-                        }
-                      >
-                        Ver Mais
-                      </button>
-                      <button
-                        className="confirm"
-                        type="button"
-                        title="Aceitar Requisição"
-                        onClick={() => handleAcceptRegister(request._id)}
-                      >
-                        <FaCheck />
-                      </button>
-                      <button
-                        className="delete"
-                        type="button"
-                        title="Remover Requisição"
-                        onClick={() => handleDeleteRegister(request._id)}
-                      >
-                        <FaTrashAlt />
-                      </button>
-                    </div>
-                  </RequestFooter>
-                </li>
-              ))
-            ) : (
-              <NoRequests>
-                <BsController />
-                Não há requisições!
-              </NoRequests>
-            )}
-          </ul>
-          {showModal && selectedRequest && (
-            <Modal closeModal={() => setShowModal(false)} title="Atividade">
-              <RequestModal
-                request={selectedRequest}
-                deleteRequest={handleDeleteRegister}
-                acceptRequest={handleAcceptRegister}
-              />
-            </Modal>
+
+                    <span className="info">{request.information}</span>
+                  </div>
+                </section>
+                <RequestFooter>
+                  <span>
+                    {new Date(request.requestDate).toLocaleDateString()}
+                  </span>
+                  <div>
+                    <button
+                      className="details"
+                      type="button"
+                      title="Detalhes da Requisição"
+                      onClick={() =>
+                        handleShowDetails({
+                          ...request,
+                          requester,
+                          activity,
+                        })
+                      }
+                    >
+                      Ver Mais
+                    </button>
+                    <button
+                      className="confirm"
+                      type="button"
+                      title="Aceitar Requisição"
+                      onClick={() => handleAcceptRegister(request._id)}
+                    >
+                      <FaCheck />
+                    </button>
+                    <button
+                      className="delete"
+                      type="button"
+                      title="Remover Requisição"
+                      onClick={() => handleDeleteRegister(request._id)}
+                    >
+                      <FaTrashAlt />
+                    </button>
+                  </div>
+                </RequestFooter>
+              </li>
+            ))
+          ) : (
+            <NoRequests>
+              <BsController />
+              Não há requisições!
+            </NoRequests>
           )}
-        </>
+        </ul>
+      )}
+      {showModal && selectedRequest && (
+        <Modal closeModal={() => setShowModal(false)} title="Atividade">
+          <RequestModal
+            request={selectedRequest}
+            deleteRequest={handleDeleteRegister}
+            acceptRequest={handleAcceptRegister}
+          />
+        </Modal>
       )}
     </RequestsContainer>
   );

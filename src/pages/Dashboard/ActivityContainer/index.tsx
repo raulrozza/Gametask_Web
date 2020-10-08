@@ -16,7 +16,7 @@ import { withTheme } from 'styled-components';
 
 // Types
 import { IActivity } from 'game';
-import { IThemedComponent } from 'theme';
+import { IThemedComponent } from '../../../interfaces/theme/ThemedComponent';
 
 // Utils
 import handleApiErrors from '../../../utils/handleApiErrors';

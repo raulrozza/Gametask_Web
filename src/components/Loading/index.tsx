@@ -9,7 +9,7 @@ import ReactLoading from 'react-loading';
 import { LoadingContainer } from './styles';
 
 // Types
-import { IThemedComponent } from 'theme';
+import { IThemedComponent } from '../../interfaces/theme/ThemedComponent';
 
 // This is the component displayed when something is loading.
 const Loading: React.FC<IThemedComponent> = ({ theme }) => (
