@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import { FaPlus, FaLink } from 'react-icons/fa';
 
 // Contexts
-import { useAuth } from '../../contexts/Authorization';
 import { useGame } from '../../contexts/Game';
 
 // Components
@@ -13,10 +12,13 @@ import GameForm from './GameForm';
 import Navbar from './Navbar';
 import Share from './Share';
 
+// Hooks
+import { useAuth } from '../../hooks/contexts/useAuth';
+
 // Types
 import { IGame } from 'game';
 
-// services
+// Services
 import api from '../../services/api';
 
 // Styles

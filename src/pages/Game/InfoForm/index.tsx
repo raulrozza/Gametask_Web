@@ -176,7 +176,10 @@ const InfoForm: React.FC = () => {
             changeTheme(defaultTheme);
             setValues({
               ...form.values,
-              theme: defaultTheme,
+              theme: {
+                primary: defaultTheme.primary,
+                secondary: defaultTheme.secondary,
+              },
             });
           }}
         >

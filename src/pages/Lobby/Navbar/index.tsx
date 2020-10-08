@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
-// Contexts
-import { useAuth } from '../../../contexts/Authorization';
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Assets
 import logo from '../../../assets/img/logo.png';
@@ -10,6 +10,8 @@ import { Container } from './styles';
 
 const Navbar: React.FC = () => {
   const { user, signOut } = useAuth();
+
+  if (!user) return null;
 
   return (
     <Container>

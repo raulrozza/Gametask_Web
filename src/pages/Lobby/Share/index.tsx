@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import crypto from 'crypto-js';
 
-// Contexts
-import { useAuth } from '../../../contexts/Authorization';
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Icons
 import { MdContentCopy } from 'react-icons/md';
@@ -21,11 +21,6 @@ const Share: React.FC<IShare> = ({ gameId }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const SECRET = process.env.REACT_APP_SECRET || '';
 
-  const cipher = crypto.AES.encrypt(
-    JSON.stringify({ gameId, inviter: user._id }),
-    SECRET,
-  ).toString();
-
   const handleCopyToClipboard = useCallback(() => {
     if (inputRef.current !== null) {
       inputRef.current.select();
@@ -34,6 +29,13 @@ const Share: React.FC<IShare> = ({ gameId }) => {
       toast.info('Copiado para a área de transferência.');
     }
   }, []);
+
+  if (!user) return null;
+
+  const cipher = crypto.AES.encrypt(
+    JSON.stringify({ gameId, inviter: user._id }),
+    SECRET,
+  ).toString();
 
   return (
     <Container>

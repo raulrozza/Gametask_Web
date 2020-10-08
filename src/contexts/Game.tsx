@@ -7,10 +7,8 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-// Contexts
-import { useAuth } from './Authorization';
-
 // Hooks
+import { useAuth } from '../hooks/contexts/useAuth';
 import { useTheme } from '../hooks/contexts/useTheme';
 
 // Services

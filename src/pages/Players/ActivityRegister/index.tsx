@@ -9,8 +9,10 @@ import Modal from '../../../components/Modal';
 import RequestModal from './RequestModal';
 
 // Contexts
-import { useAuth } from '../../../contexts/Authorization';
 import { useGame } from '../../../contexts/Game';
+
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
@@ -83,7 +85,7 @@ const ActivityRegister: React.FC = () => {
     async (id: string) => {
       const request = requests.find(item => item._id === id);
 
-      if (!request) return;
+      if (!request || !user) return;
 
       if (window.confirm('Confirmar pontuação?')) {
         try {
@@ -115,7 +117,7 @@ const ActivityRegister: React.FC = () => {
         }
       }
     },
-    [requests, refreshGame, user._id],
+    [requests, refreshGame, user],
   );
 
   const handleShowDetails = useCallback((request: IActivityRequest) => {

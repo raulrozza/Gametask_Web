@@ -4,13 +4,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FaEdit, FaTimes, FaPlus } from 'react-icons/fa';
 
 // Contexts
-import { useAuth } from '../../contexts/Authorization';
 import { IActivity } from 'game';
 
 // Custom components
 import ActivityForm from './ActivityForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
+
+// Hooks
+import { useAuth } from '../../hooks/contexts/useAuth';
 
 // Services
 import api from '../../services/api';

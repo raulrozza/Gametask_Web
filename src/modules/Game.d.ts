@@ -1,6 +1,5 @@
 declare module 'game' {
-  import { IUser } from 'authorization';
-  import { IColorPallete } from 'theme';
+  import { IUser } from '../interfaces/api/User';
 
   export interface IRank {
     color: string;
@@ -66,7 +65,10 @@ declare module 'game' {
     weeklyRanking: IRankingItem[];
     ranks: IRank[];
     levelInfo: ILevelInfo[];
-    theme: IColorPallete;
+    theme: {
+      primary: string;
+      secondary: string;
+    };
     newRegisters: number;
   }
 

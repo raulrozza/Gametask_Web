@@ -10,8 +10,10 @@ import Modal from '../../../components/Modal';
 import RequestModal from './RequestModal';
 
 // Contexts
-import { useAuth } from '../../../contexts/Authorization';
 import { useGame } from '../../../contexts/Game';
+
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
@@ -83,7 +85,7 @@ const AchievementRegister: React.FC = () => {
     async (id: string) => {
       const request = requests.find(item => item._id === id);
 
-      if (!request) return;
+      if (!request || !user) return;
 
       if (window.confirm('Garantir conquista?')) {
         try {
@@ -113,7 +115,7 @@ const AchievementRegister: React.FC = () => {
         }
       }
     },
-    [requests, refreshGame, user._id],
+    [requests, refreshGame, user],
   );
 
   const handleShowDetails = useCallback((request: IAchievementRequest) => {

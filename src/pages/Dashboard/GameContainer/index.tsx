@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom';
 import { FaCog } from 'react-icons/fa';
 
 // Contexts
-import { useAuth } from '../../../contexts/Authorization';
 import { useGame } from '../../../contexts/Game';
 
 // Assets
 import placeholder from '../../../assets/img/games/placeholder.png';
+
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Styles
 import { GameContainerDiv } from './styles';
@@ -17,6 +19,8 @@ import { GameContainerDiv } from './styles';
 const GameContainer: React.FC = () => {
   const { game, switchGame } = useGame();
   const { user, signOut } = useAuth();
+
+  if (!user) return null;
 
   return (
     <GameContainerDiv>

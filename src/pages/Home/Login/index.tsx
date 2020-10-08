@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
-// Contexts
-import { useAuth } from '../../../contexts/Authorization';
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Libs
 import { Formik, Field } from 'formik';

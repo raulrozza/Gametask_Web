@@ -6,13 +6,13 @@ import placeholder from '../../assets/img/achievements/placeholder.png';
 // Components
 import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
 
-// Contexts
-import { useAuth } from '../../contexts/Authorization';
-
 // Custom components
 import AchievementForm from './AchievementForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
+
+// Hooks
+import { useAuth } from '../../hooks/contexts/useAuth';
 
 // Services
 import api from '../../services/api';

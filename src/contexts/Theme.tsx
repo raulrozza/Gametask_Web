@@ -14,6 +14,8 @@ import Global from '../styles/Global';
 
 // Types
 import { ChangeThemeProps } from '../interfaces/hooks/UseTheme';
+
+// Utils
 import { fillTheme } from '../utils/theme/fillTheme';
 import setMobileThemeColor from '../utils/theme/setMobileThemeColor';
 
