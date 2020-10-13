@@ -9,8 +9,11 @@ export interface ColorInputProps {
   onHidePanel?: () => void;
 }
 
-export interface ColorInputWrapperProps {
+export interface ColorViewerProps {
   color: string;
-  showPicker: bool;
   hasLabel: boolean;
+}
+
+export interface ColorPickerProps {
+  showPicker: bool;
 }

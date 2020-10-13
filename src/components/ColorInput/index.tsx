@@ -1,49 +1,47 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
+// Components
 import { ChromePicker } from 'react-color';
 
 // Types
 import { ColorInputProps } from './types';
 
 // Styles
-import { ColorInputWrapper } from './styles';
+import { ColorPicker, ColorViewer, Container } from './styles';
 
 const ColorInput: React.FC<ColorInputProps> = ({
-  label,
+  label = '',
   value,
   className = '',
   onChange,
-  onShowPanel,
-  onHidePanel,
+  onShowPanel = () => null,
+  onHidePanel = () => null,
 }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [mouseOnPicker, setMouseOnPicker] = useState(false);
 
   return (
-    <ColorInputWrapper
-      color={value || '#000'}
-      showPicker={showPicker}
-      hasLabel={Boolean(label)}
-      className={className}
-    >
+    <Container className={className}>
       {label && <label>{label}:</label>}
-      <div
-        className="color-viewer"
+
+      <ColorViewer
+        color={value || '#000'}
         onClick={() => {
-          if (onShowPanel) onShowPanel();
+          onShowPanel();
           setShowPicker(true);
         }}
         onBlur={() => {
           if (!mouseOnPicker) {
             setShowPicker(false);
-            if (onHidePanel) onHidePanel();
+            onHidePanel();
           }
         }}
+        hasLabel={Boolean(label)}
         tabIndex={1}
+        className="color-viewer"
       >
-        <div
-          className={`color-picker`}
+        <ColorPicker
+          showPicker={showPicker}
           onMouseOver={() => setMouseOnPicker(true)}
           onMouseLeave={() => setMouseOnPicker(false)}
           tabIndex={1}
@@ -53,26 +51,10 @@ const ColorInput: React.FC<ColorInputProps> = ({
             color={value}
             onChangeComplete={onChange}
           />
-        </div>
-      </div>
-    </ColorInputWrapper>
+        </ColorPicker>
+      </ColorViewer>
+    </Container>
   );
-};
-
-ColorInput.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  className: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  onShowPanel: PropTypes.func,
-  onHidePanel: PropTypes.func,
-};
-
-ColorInput.defaultProps = {
-  label: '',
-  onChange: () => {
-    console.log('Not implemented.');
-  },
 };
 
 export default ColorInput;
