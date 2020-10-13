@@ -1,7 +1,6 @@
-import { DisplayErrorMessage } from './types';
 import { toast } from 'react-toastify';
 
-const displayErrorMessage: DisplayErrorMessage = (message, messageCode) => {
+const displayErrorMessage = (message: string, messageCode: number): void => {
   toast.error(message, { toastId: messageCode });
 };
 
