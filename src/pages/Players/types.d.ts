@@ -1,4 +1,7 @@
-import { IPlayer, IActivity, IAchievement, ITitle } from 'game';
+import { IAchievement } from '../../interfaces/api/Achievement';
+import { IActivity } from '../../interfaces/api/Activity';
+import { IPlayer } from '../../interfaces/api/Player';
+import { ITitle } from '../../interfaces/api/Title';
 
 export interface IActivityRequest {
   _id: string;

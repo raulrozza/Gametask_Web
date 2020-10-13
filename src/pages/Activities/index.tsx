@@ -3,9 +3,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 // Components
 import { FaEdit, FaTimes, FaPlus } from 'react-icons/fa';
 
-// Contexts
-import { IActivity } from 'game';
-
 // Custom components
 import ActivityForm from './ActivityForm';
 import PageWrapper from '../../components/PageWrapper';
@@ -35,6 +32,9 @@ import {
   removeItemFromArray,
 } from '../../utils/arrayMethods';
 import handleApiErrors from '../../utils/handleApiErrors';
+
+// Types
+import { IActivity } from '../../interfaces/api/Activity';
 
 const Activities: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);

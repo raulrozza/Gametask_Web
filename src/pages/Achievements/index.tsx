@@ -29,7 +29,7 @@ import {
 } from '../../components/PageWrapper/styles';
 
 // Types
-import { IAchievement } from 'game';
+import { IAchievement } from '../../interfaces/api/Achievement';
 
 // Utils
 import {

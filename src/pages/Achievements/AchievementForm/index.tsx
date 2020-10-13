@@ -21,8 +21,8 @@ import Form, { ErrorField } from '../../../styles/Form';
 import { TitleOptions } from './styles';
 
 // Types
-import { ITitle } from 'game';
 import { AchievementFormProps, FormValues } from '../types';
+import { ITitle } from '../../../interfaces/api/Title';
 
 // Utils
 import handleApiErrors from '../../../utils/handleApiErrors';

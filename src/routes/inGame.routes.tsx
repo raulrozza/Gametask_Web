@@ -1,11 +1,11 @@
 import React, { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-// Contexts
-import { useGame } from '../contexts/Game';
-
 // Components
 import Loading from '../components/Loading';
+
+// Hooks
+import { useGameData } from '../hooks/contexts/useGameData';
 
 // Pages
 const Lobby = lazy(() => import('../pages/Lobby'));
@@ -19,7 +19,7 @@ const Players = lazy(() => import('../pages/Players'));
   The object controls the in game routes
 */
 const InGameRoutes: React.FC = () => {
-  const { game, loading } = useGame();
+  const { game, loading } = useGameData();
 
   if (loading) return <Loading />;
 

@@ -13,12 +13,13 @@ import {
 import Loading from '../../components/Loading';
 import PageWrapper from '../../components/PageWrapper';
 
+// Hooks
+import { useGameData } from '../../hooks/contexts/useGameData';
+
 // Libs
 import { FaBars } from 'react-icons/fa';
 
-// Contexts
-import { useGame } from '../../contexts/Game';
-
+// Styles
 import { Row, SideNav, TabItem, Content } from './styles';
 
 // Subpages
@@ -31,7 +32,7 @@ const Game: React.FC = () => {
   // Hooks
   const match = useRouteMatch();
   const location = useLocation();
-  const { loading } = useGame();
+  const { loading } = useGameData();
 
   const sidenavItems = useMemo(
     () => [

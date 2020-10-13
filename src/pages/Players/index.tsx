@@ -1,13 +1,13 @@
 import React from 'react';
 
-// Contexts
-import { useGame } from '../../contexts/Game';
-
 // Components
 import Loading from '../../components/Loading';
 import ActivityRegister from './ActivityRegister';
 import AchievementRegister from './AchievementRegister';
 import TitleManager from './TitleManager';
+
+// Hooks
+import { useGameData } from '../../hooks/contexts/useGameData';
 
 // Icons
 import { FaArrowCircleLeft } from 'react-icons/fa';
@@ -20,9 +20,11 @@ import { Link } from 'react-router-dom';
 import { PlayersContainer } from './styles';
 
 const Players: React.FC = () => {
-  const { loading, game } = useGame();
+  const { loading, game } = useGameData();
 
   if (loading) return <Loading />;
+
+  if (!game) return null;
 
   const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
 

@@ -1,8 +1,10 @@
 import React from 'react';
+
+// Components
 import { Link } from 'react-router-dom';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
+// Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Icons
 import { FaFrown } from 'react-icons/fa';
@@ -14,7 +16,9 @@ import { RankingContainer } from './styles';
 import { getTextColor } from '../../../utils/theme/getTextColor';
 
 const Ranking: React.FC = () => {
-  const { game } = useGame();
+  const { game } = useGameData();
+
+  if (!game) return null;
 
   return (
     <RankingContainer>

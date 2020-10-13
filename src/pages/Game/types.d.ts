@@ -1,4 +1,4 @@
-import { IRank } from 'game';
+import { IRank } from '../../interfaces/api/Rank';
 
 export interface SideNavProps {
   shown: boolean;

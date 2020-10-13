@@ -18,7 +18,7 @@ import { AchievementBox } from './styles';
 import { withTheme } from 'styled-components';
 
 // Types
-import { IAchievement } from 'game';
+import { IAchievement } from '../../../interfaces/api/Achievement';
 import { IThemedComponent } from '../../../interfaces/theme/ThemedComponent';
 
 // Utils

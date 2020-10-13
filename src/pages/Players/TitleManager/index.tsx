@@ -14,7 +14,7 @@ import api from '../../../services/api';
 import { Container, NoTitles } from './styles';
 
 // Types
-import { ITitle } from 'game';
+import { ITitle } from '../../../interfaces/api/Title';
 
 // Utils
 import handleApiErrors from '../../../utils/handleApiErrors';

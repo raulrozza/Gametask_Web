@@ -1,4 +1,4 @@
-import { IAchievement } from 'game';
+import { IAchievement } from '../../interfaces/api/Achievement';
 
 export interface ContainerProps {
   reduced: boolean;

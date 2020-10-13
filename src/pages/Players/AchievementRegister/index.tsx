@@ -9,11 +9,9 @@ import Loading from '../../../components/Loading';
 import Modal from '../../../components/Modal';
 import RequestModal from './RequestModal';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
-
 // Hooks
 import { useAuth } from '../../../hooks/contexts/useAuth';
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
@@ -47,7 +45,7 @@ const AchievementRegister: React.FC = () => {
 
   // Hooks
   const { user } = useAuth();
-  const { refreshGame } = useGame();
+  const { refreshGame } = useGameData();
 
   useEffect(() => {
     (async () => {

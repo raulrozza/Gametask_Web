@@ -2,9 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { FaPlus, FaLink } from 'react-icons/fa';
 
-// Contexts
-import { useGame } from '../../contexts/Game';
-
 // Components
 import Loading from '../../components/Loading';
 import Modal from '../../components/Modal';
@@ -14,9 +11,10 @@ import Share from './Share';
 
 // Hooks
 import { useAuth } from '../../hooks/contexts/useAuth';
+import { useGameData } from '../../hooks/contexts/useGameData';
 
 // Types
-import { IGame } from 'game';
+import { IGame } from '../../interfaces/api/Game';
 
 // Services
 import api from '../../services/api';
@@ -36,7 +34,7 @@ const Lobby: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState('');
 
   const { signOut } = useAuth();
-  const { switchGame } = useGame();
+  const { switchGame } = useGameData();
 
   const loadGames = useCallback(async () => {
     try {

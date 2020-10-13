@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
+// Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
@@ -27,15 +27,13 @@ import {
 import handleApiErrors from '../../../utils/handleApiErrors';
 
 const LevelConfig: React.FC = () => {
-  const { game, refreshGame } = useGame();
+  const { game, refreshGame } = useGameData();
   const [disabledBtn, disableButton] = useState(false);
   const [levelInfo, setLevelInfo] = useState<ILevelInfo[]>(
-    game.levelInfo.map(level => {
-      return {
-        requiredExperience: level.requiredExperience,
-        title: level.title,
-      };
-    }),
+    game?.levelInfo.map(level => ({
+      requiredExperience: level.requiredExperience,
+      title: level.title,
+    })) || [],
   );
 
   const handleAddItem = useCallback(() => {
@@ -70,6 +68,8 @@ const LevelConfig: React.FC = () => {
   const handleSubmit = useCallback(async () => {
     disableButton(true);
 
+    if (!game) return;
+
     const newLevelInfo = levelInfo.map((info, index) => {
       return {
         ...info,
@@ -88,7 +88,7 @@ const LevelConfig: React.FC = () => {
     }
 
     disableButton(false);
-  }, [game._id, levelInfo, refreshGame]);
+  }, [game, levelInfo, refreshGame]);
 
   return (
     <LevelConfigContainer>

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
+// Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
@@ -28,13 +28,15 @@ import handleApiErrors from '../../../utils/handleApiErrors';
 import { getTextColor } from '../../../utils/theme/getTextColor';
 
 const RankConfig: React.FC = () => {
-  const { game, refreshGame } = useGame();
+  const { game, refreshGame } = useGameData();
   const [disabledBtn, disableButton] = useState(false);
   const [ranks, setRanks] = useState<IndexableRank[]>(
-    game.ranks as IndexableRank[],
+    (game?.ranks as IndexableRank[]) || [],
   );
 
   const handleAddItem = useCallback(() => {
+    if (!game) return;
+
     const newLevel = {
       level: game.levelInfo[game.levelInfo.length - 1].level,
       tag: '',
@@ -43,7 +45,7 @@ const RankConfig: React.FC = () => {
     };
 
     setRanks(ranks => addItemToArray(ranks, newLevel));
-  }, [game.levelInfo]);
+  }, [game]);
 
   const handleRemoveItem = useCallback((index: number) => {
     if (window.confirm('Deseja mesmo remover esta patente?'))
@@ -88,6 +90,8 @@ const RankConfig: React.FC = () => {
   const handleSubmit = useCallback(async () => {
     disableButton(true);
 
+    if (!game) return;
+
     try {
       await api.put(`/rank/${game._id}`, { ranks });
 
@@ -99,7 +103,9 @@ const RankConfig: React.FC = () => {
     }
 
     disableButton(false);
-  }, [game._id, ranks, refreshGame]);
+  }, [game, ranks, refreshGame]);
+
+  if (!game) return null;
 
   return (
     <RankConfigContainer>

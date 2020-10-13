@@ -7,10 +7,8 @@ import ImageInput from '../../../components/ImageInput';
 // Config
 import { defaultTheme } from '../../../config/defaultTheme';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
-
 // Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
 import { useTheme } from '../../../hooks/contexts/useTheme';
 
 // Libraries
@@ -43,17 +41,18 @@ const GameSchema = Yup.object().shape({
 });
 
 const InfoForm: React.FC = () => {
-  const { game, refreshGame } = useGame();
+  const { game, refreshGame } = useGameData();
   const { changeTheme } = useTheme();
 
   // Form management
   const initialValues: InfoFormValues = {
-    name: game.name ? game.name : '',
-    description: game.description ? game.description : '',
-    theme: game.theme
-      ? game.theme
-      : { primary: defaultTheme.primary, secondary: defaultTheme.secondary },
-    image: game.image_url,
+    name: game?.name || '',
+    description: game?.description || '',
+    theme: game?.theme || {
+      primary: defaultTheme.primary,
+      secondary: defaultTheme.secondary,
+    },
+    image: game?.image_url || null,
   };
   const [disabledBtn, setDisabledBtn] = useState(false);
 
@@ -61,6 +60,8 @@ const InfoForm: React.FC = () => {
     async (values: FormikValues) => {
       const { name, description, theme, image } = values;
       setDisabledBtn(true);
+
+      if (!game) return;
 
       try {
         const data = new FormData();
@@ -107,6 +108,8 @@ const InfoForm: React.FC = () => {
     },
     [form, changeTheme],
   );
+
+  if (!game) return null;
 
   return (
     <Form as="form" onSubmit={form.handleSubmit}>

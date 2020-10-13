@@ -15,7 +15,7 @@ import { ActivityBox } from './styles';
 import { withTheme } from 'styled-components';
 
 // Types
-import { IActivity } from 'game';
+import { IActivity } from '../../../interfaces/api/Activity';
 import { IThemedComponent } from '../../../interfaces/theme/ThemedComponent';
 
 // Utils
