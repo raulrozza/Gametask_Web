@@ -4,18 +4,17 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { GameContext } from './rawContexts';
 
 // Hooks
-import { useAuth } from '../hooks/contexts/useAuth';
+import { useApiGet } from '../hooks/api/useApiGet';
 import { useTheme } from '../hooks/contexts/useTheme';
 
 // Services
-import api, { addApiHeader, removeApiHeader } from '../services/api';
+import { addApiHeader, removeApiHeader } from '../services/api';
 import { getData, removeData, saveData } from '../services/storage';
 
 // Types
 import { IGame } from '../interfaces/api/Game';
 
 // Utils
-import handleApiErrors from '../utils/handleApiErrors';
 import isEqual from '../utils/isEqual';
 
 const Game: React.FC = ({ children }) => {
@@ -25,8 +24,8 @@ const Game: React.FC = ({ children }) => {
   );
   const [loading, setLoading] = useState(true);
 
-  const { signOut } = useAuth();
   const { changeTheme } = useTheme();
+  const apiGet = useApiGet<IGame>();
 
   const resetGame = useCallback(async () => {
     changeTheme({});
@@ -37,19 +36,17 @@ const Game: React.FC = ({ children }) => {
 
   const getGameInfo = useCallback(
     async (gameId: string) => {
-      try {
-        const { data } = await api.get(`/game/${gameId}`);
+      const game = await apiGet(`/gameplay/${gameId}`);
 
-        await saveData('storedGame', data);
+      if (!game) return;
 
-        setVerifiedGameAuthenticity(true);
-        setGame(data);
-        changeTheme(data.theme);
-      } catch (error) {
-        handleApiErrors(error, signOut);
-      }
+      await saveData('storedGame', game);
+
+      setVerifiedGameAuthenticity(true);
+      setGame(game);
+      changeTheme(game.theme);
     },
-    [signOut, changeTheme],
+    [changeTheme, apiGet],
   );
 
   useEffect(() => {

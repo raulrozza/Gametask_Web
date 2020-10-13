@@ -18,27 +18,30 @@ import { isAxiosError } from '../../utils/errors/isAxiosError';
 export function useErrorHandling(): HandleApiErrors {
   const { signOut } = useAuth();
 
-  const handleApiErrors: HandleApiErrors = useCallback(error => {
-    if (isAxiosError(error)) {
-      const response = error.response;
+  const handleApiErrors: HandleApiErrors = useCallback(
+    error => {
+      if (isAxiosError(error)) {
+        const response = error.response;
 
-      if (!response) return handleErrorWithoutResponse();
+        if (!response) return handleErrorWithoutResponse();
 
-      switch (response.status) {
-        case 403:
-          return handleForbiddenStatus(signOut);
+        switch (response.status) {
+          case 403:
+            return handleForbiddenStatus(signOut);
 
-        case 500:
-          return handleInternalErrorStatus();
+          case 500:
+            return handleInternalErrorStatus();
 
-        case 400:
-          return handleRequestErrors(response.data.code);
+          case 400:
+            return handleRequestErrors(response.data.code);
 
-        default:
-          return handleDefaultError();
-      }
-    } else handleUnknownError();
-  }, []);
+          default:
+            return handleDefaultError();
+        }
+      } else handleUnknownError();
+    },
+    [signOut],
+  );
 
   return handleApiErrors;
 }
