@@ -31,10 +31,12 @@ const Modal: React.FC<ModalProps> = ({
       <Container size={size}>
         <div className="modal-title">
           <h2>{title}</h2>
+
           <button className="close" type="button" onClick={closeModal}>
             <FaTimes />
           </button>
         </div>
+
         <div className="modal-children">{children}</div>
       </Container>
     </Background>

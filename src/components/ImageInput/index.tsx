@@ -6,6 +6,7 @@ import placeholder from '../../assets/img/achievements/placeholder.png';
 // Types
 import { ImageInputProps } from './types';
 
+// Stypes
 import { InputWrapper } from './styles';
 
 const ImageInput: React.FC<ImageInputProps> = ({
