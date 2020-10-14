@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from 'react';
 
+// Components
+import { Formik, Field } from 'formik';
+
 // Hooks
 import { useAuth } from '../../../hooks/contexts/useAuth';
+import { useApiPost } from '../../../hooks/api/useApiPost';
 
-// Libs
-import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
-
-// Services
-import api from '../../../services/api';
+// Schemas
+import { LoginSchema } from './schemas';
 
 // Styles
 import { Form } from '../styles';
@@ -17,16 +17,7 @@ import { ErrorField } from '../../../styles/Form';
 
 // Types
 import { FormContainerProps } from '../types';
-
-// Utils
-import handleApiErrors from '../../../utils/handleApiErrors';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Digite um e-mail válido')
-    .required('Digite seu email'),
-  password: Yup.string().required('Digite sua senha'),
-});
+import { IUser } from '../../../interfaces/api/User';
 
 const Login: React.FC<FormContainerProps> = ({ shown }) => {
   const initialValues = {
@@ -39,23 +30,19 @@ const Login: React.FC<FormContainerProps> = ({ shown }) => {
 
   // Hooks
   const { signIn } = useAuth();
+  const apiPost = useApiPost<IUser>();
 
   const onSubmit = useCallback(
     async values => {
       setButtonDisabled(true);
 
-      // Login
-      try {
-        const response = await api.post('/login', values);
+      const user = await apiPost('/login', values);
 
-        return signIn(response.data);
-      } catch (error) {
-        handleApiErrors(error);
-      }
+      if (!user) return setButtonDisabled(false);
 
-      return setButtonDisabled(false);
+      return signIn(user);
     },
-    [signIn],
+    [signIn, apiPost],
   );
 
   return (

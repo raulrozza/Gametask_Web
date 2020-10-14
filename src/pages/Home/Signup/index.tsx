@@ -1,12 +1,13 @@
 import React, { useState, useCallback } from 'react';
 
-// Libs
+// Components
 import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
-import { toast } from 'react-toastify';
 
-// Services
-import api from '../../../services/api';
+// Hooks
+import { useApiPost } from '../../../hooks/api/useApiPost';
+
+// Schemas
+import { SignupSchema } from './schemas';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -17,15 +18,8 @@ import { Form } from '../styles';
 import { FormContainerProps } from '../types';
 
 // Utils
-import handleApiErrors from '../../../utils/handleApiErrors';
-
-const SignupSchema = Yup.object().shape({
-  firstname: Yup.string().required('Digite seu nome'),
-  lastname: Yup.string(),
-  email: Yup.string().email('E-mail inválido').required('Digite um e-mail'),
-  password: Yup.string().required('Digite uma senha'),
-  confirmPassword: Yup.string().required('Repita sua senha'),
-});
+import displaySuccessMessage from '../../../utils/displaySuccessMessage';
+import { passwordsDontMatch } from './utils';
 
 const Signup: React.FC<FormContainerProps> = ({ shown }) => {
   const initialValues = {
@@ -39,26 +33,25 @@ const Signup: React.FC<FormContainerProps> = ({ shown }) => {
   // States
   const [signupButtonDisabled, setSignupButtonDisabled] = useState(false);
 
-  const onSubmit = useCallback(async (values, actions) => {
-    if (values.password !== values.confirmPassword) {
-      actions.setErrors({
-        confirmPassword: 'As senhas não são iguais',
-      });
-      return;
-    }
-    setSignupButtonDisabled(true);
+  // Hooks
+  const apiPost = useApiPost();
 
-    // Post user in the API
-    try {
-      await api.post('/user/signup', values);
+  const onSubmit = useCallback(
+    async (values, actions) => {
+      const passwordsError = passwordsDontMatch(values);
+      if (passwordsError) return actions.setErrors(passwordsError);
 
-      toast.success('Cadastro efetuado com sucesso!');
-    } catch (error) {
-      handleApiErrors(error);
-    }
+      setSignupButtonDisabled(true);
 
-    return setSignupButtonDisabled(false);
-  }, []);
+      const signupSuccessful = await apiPost('/user/signup', values);
+
+      if (signupSuccessful)
+        displaySuccessMessage('Cadastro efetuado com sucesso!');
+
+      return setSignupButtonDisabled(false);
+    },
+    [apiPost],
+  );
 
   return (
     <Formik
