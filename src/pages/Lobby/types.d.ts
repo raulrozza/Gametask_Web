@@ -12,7 +12,3 @@ export interface IGameValues {
   description: string;
   image: string | null;
 }
-
-export interface IShare {
-  gameId: string;
-}

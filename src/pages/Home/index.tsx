@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 // Components
+import PageTitle from '../../components/PageTitle';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -12,6 +13,8 @@ const Home: React.FC = () => {
 
   return (
     <HomePage>
+      <PageTitle />
+
       <div className="title">
         <h1>GAMETASK</h1>
       </div>

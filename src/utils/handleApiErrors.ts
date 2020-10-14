@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import displayErrorMessage from './displayErrorMessage';
+import displayErrorMessage from './messages/displayErrorMessage';
 
 /*****
  * Errors mapping

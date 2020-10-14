@@ -21,11 +21,11 @@ export function useApiFetch<T = unknown>(URL: string): IFetchReturn<T> {
 
     setData(result);
     setLoading(false);
-  }, []);
+  }, [URL, apiGet]);
 
   useEffect(() => {
     fetchFromApi();
-  }, []);
+  }, [fetchFromApi]);
 
   return {
     data,

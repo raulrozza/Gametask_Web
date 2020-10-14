@@ -18,7 +18,7 @@ import { Form } from '../styles';
 import { FormContainerProps } from '../types';
 
 // Utils
-import displaySuccessMessage from '../../../utils/displaySuccessMessage';
+import displaySuccessMessage from '../../../utils/messages/displaySuccessMessage';
 import { passwordsDontMatch } from './utils';
 
 const Signup: React.FC<FormContainerProps> = ({ shown }) => {

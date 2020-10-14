@@ -6,7 +6,7 @@ import { errorCodesToToastIds } from '../../config/errors/errorCodesToToastIds';
 import { ErrorCode } from '../../interfaces/errors/ErrorCode';
 
 // Utils
-import displayErrorMessage from '../displayErrorMessage';
+import displayErrorMessage from '../messages/displayErrorMessage';
 import { handleDefaultError } from './handleDefaultError';
 
 export function handleRequestErrors(errorCode: ErrorCode): void {
