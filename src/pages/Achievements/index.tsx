@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // Assets
 import placeholder from '../../assets/img/achievements/placeholder.png';
 
 // Components
-import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
-
-// Custom components
 import AchievementForm from './AchievementForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
 // Hooks
-import { useAuth } from '../../hooks/contexts/useAuth';
+import { useApiDelete } from '../../hooks/api/useApiDelete';
+import { useApiFetch } from '../../hooks/api/useApiFetch';
 
-// Services
-import api from '../../services/api';
+// Icons
+import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
 
 // Styles
 import { Container } from './styles';
@@ -32,98 +30,62 @@ import {
 import { IAchievement } from '../../interfaces/api/Achievement';
 
 // Utils
-import {
-  addItemToArray,
-  updateItemInArray,
-  removeItemFromArray,
-} from '../../utils/arrayMethods';
-import handleApiErrors from '../../utils/handleApiErrors';
+import { findAchievementById } from './utils';
 
 const Achievements: React.FC = () => {
-  const [achievements, setAchievements] = useState<IAchievement[]>([]);
   const [
     selectedAchievement,
     setSelectedAchievement,
   ] = useState<IAchievement | null>(null);
-  const [loading, setLoading] = useState(true);
-  // Edit panel
   const [showPanel, setShowPanel] = useState(false);
-  // Context
-  const { signOut } = useAuth();
 
-  const editAchievement = (id: string) => {
-    const achievement = achievements.find(
-      achievement => achievement._id === id,
-    );
+  const { data: achievements, loading, fetch } = useApiFetch<IAchievement[]>(
+    '/achievement',
+  );
+  const apiDelete = useApiDelete();
 
-    if (achievement) {
-      if (
-        showPanel &&
-        (!selectedAchievement || achievement._id !== selectedAchievement._id)
-      ) {
-        setSelectedAchievement({
-          ...achievement,
-          image: achievement.image ? achievement.image_url : undefined,
-        });
-        return;
-      }
-      setSelectedAchievement({
-        ...achievement,
-        image: achievement.image ? achievement.image_url : undefined,
-      });
-      setShowPanel(!showPanel);
-    }
+  if (!loading && !achievements) return null;
+
+  const handleEditAchievement = (id: string) => {
+    if (!achievements) return;
+
+    const foundAchievement = findAchievementById(achievements, id);
+
+    if (!foundAchievement) return;
+
+    const achievement = {
+      ...foundAchievement,
+      image: foundAchievement.image ? foundAchievement.image_url : undefined,
+    };
+
+    setSelectedAchievement(achievement);
+
+    const isAchievementAlreadySelected =
+      selectedAchievement && foundAchievement._id === selectedAchievement._id;
+
+    if (!showPanel || isAchievementAlreadySelected) setShowPanel(!showPanel);
   };
 
-  const createAchievement = () => {
+  const handleAddAchievement = () => {
     setSelectedAchievement(null);
     setShowPanel(true);
   };
 
-  const deleteAchievement = async (id: string) => {
+  const handleDeleteAchievement = async (id: string) => {
     const response = window.confirm(
       'Deseja mesmo excluir esta conquista? Esta ação não pode ser desfeita.',
     );
-    if (response) {
-      setLoading(true);
-      try {
-        await api.delete(`/achievement/${id}`);
 
-        const index = achievements.findIndex(item => item._id === id);
-        setAchievements(removeItemFromArray(achievements, index));
-      } catch (error) {
-        handleApiErrors(error);
-      }
+    if (!response) return;
 
-      setLoading(false);
-    }
+    const success = await apiDelete(`/achievement/${id}`);
+
+    if (success) fetch();
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.get('/achievement');
-
-        setAchievements(data);
-        setLoading(false);
-      } catch (error) {
-        handleApiErrors(error, signOut);
-      }
-    })();
-  }, [signOut]);
-
-  const onSubmit = async (id: string) => {
-    try {
-      const { data } = await api.get(`/achievement/${id}`);
-
-      const index = achievements.findIndex(item => item._id === id);
-
-      if (index === -1) setAchievements(addItemToArray(achievements, data));
-      else setAchievements(updateItemInArray(achievements, data, index));
-      setShowPanel(false);
-    } catch (error) {
-      handleApiErrors(error);
-    }
+  const onSubmit = async () => {
+    fetch();
+    setShowPanel(false);
   };
 
   return (
@@ -131,7 +93,7 @@ const Achievements: React.FC = () => {
       {!loading ? (
         <>
           <Row>
-            {achievements.length > 0 ? (
+            {achievements && achievements.length > 0 ? (
               <div>
                 <Container reduced={showPanel}>
                   {achievements.map(achievement => (
@@ -172,7 +134,7 @@ const Achievements: React.FC = () => {
                       <RemoveButton
                         horizontalPosition="right"
                         title="Excluir conquista"
-                        onClick={() => deleteAchievement(achievement._id)}
+                        onClick={() => handleDeleteAchievement(achievement._id)}
                       >
                         <FaTimes />
                       </RemoveButton>
@@ -180,7 +142,7 @@ const Achievements: React.FC = () => {
                       <button
                         className="edit-button"
                         title="Editar conquista"
-                        onClick={() => editAchievement(achievement._id)}
+                        onClick={() => handleEditAchievement(achievement._id)}
                       >
                         <FaEdit />
                       </button>
@@ -203,8 +165,9 @@ const Achievements: React.FC = () => {
           </Row>
 
           <Footer>
-            <button onClick={createAchievement}>
+            <button onClick={handleAddAchievement}>
               <span>Nova Conquista</span>
+
               <span className="plus-icon">
                 <FaPlus />
               </span>
