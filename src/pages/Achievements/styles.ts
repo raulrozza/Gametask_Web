@@ -2,73 +2,13 @@ import styled, { css } from 'styled-components';
 import { ReducingDiv } from '../../components/PageWrapper/styles';
 
 export const Container = styled(ReducingDiv)`
-  ${({ theme, reduced = false }) => css`
+  ${({ reduced = false }) => css`
     width: 100%;
     display: grid;
     grid-template-columns: ${reduced
       ? css`repeat(3, 1fr)`
       : css`repeat(5, 1fr)`};
     grid-gap: 8px;
-
-    .achievement {
-      min-width: 100px;
-      padding: 5px;
-      background: ${theme.primaryLowShade};
-      box-shadow: 0px 0px 0px 0px ${theme.primaryLowShade};
-      border-radius: 10px;
-      text-align: center;
-      transition: all 0.5s;
-      position: relative;
-
-      button {
-        visibility: hidden;
-      }
-
-      &:hover {
-        background-color: ${theme.primary};
-        box-shadow: 0px 0px 3px 2px ${theme.primaryLowShade};
-
-        button {
-          visibility: visible;
-        }
-      }
-
-      .achievement-image {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 5px;
-        border-radius: 50%;
-      }
-
-      .achievement-name {
-        font-size: 16px;
-        font-weight: bold;
-        line-height: 20px;
-        min-height: 20px;
-        width: inherit;
-        text-align: center;
-
-        .title {
-          color: ${theme.secondaryIntense};
-        }
-      }
-
-      .achievement-description {
-        font-size: 14px;
-      }
-
-      .edit-button {
-        position: absolute;
-        bottom: 2px;
-        right: 2px;
-        color: ${theme.primaryShade};
-        font-size: 16px;
-        border: none;
-        background-color: transparent;
-        margin-left: 2px;
-        cursor: pointer;
-      }
-    }
 
     /* Responsiveness */
     @media (max-width: 992px) {
