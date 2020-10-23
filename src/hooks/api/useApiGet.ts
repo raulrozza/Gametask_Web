@@ -8,14 +8,15 @@ import api from '../../services/api';
 
 // Types
 import { ApiGet } from '../../interfaces/hooks/UseApiGet';
+import { AxiosRequestConfig } from 'axios';
 
 export function useApiGet<T = unknown>(): ApiGet<T> {
   const handleApiErrors = useErrorHandling();
 
   const apiGet = useCallback(
-    async (URL: string) => {
+    async (URL: string, config?: AxiosRequestConfig) => {
       try {
-        const response = await api.get<T>(URL);
+        const response = await api.get<T>(URL, config);
 
         return response.data;
       } catch (error) {

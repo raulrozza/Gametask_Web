@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { TitleOptionsProps } from '../types';
+import { TitleOptionsProps } from '../../types';
 
 export const TitleOptions = styled.div<TitleOptionsProps>`
   ${({ theme, visible }) => css`

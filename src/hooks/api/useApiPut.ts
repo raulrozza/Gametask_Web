@@ -25,7 +25,7 @@ export function useApiPut<T = unknown>(): ApiPut<T> {
         return null;
       }
     },
-    [],
+    [handleApiErrors],
   );
 
   return apiPut;
