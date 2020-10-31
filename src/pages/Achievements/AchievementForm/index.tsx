@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 // Components
-import { useFormik, FormikValues, FormikErrors } from 'formik';
+import { useFormik, FormikValues } from 'formik';
+import TitleInput from './TitleInput';
 import ImageInput from '../../../components/ImageInput';
 
 // Constants
@@ -13,6 +14,7 @@ import { useApiPut } from '../../../hooks/api/useApiPut';
 
 // Icons
 import { FaEdit } from 'react-icons/fa';
+
 // Schemas
 import { AchievementSchema } from './schemas';
 
@@ -26,8 +28,7 @@ import { IAchievement } from '../../../interfaces/api/Achievement';
 import { ITitle } from '../../../interfaces/api/Title';
 
 // Utils
-import { getAchievementFormData } from './utils';
-import TitleInput from './TitleInput';
+import { getAchievementFormData, validateFormTitle } from './utils';
 
 const AchievementForm: React.FC<AchievementFormProps> = ({
   achievement,
@@ -86,16 +87,6 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
     [apiPut, submitCallback, title],
   );
 
-  function validateFormTitle(values: FormikValues): FormikErrors<FormikValues> {
-    const error = {} as FormikErrors<FormikValues>;
-
-    if (values.title.length > 0 && !title) {
-      error.title = 'Adicione um título existente.';
-    }
-
-    return error;
-  }
-
   const submitForm = useCallback(
     async (values: FormikValues) => {
       setDisabledBtn(true);
@@ -111,7 +102,7 @@ const AchievementForm: React.FC<AchievementFormProps> = ({
   const { setValues, resetForm, ...form } = useFormik({
     initialValues,
     validationSchema: AchievementSchema,
-    validate: validateFormTitle,
+    validate: values => validateFormTitle(values, title),
     onSubmit: submitForm,
   });
 
