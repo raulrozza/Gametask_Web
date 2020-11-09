@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-// Formik
+// Libs
 import { Formik, Field } from 'formik';
-
-// Yup
 import * as Yup from 'yup';
 
 // Services
@@ -20,7 +18,7 @@ import ImageInput from '../../../components/ImageInput';
 import { IGameForm, IGameValues } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Dê um nome ao seu jogo.'),
@@ -37,31 +35,36 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
     image: null,
   };
 
+  const onSubmit = useCallback(
+    async values => {
+      if (!values.image) return;
+
+      setDisabledButton(true);
+      try {
+        const data = new FormData();
+
+        data.append('name', values.name);
+        data.append('description', values.description);
+        data.append('image', values.image);
+
+        await api.post(`/game`, data);
+
+        onSuccess();
+      } catch (error) {
+        handleApiErrors(error);
+      } finally {
+        closeModal();
+      }
+    },
+    [onSuccess, closeModal],
+  );
+
   return (
     <Container>
       <Formik
         initialValues={initialValues}
         validationSchema={GameSchema}
-        onSubmit={async values => {
-          if (!values.image) return;
-
-          setDisabledButton(true);
-          try {
-            const data = new FormData();
-
-            data.append('name', values.name);
-            data.append('description', values.description);
-            data.append('image', values.image);
-
-            await api.post(`/game`, data);
-
-            onSuccess();
-          } catch (error) {
-            handleErrors(error);
-          } finally {
-            closeModal();
-          }
-        }}
+        onSubmit={onSubmit}
       >
         {({ errors, touched, values, setFieldValue }) => (
           <Form>

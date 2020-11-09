@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react';
-
-// Assets
-import placeholder from '../../assets/img/achievements/placeholder.png';
+import React, { useState } from 'react';
 
 // Components
-import { FaEdit, FaPlus, FaTimes } from 'react-icons/fa';
-
-// Contexts
-import { useAuth } from '../../contexts/Authorization';
-
-// Custom components
 import AchievementForm from './AchievementForm';
 import PageWrapper from '../../components/PageWrapper';
 import Loading from '../../components/Loading';
 
-// Services
-import api from '../../services/api';
+// Hooks
+import { useApiFetch } from '../../hooks/api/useApiFetch';
+
+// Icons
+import { FaPlus } from 'react-icons/fa';
 
 // Styles
 import { Container } from './styles';
-import { RemoveButton } from '../../styles/RemoveButton';
 import {
   EmptyContainer,
   Footer,
@@ -29,101 +22,53 @@ import {
 } from '../../components/PageWrapper/styles';
 
 // Types
-import { IAchievement } from 'game';
+import { IAchievement } from '../../interfaces/api/Achievement';
 
 // Utils
-import {
-  addItemToArray,
-  updateItemInArray,
-  removeItemFromArray,
-} from '../../utils/arrayMethods';
-import handleErrors from '../../utils/handleErrors';
+import { findAchievementById } from './utils';
+import AchievementCard from './AchievementCard';
 
 const Achievements: React.FC = () => {
-  const [achievements, setAchievements] = useState<IAchievement[]>([]);
   const [
     selectedAchievement,
     setSelectedAchievement,
   ] = useState<IAchievement | null>(null);
-  const [loading, setLoading] = useState(true);
-  // Edit panel
   const [showPanel, setShowPanel] = useState(false);
-  // Context
-  const { signOut } = useAuth();
 
-  const editAchievement = (id: string) => {
-    const achievement = achievements.find(
-      achievement => achievement._id === id,
-    );
+  const { data: achievements, loading, fetch } = useApiFetch<IAchievement[]>(
+    '/achievement',
+  );
 
-    if (achievement) {
-      if (
-        showPanel &&
-        (!selectedAchievement || achievement._id !== selectedAchievement._id)
-      ) {
-        setSelectedAchievement({
-          ...achievement,
-          image: achievement.image ? achievement.image_url : undefined,
-        });
-        return;
-      }
-      setSelectedAchievement({
-        ...achievement,
-        image: achievement.image ? achievement.image_url : undefined,
-      });
-      setShowPanel(!showPanel);
-    }
+  if (!loading && !achievements) return null;
+
+  const handleEditAchievement = (id: string) => {
+    if (!achievements) return;
+
+    const foundAchievement = findAchievementById(achievements, id);
+
+    if (!foundAchievement) return;
+
+    const achievement = {
+      ...foundAchievement,
+      image: foundAchievement.image ? foundAchievement.image_url : undefined,
+    };
+
+    setSelectedAchievement(achievement);
+
+    const isAchievementAlreadySelected =
+      selectedAchievement && foundAchievement._id === selectedAchievement._id;
+
+    if (!showPanel || isAchievementAlreadySelected) setShowPanel(!showPanel);
   };
 
-  const createAchievement = () => {
+  const handleAddAchievement = () => {
     setSelectedAchievement(null);
     setShowPanel(true);
   };
 
-  const deleteAchievement = async (id: string) => {
-    const response = window.confirm(
-      'Deseja mesmo excluir esta conquista? Esta ação não pode ser desfeita.',
-    );
-    if (response) {
-      setLoading(true);
-      try {
-        await api.delete(`/achievement/${id}`);
-
-        const index = achievements.findIndex(item => item._id === id);
-        setAchievements(removeItemFromArray(achievements, index));
-      } catch (error) {
-        handleErrors(error);
-      }
-
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.get('/achievement');
-
-        setAchievements(data);
-        setLoading(false);
-      } catch (error) {
-        handleErrors(error, signOut);
-      }
-    })();
-  }, [signOut]);
-
-  const onSubmit = async (id: string) => {
-    try {
-      const { data } = await api.get(`/achievement/${id}`);
-
-      const index = achievements.findIndex(item => item._id === id);
-
-      if (index === -1) setAchievements(addItemToArray(achievements, data));
-      else setAchievements(updateItemInArray(achievements, data, index));
-      setShowPanel(false);
-    } catch (error) {
-      handleErrors(error);
-    }
+  const onSubmit = async () => {
+    fetch();
+    setShowPanel(false);
   };
 
   return (
@@ -131,60 +76,16 @@ const Achievements: React.FC = () => {
       {!loading ? (
         <>
           <Row>
-            {achievements.length > 0 ? (
+            {achievements && achievements.length > 0 ? (
               <div>
                 <Container reduced={showPanel}>
                   {achievements.map(achievement => (
-                    <div key={achievement._id} className="achievement">
-                      <picture>
-                        <source
-                          srcSet={
-                            achievement.image
-                              ? achievement.image_url
-                              : undefined
-                          }
-                        />
-
-                        <img
-                          className="achievement-image"
-                          src={placeholder}
-                          alt={`achievement-${achievement._id}`}
-                        />
-                      </picture>
-
-                      <div className="achievement-name">
-                        {achievement.name}
-
-                        {achievement.title ? (
-                          <span className="title">
-                            {' '}
-                            [{achievement.title.name}]
-                          </span>
-                        ) : (
-                          ''
-                        )}
-                      </div>
-
-                      <div className="achievement-description">
-                        {achievement.description}
-                      </div>
-
-                      <RemoveButton
-                        horizontalPosition="right"
-                        title="Excluir conquista"
-                        onClick={() => deleteAchievement(achievement._id)}
-                      >
-                        <FaTimes />
-                      </RemoveButton>
-
-                      <button
-                        className="edit-button"
-                        title="Editar conquista"
-                        onClick={() => editAchievement(achievement._id)}
-                      >
-                        <FaEdit />
-                      </button>
-                    </div>
+                    <AchievementCard
+                      key={achievement._id}
+                      achievement={achievement}
+                      onEdit={handleEditAchievement}
+                      onDelete={fetch}
+                    />
                   ))}
                 </Container>
               </div>
@@ -203,8 +104,9 @@ const Achievements: React.FC = () => {
           </Row>
 
           <Footer>
-            <button onClick={createAchievement}>
+            <button onClick={handleAddAchievement}>
               <span>Nova Conquista</span>
+
               <span className="plus-icon">
                 <FaPlus />
               </span>

@@ -6,8 +6,10 @@ import Loading from '../components/Loading';
 import NotFound from '../components/NotFound';
 
 // Contexts
-import { useAuth } from '../contexts/Authorization';
 import Game from '../contexts/Game';
+
+// Hooks
+import { useAuth } from '../hooks/contexts/useAuth';
 
 // Routes
 import InGameRoutes from './inGame.routes';

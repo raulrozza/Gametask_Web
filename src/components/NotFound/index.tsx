@@ -1,6 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+// Libs
 import { Helmet } from 'react-helmet';
+
+// Icons
 import { FaFrown } from 'react-icons/fa';
 
 // Styles
@@ -9,23 +12,17 @@ import { Container } from './styles';
 // Types
 import { NotFoundProps } from './types';
 
-// This is the default Not Found component, showing a sad face and a custom message
-const NotFound: React.FC<NotFoundProps> = ({ message }) => {
-  return (
-    <Container>
-      <Helmet>
-        <title>Página não encontrada - GameTask</title>
-      </Helmet>
-      <div>
-        <FaFrown />
-        <h1>{message}</h1>
-      </div>
-    </Container>
-  );
-};
+const NotFound: React.FC<NotFoundProps> = ({ message }) => (
+  <Container>
+    <Helmet>
+      <title>Página não encontrada - GameTask</title>
+    </Helmet>
 
-NotFound.propTypes = {
-  message: PropTypes.string.isRequired,
-};
+    <div>
+      <FaFrown />
+      <h1>{message}</h1>
+    </div>
+  </Container>
+);
 
 export default NotFound;

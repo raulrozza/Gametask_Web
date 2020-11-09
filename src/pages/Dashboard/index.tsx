@@ -8,15 +8,18 @@ import GameContainer from './GameContainer';
 import Loading from '../../components/Loading';
 import Ranking from './Ranking';
 
-// Contexts
-import { useGame } from '../../contexts/Game';
+// Hooks
+import { useGameData } from '../../hooks/contexts/useGameData';
 
+// Styles
 import { Main } from './styles';
 
 const Dashboard: React.FC = () => {
-  const { loading, game } = useGame();
+  const { loading, game } = useGameData();
 
   if (loading) return <Loading />;
+
+  if (!game) return null;
 
   const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
 

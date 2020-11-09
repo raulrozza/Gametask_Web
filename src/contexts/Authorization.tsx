@@ -1,45 +1,55 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback, memo } from 'react';
 
-import api from '../services/api';
-import { useTheme } from './Theme';
-import { IUser, IAuth } from 'authorization';
+// Contexts
+import { AuthorizationContext } from './rawContexts';
 
-const AuthorizationContext = createContext({});
+// Hooks
+import { useTheme } from '../hooks/contexts/useTheme';
 
-const Authorization: React.FC = ({ children }) => {
+// Services
+import { addApiHeader } from '../services/api';
+import { clearData, getData, saveData } from '../services/storage';
+
+// Types
+import { IUser } from '../interfaces/api/User';
+
+const Authorization: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { changeTheme } = useTheme();
 
   // States management
-  const [user, setUser] = useState<IUser>({} as IUser);
+  const [user, setUser] = useState<IUser | null>(null);
   const [logged, setLogged] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('loggedUser');
-    if (!storedUser) setLogged(false);
-    else {
-      const parsedUser = JSON.parse(storedUser);
-      api.defaults.headers.Authorization = 'Bearer ' + parsedUser.token;
-      setUser(parsedUser);
-      setLogged(true);
-    }
-    setLoading(false);
+    (async () => {
+      const storedUser = await getData<IUser>('loggedUser');
+
+      if (!storedUser) setLogged(false);
+      else {
+        addApiHeader('Authorization', `Bearer ${storedUser.token}`);
+        setUser(storedUser);
+        setLogged(true);
+      }
+      setLoading(false);
+    })();
   }, []);
 
-  const signIn = (user: IUser) => {
-    localStorage.setItem('loggedUser', JSON.stringify(user));
-    api.defaults.headers.Authorization = 'Bearer ' + user.token;
+  const signIn = useCallback(async (user: IUser) => {
+    await saveData('loggedUser', user);
+    addApiHeader('Authorization', `Bearer ${user.token}`);
     setUser(user);
     setLogged(true);
-  };
+  }, []);
 
-  const signOut = () => {
-    localStorage.clear();
-    setUser({} as IUser);
-    changeTheme({});
+  const signOut = useCallback(async () => {
+    await clearData();
+    setUser(null);
     setLogged(false);
-  };
+    changeTheme({});
+  }, [changeTheme]);
 
   return (
     <AuthorizationContext.Provider
@@ -50,14 +60,4 @@ const Authorization: React.FC = ({ children }) => {
   );
 };
 
-export const useAuth: () => IAuth = () => {
-  const auth = useContext(AuthorizationContext) as IAuth;
-
-  return auth;
-};
-
-Authorization.propTypes = {
-  children: PropTypes.node,
-};
-
-export default Authorization;
+export default memo(Authorization);

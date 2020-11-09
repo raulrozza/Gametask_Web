@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // Components
 import ColorInput from '../../../components/ColorInput';
 import ImageInput from '../../../components/ImageInput';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
+// Config
+import { defaultTheme } from '../../../config/defaultTheme';
+
+// Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
+import { useTheme } from '../../../hooks/contexts/useTheme';
 
 // Libraries
 import { FaEdit } from 'react-icons/fa';
 import { useFormik, FormikValues } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 // Services
 import api from '../../../services/api';
 
-// Types
-import { InfoFormValues } from '../types';
-
 // Styles
 import Button from '../../../styles/Button';
 import { Form } from './styles';
-import { useTheme, defaultTheme } from '../../../contexts/Theme';
 import { ErrorField } from '../../../styles/Form';
+
+// Types
+import { InfoFormValues } from '../types';
+
+// Utils
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const GameSchema = Yup.object().shape({
   name: Yup.string().required('Digite o nome do jogo.'),
@@ -34,47 +41,54 @@ const GameSchema = Yup.object().shape({
 });
 
 const InfoForm: React.FC = () => {
-  const { game, refreshGame } = useGame();
+  const { game, refreshGame } = useGameData();
   const { changeTheme } = useTheme();
 
   // Form management
   const initialValues: InfoFormValues = {
-    name: game.name ? game.name : '',
-    description: game.description ? game.description : '',
-    theme: game.theme
-      ? game.theme
-      : { primary: defaultTheme.primary, secondary: defaultTheme.secondary },
-    image: game.image_url,
+    name: game?.name || '',
+    description: game?.description || '',
+    theme: game?.theme || {
+      primary: defaultTheme.primary,
+      secondary: defaultTheme.secondary,
+    },
+    image: game?.image_url || null,
   };
   const [disabledBtn, setDisabledBtn] = useState(false);
 
-  const submitForm = async (values: FormikValues) => {
-    const { name, description, theme, image } = values;
-    setDisabledBtn(true);
+  const submitForm = useCallback(
+    async (values: FormikValues) => {
+      const { name, description, theme, image } = values;
+      setDisabledBtn(true);
 
-    try {
-      const data = new FormData();
+      if (!game) return;
 
-      if (name !== game.name) data.append('name', name);
-      if (description !== game.description)
-        data.append('description', description);
-      if (
-        theme.primary !== game.theme.primary ||
-        theme.secondary !== game.theme.secondary
-      )
-        data.append('theme', JSON.stringify(theme));
-      if (image !== game.image_url) data.append('image', image);
+      try {
+        const data = new FormData();
 
-      await api.put(`/game/${game._id}`, data);
+        if (name !== game.name) data.append('name', name);
+        if (description !== game.description)
+          data.append('description', description);
+        if (
+          theme.primary !== game.theme.primary ||
+          theme.secondary !== game.theme.secondary
+        )
+          data.append('theme', JSON.stringify(theme));
+        if (image !== game.image_url) data.append('image', image);
 
-      await refreshGame();
-    } catch (error) {
-      if (error.response) console.error(error.response.data);
-      console.error(error);
-    }
+        await api.put(`/game/${game._id}`, data);
 
-    setDisabledBtn(false);
-  };
+        toast.success('Informações alteradas com sucesso.');
+
+        await refreshGame();
+      } catch (error) {
+        handleApiErrors(error);
+      }
+
+      setDisabledBtn(false);
+    },
+    [game, refreshGame],
+  );
 
   const { setValues, ...form } = useFormik({
     initialValues,
@@ -82,15 +96,20 @@ const InfoForm: React.FC = () => {
     onSubmit: submitForm,
   });
 
-  const handleColorChange = (key: string, color: string) => {
-    const newTheme = {
-      ...form.values.theme,
-    };
-    newTheme[key] = color;
+  const handleColorChange = useCallback(
+    (key: string, color: string) => {
+      const newTheme = {
+        ...form.values.theme,
+      };
+      newTheme[key] = color;
 
-    changeTheme(newTheme);
-    form.setFieldValue('theme', newTheme);
-  };
+      changeTheme(newTheme);
+      form.setFieldValue('theme', newTheme);
+    },
+    [form, changeTheme],
+  );
+
+  if (!game) return null;
 
   return (
     <Form as="form" onSubmit={form.handleSubmit}>
@@ -160,7 +179,10 @@ const InfoForm: React.FC = () => {
             changeTheme(defaultTheme);
             setValues({
               ...form.values,
-              theme: defaultTheme,
+              theme: {
+                primary: defaultTheme.primary,
+                secondary: defaultTheme.secondary,
+              },
             });
           }}
         >

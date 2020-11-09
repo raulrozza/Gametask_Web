@@ -1,45 +1,48 @@
-import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useCallback } from 'react';
 
-import crypto from 'crypto-js';
-
-// Contexts
-import { useAuth } from '../../../contexts/Authorization';
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
 
 // Icons
 import { MdContentCopy } from 'react-icons/md';
+
+// Services
+import { encrypt } from '../../../services/encrypting';
 
 // Styles
 import { Container } from './styles';
 
 // Types
-import { IShare } from '../types';
-import { toast } from 'react-toastify';
+import { ShareProps } from './types';
 
-const Share: React.FC<IShare> = ({ gameId }) => {
+// Utils
+import displayInfoMessage from '../../../utils/messages/displayInfoMessage';
+
+const Share: React.FC<ShareProps> = ({ gameId }) => {
   const { user } = useAuth();
   const inputRef = useRef<HTMLInputElement>(null);
   const SECRET = process.env.REACT_APP_SECRET || '';
 
-  const cipher = crypto.AES.encrypt(
-    JSON.stringify({ gameId, inviter: user._id }),
-    SECRET,
-  ).toString();
-
-  const handleCopyToClipboard = () => {
+  const handleCopyToClipboard = useCallback(() => {
     if (inputRef.current !== null) {
       inputRef.current.select();
       document.execCommand('copy');
 
-      toast.info('Copiado para a área de transferência.');
+      displayInfoMessage('Copiado para a área de transferência.');
     }
-  };
+  }, []);
+
+  if (!user) return null;
+
+  const cipher = encrypt({ gameId, inviter: user._id }, SECRET);
 
   return (
     <Container>
       <span>Código para convite:</span>
+
       <div className="input-group">
         <input type="text" ref={inputRef} value={cipher} readOnly />
+
         <button
           type="button"
           onClick={handleCopyToClipboard}
@@ -50,10 +53,6 @@ const Share: React.FC<IShare> = ({ gameId }) => {
       </div>
     </Container>
   );
-};
-
-Share.propTypes = {
-  gameId: PropTypes.string.isRequired,
 };
 
 export default Share;

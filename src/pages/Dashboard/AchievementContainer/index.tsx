@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 // Assets
@@ -19,11 +18,11 @@ import { AchievementBox } from './styles';
 import { withTheme } from 'styled-components';
 
 // Types
-import { IAchievement } from 'game';
-import { IThemedComponent } from 'theme';
+import { IAchievement } from '../../../interfaces/api/Achievement';
+import { IThemedComponent } from '../../../interfaces/theme/ThemedComponent';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -38,7 +37,7 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
         setAchievements(data);
         setLoadingData(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);
@@ -118,25 +117,4 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   );
 };
 
-AchievementContainer.propTypes = {
-  theme: PropTypes.shape({
-    primary: PropTypes.string.isRequired,
-    primaryTransparent: PropTypes.string.isRequired,
-    primaryContrast: PropTypes.string.isRequired,
-    primaryLowShade: PropTypes.string.isRequired,
-    primaryShade: PropTypes.string.isRequired,
-    primaryExtraShade: PropTypes.string.isRequired,
-    primaryIntense: PropTypes.string.isRequired,
-    primaryExtraIntense: PropTypes.string.isRequired,
-    secondary: PropTypes.string.isRequired,
-    secondaryTransparent: PropTypes.string.isRequired,
-    secondaryContrast: PropTypes.string.isRequired,
-    secondaryLowShade: PropTypes.string.isRequired,
-    secondaryShade: PropTypes.string.isRequired,
-    secondaryExtraShade: PropTypes.string.isRequired,
-    secondaryIntense: PropTypes.string.isRequired,
-    secondaryExtraIntense: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-export default withTheme(AchievementContainer);
+export default memo(withTheme(AchievementContainer));

@@ -1,38 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
+// Assets
+import userPlaceholder from '../../../assets/img/users/placeholder.png';
 
 // Components
 import Loading from '../../../components/Loading';
 import Modal from '../../../components/Modal';
 import RequestModal from './RequestModal';
 
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
+import { useGameData } from '../../../hooks/contexts/useGameData';
+
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 import { BsController } from 'react-icons/bs';
 
+// Libs
+import { toast } from 'react-toastify';
+
 // Services
 import api from '../../../services/api';
 
-// Utils
-import { removeItemFromArray } from '../../../utils/arrayMethods';
-
-// Assets
-import userPlaceholder from '../../../assets/img/users/placeholder.png';
-
 // Styles
 import { RequestsContainer } from './styles';
+import { NoRequests, RequestFooter } from '../styles';
 
 // Types
-import { IRequest } from '../types';
+import { IActivityRequest } from '../types';
 
 // Utils
-import handleErrors from '../../../utils/handleErrors';
+import { removeItemFromArray } from '../../../utils/arrayMethods';
+import handleApiErrors from '../../../utils/handleApiErrors';
 
 const ActivityRegister: React.FC = () => {
   // States
-  const [requests, setRequests] = useState<IRequest[]>([]);
+  const [requests, setRequests] = useState<IActivityRequest[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRequest, setSelectedRequest] = useState<IRequest | null>(null);
+  const [
+    selectedRequest,
+    setSelectedRequest,
+  ] = useState<IActivityRequest | null>(null);
   const [showModal, setShowModal] = useState(false);
+
+  // Hooks
+  const { user } = useAuth();
+  const { refreshGame } = useGameData();
 
   useEffect(() => {
     (async () => {
@@ -42,148 +55,160 @@ const ActivityRegister: React.FC = () => {
         setRequests(response.data);
         setLoading(false);
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     })();
   }, []);
 
-  const handleDeleteRegister = (id: string) => {
+  const handleDeleteRegister = useCallback(async (id: string) => {
     if (window.confirm('Deseja realmente excluir esta requisição?')) {
       try {
-        api.delete(`/activityRegister/${id}`);
-
-        setRequests(
-          removeItemFromArray(
-            requests,
-            requests.findIndex(request => request._id === id),
-          ),
-        );
-      } catch (error) {
-        handleErrors(error);
-      }
-    }
-  };
-
-  const handleAcceptRegister = (id: string) => {
-    const request = requests.find(item => item._id === id);
-
-    if (!request) return;
-
-    if (window.confirm('Confirmar pontuação?')) {
-      try {
-        const data = {
-          userId: request.requester._id,
-          activityId: request.activity._id,
-          registerId: id,
-          experience: request.activity.experience,
-          completionDate: request.completionDate,
-        };
-
-        api.post('/experience', data);
-
-        setRequests(
+        setRequests(requests =>
           removeItemFromArray(
             requests,
             requests.findIndex(request => request._id === id),
           ),
         );
 
-        setShowModal(false);
+        await api.delete(`/activityRegister/${id}`);
+
+        toast.update('Requisição excluída');
       } catch (error) {
-        handleErrors(error);
+        handleApiErrors(error);
       }
     }
-  };
+  }, []);
 
-  const handleShowDetails = (request: IRequest) => {
+  const handleAcceptRegister = useCallback(
+    async (id: string) => {
+      const request = requests.find(item => item._id === id);
+
+      if (!request || !user) return;
+
+      if (window.confirm('Confirmar pontuação?')) {
+        try {
+          const data = {
+            userId: user._id,
+            playerId: request.requester._id,
+            activityId: request.activity._id,
+            registerId: id,
+            experience: request.activity.experience,
+            completionDate: request.completionDate,
+          };
+
+          setRequests(
+            removeItemFromArray(
+              requests,
+              requests.findIndex(request => request._id === id),
+            ),
+          );
+
+          await api.post('/experience', data);
+
+          toast.success('Requisição aceita!');
+
+          refreshGame();
+
+          setShowModal(false);
+        } catch (error) {
+          handleApiErrors(error);
+        }
+      }
+    },
+    [requests, refreshGame, user],
+  );
+
+  const handleShowDetails = useCallback((request: IActivityRequest) => {
     setSelectedRequest(request);
     setShowModal(true);
-  };
+  }, []);
 
   return (
     <RequestsContainer>
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <ul className="request-list">
-            {requests.length > 0 ? (
-              requests.map(({ requester: user, activity, ...request }) => (
-                <li className="request" key={request._id}>
-                  <section className="main">
-                    <img
-                      src={user.image ? user.profile_url : userPlaceholder}
-                      alt={user.firstname}
-                    />
+        <ul className="request-list">
+          {requests.length > 0 ? (
+            requests.map(({ requester, activity, ...request }) => (
+              <li className="request" key={request._id}>
+                <section className="main">
+                  <img
+                    src={
+                      requester.user.image
+                        ? requester.user.profile_url
+                        : userPlaceholder
+                    }
+                    alt={requester.user.firstname}
+                  />
 
-                    <div>
-                      <span className="title">
-                        <strong>{user.firstname}</strong>
-                        {` | `}
-                        <strong>
-                          {activity.name} ({activity.experience} XP)
-                        </strong>
-                      </span>
-
-                      <span className="info">{request.information}</span>
-                    </div>
-                  </section>
-                  <footer>
-                    <span>
-                      {new Date(request.requestDate).toLocaleDateString()}
+                  <div>
+                    <span className="title">
+                      <strong>{requester.user.firstname}</strong>
+                      {` | `}
+                      <strong>
+                        {activity.name} ({activity.experience} XP)
+                      </strong>
                     </span>
-                    <div>
-                      <button
-                        className="details"
-                        type="button"
-                        title="Detalhes da Requisição"
-                        onClick={() =>
-                          handleShowDetails({
-                            ...request,
-                            requester: user,
-                            activity,
-                          })
-                        }
-                      >
-                        Ver Mais
-                      </button>
-                      <button
-                        className="confirm"
-                        type="button"
-                        title="Aceitar Requisição"
-                        onClick={() => handleAcceptRegister(request._id)}
-                      >
-                        <FaCheck />
-                      </button>
-                      <button
-                        className="delete"
-                        type="button"
-                        title="Remover Requisição"
-                        onClick={() => handleDeleteRegister(request._id)}
-                      >
-                        <FaTrashAlt />
-                      </button>
-                    </div>
-                  </footer>
-                </li>
-              ))
-            ) : (
-              <div className="no-requests">
-                <BsController />
-                Não há requisições!
-              </div>
-            )}
-          </ul>
-          {showModal && selectedRequest && (
-            <Modal closeModal={() => setShowModal(false)} title="Atividade">
-              <RequestModal
-                request={selectedRequest}
-                deleteRequest={handleDeleteRegister}
-                acceptRequest={handleAcceptRegister}
-              />
-            </Modal>
+
+                    <span className="info">{request.information}</span>
+                  </div>
+                </section>
+                <RequestFooter>
+                  <span>
+                    {new Date(request.requestDate).toLocaleDateString()}
+                  </span>
+                  <div>
+                    <button
+                      className="details"
+                      type="button"
+                      title="Detalhes da Requisição"
+                      onClick={() =>
+                        handleShowDetails({
+                          ...request,
+                          requester,
+                          activity,
+                        })
+                      }
+                    >
+                      Ver Mais
+                    </button>
+                    <button
+                      className="confirm"
+                      type="button"
+                      title="Aceitar Requisição"
+                      onClick={() => handleAcceptRegister(request._id)}
+                    >
+                      <FaCheck />
+                    </button>
+                    <button
+                      className="delete"
+                      type="button"
+                      title="Remover Requisição"
+                      onClick={() => handleDeleteRegister(request._id)}
+                    >
+                      <FaTrashAlt />
+                    </button>
+                  </div>
+                </RequestFooter>
+              </li>
+            ))
+          ) : (
+            <NoRequests>
+              <BsController />
+              Não há requisições!
+            </NoRequests>
           )}
-        </>
+        </ul>
+      )}
+      {showModal && selectedRequest && (
+        <Modal closeModal={() => setShowModal(false)} title="Atividade">
+          <RequestModal
+            request={selectedRequest}
+            deleteRequest={handleDeleteRegister}
+            acceptRequest={handleAcceptRegister}
+          />
+        </Modal>
       )}
     </RequestsContainer>
   );

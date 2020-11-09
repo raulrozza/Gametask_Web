@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // Icons
 import { FaCheck, FaTrash } from 'react-icons/fa';
@@ -8,12 +7,13 @@ import { FaCheck, FaTrash } from 'react-icons/fa';
 import userPlaceholder from '../../../../assets/img/users/placeholder.png';
 
 // Types
-import { RequestModalProps } from '../../types';
+import { ActivityRequestModalProps } from '../../types';
 
 // Styles
 import { ModalContainer } from './styles';
+import { RequestFooter } from '../../styles';
 
-const RequestModal: React.FC<RequestModalProps> = ({
+const RequestModal: React.FC<ActivityRequestModalProps> = ({
   request,
   deleteRequest,
   acceptRequest,
@@ -22,11 +22,11 @@ const RequestModal: React.FC<RequestModalProps> = ({
     <header>
       <img
         src={
-          request.requester.image
-            ? request.requester.profile_url
+          request.requester.user.image
+            ? request.requester.user.profile_url
             : userPlaceholder
         }
-        alt={request.requester.firstname}
+        alt={request.requester.user.firstname}
       />
 
       <strong>
@@ -36,14 +36,14 @@ const RequestModal: React.FC<RequestModalProps> = ({
       <span>
         concluído por{' '}
         <strong>
-          {request.requester.firstname} {request.requester.lastname}
+          {request.requester.user.firstname} {request.requester.user.lastname}
         </strong>{' '}
         em {new Date(request.completionDate).toLocaleDateString()}
       </span>
     </header>
 
     <section>
-      <span>{request.requester.firstname} informa: </span>
+      <span>{request.requester.user.firstname} informa: </span>
 
       <span>{request.information}</span>
 
@@ -52,7 +52,7 @@ const RequestModal: React.FC<RequestModalProps> = ({
       )}
     </section>
 
-    <footer>
+    <RequestFooter>
       <cite>
         Requisição feita em {new Date(request.requestDate).toLocaleDateString()}
         , {new Date(request.requestDate).toLocaleTimeString()}
@@ -77,32 +77,8 @@ const RequestModal: React.FC<RequestModalProps> = ({
           <FaTrash />
         </button>
       </div>
-    </footer>
+    </RequestFooter>
   </ModalContainer>
 );
-
-RequestModal.propTypes = {
-  request: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    requester: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      firstname: PropTypes.string.isRequired,
-      lastname: PropTypes.string.isRequired,
-      image: PropTypes.string,
-      profile_url: PropTypes.string.isRequired,
-    }).isRequired,
-    activity: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      experience: PropTypes.number.isRequired,
-      dmRules: PropTypes.string,
-    }).isRequired,
-    completionDate: PropTypes.string.isRequired,
-    requestDate: PropTypes.string.isRequired,
-    information: PropTypes.string.isRequired,
-  }).isRequired,
-  deleteRequest: PropTypes.func.isRequired,
-  acceptRequest: PropTypes.func.isRequired,
-};
 
 export default RequestModal;

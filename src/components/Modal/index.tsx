@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useEffect } from 'react';
 
 // Icons
 import { FaTimes } from 'react-icons/fa';
@@ -16,32 +15,32 @@ const Modal: React.FC<ModalProps> = ({
   children,
   size = 'md',
 }) => {
+  const backgroundRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (backgroundRef.current)
+      backgroundRef.current.addEventListener('click', function (
+        event: MouseEvent,
+      ) {
+        if (event.target && event.target === this) closeModal();
+      });
+  }, [closeModal]);
+
   return (
-    <Background>
+    <Background ref={backgroundRef}>
       <Container size={size}>
         <div className="modal-title">
           <h2>{title}</h2>
+
           <button className="close" type="button" onClick={closeModal}>
             <FaTimes />
           </button>
         </div>
+
         <div className="modal-children">{children}</div>
       </Container>
     </Background>
   );
-};
-
-Modal.propTypes = {
-  title: PropTypes.string,
-  closeModal: PropTypes.func,
-  children: PropTypes.node,
-  size: PropTypes.oneOf(['sm', 'md', 'lg']),
-};
-
-Modal.defaultProps = {
-  closeModal: () => {
-    console.log('Not implemented.');
-  },
 };
 
 export default Modal;

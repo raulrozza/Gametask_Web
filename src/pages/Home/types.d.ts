@@ -5,3 +5,7 @@ export interface FormToggleButtonProps {
 export interface FormProps {
   shown?: boolean;
 }
+
+export interface FormContainerProps {
+  shown: boolean;
+}

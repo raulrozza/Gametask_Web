@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
+// Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 // Services
 import api from '../../../services/api';
-
-// Utils
-import {
-  addItemToArray,
-  removeItemFromArray,
-  updateItemInArray,
-} from '../../../utils/arrayMethods';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -24,44 +18,57 @@ import { LevelConfigContainer } from './styles';
 // Types
 import { ILevelInfo } from '../types';
 
+// Utils
+import {
+  addItemToArray,
+  removeItemFromArray,
+  updateItemInArray,
+} from '../../../utils/arrayMethods';
+import handleApiErrors from '../../../utils/handleApiErrors';
+
 const LevelConfig: React.FC = () => {
-  const { game, refreshGame } = useGame();
+  const { game, refreshGame } = useGameData();
   const [disabledBtn, disableButton] = useState(false);
   const [levelInfo, setLevelInfo] = useState<ILevelInfo[]>(
-    game.levelInfo.map(level => {
-      return {
-        requiredExperience: level.requiredExperience,
-        title: level.title,
-      };
-    }),
+    game?.levelInfo.map(level => ({
+      requiredExperience: level.requiredExperience,
+      title: level.title,
+    })) || [],
   );
 
-  const handleAddItem = () => {
+  const handleAddItem = useCallback(() => {
     const newLevel = {
       requiredExperience: 0,
       title: '',
     };
 
-    setLevelInfo(addItemToArray(levelInfo, newLevel));
-  };
+    setLevelInfo(levelInfo => addItemToArray(levelInfo, newLevel));
+  }, []);
 
-  const handleRemoveItem = (index: number) => {
+  const handleRemoveItem = useCallback((index: number) => {
     if (window.confirm('Deseja mesmo remover este nível?'))
-      setLevelInfo(removeItemFromArray(levelInfo, index));
-  };
+      setLevelInfo(levelInfo => removeItemFromArray(levelInfo, index));
+  }, []);
 
-  const handleChangeItem = (target: HTMLInputElement, index: number) => {
-    const item = levelInfo[index];
-    const selector = target.name;
+  const handleChangeItem = useCallback(
+    (target: HTMLInputElement, index: number) => {
+      setLevelInfo(levelInfo => {
+        const item = levelInfo[index];
+        const selector = target.name;
 
-    if (target.type === 'number') item[selector] = parseInt(target.value);
-    else item[target.name] = target.value;
+        if (target.type === 'number') item[selector] = parseInt(target.value);
+        else item[target.name] = target.value;
 
-    setLevelInfo(updateItemInArray(levelInfo, item, index));
-  };
+        return updateItemInArray(levelInfo, item, index);
+      });
+    },
+    [],
+  );
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     disableButton(true);
+
+    if (!game) return;
 
     const newLevelInfo = levelInfo.map((info, index) => {
       return {
@@ -73,13 +80,15 @@ const LevelConfig: React.FC = () => {
     try {
       await api.put(`/level/${game._id}`, { levelInfo: newLevelInfo });
 
+      toast.success('Níveis alterados com sucesso.');
+
       await refreshGame();
     } catch (error) {
-      console.error(error);
+      handleApiErrors(error);
     }
 
     disableButton(false);
-  };
+  }, [game, levelInfo, refreshGame]);
 
   return (
     <LevelConfigContainer>

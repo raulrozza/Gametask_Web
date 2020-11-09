@@ -1,27 +1,21 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback } from 'react';
 
 // Contexts
-import { useAuth } from './Authorization';
-import { useTheme } from './Theme';
+import { GameContext } from './rawContexts';
+
+// Hooks
+import { useApiGet } from '../hooks/api/useApiGet';
+import { useTheme } from '../hooks/contexts/useTheme';
 
 // Services
-import api from '../services/api';
+import { addApiHeader, removeApiHeader } from '../services/api';
+import { getData, removeData, saveData } from '../services/storage';
 
 // Types
-import { IGameHook, IGame } from 'game';
+import { IGame } from '../interfaces/api/Game';
 
 // Utils
-import handleErrors from '../utils/handleErrors';
 import isEqual from '../utils/isEqual';
-
-const GameContext = createContext({});
 
 const Game: React.FC = ({ children }) => {
   const [game, setGame] = useState<IGame | null>(null);
@@ -29,71 +23,71 @@ const Game: React.FC = ({ children }) => {
     false,
   );
   const [loading, setLoading] = useState(true);
-  const { signOut } = useAuth();
-  const { changeTheme } = useTheme();
 
-  const resetGame = useCallback(() => {
+  const { changeTheme } = useTheme();
+  const apiGet = useApiGet<IGame>();
+
+  const resetGame = useCallback(async () => {
     changeTheme({});
-    localStorage.removeItem('storedGame');
+    await removeData('storedGame');
     setGame(null);
+    removeApiHeader('X-Game-ID');
   }, [changeTheme]);
 
   const getGameInfo = useCallback(
     async (gameId: string) => {
-      try {
-        const { data } = await api.get(`/game/${gameId}`);
+      const game = await apiGet(`/gameplay/${gameId}`);
 
-        localStorage.setItem('storedGame', JSON.stringify(data));
+      if (!game) return;
 
-        setVerifiedGameAuthenticity(true);
-        setGame(data);
-        changeTheme(data.theme);
-      } catch (error) {
-        handleErrors(error, signOut);
-      }
+      await saveData('storedGame', game);
+
+      setVerifiedGameAuthenticity(true);
+      setGame(game);
+      changeTheme(game.theme);
     },
-    [signOut, changeTheme],
+    [changeTheme, apiGet],
   );
 
-  // Get the game's info
   useEffect(() => {
-    // Get the local storage info
-    const storedGame = localStorage.getItem('storedGame');
+    (async () => {
+      // Get the local storage info
+      const storedGame = await getData<IGame>('storedGame');
 
-    if (!storedGame) resetGame();
-    else {
-      const parsedGame = JSON.parse(storedGame);
-
-      if (!parsedGame) resetGame();
+      if (!storedGame) resetGame();
       else {
         // Check if the game in state is equal to the one stored in the local storage.
         // If they are, DO NOT CHANGE THE STATE because it causes infinite re-renderings
-        api.defaults.headers['X-Game-ID'] = parsedGame._id;
+        addApiHeader('X-Game-ID', storedGame._id);
 
-        if (!isEqual(game, parsedGame)) {
-          setGame(parsedGame);
-          changeTheme(parsedGame.theme);
+        if (!isEqual(game, storedGame)) {
+          setGame(storedGame);
+          changeTheme(storedGame.theme);
         }
 
-        if (!verifiedGameAuthenticity) getGameInfo(parsedGame._id);
+        if (!verifiedGameAuthenticity) getGameInfo(storedGame._id);
       }
-    }
 
-    setLoading(false);
+      setLoading(false);
+    })();
   }, [changeTheme, resetGame, getGameInfo, verifiedGameAuthenticity, game]);
 
-  const switchGame = (game?: IGame) => {
-    setLoading(true);
+  const switchGame = useCallback(
+    async (game?: IGame) => {
+      setLoading(true);
 
-    if (game) {
-      localStorage.setItem('storedGame', JSON.stringify(game));
+      if (game) {
+        await saveData('storedGame', game);
 
-      setGame(game);
-      changeTheme(game.theme);
-    } else resetGame();
+        setGame(game);
+        changeTheme(game.theme);
+      } else resetGame();
 
-    setLoading(false);
-  };
+      setVerifiedGameAuthenticity(false);
+      setLoading(false);
+    },
+    [changeTheme, resetGame],
+  );
 
   const refreshGame = useCallback(() => {
     if (game) return getGameInfo(game._id);
@@ -112,16 +106,6 @@ const Game: React.FC = ({ children }) => {
       {children}
     </GameContext.Provider>
   );
-};
-
-export const useGame: () => IGameHook = () => {
-  const game = useContext(GameContext) as IGameHook;
-
-  return game;
-};
-
-Game.propTypes = {
-  children: PropTypes.node,
 };
 
 export default Game;

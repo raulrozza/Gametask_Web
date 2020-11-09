@@ -1,3 +1,3 @@
-export type AddArray<T> = (array: T[], item: T) => T[];
-export type UpdateArray<T> = (array: T[], item: T, index: number) => T[];
-export type RemoveArray<T> = (array: T[], index: number) => T[];
+export type AddItemToArray = <T>(array: T[], item: T) => T[];
+export type UpdateItemInArray = <T>(array: T[], item: T, index: number) => T[];
+export type RemoveItemFromArray = <T>(array: T[], index: number) => T[];

@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
-// Contexts
-import { useGame } from '../../../contexts/Game';
-import { getTextColor } from '../../../contexts/Theme';
+// Hooks
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Libs
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 // Services
 import api from '../../../services/api';
-
-// Utils
-import {
-  addItemToArray,
-  removeItemFromArray,
-  updateItemInArray,
-} from '../../../utils/arrayMethods';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -25,14 +18,25 @@ import { RankConfigContainer, RankItem, ColorInput } from './styles';
 // Types
 import { IndexableRank } from '../types';
 
+// Utils
+import {
+  addItemToArray,
+  removeItemFromArray,
+  updateItemInArray,
+} from '../../../utils/arrayMethods';
+import handleApiErrors from '../../../utils/handleApiErrors';
+import { getTextColor } from '../../../utils/theme/getTextColor';
+
 const RankConfig: React.FC = () => {
-  const { game, refreshGame } = useGame();
+  const { game, refreshGame } = useGameData();
   const [disabledBtn, disableButton] = useState(false);
   const [ranks, setRanks] = useState<IndexableRank[]>(
-    game.ranks as IndexableRank[],
+    (game?.ranks as IndexableRank[]) || [],
   );
 
-  const handleAddItem = () => {
+  const handleAddItem = useCallback(() => {
+    if (!game) return;
+
     const newLevel = {
       level: game.levelInfo[game.levelInfo.length - 1].level,
       tag: '',
@@ -40,53 +44,68 @@ const RankConfig: React.FC = () => {
       color: '',
     };
 
-    setRanks(addItemToArray(ranks, newLevel));
-  };
+    setRanks(ranks => addItemToArray(ranks, newLevel));
+  }, [game]);
 
-  const handleRemoveItem = (index: number) => {
+  const handleRemoveItem = useCallback((index: number) => {
     if (window.confirm('Deseja mesmo remover esta patente?'))
-      setRanks(removeItemFromArray(ranks, index));
-  };
+      setRanks(ranks => removeItemFromArray(ranks, index));
+  }, []);
 
-  const handleSelectChange = (value: string, index: number) => {
-    const item = ranks[index];
-    item.level = parseInt(value);
+  const handleSelectChange = useCallback((value: string, index: number) => {
+    setRanks(ranks => {
+      const item = ranks[index];
+      item.level = parseInt(value);
 
-    setRanks(
-      updateItemInArray(ranks, item, index).sort((a, b) => a.level - b.level),
-    );
-  };
+      return updateItemInArray(ranks, item, index).sort(
+        (a, b) => a.level - b.level,
+      );
+    });
+  }, []);
 
-  const handleChangeItem = (target: HTMLInputElement, index: number) => {
-    const item = ranks[index];
-    item[target.name] = target.value;
+  const handleChangeItem = useCallback(
+    (target: HTMLInputElement, index: number) => {
+      setRanks(ranks => {
+        const item = ranks[index];
+        item[target.name] = target.value;
 
-    setRanks(updateItemInArray(ranks, item, index));
-  };
+        return updateItemInArray(ranks, item, index);
+      });
+    },
+    [],
+  );
 
-  const handleColorChange = (color: string, index: number) => {
-    const item = ranks[index];
-    const newItem = {
-      ...item,
-      color,
-    };
+  const handleColorChange = useCallback((color: string, index: number) => {
+    setRanks(ranks => {
+      const item = ranks[index];
+      const newItem = {
+        ...item,
+        color,
+      };
 
-    setRanks(updateItemInArray(ranks, newItem, index));
-  };
+      return updateItemInArray(ranks, newItem, index);
+    });
+  }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     disableButton(true);
+
+    if (!game) return;
 
     try {
       await api.put(`/rank/${game._id}`, { ranks });
 
+      toast.success('Patente alterada com sucesso.');
+
       await refreshGame();
     } catch (error) {
-      console.error(error);
+      handleApiErrors(error);
     }
 
     disableButton(false);
-  };
+  }, [game, ranks, refreshGame]);
+
+  if (!game) return null;
 
   return (
     <RankConfigContainer>

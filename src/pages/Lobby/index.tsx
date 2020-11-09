@@ -1,63 +1,47 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Helmet } from 'react-helmet';
-import { FaPlus, FaLink } from 'react-icons/fa';
-
-// Contexts
-import { useAuth } from '../../contexts/Authorization';
-import { useGame } from '../../contexts/Game';
+import React, { useState, useEffect } from 'react';
 
 // Components
 import Loading from '../../components/Loading';
 import Modal from '../../components/Modal';
+import PageTitle from '../../components/PageTitle';
 import GameForm from './GameForm';
 import Navbar from './Navbar';
 import Share from './Share';
 
-// Types
-import { IGame } from 'game';
+// Hooks
+import { useGameData } from '../../hooks/contexts/useGameData';
+import { useApiFetch } from '../../hooks/api/useApiFetch';
 
-// services
-import api from '../../services/api';
+// Icons
+import { FaPlus, FaLink } from 'react-icons/fa';
 
 // Styles
 import { Container, GameCard } from './styles';
 import Button from '../../styles/Button';
 
-// Utils
-import handleErrors from '../../utils/handleErrors';
+// Types
+import { IGame } from '../../interfaces/api/Game';
 
 const Lobby: React.FC = () => {
-  const [games, setGames] = useState<IGame[]>([]);
-  const [loading, setLoading] = useState(true);
   const [showGameModal, setShowGameModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [selectedGame, setSelectedGame] = useState('');
 
-  const { signOut } = useAuth();
-  const { switchGame } = useGame();
-
-  const loadGames = useCallback(async () => {
-    try {
-      const { data } = await api.get('/game');
-
-      setGames(data);
-      setLoading(false);
-    } catch (error) {
-      handleErrors(error, signOut);
-    }
-  }, [signOut]);
+  // Hooks
+  const { switchGame } = useGameData();
+  const { data: games, loading, fetch } = useApiFetch<IGame[]>('/game');
 
   useEffect(() => {
-    loadGames();
-  }, [loadGames]);
+    fetch();
+  }, [fetch]);
 
   if (loading) return <Loading />;
+  if (!games) return null;
 
   return (
     <Container>
-      <Helmet>
-        <title>Lobby - GameTask</title>
-      </Helmet>
+      <PageTitle title="Lobby" />
+
       <Navbar />
 
       <section className="games-container">
@@ -65,13 +49,16 @@ const Lobby: React.FC = () => {
           {games.map(game => (
             <GameCard key={game._id} hasInfo={Boolean(game)}>
               <strong>{game.name}</strong>
+
               <img src={game.image_url} alt={game.name} />
+
               <span>{game.description}</span>
 
               <div>
                 <Button outline onClick={() => switchGame(game)}>
                   Entrar
                 </Button>
+
                 <Button
                   onClick={() => {
                     setSelectedGame(game._id);
@@ -87,11 +74,13 @@ const Lobby: React.FC = () => {
           <GameCard>
             <button type="button" onClick={() => setShowGameModal(true)}>
               <FaPlus />
+
               <span>Criar Jogo</span>
             </button>
           </GameCard>
         </div>
       </section>
+
       {showGameModal && (
         <Modal
           title="Criar Jogo"
@@ -99,11 +88,12 @@ const Lobby: React.FC = () => {
           closeModal={() => setShowGameModal(false)}
         >
           <GameForm
-            onSuccess={loadGames}
+            onSuccess={fetch}
             closeModal={() => setShowGameModal(false)}
           />
         </Modal>
       )}
+
       {showShareModal && (
         <Modal
           title="Compartilhar"

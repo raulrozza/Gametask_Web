@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo, memo } from 'react';
 
 // Assets
 import placeholder from '../../assets/img/achievements/placeholder.png';
@@ -7,11 +6,12 @@ import placeholder from '../../assets/img/achievements/placeholder.png';
 // Types
 import { ImageInputProps } from './types';
 
+// Stypes
 import { InputWrapper } from './styles';
 
 const ImageInput: React.FC<ImageInputProps> = ({
   name,
-  value,
+  value = null,
   setInput,
   children,
   ...props
@@ -40,15 +40,4 @@ const ImageInput: React.FC<ImageInputProps> = ({
   );
 };
 
-ImageInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.string]),
-  setInput: PropTypes.func.isRequired,
-  children: PropTypes.node,
-};
-
-ImageInput.defaultProps = {
-  value: null,
-};
-
-export default ImageInput;
+export default memo(ImageInput);

@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, useMemo, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   Switch,
@@ -13,12 +13,13 @@ import {
 import Loading from '../../components/Loading';
 import PageWrapper from '../../components/PageWrapper';
 
+// Hooks
+import { useGameData } from '../../hooks/contexts/useGameData';
+
 // Libs
 import { FaBars } from 'react-icons/fa';
 
-// Contexts
-import { useGame } from '../../contexts/Game';
-
+// Styles
 import { Row, SideNav, TabItem, Content } from './styles';
 
 // Subpages
@@ -31,25 +32,28 @@ const Game: React.FC = () => {
   // Hooks
   const match = useRouteMatch();
   const location = useLocation();
-  const { loading } = useGame();
+  const { loading } = useGameData();
 
-  const sidenavItems = [
-    {
-      key: 'info',
-      title: 'Informações gerais',
-      url: `${match.url}/info`,
-    },
-    {
-      key: 'leveling',
-      title: 'Gerenciar níveis',
-      url: `${match.url}/leveling`,
-    },
-    {
-      key: 'ranks',
-      title: 'Gerenciar patentes',
-      url: `${match.url}/ranks`,
-    },
-  ];
+  const sidenavItems = useMemo(
+    () => [
+      {
+        key: 'info',
+        title: 'Informações gerais',
+        url: `${match.url}/info`,
+      },
+      {
+        key: 'leveling',
+        title: 'Gerenciar níveis',
+        url: `${match.url}/leveling`,
+      },
+      {
+        key: 'ranks',
+        title: 'Gerenciar patentes',
+        url: `${match.url}/ranks`,
+      },
+    ],
+    [match.url],
+  );
 
   if (loading) return <Loading />;
   return (

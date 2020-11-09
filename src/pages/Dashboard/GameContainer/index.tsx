@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 // Components
 import { FaCog } from 'react-icons/fa';
 
-// Contexts
-import { useAuth } from '../../../contexts/Authorization';
-import { useGame } from '../../../contexts/Game';
-
 // Assets
 import placeholder from '../../../assets/img/games/placeholder.png';
+
+// Hooks
+import { useAuth } from '../../../hooks/contexts/useAuth';
+import { useGameData } from '../../../hooks/contexts/useGameData';
 
 // Styles
 import { GameContainerDiv } from './styles';
 
 const GameContainer: React.FC = () => {
-  const { game, switchGame } = useGame();
+  const { game, switchGame } = useGameData();
   const { user, signOut } = useAuth();
+
+  if (!user || !game) return null;
 
   return (
     <GameContainerDiv>
@@ -52,4 +54,4 @@ const GameContainer: React.FC = () => {
   );
 };
 
-export default GameContainer;
+export default memo(GameContainer);
