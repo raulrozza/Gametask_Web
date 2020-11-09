@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
+// Hooks
+import { useApiPost } from '../../../hooks/api/useApiPost';
+
 // Libs
 import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
 
-// Services
-import api from '../../../services/api';
+// Schemas
+import { GameSchema } from './schemas';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -18,16 +20,12 @@ import ImageInput from '../../../components/ImageInput';
 import { IGameForm, IGameValues } from '../types';
 
 // Utils
-import handleApiErrors from '../../../utils/handleApiErrors';
-
-const GameSchema = Yup.object().shape({
-  name: Yup.string().required('Dê um nome ao seu jogo.'),
-  description: Yup.string().required('Descreva seu jogo.'),
-  image: Yup.mixed(),
-});
+import displayErrorMessage from '../../../utils/messages/displayErrorMessage';
 
 const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
   const [disabledButton, setDisabledButton] = useState(false);
+
+  const apiPost = useApiPost();
 
   const initialValues: IGameValues = {
     name: '',
@@ -37,26 +35,27 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
 
   const onSubmit = useCallback(
     async values => {
-      if (!values.image) return;
+      if (!values.image) {
+        displayErrorMessage('Por favor, envie uma imagem!', 0);
+
+        return;
+      }
 
       setDisabledButton(true);
-      try {
-        const data = new FormData();
 
-        data.append('name', values.name);
-        data.append('description', values.description);
-        data.append('image', values.image);
+      const data = new FormData();
 
-        await api.post(`/game`, data);
+      data.append('name', values.name);
+      data.append('description', values.description);
+      data.append('image', values.image);
 
-        onSuccess();
-      } catch (error) {
-        handleApiErrors(error);
-      } finally {
-        closeModal();
-      }
+      const result = await apiPost(`/game`, data);
+
+      if (result) onSuccess();
+
+      closeModal();
     },
-    [onSuccess, closeModal],
+    [apiPost, onSuccess, closeModal],
   );
 
   return (
@@ -101,6 +100,7 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
               <Button outline onClick={closeModal}>
                 Cancelar
               </Button>
+
               <Button type="submit" disabled={disabledButton}>
                 Criar
               </Button>
