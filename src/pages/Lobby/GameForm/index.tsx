@@ -51,7 +51,7 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
 
       const result = await apiPost(`/game`, data);
 
-      if (result) onSuccess();
+      if (result !== null) onSuccess();
 
       closeModal();
     },
