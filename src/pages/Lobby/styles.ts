@@ -41,6 +41,9 @@ export const GameCard = styled.div<IGameCard>`
 
   background: transparent;
 
+  overflow-y: auto;
+  scrollbar-width: thin;
+
   border-radius: 16px;
 
   ${({ theme, hasInfo }) =>
