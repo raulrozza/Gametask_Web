@@ -3,7 +3,7 @@ import tinyColor from 'tinycolor2';
 // Types
 import { DefaultTheme } from 'styled-components';
 
-export const fillTheme = (key: string, value: string): DefaultTheme => {
+const fillTheme = (key: string, value: string): DefaultTheme => {
   const color = tinyColor(value);
   const pallete = {} as DefaultTheme;
 
@@ -35,3 +35,5 @@ export const fillTheme = (key: string, value: string): DefaultTheme => {
 
   return pallete;
 };
+
+export default fillTheme;

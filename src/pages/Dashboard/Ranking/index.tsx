@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Hooks
-import { useGameData } from '../../../hooks/contexts/useGameData';
+import { useGameData } from 'hooks';
 
 // Icons
 import { FaFrown } from 'react-icons/fa';
@@ -13,7 +13,7 @@ import { FaFrown } from 'react-icons/fa';
 import { RankingContainer } from './styles';
 
 // Utils
-import { getTextColor } from '../../../utils/theme/getTextColor';
+import { getTextColor } from 'utils';
 
 const Ranking: React.FC = () => {
   const { game } = useGameData();

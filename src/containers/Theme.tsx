@@ -13,11 +13,10 @@ import { DefaultTheme, ThemeProvider } from 'styled-components';
 import Global from 'styles/Global';
 
 // Types
-import { ChangeThemeProps } from 'interfaces/hooks/UseTheme';
+import { ChangeThemeProps } from 'interfaces';
 
 // Utils
-import { fillTheme } from 'utils/theme/fillTheme';
-import setMobileThemeColor from 'utils/theme/setMobileThemeColor';
+import { fillTheme, setMobileThemeColor } from 'utils';
 
 const Theme: React.FC = ({ children }) => {
   const [theme, setTheme] = useState<DefaultTheme>(defaultTheme);

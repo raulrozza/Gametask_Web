@@ -25,7 +25,7 @@ import {
   updateItemInArray,
 } from '../../../utils/arrayMethods';
 import handleApiErrors from '../../../utils/handleApiErrors';
-import { getTextColor } from '../../../utils/theme/getTextColor';
+import { getTextColor } from '../../../utils/theme';
 
 const RankConfig: React.FC = () => {
   const { game, refreshGame } = useGameData();

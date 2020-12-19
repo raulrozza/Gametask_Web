@@ -10,10 +10,10 @@ import { useApiGet, useTheme } from 'hooks';
 import { api, storage } from 'services';
 
 // Types
-import { IGame } from 'interfaces/api/Game';
+import { IGame } from 'interfaces';
 
 // Utils
-import isEqual from 'utils/isEqual';
+import { isEqual } from 'utils';
 
 const Game: React.FC = ({ children }) => {
   const [game, setGame] = useState<IGame | null>(null);
