@@ -1,4 +1,4 @@
-import { ITitle } from './Title';
+import { ITitle } from 'interfaces';
 
 export interface IAchievement {
   _id: string;

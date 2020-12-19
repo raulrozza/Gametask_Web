@@ -1,6 +1,4 @@
-import { IPlayer } from './Player';
-import { IRank } from './Rank';
-import { IUser } from './User';
+import { IPlayer, IRank, IUser } from 'interfaces';
 
 interface ILevelInfo {
   level: number;

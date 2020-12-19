@@ -1,4 +1,4 @@
-import { IUser } from '../api/User';
+import { IUser } from 'interfaces';
 
 export interface IAuth {
   user: IUser | null;

@@ -1,4 +1,4 @@
-import { IGame } from '../api/Game';
+import { IGame } from 'interfaces';
 
 export interface IGameData {
   game: IGame | null;
