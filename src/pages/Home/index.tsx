@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
 // Components
-import PageTitle from '../../components/PageTitle';
-import Login from './Login';
-import Signup from './Signup';
+import { PageTitle } from 'components';
+import { Login, Signup } from './components';
 
 // Styles
 import { HomePage, FormToggle } from './styles';

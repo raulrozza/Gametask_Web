@@ -23,7 +23,7 @@ import { api } from '../../../services';
 // Styles
 import Button from '../../../styles/Button';
 import { Form } from './styles';
-import { ErrorField } from '../../../styles/Form';
+import { ErrorField } from '../../../styles';
 
 // Types
 import { InfoFormValues } from '../types';

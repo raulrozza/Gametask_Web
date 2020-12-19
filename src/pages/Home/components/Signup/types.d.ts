@@ -1,3 +1,5 @@
+import { FormikHelpers } from 'formik';
+
 export interface SignupFormValues {
   firstname: string;
   lastname?: string;
@@ -11,3 +13,13 @@ export type PasswordsError =
       confirmPassword: string;
     }
   | undefined;
+
+export interface UseSignup {
+  (): {
+    buttonDisabled: boolean;
+    onSubmit: (
+      values: SignupFormValues,
+      actions: FormikHelpers,
+    ) => Promise<void>;
+  };
+}

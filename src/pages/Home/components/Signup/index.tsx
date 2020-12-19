@@ -1,57 +1,26 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 
 // Components
 import { Formik, Field } from 'formik';
 
+// Constants
+import { initialValues } from './constants';
+
 // Hooks
-import { useApiPost } from '../../../hooks/api/useApiPost';
+import { useSignup } from './hooks';
 
 // Schemas
 import { SignupSchema } from './schemas';
 
 // Styles
-import Button from '../../../styles/Button';
-import { ErrorField } from '../../../styles/Form';
-import { Form } from '../styles';
+import { Button, ErrorField } from 'styles';
+import { Form } from '../../styles';
 
 // Types
-import { FormContainerProps } from '../types';
-
-// Utils
-import displaySuccessMessage from '../../../utils/messages/displaySuccessMessage';
-import { passwordsDontMatch } from './utils';
+import { FormContainerProps } from '../../types';
 
 const Signup: React.FC<FormContainerProps> = ({ shown }) => {
-  const initialValues = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
-
-  // States
-  const [signupButtonDisabled, setSignupButtonDisabled] = useState(false);
-
-  // Hooks
-  const apiPost = useApiPost();
-
-  const onSubmit = useCallback(
-    async (values, actions) => {
-      const passwordsError = passwordsDontMatch(values);
-      if (passwordsError) return actions.setErrors(passwordsError);
-
-      setSignupButtonDisabled(true);
-
-      const signupSuccessful = await apiPost('/user/signup', values);
-
-      if (signupSuccessful)
-        displaySuccessMessage('Cadastro efetuado com sucesso!');
-
-      return setSignupButtonDisabled(false);
-    },
-    [apiPost],
-  );
+  const { buttonDisabled, onSubmit } = useSignup();
 
   return (
     <Formik
@@ -109,7 +78,7 @@ const Signup: React.FC<FormContainerProps> = ({ shown }) => {
             </div>
 
             <div className="input-group">
-              <Button type="submit" disabled={signupButtonDisabled}>
+              <Button type="submit" disabled={buttonDisabled}>
                 Cadastrar
               </Button>
             </div>

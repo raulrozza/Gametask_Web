@@ -12,7 +12,7 @@ import { GameSchema } from './schemas';
 
 // Styles
 import Button from '../../../styles/Button';
-import Form, { ErrorField } from '../../../styles/Form';
+import { Form, ErrorField } from '../../../styles';
 import { Container } from './styles';
 import ImageInput from '../../../components/ImageInput';
 

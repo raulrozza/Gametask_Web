@@ -1,49 +1,26 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 
 // Components
 import { Formik, Field } from 'formik';
 
+// Constants
+import { initialValues } from './constants';
+
 // Hooks
-import { useAuth } from '../../../hooks/contexts/useAuth';
-import { useApiPost } from '../../../hooks/api/useApiPost';
+import { useLogin } from './hooks';
 
 // Schemas
 import { LoginSchema } from './schemas';
 
 // Styles
-import { Form } from '../styles';
-import Button from '../../../styles/Button';
-import { ErrorField } from '../../../styles/Form';
+import { Button, ErrorField } from 'styles';
+import { Form } from '../../styles';
 
 // Types
-import { FormContainerProps } from '../types';
-import { IUser } from '../../../interfaces/api/User';
+import { FormContainerProps } from '../../types';
 
 const Login: React.FC<FormContainerProps> = ({ shown }) => {
-  const initialValues = {
-    email: '',
-    password: '',
-  };
-
-  // States
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-
-  // Hooks
-  const { signIn } = useAuth();
-  const apiPost = useApiPost<IUser>();
-
-  const onSubmit = useCallback(
-    async values => {
-      setButtonDisabled(true);
-
-      const user = await apiPost('/login', values);
-
-      if (!user) return setButtonDisabled(false);
-
-      return signIn(user);
-    },
-    [signIn, apiPost],
-  );
+  const { buttonDisabled, onSubmit } = useLogin();
 
   return (
     <Formik

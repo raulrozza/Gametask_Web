@@ -10,7 +10,7 @@ import { api } from '../../../services';
 
 // Styles
 import Button from '../../../styles/Button';
-import Form, { ErrorField } from '../../../styles/Form';
+import { Form, ErrorField } from '../../../styles';
 
 // Types
 import { ActivityFormProps } from '../types';

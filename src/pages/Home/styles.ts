@@ -1,7 +1,10 @@
 import styled, { css } from 'styled-components';
+
+// Styles
+import { Button, Form as DefaultForm } from 'styles';
+
+// Types
 import { FormToggleButtonProps, FormProps } from './types';
-import Button from '../../styles/Button';
-import DefaultForm from '../../styles/Form';
 
 export const HomePage = styled.section`
   ${({ theme }) => css`
