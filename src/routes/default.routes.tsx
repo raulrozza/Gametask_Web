@@ -2,7 +2,7 @@ import React, { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Pages
-const Home = lazy(() => import('../pages/Home'));
+const Home = lazy(() => import('pages/Home'));
 
 /*
   The object controls the pages routes when the user is not logged in

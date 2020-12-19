@@ -2,14 +2,13 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 // Components
-import Loading from '../components/Loading';
-import NotFound from '../components/NotFound';
+import { Loading, NotFound } from 'components';
 
 // Contexts
-import Game from '../containers/Game';
+import { Game } from 'containers';
 
 // Hooks
-import { useAuth } from '../hooks/contexts/useAuth';
+import { useAuth } from 'hooks';
 
 // Routes
 import InGameRoutes from './inGame.routes';

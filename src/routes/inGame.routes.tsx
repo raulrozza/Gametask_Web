@@ -2,18 +2,18 @@ import React, { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Components
-import Loading from '../components/Loading';
+import { Loading } from 'components';
 
 // Hooks
-import { useGameData } from '../hooks/contexts/useGameData';
+import { useGameData } from 'hooks';
 
 // Pages
-const Lobby = lazy(() => import('../pages/Lobby'));
-const Achievements = lazy(() => import('../pages/Achievements'));
-const Activities = lazy(() => import('../pages/Activities'));
-const Dashboard = lazy(() => import('../pages/Dashboard'));
-const Game = lazy(() => import('../pages/Game'));
-const Players = lazy(() => import('../pages/Players'));
+const Lobby = lazy(() => import('pages/Lobby'));
+const Achievements = lazy(() => import('pages/Achievements'));
+const Activities = lazy(() => import('pages/Activities'));
+const Dashboard = lazy(() => import('pages/Dashboard'));
+const Game = lazy(() => import('pages/Game'));
+const Players = lazy(() => import('pages/Players'));
 
 /*
   The object controls the in game routes
