@@ -1,56 +1,37 @@
-import React, { useEffect, useState, memo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, memo } from 'react';
 
 // Assets
 import placeholder from 'assets/img/achievements/placeholder.png';
 
 // Components
-import { FaSortUp, FaSortDown } from 'react-icons/fa';
-
-// Services
-import { api } from 'services';
-
-// Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
+import { Link } from 'react-router-dom';
+
+// Icons
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Styles
 import { AchievementBox } from './styles';
-import { withTheme } from 'styled-components';
-
-// Types
-import { IAchievement } from 'interfaces/api/Achievement';
-import { IThemedComponent } from 'interfaces/theme/ThemedComponent';
+import { useTheme } from 'styled-components';
 
 // Utils
-import handleApiErrors from 'utils/handleApiErrors';
+import { useAchievements } from './hooks';
 
-const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
-  const [achievements, setAchievements] = useState<IAchievement[]>([]);
-  const [loadingData, setLoadingData] = useState(true);
+const AchievementContainer: React.FC = () => {
   const [minmax, setMinmax] = useState(false);
+  const { achievements, loading } = useAchievements();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.instance.get('/achievement');
-
-        setAchievements(data);
-        setLoadingData(false);
-      } catch (error) {
-        handleApiErrors(error);
-      }
-    })();
-  }, []);
+  const theme = useTheme();
 
   return (
     <AchievementBox>
-      {!(!loadingData && achievements.length === 0) ? (
+      {!(!loading && achievements.length === 0) ? (
         <div
           className={`achievement-container container ${
             minmax ? 'maximized' : ''
           }`}
         >
-          {!loadingData
+          {!loading
             ? achievements.map(achievement => (
                 <div
                   className="achievement"
@@ -62,12 +43,14 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
                         achievement.image ? achievement.image_url : undefined
                       }
                     />
+
                     <img
                       className="achievement-image"
                       src={placeholder}
                       alt={`achievement-${achievement._id}-img`}
                     />
                   </picture>
+
                   <div className="achievement-name">{achievement.name}</div>
                 </div>
               ))
@@ -83,6 +66,7 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
                       circle
                     />
                   </div>
+
                   <div className="achievement-name">
                     <SkeletonLoader
                       background={theme.primaryShade}
@@ -117,4 +101,4 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   );
 };
 
-export default memo(withTheme(AchievementContainer));
+export default memo(AchievementContainer);
