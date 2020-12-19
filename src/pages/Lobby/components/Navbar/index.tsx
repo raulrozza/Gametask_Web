@@ -25,6 +25,7 @@ const Navbar: React.FC = () => {
           Lobby <span>Entre ou crie um jogo</span>
         </h2>
       </div>
+
       <span>
         Você está logado como <strong>{user.firstname}</strong>.{' '}
         <span

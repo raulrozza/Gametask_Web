@@ -1,13 +1,10 @@
-import React, { useRef, useCallback } from 'react';
+import React from 'react';
 
 // Hooks
-import { useAuth } from 'hooks';
+import { useShare } from './hooks';
 
 // Icons
 import { MdContentCopy } from 'react-icons/md';
-
-// Services
-import { encrypting } from 'services';
 
 // Styles
 import { Container } from './styles';
@@ -15,26 +12,8 @@ import { Container } from './styles';
 // Types
 import { ShareProps } from './types';
 
-// Utils
-import { displayInfoMessage } from 'utils';
-
 const Share: React.FC<ShareProps> = ({ gameId }) => {
-  const { user } = useAuth();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const SECRET = process.env.REACT_APP_SECRET || '';
-
-  const handleCopyToClipboard = useCallback(() => {
-    if (inputRef.current !== null) {
-      inputRef.current.select();
-      document.execCommand('copy');
-
-      displayInfoMessage('Copiado para a área de transferência.');
-    }
-  }, []);
-
-  if (!user) return null;
-
-  const cipher = encrypting.encrypt({ gameId, inviter: user._id }, SECRET);
+  const { cipher, inputRef, handleCopyToClipboard } = useShare({ gameId });
 
   return (
     <Container>
