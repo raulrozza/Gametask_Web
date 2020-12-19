@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
 // Types
-import { IAuth } from '../interfaces/hooks/UseAuth';
-import { IGameData } from '../interfaces/hooks/UseGameData';
-import { ITheme } from '../interfaces/hooks/UseTheme';
+import { IAuth } from 'interfaces/hooks/UseAuth';
+import { IGameData } from 'interfaces/hooks/UseGameData';
+import { ITheme } from 'interfaces/hooks/UseTheme';
 
 export const AuthorizationContext = createContext<IAuth>({
   user: null,

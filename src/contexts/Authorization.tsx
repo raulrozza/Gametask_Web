@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useCallback, memo } from 'react';
 
 // Contexts
-import { AuthorizationContext } from './rawContexts';
+import { AuthorizationContext } from 'contexts/rawContexts';
 
 // Hooks
-import { useTheme } from '../hooks/contexts/useTheme';
+import { useTheme } from 'hooks';
 
 // Services
-import { addApiHeader } from '../services/api';
-import { clearData, getData, saveData } from '../services/storage';
+import { addApiHeader } from 'services/api';
+import { clearData, getData, saveData } from 'services/storage';
 
 // Types
-import { IUser } from '../interfaces/api/User';
+import { IUser } from 'interfaces/api/User';
 
 const Authorization: React.FC<{ children: React.ReactNode }> = ({
   children,

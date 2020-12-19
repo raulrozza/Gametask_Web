@@ -1,23 +1,23 @@
 import React, { useState, useCallback } from 'react';
 
 // Config
-import { defaultTheme } from '../config/defaultTheme';
+import { defaultTheme } from 'config/defaultTheme';
 
 // Contexts
-import { ThemeContext } from './rawContexts';
+import { ThemeContext } from 'contexts/rawContexts';
 
 // Libs
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 
 // Styles
-import Global from '../styles/Global';
+import Global from 'styles/Global';
 
 // Types
-import { ChangeThemeProps } from '../interfaces/hooks/UseTheme';
+import { ChangeThemeProps } from 'interfaces/hooks/UseTheme';
 
 // Utils
-import { fillTheme } from '../utils/theme/fillTheme';
-import setMobileThemeColor from '../utils/theme/setMobileThemeColor';
+import { fillTheme } from 'utils/theme/fillTheme';
+import setMobileThemeColor from 'utils/theme/setMobileThemeColor';
 
 const Theme: React.FC = ({ children }) => {
   const [theme, setTheme] = useState<DefaultTheme>(defaultTheme);

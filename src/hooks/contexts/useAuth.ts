@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 
 // Contexts
-import { AuthorizationContext } from '../../contexts/rawContexts';
+import { AuthorizationContext } from 'contexts/rawContexts';
 
 // Types
-import { IAuth } from '../../interfaces/hooks/UseAuth';
+import { IAuth } from 'interfaces/hooks/UseAuth';
 
 export function useAuth(): IAuth {
   const auth = useContext(AuthorizationContext);

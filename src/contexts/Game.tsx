@@ -1,21 +1,20 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 // Contexts
-import { GameContext } from './rawContexts';
+import { GameContext } from 'contexts/rawContexts';
 
 // Hooks
-import { useApiGet } from '../hooks/api/useApiGet';
-import { useTheme } from '../hooks/contexts/useTheme';
+import { useApiGet, useTheme } from 'hooks';
 
 // Services
-import { addApiHeader, removeApiHeader } from '../services/api';
-import { getData, removeData, saveData } from '../services/storage';
+import { addApiHeader, removeApiHeader } from 'services/api';
+import { getData, removeData, saveData } from 'services/storage';
 
 // Types
-import { IGame } from '../interfaces/api/Game';
+import { IGame } from 'interfaces/api/Game';
 
 // Utils
-import isEqual from '../utils/isEqual';
+import isEqual from 'utils/isEqual';
 
 const Game: React.FC = ({ children }) => {
   const [game, setGame] = useState<IGame | null>(null);

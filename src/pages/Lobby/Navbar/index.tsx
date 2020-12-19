@@ -1,12 +1,16 @@
 import React, { memo } from 'react';
 
-// Hooks
-import { useAuth } from '../../../hooks/contexts/useAuth';
-
 // Assets
-import logo from '../../../assets/img/logo.png';
+import logo from 'assets/img/logo.png';
 
+// Hooks
+import { useAuth } from 'hooks/contexts/useAuth';
+
+// Styles
 import { Container } from './styles';
+
+// Utils
+import clickOnEnter from 'utils/clickOnEnter';
 
 const Navbar: React.FC = () => {
   const { user, signOut } = useAuth();
@@ -23,7 +27,13 @@ const Navbar: React.FC = () => {
       </div>
       <span>
         Você está logado como <strong>{user.firstname}</strong>.{' '}
-        <span className="logout" onClick={signOut}>
+        <span
+          className="logout"
+          onClick={signOut}
+          role="button"
+          tabIndex={0}
+          onKeyUp={clickOnEnter}
+        >
           Sair
         </span>
       </span>
