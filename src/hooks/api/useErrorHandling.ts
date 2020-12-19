@@ -1,19 +1,21 @@
 import { useCallback } from 'react';
 
 // Hooks
-import { useAuth } from '../contexts/useAuth';
+import { useAuth } from 'hooks';
 
 // Types
-import { HandleApiErrors } from '../../interfaces/hooks/UseErrorHandling';
+import { HandleApiErrors } from 'interfaces';
 
 // Utils
-import { handleDefaultError } from '../../utils/errors/handleDefaultError';
-import { handleErrorWithoutResponse } from '../../utils/errors/handleErrorWithoutResponse';
-import { handleForbiddenStatus } from '../../utils/errors/handleForbiddenStatus';
-import { handleInternalErrorStatus } from '../../utils/errors/handleInternalErrorStatus';
-import { handleRequestErrors } from '../../utils/errors/handleRequestErrors';
-import { handleUnknownError } from '../../utils/errors/handleUnkownError';
-import { isAxiosError } from '../../utils/errors/isAxiosError';
+import {
+  handleDefaultError,
+  handleErrorWithoutResponse,
+  handleForbiddenStatus,
+  handleInternalErrorStatus,
+  handleRequestErrors,
+  handleUnknownError,
+  isAxiosError,
+} from 'utils';
 
 export function useErrorHandling(): HandleApiErrors {
   const { signOut } = useAuth();

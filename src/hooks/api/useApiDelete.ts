@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 
 // Hooks
-import { useErrorHandling } from 'hooks/api';
+import { useErrorHandling } from 'hooks';
 
 // Services
 import { api } from 'services';
 
 // Types
-import { ApiDelete } from 'interfaces/hooks/UseApiDelete';
+import { ApiDelete } from 'interfaces';
 
 export function useApiDelete<T = unknown>(): ApiDelete<T> {
   const handleApiErrors = useErrorHandling();

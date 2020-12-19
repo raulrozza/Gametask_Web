@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 // Hooks
-import { useApiGet } from './useApiGet';
+import { useApiGet } from 'hooks';
 
 // Types
-import { IFetchReturn } from '../../interfaces/hooks/UseApiFetch';
+import { IFetchReturn } from 'interfaces';
 
 export function useApiFetch<T = unknown>(URL: string): IFetchReturn<T> {
   const apiGet = useApiGet<T>();

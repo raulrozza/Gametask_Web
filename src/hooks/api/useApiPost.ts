@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 
 // Hooks
-import { useErrorHandling } from './useErrorHandling';
+import { useErrorHandling } from 'hooks';
 
 // Services
-import { api } from '../../services';
+import { api } from 'services';
 
 // Types
-import { ApiPost } from '../../interfaces/hooks/UseApiPost';
+import { ApiPost } from 'interfaces';
 
 export function useApiPost<T = unknown>(): ApiPost<T> {
   const handleApiErrors = useErrorHandling();

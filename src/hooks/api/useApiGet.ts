@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 
 // Hooks
-import { useErrorHandling } from './useErrorHandling';
+import { useErrorHandling } from 'hooks';
 
 // Services
-import { api } from '../../services';
+import { api } from 'services';
 
 // Types
-import { ApiGet } from '../../interfaces/hooks/UseApiGet';
+import { ApiGet } from 'interfaces';
 import { AxiosRequestConfig } from 'axios';
 
 export function useApiGet<T = unknown>(): ApiGet<T> {

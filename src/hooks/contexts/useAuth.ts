@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthorizationContext } from 'contexts';
 
 // Types
-import { IAuth } from 'interfaces/hooks/UseAuth';
+import { IAuth } from 'interfaces';
 
 export function useAuth(): IAuth {
   const auth = useContext(AuthorizationContext);
