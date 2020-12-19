@@ -1,4 +1,4 @@
-import { IToastIds } from 'interfaces/errors/ToastIds';
+import { IToastIds } from 'interfaces';
 
 export const toastIds: IToastIds = {
   UNKNOWN: 0,
