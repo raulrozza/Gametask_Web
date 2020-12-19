@@ -14,7 +14,7 @@ import { Container } from './styles';
 
 // Types
 import { AchievementCardProps } from './types';
-import { RemoveButton } from '../../../styles/RemoveButton';
+import { RemoveButton } from '../../../styles';
 
 const AchievementCard: React.FC<AchievementCardProps> = ({
   achievement,

@@ -16,7 +16,7 @@ import { api } from '../../services';
 
 // Styles
 import { Container } from './styles';
-import { RemoveButton } from '../../styles/RemoveButton';
+import { RemoveButton } from '../../styles';
 import {
   EmptyContainer,
   Footer,

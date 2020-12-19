@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { RemoveButtonProps } from './types';
+import { RemoveButtonProps } from 'styles';
 
-export const RemoveButton = styled.button<RemoveButtonProps>`
+const RemoveButton = styled.button<RemoveButtonProps>`
   ${({ theme, horizontalPosition = 'left' }) => css`
     position: absolute;
     top: 2px;
@@ -26,3 +26,5 @@ export const RemoveButton = styled.button<RemoveButtonProps>`
     }
   `}
 `;
+
+export default RemoveButton;

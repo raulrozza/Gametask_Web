@@ -12,7 +12,7 @@ import { api } from '../../../services';
 
 // Styles
 import Button from '../../../styles/Button';
-import { RemoveButton } from '../../../styles/RemoveButton';
+import { RemoveButton } from '../../../styles';
 import { LevelConfigContainer } from './styles';
 
 // Types
