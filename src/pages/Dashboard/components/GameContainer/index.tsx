@@ -1,14 +1,16 @@
 import React, { memo } from 'react';
-import { Link } from 'react-router-dom';
-
-// Components
-import { FaCog } from 'react-icons/fa';
 
 // Assets
 import placeholder from 'assets/img/games/placeholder.png';
 
+// Components
+import { Link } from 'react-router-dom';
+
 // Hooks
 import { useAuth, useGameData } from 'hooks';
+
+// Icons
+import { FaCog } from 'react-icons/fa';
 
 // Styles
 import { GameContainerDiv } from './styles';
@@ -24,6 +26,7 @@ const GameContainer: React.FC = () => {
       <div className="img-container">
         <picture>
           <source srcSet={game.image && game.image_url} />
+
           <img src={placeholder} alt={game.name} />
         </picture>
       </div>
