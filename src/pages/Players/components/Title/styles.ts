@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { TitleElementContainerProps } from '../../types';
+import { TitleElementContainerProps } from './types';
 
 export const Container = styled.li<TitleElementContainerProps>`
   ${({ theme, editing }) => css`

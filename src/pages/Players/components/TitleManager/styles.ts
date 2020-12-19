@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { RequestsContainer } from '../styles';
+import { RequestsContainer } from '../../styles';
 
 export const Container = styled(RequestsContainer)`
   width: 360px;

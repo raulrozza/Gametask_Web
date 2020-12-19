@@ -7,13 +7,13 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { Container } from './styles';
 
 // Types
-import { TitleElementProps } from '../../types';
+import { TitleProps } from './types';
 
 // Utils
-import handleApiErrors from '../../../../utils/handleApiErrors';
-import { api } from '../../../../services';
+import handleApiErrors from 'utils/handleApiErrors';
+import { api } from 'services';
 
-const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
+const Title: React.FC<TitleProps> = ({ title, onDelete }) => {
   const [name, setName] = useState(title.name);
   const [editing, setEditing] = useState(false);
 
@@ -59,6 +59,7 @@ const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
         onKeyUp={handleFinishEditing}
         readOnly={!editing}
       />
+
       <button title="Excluir título" onClick={handleDelete}>
         <FaTrashAlt />
       </button>
@@ -66,4 +67,4 @@ const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
   );
 };
 
-export default TitleElement;
+export default Title;
