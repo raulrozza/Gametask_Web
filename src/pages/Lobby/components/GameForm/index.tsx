@@ -1,11 +1,13 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 // Components
 import { ImageInput } from 'components';
 
+// Constants
+import { initialValues } from './constants';
+
 // Hooks
-import { useApiPost } from 'hooks';
+import { useCreateGame } from './hooks';
 
 // Libs
 import { Formik, Field } from 'formik';
@@ -18,46 +20,10 @@ import { Button, Form, ErrorField } from 'styles';
 import { Container } from './styles';
 
 // Types
-import { IGameForm, IGameValues } from '../../types';
-
-// Utils
-import { displayErrorMessage } from 'utils';
+import { IGameForm } from '../../types';
 
 const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
-  const [disabledButton, setDisabledButton] = useState(false);
-
-  const apiPost = useApiPost();
-
-  const initialValues: IGameValues = {
-    name: '',
-    description: '',
-    image: null,
-  };
-
-  const onSubmit = useCallback(
-    async values => {
-      if (!values.image) {
-        displayErrorMessage('Por favor, envie uma imagem!', 0);
-
-        return;
-      }
-
-      setDisabledButton(true);
-
-      const data = new FormData();
-
-      data.append('name', values.name);
-      data.append('description', values.description);
-      data.append('image', values.image);
-
-      const result = await apiPost(`/game`, data);
-
-      if (result !== null) onSuccess();
-
-      closeModal();
-    },
-    [apiPost, onSuccess, closeModal],
-  );
+  const { loading, onSubmit } = useCreateGame({ onSuccess, closeModal });
 
   return (
     <Container>
@@ -102,7 +68,7 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
                 Cancelar
               </Button>
 
-              <Button type="submit" disabled={disabledButton}>
+              <Button type="submit" disabled={loading}>
                 Criar
               </Button>
             </div>
@@ -111,11 +77,6 @@ const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
       </Formik>
     </Container>
   );
-};
-
-GameForm.propTypes = {
-  onSuccess: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
 };
 
 export default GameForm;
