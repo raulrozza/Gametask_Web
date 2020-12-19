@@ -1,13 +1,11 @@
 // Constants
-import { toastMessages } from '../../config/errors/toastMessages';
-import { errorCodesToToastIds } from '../../config/errors/errorCodesToToastIds';
+import { toastMessages, errorCodesToToastIds } from 'config/errors';
 
 // Types
-import { ErrorCode } from '../../interfaces/errors/ErrorCode';
+import { ErrorCode } from 'interfaces';
 
 // Utils
-import displayErrorMessage from '../messages/displayErrorMessage';
-import { handleDefaultError } from './handleDefaultError';
+import { handleDefaultError, displayErrorMessage } from 'utils';
 
 export function handleRequestErrors(errorCode: ErrorCode): void {
   const messageCode = errorCodesToToastIds[errorCode];

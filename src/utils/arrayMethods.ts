@@ -1,8 +1,4 @@
-import {
-  AddItemToArray,
-  UpdateItemInArray,
-  RemoveItemFromArray,
-} from './types';
+import { AddItemToArray, UpdateItemInArray, RemoveItemFromArray } from 'utils';
 
 export const addItemToArray: AddItemToArray = (array, item) => {
   return [...array, item];

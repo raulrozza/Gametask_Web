@@ -1,9 +1,8 @@
 // Constants
-import { toastIds } from '../../config/errors/toastIds';
-import { toastMessages } from '../../config/errors/toastMessages';
+import { toastIds, toastMessages } from 'config/errors';
 
 // Utils
-import displayErrorMessage from '../messages/displayErrorMessage';
+import { displayErrorMessage } from 'utils';
 
 export function handleUnknownError(): void {
   displayErrorMessage(toastMessages[toastIds.UNKNOWN], toastIds.UNKNOWN);
