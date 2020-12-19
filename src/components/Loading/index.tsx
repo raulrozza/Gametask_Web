@@ -8,7 +8,7 @@ import { LoadingContainer } from './styles';
 import { withTheme } from 'styled-components';
 
 // Types
-import { IThemedComponent } from 'interfaces/theme/ThemedComponent';
+import { IThemedComponent } from 'interfaces';
 
 const Loading: React.FC<IThemedComponent> = ({ theme }) => (
   <LoadingContainer>
