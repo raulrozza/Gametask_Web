@@ -1,56 +1,38 @@
-import React, { useEffect, useState, memo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, memo } from 'react';
 
 // Components
-import { FaSortUp, FaSortDown } from 'react-icons/fa';
-
-// Services
-import { api } from 'services';
-
-// Loaders
+import { Link } from 'react-router-dom';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
+
+// Hooks
+import { useActivities } from './hooks';
+import { useTheme } from 'styled-components';
+
+// Icons
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Styles
 import { ActivityBox } from './styles';
-import { withTheme } from 'styled-components';
 
-// Types
-import { IActivity } from 'interfaces/api/Activity';
-import { IThemedComponent } from 'interfaces/theme/ThemedComponent';
-
-// Utils
-import handleApiErrors from 'utils/handleApiErrors';
-
-const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [loadingData, setLoadingData] = useState(true);
+const ActivityContainer: React.FC = () => {
   const [minmax, setMinmax] = useState(false);
+  const { loading, activities } = useActivities();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.instance.get('/activity');
-
-        setActivities(data);
-        setLoadingData(false);
-      } catch (error) {
-        handleApiErrors(error);
-      }
-    })();
-  }, []);
+  const theme = useTheme();
 
   return (
     <ActivityBox>
-      {!(!loadingData && activities.length === 0) ? (
+      {!(!loading && activities.length === 0) ? (
         <div
           className={`activity-container container ${
             minmax ? 'maximized' : ''
           }`}
         >
-          {!loadingData
+          {!loading
             ? activities.map(activity => (
                 <div className="activity" key={`activity-${activity._id}`}>
                   <div className="activity-name">{activity.name}</div>
+
                   <div className="activity-experience">
                     {activity.experience} XP
                   </div>
@@ -67,6 +49,7 @@ const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
                       height="100%"
                     />
                   </div>
+
                   <div className="activity-experience">
                     <SkeletonLoader
                       background={theme.primaryShade}
@@ -101,4 +84,4 @@ const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
   );
 };
 
-export default memo(withTheme(ActivityContainer));
+export default memo(ActivityContainer);
