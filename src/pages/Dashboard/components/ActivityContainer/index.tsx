@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
-import { api } from '../../../services';
+import { api } from 'services';
 
 // Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
@@ -15,11 +15,11 @@ import { ActivityBox } from './styles';
 import { withTheme } from 'styled-components';
 
 // Types
-import { IActivity } from '../../../interfaces/api/Activity';
-import { IThemedComponent } from '../../../interfaces/theme/ThemedComponent';
+import { IActivity } from 'interfaces/api/Activity';
+import { IThemedComponent } from 'interfaces/theme/ThemedComponent';
 
 // Utils
-import handleApiErrors from '../../../utils/handleApiErrors';
+import handleApiErrors from 'utils/handleApiErrors';
 
 const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [activities, setActivities] = useState<IActivity[]>([]);

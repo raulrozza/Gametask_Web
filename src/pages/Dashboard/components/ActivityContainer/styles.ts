@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { MinMaxBox } from '../styles';
+import { MinMaxBox } from '../../styles';
 
 export const ActivityBox = styled(MinMaxBox)`
   ${({ theme }) => css`

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MinMaxBox } from '../styles';
+import { MinMaxBox } from '../../styles';
 
 export const AchievementBox = styled(MinMaxBox)`
   .achievement-container {

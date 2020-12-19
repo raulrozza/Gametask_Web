@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { InfoBox } from '../styles';
+import { InfoBox } from '../../styles';
 
 export const GameContainerDiv = styled(InfoBox)`
   ${({ theme }) => css`

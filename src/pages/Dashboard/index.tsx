@@ -1,15 +1,17 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 // Custom Components
-import AchievementContainer from './AchievementContainer';
-import ActivityContainer from './ActivityContainer';
-import GameContainer from './GameContainer';
-import Loading from '../../components/Loading';
-import Ranking from './Ranking';
+import { Helmet } from 'react-helmet';
+import { Loading } from 'components';
+import {
+  AchievementContainer,
+  ActivityContainer,
+  GameContainer,
+  Ranking,
+} from './components';
 
 // Hooks
-import { useGameData } from '../../hooks/contexts/useGameData';
+import { useGameData } from 'hooks';
 
 // Styles
 import { Main } from './styles';
@@ -28,11 +30,14 @@ const Dashboard: React.FC = () => {
       <Helmet>
         <title>{registerTitle}Dashboard - GameTask</title>
       </Helmet>
+
       <Ranking />
+
       <div className="column">
         <AchievementContainer />
         <ActivityContainer />
       </div>
+
       <GameContainer />
     </Main>
   );

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { InfoBox } from '../styles';
+import { InfoBox } from '../../styles';
 
 export const RankingContainer = styled(InfoBox)`
   ${({ theme }) => css`

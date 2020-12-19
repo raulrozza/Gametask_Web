@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 import { FaCog } from 'react-icons/fa';
 
 // Assets
-import placeholder from '../../../assets/img/games/placeholder.png';
+import placeholder from 'assets/img/games/placeholder.png';
 
 // Hooks
-import { useAuth } from '../../../hooks/contexts/useAuth';
-import { useGameData } from '../../../hooks/contexts/useGameData';
+import { useAuth, useGameData } from 'hooks';
 
 // Styles
 import { GameContainerDiv } from './styles';

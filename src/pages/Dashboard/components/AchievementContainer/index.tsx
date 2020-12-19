@@ -2,13 +2,13 @@ import React, { useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 // Assets
-import placeholder from '../../../assets/img/achievements/placeholder.png';
+import placeholder from 'assets/img/achievements/placeholder.png';
 
 // Components
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
-import { api } from '../../../services';
+import { api } from 'services';
 
 // Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
@@ -18,11 +18,11 @@ import { AchievementBox } from './styles';
 import { withTheme } from 'styled-components';
 
 // Types
-import { IAchievement } from '../../../interfaces/api/Achievement';
-import { IThemedComponent } from '../../../interfaces/theme/ThemedComponent';
+import { IAchievement } from 'interfaces/api/Achievement';
+import { IThemedComponent } from 'interfaces/theme/ThemedComponent';
 
 // Utils
-import handleApiErrors from '../../../utils/handleApiErrors';
+import handleApiErrors from 'utils/handleApiErrors';
 
 const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
