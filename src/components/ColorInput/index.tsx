@@ -37,14 +37,12 @@ const ColorInput: React.FC<ColorInputProps> = ({
           }
         }}
         hasLabel={Boolean(label)}
-        tabIndex={1}
         className="color-viewer"
       >
         <ColorPicker
           showPicker={showPicker}
           onMouseOver={() => setMouseOnPicker(true)}
           onMouseLeave={() => setMouseOnPicker(false)}
-          tabIndex={1}
         >
           <ChromePicker
             disableAlpha

@@ -1,7 +1,7 @@
 import React, { useMemo, memo } from 'react';
 
 // Assets
-import placeholder from '../../assets/img/achievements/placeholder.png';
+import placeholder from 'assets/img/achievements/placeholder.png';
 
 // Types
 import { ImageInputProps } from './types';
