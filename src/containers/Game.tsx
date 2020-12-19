@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 // Contexts
-import { GameContext } from 'contexts/rawContexts';
+import { GameContext } from 'contexts';
 
 // Hooks
 import { useApiGet, useTheme } from 'hooks';

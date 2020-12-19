@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import NotFound from '../components/NotFound';
 
 // Contexts
-import Game from '../contexts/Game';
+import Game from '../containers/Game';
 
 // Hooks
 import { useAuth } from '../hooks/contexts/useAuth';

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 // Context
-import { ThemeContext } from '../../contexts/rawContexts';
+import { ThemeContext } from '../../contexts';
 
 // Types
 import { ITheme } from '../../interfaces/hooks/UseTheme';

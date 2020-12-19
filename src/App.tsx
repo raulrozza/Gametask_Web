@@ -5,8 +5,8 @@ import Routes from './routes/index.routes';
 import { ToastContainer, Slide } from 'react-toastify';
 
 // Contexts
-import Authorization from './contexts/Authorization';
-import Theme from './contexts/Theme';
+import Authorization from './containers/Authorization';
+import Theme from './containers/Theme';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 

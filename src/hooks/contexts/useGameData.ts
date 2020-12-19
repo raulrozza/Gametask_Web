@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 // Contexts
-import { GameContext } from '../../contexts/rawContexts';
+import { GameContext } from '../../contexts';
 
 // Types
 import { IGameData } from '../../interfaces/hooks/UseGameData';

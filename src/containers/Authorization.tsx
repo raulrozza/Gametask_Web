@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, memo } from 'react';
 
 // Contexts
-import { AuthorizationContext } from 'contexts/rawContexts';
+import { AuthorizationContext } from 'contexts';
 
 // Hooks
 import { useTheme } from 'hooks';

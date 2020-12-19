@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { defaultTheme } from 'config/defaultTheme';
 
 // Contexts
-import { ThemeContext } from 'contexts/rawContexts';
+import { ThemeContext } from 'contexts';
 
 // Libs
 import { DefaultTheme, ThemeProvider } from 'styled-components';
