@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
 // Components
-import Loading from '../../components/Loading';
-import Modal from '../../components/Modal';
-import PageTitle from '../../components/PageTitle';
-import GameForm from './GameForm';
-import Navbar from './Navbar';
-import Share from './Share';
+import { Loading, Modal, PageTitle } from 'components';
+import { GameForm, Navbar, Share } from './components';
 
 // Hooks
-import { useGameData } from '../../hooks/contexts/useGameData';
-import { useApiFetch } from '../../hooks/api/useApiFetch';
+import { useApiFetch, useGameData } from 'hooks';
 
 // Icons
 import { FaPlus, FaLink } from 'react-icons/fa';
 
 // Styles
+import { Button } from 'styles';
 import { Container, GameCard } from './styles';
-import Button from '../../styles/Button';
 
 // Types
-import { IGame } from '../../interfaces/api/Game';
+import { IGame } from 'interfaces';
 
 const Lobby: React.FC = () => {
   const [showGameModal, setShowGameModal] = useState(false);

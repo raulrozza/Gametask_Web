@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
+// Components
+import { ImageInput } from 'components';
+
 // Hooks
-import { useApiPost } from '../../../hooks/api/useApiPost';
+import { useApiPost } from 'hooks';
 
 // Libs
 import { Formik, Field } from 'formik';
@@ -11,16 +14,14 @@ import { Formik, Field } from 'formik';
 import { GameSchema } from './schemas';
 
 // Styles
-import Button from '../../../styles/Button';
-import { Form, ErrorField } from '../../../styles';
+import { Button, Form, ErrorField } from 'styles';
 import { Container } from './styles';
-import ImageInput from '../../../components/ImageInput';
 
 // Types
-import { IGameForm, IGameValues } from '../types';
+import { IGameForm, IGameValues } from '../../types';
 
 // Utils
-import displayErrorMessage from '../../../utils/messages/displayErrorMessage';
+import { displayErrorMessage } from 'utils';
 
 const GameForm: React.FC<IGameForm> = ({ onSuccess, closeModal }) => {
   const [disabledButton, setDisabledButton] = useState(false);

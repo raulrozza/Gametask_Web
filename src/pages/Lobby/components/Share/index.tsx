@@ -1,13 +1,13 @@
 import React, { useRef, useCallback } from 'react';
 
 // Hooks
-import { useAuth } from '../../../hooks/contexts/useAuth';
+import { useAuth } from 'hooks';
 
 // Icons
 import { MdContentCopy } from 'react-icons/md';
 
 // Services
-import { encrypting } from '../../../services';
+import { encrypting } from 'services';
 
 // Styles
 import { Container } from './styles';
@@ -16,7 +16,7 @@ import { Container } from './styles';
 import { ShareProps } from './types';
 
 // Utils
-import displayInfoMessage from '../../../utils/messages/displayInfoMessage';
+import { displayInfoMessage } from 'utils';
 
 const Share: React.FC<ShareProps> = ({ gameId }) => {
   const { user } = useAuth();

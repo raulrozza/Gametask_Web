@@ -4,13 +4,13 @@ import React, { memo } from 'react';
 import logo from 'assets/img/logo.png';
 
 // Hooks
-import { useAuth } from 'hooks/contexts/useAuth';
+import { useAuth } from 'hooks';
 
 // Styles
 import { Container } from './styles';
 
 // Utils
-import clickOnEnter from 'utils/clickOnEnter';
+import { clickOnEnter } from 'utils';
 
 const Navbar: React.FC = () => {
   const { user, signOut } = useAuth();
