@@ -8,7 +8,7 @@ import placeholder from '../../../assets/img/achievements/placeholder.png';
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
@@ -32,7 +32,7 @@ const AchievementContainer: React.FC<IThemedComponent> = ({ theme }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/achievement');
+        const { data } = await api.instance.get('/achievement');
 
         setAchievements(data);
         setLoadingData(false);

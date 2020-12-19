@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useErrorHandling } from './useErrorHandling';
 
 // Services
-import api from '../../services/api';
+import { api } from '../../services';
 
 // Types
 import { ApiGet } from '../../interfaces/hooks/UseApiGet';
@@ -16,7 +16,7 @@ export function useApiGet<T = unknown>(): ApiGet<T> {
   const apiGet = useCallback(
     async (URL: string, config?: AxiosRequestConfig) => {
       try {
-        const response = await api.get<T>(URL, config);
+        const response = await api.instance.get<T>(URL, config);
 
         return response.data;
       } catch (error) {

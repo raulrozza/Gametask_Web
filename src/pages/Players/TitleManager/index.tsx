@@ -8,7 +8,7 @@ import TitleElement from './TitleElement';
 import { FaPlus } from 'react-icons/fa';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Styles
 import { Container, NoTitles } from './styles';
@@ -30,7 +30,7 @@ const TitleManager: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/title');
+        const { data } = await api.instance.get('/title');
 
         setTitles(data);
       } catch (error) {
@@ -43,7 +43,9 @@ const TitleManager: React.FC = () => {
 
   const handleAddTitle = useCallback(async () => {
     try {
-      const { data } = await api.post('/title', { name: 'Novo título' });
+      const { data } = await api.instance.post('/title', {
+        name: 'Novo título',
+      });
 
       setTitles(titles => addItemToArray(titles, data));
     } catch (error) {

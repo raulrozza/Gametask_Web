@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useErrorHandling } from 'hooks/api';
 
 // Services
-import api from 'services/api';
+import { api } from 'services';
 
 // Types
 import { ApiDelete } from 'interfaces/hooks/UseApiDelete';
@@ -15,7 +15,7 @@ export function useApiDelete<T = unknown>(): ApiDelete<T> {
   const apiDelete = useCallback(
     async (URL: string) => {
       try {
-        const response = await api.delete<T>(URL);
+        const response = await api.instance.delete<T>(URL);
 
         return response.data;
       } catch (error) {

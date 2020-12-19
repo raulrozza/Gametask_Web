@@ -7,7 +7,7 @@ import { useAuth } from '../../../hooks/contexts/useAuth';
 import { MdContentCopy } from 'react-icons/md';
 
 // Services
-import { encrypt } from '../../../services/encrypting';
+import { encrypting } from '../../../services';
 
 // Styles
 import { Container } from './styles';
@@ -34,7 +34,7 @@ const Share: React.FC<ShareProps> = ({ gameId }) => {
 
   if (!user) return null;
 
-  const cipher = encrypt({ gameId, inviter: user._id }, SECRET);
+  const cipher = encrypting.encrypt({ gameId, inviter: user._id }, SECRET);
 
   return (
     <Container>

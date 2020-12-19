@@ -18,7 +18,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -76,7 +76,7 @@ const InfoForm: React.FC = () => {
           data.append('theme', JSON.stringify(theme));
         if (image !== game.image_url) data.append('image', image);
 
-        await api.put(`/game/${game._id}`, data);
+        await api.instance.put(`/game/${game._id}`, data);
 
         toast.success('Informações alteradas com sucesso.');
 

@@ -8,7 +8,7 @@ import { FaPlus, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -78,7 +78,7 @@ const LevelConfig: React.FC = () => {
     });
 
     try {
-      await api.put(`/level/${game._id}`, { levelInfo: newLevelInfo });
+      await api.instance.put(`/level/${game._id}`, { levelInfo: newLevelInfo });
 
       toast.success('Níveis alterados com sucesso.');
 
@@ -101,7 +101,7 @@ const LevelConfig: React.FC = () => {
         </p>
         <div className="level-info-container">
           {levelInfo.map((info, index) => (
-            <div className="info-item" key={`info-${index}`} tabIndex={1}>
+            <div className="info-item" key={`info-${index}`}>
               <RemoveButton
                 type="button"
                 title="Remover"

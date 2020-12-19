@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useErrorHandling } from './useErrorHandling';
 
 // Services
-import api from '../../services/api';
+import { api } from '../../services';
 
 // Types
 import { ApiPost } from '../../interfaces/hooks/UseApiPost';
@@ -15,7 +15,7 @@ export function useApiPost<T = unknown>(): ApiPost<T> {
   const apiPost = useCallback(
     async (URL: string, body: unknown) => {
       try {
-        const response = await api.post<T>(URL, body);
+        const response = await api.instance.post<T>(URL, body);
 
         return response.data;
       } catch (error) {

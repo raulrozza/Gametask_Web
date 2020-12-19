@@ -20,7 +20,7 @@ import { BsController } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Styles
 import { RequestsContainer } from './styles';
@@ -50,7 +50,7 @@ const ActivityRegister: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await api.get('activityRegister');
+        const response = await api.instance.get('activityRegister');
 
         setRequests(response.data);
         setLoading(false);
@@ -70,7 +70,7 @@ const ActivityRegister: React.FC = () => {
           ),
         );
 
-        await api.delete(`/activityRegister/${id}`);
+        await api.instance.delete(`/activityRegister/${id}`);
 
         toast.update('Requisição excluída');
       } catch (error) {
@@ -103,7 +103,7 @@ const ActivityRegister: React.FC = () => {
             ),
           );
 
-          await api.post('/experience', data);
+          await api.instance.post('/experience', data);
 
           toast.success('Requisição aceita!');
 

@@ -12,7 +12,7 @@ import Loading from '../../components/Loading';
 import { useAuth } from '../../hooks/contexts/useAuth';
 
 // Services
-import api from '../../services/api';
+import { api } from '../../services';
 
 // Styles
 import { Container } from './styles';
@@ -78,7 +78,7 @@ const Activities: React.FC = () => {
     if (response) {
       setLoading(true);
       try {
-        await api.delete(`/activity/${id}`);
+        await api.instance.delete(`/activity/${id}`);
 
         setActivities(activities => {
           const index = activities.findIndex(item => item._id === id);
@@ -96,7 +96,7 @@ const Activities: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/activity');
+        const { data } = await api.instance.get('/activity');
 
         setActivities(data);
         setLoading(false);
@@ -108,7 +108,7 @@ const Activities: React.FC = () => {
 
   const onSubmit = useCallback(async (id: string) => {
     try {
-      const { data } = await api.get(`/activity/${id}`);
+      const { data } = await api.instance.get(`/activity/${id}`);
 
       setActivities(activities => {
         const index = activities.findIndex(item => item._id === id);

@@ -1,15 +1,19 @@
 import axios from 'axios';
 
-const api = axios.create({
+const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
 
-export const addApiHeader = (header: string, value: string): void => {
-  api.defaults.headers[header] = value;
+const addApiHeader = (header: string, value: string): void => {
+  instance.defaults.headers[header] = value;
 };
 
-export const removeApiHeader = (header: string): void => {
-  delete api.defaults.headers[header];
+const removeApiHeader = (header: string): void => {
+  delete instance.defaults.headers[header];
 };
 
-export default api;
+export default {
+  instance,
+  addApiHeader,
+  removeApiHeader,
+};

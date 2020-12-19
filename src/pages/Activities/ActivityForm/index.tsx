@@ -6,7 +6,7 @@ import { useFormik, FormikValues, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -41,7 +41,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
       setDisabledBtn(true);
       try {
         if (activity) {
-          await api.put(`/activity/${activity._id}`, {
+          await api.instance.put(`/activity/${activity._id}`, {
             name,
             description,
             experience,
@@ -50,7 +50,7 @@ const ActivityForm: React.FC<ActivityFormProps> = ({
 
           submitCallback(activity._id);
         } else {
-          const { data } = await api.post('/activity', {
+          const { data } = await api.instance.post('/activity', {
             name,
             description,
             experience: parseInt(experience),

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Loaders
 import SkeletonLoader from 'tiny-skeleton-loader-react';
@@ -29,7 +29,7 @@ const ActivityContainer: React.FC<IThemedComponent> = ({ theme }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/activity');
+        const { data } = await api.instance.get('/activity');
 
         setActivities(data);
         setLoadingData(false);

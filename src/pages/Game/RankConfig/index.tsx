@@ -8,7 +8,7 @@ import { FaPlus, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Styles
 import Button from '../../../styles/Button';
@@ -93,7 +93,7 @@ const RankConfig: React.FC = () => {
     if (!game) return;
 
     try {
-      await api.put(`/rank/${game._id}`, { ranks });
+      await api.instance.put(`/rank/${game._id}`, { ranks });
 
       toast.success('Patente alterada com sucesso.');
 
@@ -137,7 +137,7 @@ const RankConfig: React.FC = () => {
                 <select
                   name="level"
                   value={rank.level}
-                  onChange={({ target }) =>
+                  onBlur={({ target }) =>
                     handleSelectChange(target.value, index)
                   }
                 >

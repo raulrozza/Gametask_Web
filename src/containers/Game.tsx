@@ -7,8 +7,7 @@ import { GameContext } from 'contexts';
 import { useApiGet, useTheme } from 'hooks';
 
 // Services
-import { addApiHeader, removeApiHeader } from 'services/api';
-import { getData, removeData, saveData } from 'services/storage';
+import { api, storage } from 'services';
 
 // Types
 import { IGame } from 'interfaces/api/Game';
@@ -28,9 +27,9 @@ const Game: React.FC = ({ children }) => {
 
   const resetGame = useCallback(async () => {
     changeTheme({});
-    await removeData('storedGame');
+    await storage.remove('storedGame');
     setGame(null);
-    removeApiHeader('X-Game-ID');
+    api.removeApiHeader('X-Game-ID');
   }, [changeTheme]);
 
   const getGameInfo = useCallback(
@@ -39,7 +38,7 @@ const Game: React.FC = ({ children }) => {
 
       if (!game) return;
 
-      await saveData('storedGame', game);
+      await storage.save('storedGame', game);
 
       setVerifiedGameAuthenticity(true);
       setGame(game);
@@ -51,13 +50,13 @@ const Game: React.FC = ({ children }) => {
   useEffect(() => {
     (async () => {
       // Get the local storage info
-      const storedGame = await getData<IGame>('storedGame');
+      const storedGame = await storage.get<IGame>('storedGame');
 
       if (!storedGame) resetGame();
       else {
         // Check if the game in state is equal to the one stored in the local storage.
         // If they are, DO NOT CHANGE THE STATE because it causes infinite re-renderings
-        addApiHeader('X-Game-ID', storedGame._id);
+        api.addApiHeader('X-Game-ID', storedGame._id);
 
         if (!isEqual(game, storedGame)) {
           setGame(storedGame);
@@ -76,7 +75,7 @@ const Game: React.FC = ({ children }) => {
       setLoading(true);
 
       if (game) {
-        await saveData('storedGame', game);
+        await storage.save('storedGame', game);
 
         setGame(game);
         changeTheme(game.theme);

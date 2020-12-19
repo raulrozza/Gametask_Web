@@ -23,7 +23,7 @@ import { toast } from 'react-toastify';
 import { NoRequests, RequestsContainer, RequestFooter } from '../styles';
 
 // Services
-import api from '../../../services/api';
+import { api } from '../../../services';
 
 // Utils
 import { removeItemFromArray } from '../../../utils/arrayMethods';
@@ -50,7 +50,7 @@ const AchievementRegister: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await api.get('achievementRegister');
+        const response = await api.instance.get('achievementRegister');
 
         setRequests(response.data);
         setLoading(false);
@@ -70,7 +70,7 @@ const AchievementRegister: React.FC = () => {
           ),
         );
 
-        await api.delete(`/achievementRegister/${id}`);
+        await api.instance.delete(`/achievementRegister/${id}`);
 
         toast.update('Requisição excluída');
       } catch (error) {
@@ -101,7 +101,7 @@ const AchievementRegister: React.FC = () => {
             ),
           );
 
-          await api.post('/unlockAchievement', data);
+          await api.instance.post('/unlockAchievement', data);
 
           toast.success('Conquista garantida.');
 

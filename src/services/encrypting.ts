@@ -1,6 +1,6 @@
 import crypto from 'crypto-js';
 
-export function encrypt(data: unknown, secret: string): string {
+function encrypt(data: unknown, secret: string): string {
   const jsonData = JSON.stringify(data);
 
   const encryptedArray = crypto.AES.encrypt(jsonData, secret);
@@ -9,3 +9,7 @@ export function encrypt(data: unknown, secret: string): string {
 
   return cipher;
 }
+
+export default {
+  encrypt,
+};

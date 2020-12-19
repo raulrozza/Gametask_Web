@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useErrorHandling } from './useErrorHandling';
 
 // Services
-import api from '../../services/api';
+import { api } from '../../services';
 
 // Types
 import { ApiPut } from '../../interfaces/hooks/UseApiPut';
@@ -15,7 +15,7 @@ export function useApiPut<T = unknown>(): ApiPut<T> {
   const apiPut = useCallback(
     async (URL: string, body: unknown, headers: unknown = {}) => {
       try {
-        const response = await api.put<T>(URL, body, {
+        const response = await api.instance.put<T>(URL, body, {
           headers,
         });
 

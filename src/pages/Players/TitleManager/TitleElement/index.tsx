@@ -11,7 +11,7 @@ import { TitleElementProps } from '../../types';
 
 // Utils
 import handleApiErrors from '../../../../utils/handleApiErrors';
-import api from '../../../../services/api';
+import { api } from '../../../../services';
 
 const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
   const [name, setName] = useState(title.name);
@@ -29,7 +29,7 @@ const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
         setEditing(false);
 
         try {
-          await api.put(`/title/${title._id}`, { name });
+          await api.instance.put(`/title/${title._id}`, { name });
         } catch (error) {
           handleApiErrors(error);
         }
@@ -41,7 +41,7 @@ const TitleElement: React.FC<TitleElementProps> = ({ title, onDelete }) => {
   const handleDelete = useCallback(async () => {
     if (window.confirm('Deseja mesmo excluir este título?'))
       try {
-        await api.delete(`/title/${title._id}`);
+        await api.instance.delete(`/title/${title._id}`);
 
         onDelete(title._id);
       } catch (error) {
