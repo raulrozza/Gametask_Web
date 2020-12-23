@@ -1,4 +1,4 @@
-import { IAchievement, IActivity, IPlayer, ITitle } from 'interfaces';
+import { IAchievement, IActivity, IPlayer } from 'interfaces';
 
 export interface IActivityRequest {
   _id: string;
@@ -15,12 +15,6 @@ export interface IAchievementRequest {
   achievement: IAchievement;
   information: string;
   requestDate: string;
-}
-
-export interface ActivityRequestModalProps {
-  request: IActivityRequest;
-  deleteRequest: (id: string) => void;
-  acceptRequest: (id: string) => void;
 }
 
 export interface AchievementRequestModalProps {

@@ -4,9 +4,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Loading } from 'components';
-import ActivityRegister from './ActivityRegister';
 import AchievementRegister from './AchievementRegister';
-import { TitleManager } from './components';
+import { ActivityRegister, TitleManager } from './components';
 
 // Hooks
 import { useGameData } from 'hooks';

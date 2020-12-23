@@ -20,6 +20,8 @@ const Ranking: React.FC = () => {
 
   if (!game) return null;
 
+  console.log(game);
+
   return (
     <RankingContainer>
       <ul>
@@ -40,6 +42,7 @@ const Ranking: React.FC = () => {
             return (
               <li key={player._id}>
                 <div className="points">{currentExperience}</div>
+
                 <div className="user">
                   <span
                     className="rank"
@@ -51,10 +54,12 @@ const Ranking: React.FC = () => {
                   >
                     {player.rank.tag}
                   </span>
+
                   <span className="name">
                     {player.user.firstname}
                     {player.user.lastname ? ` ${player.user.lastname}` : ''}
                   </span>
+
                   {player.currentTitle && (
                     <span className="title">, {player.currentTitle.name}</span>
                   )}
@@ -69,6 +74,7 @@ const Ranking: React.FC = () => {
           </span>
         )}
       </ul>
+
       <footer>
         <Link to="/players">Gerenciar Jogadores</Link>
       </footer>

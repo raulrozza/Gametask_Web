@@ -1,19 +1,19 @@
 import React from 'react';
 
+// Assets
+import userPlaceholder from 'assets/img/users/placeholder.png';
+
 // Icons
 import { FaCheck, FaTrash } from 'react-icons/fa';
-
-// Assets
-import userPlaceholder from '../../../../assets/img/users/placeholder.png';
-
-// Types
-import { ActivityRequestModalProps } from '../../types';
 
 // Styles
 import { ModalContainer } from './styles';
 import { RequestFooter } from '../../styles';
 
-const RequestModal: React.FC<ActivityRequestModalProps> = ({
+// Types
+import { ActivityModalProps } from './types';
+
+const ActivityModal: React.FC<ActivityModalProps> = ({
   request,
   deleteRequest,
   acceptRequest,
@@ -81,4 +81,4 @@ const RequestModal: React.FC<ActivityRequestModalProps> = ({
   </ModalContainer>
 );
 
-export default RequestModal;
+export default ActivityModal;
