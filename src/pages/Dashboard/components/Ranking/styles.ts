@@ -24,8 +24,8 @@ export const RankingContainer = styled(InfoBox)`
           }
 
           &.registers-box {
-            background-color: ${theme.secondaryShade};
-            color: ${theme.secondaryContrast};
+            background-color: ${theme.palette.secondary.dark};
+            color: ${theme.palette.secondary.contrast};
 
             height: 20px;
             padding: 4px;
@@ -50,7 +50,7 @@ export const RankingContainer = styled(InfoBox)`
           font-weight: bold;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid ${theme.primaryLowShade};
+          border-bottom: 1px solid ${theme.palette.primary.dark};
           font-family: 'Open Sans', sans-serif;
 
           ul li div {
@@ -68,7 +68,7 @@ export const RankingContainer = styled(InfoBox)`
         font-size: 14px;
         justify-content: center;
         text-decoration: underline;
-        color: ${theme.secondary};
+        color: ${theme.palette.secondary.main};
 
         svg {
           margin-left: 4px;
@@ -88,7 +88,7 @@ export const RankingContainer = styled(InfoBox)`
     }
 
     footer {
-      border-top: 1px solid ${theme.primaryLowShade};
+      border-top: 1px solid ${theme.palette.primary.dark};
       margin-top: 8px;
       width: 100%;
       display: flex;

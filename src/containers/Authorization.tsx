@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback, memo } from 'react';
 import { AuthorizationContext } from 'contexts';
 
 // Hooks
-import { useTheme } from 'hooks';
+/* import { useTheme } from 'hooks'; */
 
 // Services
 import { api, storage } from 'services';
@@ -15,7 +15,7 @@ import { IUser } from 'interfaces';
 const Authorization: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { changeTheme } = useTheme();
+  /*   const { changeTheme } = useTheme(); */
 
   // States management
   const [user, setUser] = useState<IUser | null>(null);
@@ -47,8 +47,8 @@ const Authorization: React.FC<{ children: React.ReactNode }> = ({
     await storage.clear();
     setUser(null);
     setLogged(false);
-    changeTheme({});
-  }, [changeTheme]);
+    /* changeTheme({}) */
+  }, []);
 
   return (
     <AuthorizationContext.Provider

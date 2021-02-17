@@ -18,9 +18,9 @@ export const Background = styled.div`
 
 export const Container = styled.div<ContainerProps>`
   ${({ theme, size }) => css`
-    background-color: ${theme.primary};
+    background-color: ${theme.palette.primary.main};
     border-radius: 10px;
-    border: 1px solid ${theme.primaryIntense};
+    border: 1px solid ${theme.palette.primary.light};
     padding: 8px;
     max-width: 100%;
     max-height: 100%;
@@ -43,17 +43,17 @@ export const Container = styled.div<ContainerProps>`
       align-items: center;
       justify-content: space-between;
       padding-bottom: 4px;
-      border: 0 solid ${theme.primaryLowShade};
+      border: 0 solid ${theme.palette.primary.dark};
       border-bottom-width: 1px;
 
       h2 {
-        color: ${theme.secondary};
+        color: ${theme.palette.secondary.main};
       }
 
       button {
-        background-color: ${theme.primary};
-        border: 1px solid ${theme.primaryLowShade};
-        color: ${theme.primaryContrast};
+        background-color: ${theme.palette.primary.main};
+        border: 1px solid ${theme.palette.primary.dark};
+        color: ${theme.palette.primary.contrast};
         border-radius: 5px;
         padding: 4px;
         display: flex;

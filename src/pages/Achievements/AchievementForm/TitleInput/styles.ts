@@ -7,8 +7,8 @@ export const TitleOptions = styled.div<TitleOptionsProps>`
     z-index: 10;
     width: inherit;
     max-height: 80%;
-    background-color: ${theme.primaryLowShade};
-    border: 1px solid ${theme.primaryContrast};
+    background-color: ${theme.palette.primary.dark};
+    border: 1px solid ${theme.palette.primary.contrast};
     border-top: none;
     border-radius: 0 0 5px 5px;
     font-size: 14px;
@@ -26,7 +26,7 @@ export const TitleOptions = styled.div<TitleOptionsProps>`
       border-radius: 5px;
 
       &:hover {
-        background-color: ${theme.primary};
+        background-color: ${theme.palette.primary.main};
       }
     }
 

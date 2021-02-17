@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { GameContext } from 'contexts';
 
 // Hooks
-import { useApiGet, useTheme } from 'hooks';
+import { useApiGet } from 'hooks';
 
 // Services
 import { api, storage } from 'services';
@@ -22,15 +22,15 @@ const Game: React.FC = ({ children }) => {
   );
   const [loading, setLoading] = useState(true);
 
-  const { changeTheme } = useTheme();
+  /*  const { changeTheme } = useTheme(); */
   const apiGet = useApiGet<IGame>();
 
   const resetGame = useCallback(async () => {
-    changeTheme({});
+    /* changeTheme({}); */
     await storage.remove('storedGame');
     setGame(null);
     api.removeApiHeader('X-Game-ID');
-  }, [changeTheme]);
+  }, []);
 
   const getGameInfo = useCallback(
     async (gameId: string) => {
@@ -42,9 +42,9 @@ const Game: React.FC = ({ children }) => {
 
       setVerifiedGameAuthenticity(true);
       setGame(game);
-      changeTheme(game.theme);
+      /* changeTheme(game.theme); */
     },
-    [changeTheme, apiGet],
+    [apiGet],
   );
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const Game: React.FC = ({ children }) => {
 
         if (!isEqual(game, storedGame)) {
           setGame(storedGame);
-          changeTheme(storedGame.theme);
+          /* changeTheme(storedGame.theme); */
         }
 
         if (!verifiedGameAuthenticity) getGameInfo(storedGame._id);
@@ -68,7 +68,7 @@ const Game: React.FC = ({ children }) => {
 
       setLoading(false);
     })();
-  }, [changeTheme, resetGame, getGameInfo, verifiedGameAuthenticity, game]);
+  }, [resetGame, getGameInfo, verifiedGameAuthenticity, game]);
 
   const switchGame = useCallback(
     async (game?: IGame) => {
@@ -78,13 +78,13 @@ const Game: React.FC = ({ children }) => {
         await storage.save('storedGame', game);
 
         setGame(game);
-        changeTheme(game.theme);
+        /*   changeTheme(game.theme); */
       } else resetGame();
 
       setVerifiedGameAuthenticity(false);
       setLoading(false);
     },
-    [changeTheme, resetGame],
+    [resetGame],
   );
 
   const refreshGame = useCallback(() => {

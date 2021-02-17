@@ -21,14 +21,14 @@ export const ColorViewer = styled.div<ColorViewerProps>`
     height: 36px;
 
     border-radius: 5px;
-    border: 1px solid ${theme.primaryShade};
+    border: 1px solid ${theme.palette.primary.dark};
 
     cursor: pointer;
 
     background-color: ${color};
 
     &:hover {
-      border-color: ${theme.primaryLowShade};
+      border-color: ${theme.palette.primary.dark};
     }
   `}
 `;
@@ -42,18 +42,18 @@ export const ColorPicker = styled.div<ColorPickerProps>`
     z-index: 2;
 
     .chrome-picker {
-      background-color: ${theme.primaryIntense} !important;
+      background-color: ${theme.palette.primary.light} !important;
 
       input {
-        color: ${theme.primaryContrast} !important;
+        color: ${theme.palette.primary.contrast} !important;
       }
 
       span {
-        color: ${theme.primaryExtraShade} !important;
+        color: ${theme.palette.primary.dark} !important;
       }
 
       svg {
-        fill: ${theme.primaryContrast} !important;
+        fill: ${theme.palette.primary.contrast} !important;
       }
     }
 

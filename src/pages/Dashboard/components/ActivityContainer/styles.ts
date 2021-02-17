@@ -11,7 +11,7 @@ export const ActivityBox = styled(MinMaxBox)`
         padding: 5px;
         font-weight: bold;
         text-align: center;
-        border: 1px solid ${theme.secondaryShade};
+        border: 1px solid ${theme.palette.secondary.dark};
         border-radius: 10px;
         margin: 5px;
 
@@ -31,7 +31,7 @@ export const ActivityBox = styled(MinMaxBox)`
       }
 
       .activity-experience {
-        color: ${theme.secondary};
+        color: ${theme.palette.secondary.main};
         font-size: 20px;
         height: 32px;
       }

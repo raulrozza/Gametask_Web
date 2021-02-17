@@ -13,8 +13,8 @@ export const Container = styled(ReducingDiv)`
     .activity {
       min-width: 100px;
       padding: 5px;
-      background: ${theme.primaryLowShade};
-      box-shadow: 0px 0px 0px 0px ${theme.primaryLowShade};
+      background: ${theme.palette.primary.dark};
+      box-shadow: 0px 0px 0px 0px ${theme.palette.primary.dark};
       border-radius: 10px;
       text-align: center;
       transition: all 0.5s;
@@ -32,8 +32,8 @@ export const Container = styled(ReducingDiv)`
       }
 
       &:hover {
-        background-color: ${theme.primary};
-        box-shadow: 0px 0px 3px 2px ${theme.primaryLowShade};
+        background-color: ${theme.palette.primary.main};
+        box-shadow: 0px 0px 3px 2px ${theme.palette.primary.dark};
 
         button {
           visibility: visible;
@@ -57,11 +57,11 @@ export const Container = styled(ReducingDiv)`
       .activity-rules {
         font-size: 12px;
         margin-top: 5px;
-        color: ${theme.secondaryIntense};
+        color: ${theme.palette.secondary.light};
       }
 
       .activity-xp {
-        color: ${theme.secondary};
+        color: ${theme.palette.secondary.main};
         font-size: 24px;
         font-weight: bold;
         text-align: left;
@@ -72,7 +72,7 @@ export const Container = styled(ReducingDiv)`
       position: absolute;
       bottom: 2px;
       right: 2px;
-      color: ${theme.primaryShade};
+      color: ${theme.palette.primary.dark};
       font-size: 16px;
       border: none;
       background-color: transparent;

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   display: flex;
-  color: ${({ theme }) => theme.secondaryExtraIntense};
-  border-bottom: 1px solid ${({ theme }) => theme.primaryShade};
+  color: ${({ theme }) => theme.palette.secondary.light};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.primary.dark};
 
   a {
     background: transparent;
@@ -14,13 +14,13 @@ export const Container = styled.header`
 
     svg {
       font-size: 24px;
-      color: ${({ theme }) => theme.secondaryExtraIntense};
+      color: ${({ theme }) => theme.palette.secondary.light};
       cursor: pointer;
       transition: all 0.2s;
     }
 
     &:hover svg {
-      color: ${({ theme }) => theme.secondary};
+      color: ${({ theme }) => theme.palette.secondary.main};
     }
   }
 `;

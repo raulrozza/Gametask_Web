@@ -45,14 +45,14 @@ const ActivityContainer: React.FC = () => {
                 >
                   <div className="activity-name">
                     <SkeletonLoader
-                      background={theme.primaryShade}
+                      background={theme.palette.primary.dark}
                       height="100%"
                     />
                   </div>
 
                   <div className="activity-experience">
                     <SkeletonLoader
-                      background={theme.primaryShade}
+                      background={theme.palette.primary.dark}
                       height="100%"
                     />
                   </div>

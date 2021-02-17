@@ -32,8 +32,8 @@ export const GameContainerDiv = styled(InfoBox)`
 
     button:not(.config-btn) {
       width: 280px;
-      background-color: ${theme.primaryLowShade};
-      border: 1px solid ${theme.primaryShade};
+      background-color: ${theme.palette.primary.dark};
+      border: 1px solid ${theme.palette.primary.dark};
       border-bottom: none;
       padding: 8px 0;
       cursor: pointer;
@@ -47,7 +47,7 @@ export const GameContainerDiv = styled(InfoBox)`
       }
 
       &.logout {
-        color: ${theme.secondary};
+        color: ${theme.palette.secondary.main};
       }
     }
 
@@ -55,7 +55,7 @@ export const GameContainerDiv = styled(InfoBox)`
       font-size: 14px;
 
       strong {
-        color: ${theme.secondaryExtraIntense};
+        color: ${theme.palette.secondary.light};
       }
     }
 
@@ -70,7 +70,7 @@ export const GameContainerDiv = styled(InfoBox)`
       transition: color 0.4s;
 
       &:hover {
-        color: ${theme.primaryShade};
+        color: ${theme.palette.primary.dark};
       }
     }
   `}

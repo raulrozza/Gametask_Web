@@ -3,7 +3,7 @@ import { IGameCard } from './types';
 
 export const Container = styled.main`
   ${({ theme }) => css`
-    background-color: ${theme.primaryLowShade};
+    background-color: ${theme.palette.primary.dark};
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
@@ -55,13 +55,13 @@ export const GameCard = styled.div<IGameCard>`
           padding: 16px 8px;
           text-align: center;
 
-          background-color: ${theme.primaryTransparent};
-          border: 1px solid ${theme.secondary};
+          background-color: ${theme.palette.primary.main}55;
+          border: 1px solid ${theme.palette.secondary.main};
 
           strong {
             font-family: 'Open Sans', sans-serif;
             font-size: 22px;
-            color: ${theme.secondary};
+            color: ${theme.palette.secondary.main};
           }
 
           img {
@@ -78,16 +78,16 @@ export const GameCard = styled.div<IGameCard>`
           }
 
           &:hover {
-            background-color: ${theme.primary};
+            background-color: ${theme.palette.primary.main};
           }
         `
       : css`
-          border: 1px dashed ${theme.primaryContrast};
+          border: 1px dashed ${theme.palette.primary.contrast};
 
           transition: background-color 0.2s;
 
           &:hover {
-            background: ${theme.secondaryTransparent};
+            background: ${theme.palette.secondary.main}55;
           }
 
           button {

@@ -6,13 +6,12 @@ import { ToastContainer, Slide } from 'react-toastify';
 
 // Contexts
 import Authorization from './containers/Authorization';
-import Theme from './containers/Theme';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const App: React.FC = () => {
   return (
-    <Theme>
+    <>
       <Authorization>
         <Routes />
       </Authorization>
@@ -27,7 +26,7 @@ const App: React.FC = () => {
         pauseOnHover={false}
         limit={3}
       />
-    </Theme>
+    </>
   );
 };
 

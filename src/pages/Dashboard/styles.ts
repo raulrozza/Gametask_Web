@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Main = styled.main`
-  background-color: ${({ theme }) => theme.primaryLowShade};
+  background-color: ${({ theme }) => theme.palette.primary.dark};
   min-height: 100vh;
   padding: 10px;
   display: flex;
@@ -21,7 +21,7 @@ export const Main = styled.main`
 `;
 
 export const InfoBox = styled.div`
-  background-color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => theme.palette.primary.contrast};
   padding: 10px;
   border-radius: 10px;
   margin: 10px;
@@ -60,7 +60,7 @@ export const MinMaxBox = styled(InfoBox)`
     }
 
     .min-max {
-      border-top: 1px solid ${theme.primaryLowShade};
+      border-top: 1px solid ${theme.palette.primary.dark};
       margin-top: 8px;
       position: relative;
       width: 100%;
@@ -72,7 +72,7 @@ export const MinMaxBox = styled(InfoBox)`
 
       svg {
         cursor: pointer;
-        color: ${theme.primaryShade};
+        color: ${theme.palette.primary.dark};
         position: absolute;
         right: 0px;
       }

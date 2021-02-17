@@ -3,7 +3,7 @@ import { ReducingDivProps, EditorProps } from './types';
 
 export const PageWrapperContainer = styled.main`
   ${({ theme }) => css`
-    background-color: ${theme.primaryLowShade};
+    background-color: ${theme.palette.primary.dark};
     min-height: 100vh;
     padding: 10px;
     display: flex;
@@ -11,7 +11,7 @@ export const PageWrapperContainer = styled.main`
     align-items: flex-start;
 
     .container {
-      background-color: ${theme.primary};
+      background-color: ${theme.palette.primary.main};
       padding: 10px;
       border-radius: 10px;
       margin: 10px;
@@ -73,7 +73,7 @@ export const EmptyContainer = styled(ReducingDiv)`
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: ${({ theme }) => theme.primaryContrast};
+  color: ${({ theme }) => theme.palette.primary.contrast};
 `;
 
 export const Editor = styled.div<EditorProps>`
@@ -84,7 +84,7 @@ export const Editor = styled.div<EditorProps>`
     ${shown
       ? css`
           width: 40%;
-          border-color: ${theme.primaryShade};
+          border-color: ${theme.palette.primary.dark};
           overflow: auto;
           margin-left: 8px;
         `
@@ -120,8 +120,8 @@ export const Footer = styled.footer`
 
     button {
       cursor: pointer;
-      background-color: ${theme.secondary};
-      color: ${theme.secondaryContrast};
+      background-color: ${theme.palette.secondary.main};
+      color: ${theme.palette.secondary.contrast};
       border: none;
       border-radius: 2px;
       line-height: 24px;
@@ -130,7 +130,7 @@ export const Footer = styled.footer`
       transition: all 0.2s;
 
       &:hover:not(:disabled) {
-        background-color: ${theme.secondaryShade};
+        background-color: ${theme.palette.secondary.dark};
       }
     }
 

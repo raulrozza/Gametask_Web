@@ -5,8 +5,8 @@ export const LoadingContainer = styled.div`
     width: 100%;
     height: 100%;
 
-    background: ${theme.primary};
-    color: ${theme.secondary};
+    background: ${theme.palette.primary.main};
+    color: ${theme.palette.secondary.main};
 
     display: flex;
     justify-content: center;

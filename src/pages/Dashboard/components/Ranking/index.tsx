@@ -20,8 +20,6 @@ const Ranking: React.FC = () => {
 
   if (!game) return null;
 
-  console.log(game);
-
   return (
     <RankingContainer>
       <ul>

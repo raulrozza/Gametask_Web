@@ -20,15 +20,15 @@ const Form = styled(FormikForm)`
       width: 100%;
       height: 36px;
       border-radius: 5px;
-      border: 1px solid ${theme.primaryShade};
+      border: 1px solid ${theme.palette.primary.dark};
       padding: 0 10px;
       line-height: 24px;
       font-size: 14px;
       transition: border-color 0.5s;
-      background-color: ${theme.primaryIntense};
+      background-color: ${theme.palette.primary.light};
 
       &:focus {
-        border-color: ${theme.secondary};
+        border-color: ${theme.palette.secondary.main};
       }
     }
 

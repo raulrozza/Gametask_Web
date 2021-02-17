@@ -13,7 +13,7 @@ export const RankConfigContainer = styled.section`
     text-align: center;
 
     h2 {
-      color: ${theme.secondary};
+      color: ${theme.palette.secondary.main};
       margin-bottom: 12px;
     }
 
@@ -25,16 +25,16 @@ export const RankConfigContainer = styled.section`
       width: 100%;
       height: 60px;
       border-radius: 10px;
-      background-color: ${theme.primaryTransparent};
-      border: 1px dashed ${theme.primaryContrast};
+      background-color: ${theme.palette.primary.main}55;
+      border: 1px dashed ${theme.palette.primary.contrast};
       cursor: pointer;
       font-size: 18px;
       transition: all 0.4s;
 
       &:hover {
-        background-color: ${theme.secondaryTransparent};
-        color: ${theme.secondaryContrast};
-        border-color: ${theme.secondaryContrast};
+        background-color: ${theme.palette.secondary.main}55;
+        color: ${theme.palette.secondary.contrast};
+        border-color: ${theme.palette.secondary.contrast};
       }
     }
 
@@ -46,7 +46,7 @@ export const RankConfigContainer = styled.section`
 
 export const RankItem = styled.div<RankItemProps>`
   ${({ theme, backgroundColor, textColor }) => css`
-    border: 1px solid ${theme.primary};
+    border: 1px solid ${theme.palette.primary.contrast};
     border-radius: 10px;
     padding: 10px;
     transition: all 0.2s;
@@ -68,7 +68,7 @@ export const RankItem = styled.div<RankItemProps>`
     select {
       background-color: transparent;
       border: none;
-      border-bottom: 2px groove ${theme.secondary};
+      border-bottom: 2px groove ${theme.palette.secondary.main};
       border-radius: 5px 5px 0 0;
       transition: all 0.2s;
       padding: 8px 12px 4px;
@@ -76,18 +76,18 @@ export const RankItem = styled.div<RankItemProps>`
 
     select {
       cursor: pointer;
-      background-color: ${theme.primaryExtraIntense};
-      border-color: ${theme.secondaryIntense};
-      color: ${theme.primaryContrast};
+      background-color: ${theme.palette.primary.light};
+      border-color: ${theme.palette.secondary.light};
+      color: ${theme.palette.primary.contrast};
     }
 
     input {
       color: ${textColor};
 
       &:focus {
-        background-color: ${theme.primaryExtraIntense};
-        border-color: ${theme.secondaryIntense};
-        color: ${theme.primaryContrast} !important;
+        background-color: ${theme.palette.primary.light};
+        border-color: ${theme.palette.secondary.light};
+        color: ${theme.palette.primary.contrast} !important;
       }
     }
 
@@ -123,7 +123,7 @@ export const RankItem = styled.div<RankItemProps>`
 
 export const ColorInput = styled(ColorInputDefault)`
   ${({ theme }) => css`
-    border: 2px groove ${theme.secondary};
+    border: 2px groove ${theme.palette.secondary.main};
     transition: all 0.3s;
 
     &::after {
@@ -134,7 +134,7 @@ export const ColorInput = styled(ColorInputDefault)`
     }
 
     &:hover {
-      border-color: ${theme.secondaryIntense};
+      border-color: ${theme.palette.secondary.light};
     }
 
     .color-viewer {

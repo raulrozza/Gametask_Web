@@ -17,7 +17,7 @@ export const LevelConfigContainer = styled.section`
     }
 
     h2 {
-      color: ${theme.secondary};
+      color: ${theme.palette.secondary.main};
       margin-bottom: 12px;
     }
 
@@ -26,14 +26,14 @@ export const LevelConfigContainer = styled.section`
     }
 
     .level-info-container {
-      background-color: ${theme.primaryIntense};
+      background-color: ${theme.palette.primary.light};
       opacity: 0.8;
       padding: 8px;
       border-radius: 8px;
     }
 
     .info-item {
-      background-color: ${theme.primaryLowShade};
+      background-color: ${theme.palette.primary.dark};
       border-radius: 10px;
       padding: 10px;
       transition: all 0.2s;
@@ -48,11 +48,11 @@ export const LevelConfigContainer = styled.section`
       }
 
       &:hover {
-        background-color: ${theme.primaryShade};
+        background-color: ${theme.palette.primary.dark};
       }
 
       span {
-        color: ${theme.primaryContrast};
+        color: ${theme.palette.primary.contrast};
         display: flex;
         align-items: flex-end;
         padding-bottom: 4px;
@@ -60,17 +60,17 @@ export const LevelConfigContainer = styled.section`
       }
 
       input {
-        color: ${theme.primaryContrast};
+        color: ${theme.palette.primary.contrast};
         background-color: transparent;
         border: none;
-        border-bottom: 2px groove ${theme.secondary};
+        border-bottom: 2px groove ${theme.palette.secondary.main};
         border-radius: 5px 5px 0 0;
         transition: all 0.2s;
         padding: 8px 12px 4px;
 
         &:focus {
-          background-color: ${theme.primaryExtraIntense};
-          border-color: ${theme.secondaryIntense};
+          background-color: ${theme.palette.primary.light};
+          border-color: ${theme.palette.secondary.light};
         }
       }
 
@@ -120,15 +120,15 @@ export const LevelConfigContainer = styled.section`
       height: 60px;
       border-radius: 10px;
       background-color: transparent;
-      border: 1px dashed ${theme.primaryContrast};
+      border: 1px dashed ${theme.palette.primary.contrast};
       cursor: pointer;
       font-size: 18px;
       transition: all 0.4s;
 
       &:hover {
-        background-color: ${theme.secondaryTransparent};
-        color: ${theme.secondaryContrast};
-        border-color: ${theme.secondaryContrast};
+        background-color: ${theme.palette.secondary.main}55;
+        color: ${theme.palette.secondary.contrast};
+        border-color: ${theme.palette.secondary.contrast};
       }
     }
 

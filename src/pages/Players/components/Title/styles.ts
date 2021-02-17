@@ -16,23 +16,23 @@ export const Container = styled.li<TitleElementContainerProps>`
 
       ${editing
         ? css`
-            border: 1px solid ${theme.primary};
+            border: 1px solid ${theme.palette.primary.contrast};
             border-right: none;
 
-            background-color: ${theme.primaryIntense};
-            color: ${theme.primaryContrast};
+            background-color: ${theme.palette.primary.light};
+            color: ${theme.palette.primary.contrast};
           `
         : css`
             cursor: pointer;
             border: 1px solid transparent;
             background-color: transparent;
 
-            color: ${theme.secondary};
+            color: ${theme.palette.secondary.main};
 
             transition: border-color 0.2s;
 
             &:hover {
-              border-bottom: 1px solid ${theme.secondary};
+              border-bottom: 1px solid ${theme.palette.secondary.main};
             }
           `}
     }

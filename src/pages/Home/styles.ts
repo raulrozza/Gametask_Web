@@ -8,8 +8,8 @@ import { FormToggleButtonProps, FormProps } from './types';
 
 export const HomePage = styled.section`
   ${({ theme }) => css`
-    background-color: ${theme.primaryLowShade};
-    color: ${theme.primaryContrast};
+    background-color: ${theme.palette.primary.dark};
+    color: ${theme.palette.primary.contrast};
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -19,21 +19,21 @@ export const HomePage = styled.section`
     .title {
       cursor: default;
       margin-bottom: 20px;
-      background: ${theme.secondaryLowShade};
-      color: ${theme.secondaryContrast};
+      background: ${theme.palette.secondary.dark};
+      color: ${theme.palette.secondary.contrast};
       padding: 10px 20px;
       border-radius: 15px;
       text-align: center;
     }
 
     .container {
-      background: ${theme.primary};
+      background: ${theme.palette.primary.main};
       display: flex;
       flex-direction: row;
       border-radius: 3px;
 
       h2 {
-        color: ${theme.secondaryIntense};
+        color: ${theme.palette.secondary.light};
         margin-bottom: 10px;
 
         @media (max-width: 768px) {
@@ -70,8 +70,8 @@ export const FormToggle = {
       ${({ active, theme }) =>
         active &&
         css`
-          background-color: ${theme.primary};
-          color: ${theme.secondaryIntense};
+          background-color: ${theme.palette.primary.main};
+          color: ${theme.palette.secondary.light};
         `}
     }
   `,

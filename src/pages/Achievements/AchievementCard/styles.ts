@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   min-width: 100px;
   padding: 5px;
-  background: ${({ theme }) => theme.primaryLowShade};
-  box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.primaryLowShade};
+  background: ${({ theme }) => theme.palette.primary.dark};
+  box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.palette.primary.dark};
   border-radius: 10px;
   text-align: center;
   transition: all 0.5s;
@@ -15,8 +15,8 @@ export const Container = styled.div`
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.primary};
-    box-shadow: 0px 0px 3px 2px ${({ theme }) => theme.primaryLowShade};
+    background-color: ${({ theme }) => theme.palette.primary.contrast};
+    box-shadow: 0px 0px 3px 2px ${({ theme }) => theme.palette.primary.dark};
 
     button {
       visibility: visible;
@@ -39,7 +39,7 @@ export const Container = styled.div`
     text-align: center;
 
     .title {
-      color: ${({ theme }) => theme.secondaryIntense};
+      color: ${({ theme }) => theme.palette.secondary.light};
     }
   }
 
@@ -51,7 +51,7 @@ export const Container = styled.div`
     position: absolute;
     bottom: 2px;
     right: 2px;
-    color: ${({ theme }) => theme.primaryShade};
+    color: ${({ theme }) => theme.palette.primary.dark};
     font-size: 16px;
     border: none;
     background-color: transparent;

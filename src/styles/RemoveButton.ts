@@ -11,7 +11,7 @@ const RemoveButton = styled.button<RemoveButtonProps>`
 
     border: none;
     border-radius: 50%;
-    color: ${theme.primary};
+    color: ${theme.palette.primary.contrast};
     background-color: darkred;
     transition: background-color 0.5s;
 

@@ -5,11 +5,11 @@ import ColorInput from '../../../components/ColorInput';
 import ImageInput from '../../../components/ImageInput';
 
 // Config
-import { defaultTheme } from '../../../config/defaultTheme';
+/* import { defaultTheme } from '../../../config/defaultTheme'; */
 
 // Hooks
 import { useGameData } from '../../../hooks/contexts/useGameData';
-import { useTheme } from '../../../hooks/contexts/useTheme';
+/* import { useTheme } from '../../../hooks/contexts/useTheme'; */
 
 // Libraries
 import { FaEdit } from 'react-icons/fa';
@@ -42,15 +42,15 @@ const GameSchema = Yup.object().shape({
 
 const InfoForm: React.FC = () => {
   const { game, refreshGame } = useGameData();
-  const { changeTheme } = useTheme();
+  /* const { changeTheme } = useTheme(); */
 
   // Form management
   const initialValues: InfoFormValues = {
     name: game?.name || '',
     description: game?.description || '',
     theme: game?.theme || {
-      primary: defaultTheme.primary,
-      secondary: defaultTheme.secondary,
+      primary: '', // defaultTheme.primary,
+      secondary: '', // defaultTheme.secondary,
     },
     image: game?.image_url || null,
   };
@@ -103,10 +103,10 @@ const InfoForm: React.FC = () => {
       };
       newTheme[key] = color;
 
-      changeTheme(newTheme);
+      /* changeTheme(newTheme); */
       form.setFieldValue('theme', newTheme);
     },
-    [form, changeTheme],
+    [form],
   );
 
   if (!game) return null;
@@ -157,9 +157,9 @@ const InfoForm: React.FC = () => {
       <div className="input-group">
         <h3>Tema</h3>
 
-        <ColorInput
+        {/* <ColorInput
           label="Cor de fundo"
-          value={form.values.theme.primary}
+          value={form.values.theme.palette.primary.contrast}
           onChange={color => handleColorChange('primary', color.hex)}
           onShowPanel={() => changeTheme(form.values.theme)}
           onHidePanel={() => changeTheme(game.theme)}
@@ -167,7 +167,7 @@ const InfoForm: React.FC = () => {
 
         <ColorInput
           label="Cor dos botões"
-          value={form.values.theme.secondary}
+          value={form.values.palette.secondary.main}
           onChange={color => handleColorChange('secondary', color.hex)}
           onShowPanel={() => changeTheme(form.values.theme)}
           onHidePanel={() => changeTheme(game.theme)}
@@ -187,7 +187,7 @@ const InfoForm: React.FC = () => {
           }}
         >
           Restaurar tema padrão
-        </button>
+        </button> */}
       </div>
 
       <Button outline type="submit" disabled={disabledBtn}>

@@ -23,7 +23,7 @@ export const Container = styled.div`
       align-items: stretch;
       overflow: hidden;
 
-      border: 1px solid ${theme.secondary};
+      border: 1px solid ${theme.palette.secondary.main};
       border-radius: 4px;
 
       input {
@@ -32,8 +32,8 @@ export const Container = styled.div`
 
         padding: 0 8px;
 
-        background-color: ${theme.primaryLowShade};
-        color: ${theme.primaryContrast};
+        background-color: ${theme.palette.primary.dark};
+        color: ${theme.palette.primary.contrast};
       }
 
       button {
@@ -47,21 +47,21 @@ export const Container = styled.div`
         align-items: center;
         justify-content: center;
 
-        background-color: ${theme.primary};
-        color: ${theme.primaryExtraShade};
+        background-color: ${theme.palette.primary.main};
+        color: ${theme.palette.primary.dark};
 
         cursor: pointer;
 
         transition: all 0.3s;
 
         &:hover {
-          color: ${theme.secondary};
+          color: ${theme.palette.secondary.main};
         }
 
         &:active,
         &:focus {
-          outline: 1px solid ${theme.secondaryTransparent};
-          color: ${theme.secondaryIntense};
+          outline: 1px solid ${theme.palette.secondary.main}55;
+          color: ${theme.palette.secondary.light};
         }
       }
     }

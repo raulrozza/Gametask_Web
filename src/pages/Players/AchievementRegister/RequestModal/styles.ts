@@ -36,7 +36,7 @@ export const ModalContainer = styled.div`
 
       span {
         font-size: 20px;
-        color: ${({ theme }) => theme.primaryExtraShade};
+        color: ${({ theme }) => theme.palette.primary.dark};
       }
     }
 

@@ -16,14 +16,14 @@ export const Container = styled.nav`
     }
 
     h2 {
-      color: ${({ theme }) => theme.secondaryIntense};
+      color: ${({ theme }) => theme.palette.secondary.light};
 
       @media (max-width: 383px) {
         display: none;
       }
       span {
         font-family: inherit;
-        color: ${({ theme }) => theme.primaryContrast};
+        color: ${({ theme }) => theme.palette.primary.contrast};
 
         @media (max-width: 576px) {
           display: none;
@@ -42,18 +42,18 @@ export const Container = styled.nav`
     }
 
     strong {
-      color: ${({ theme }) => theme.secondaryExtraIntense};
+      color: ${({ theme }) => theme.palette.secondary.light};
     }
 
     span.logout {
-      color: ${({ theme }) => theme.secondary};
+      color: ${({ theme }) => theme.palette.secondary.main};
       cursor: pointer;
 
       transition: color 0.2s;
 
       &:hover {
         text-decoration: underline;
-        color: ${({ theme }) => theme.secondaryLowShade};
+        color: ${({ theme }) => theme.palette.secondary.dark};
       }
     }
   }

@@ -7,7 +7,7 @@ const fillTheme = (key: string, value: string): DefaultTheme => {
   const color = tinyColor(value);
   const pallete = {} as DefaultTheme;
 
-  pallete[`${key}`] = color.toHexString();
+  /* pallete[`${key}`] = color.toHexString();
 
   pallete[`${key}Contrast`] = color.isLight() ? '#1F1F1F' : '#FFF';
 
@@ -31,7 +31,7 @@ const fillTheme = (key: string, value: string): DefaultTheme => {
     ? tinyColor(value).darken(20).toHexString()
     : tinyColor(value).lighten(20).toHexString();
 
-  pallete[`${key}Transparent`] = tinyColor(value).setAlpha(0.53).toHex8String();
+  pallete[`${key}Transparent`] = tinyColor(value).setAlpha(0.53).toHex8String(); */
 
   return pallete;
 };

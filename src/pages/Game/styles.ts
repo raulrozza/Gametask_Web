@@ -36,7 +36,7 @@ export const SideNav = styled.aside<SideNavProps>`
         cursor: pointer;
         margin: 0 10px;
         background-color: transparent;
-        color: ${theme.secondary};
+        color: ${theme.palette.secondary.main};
         border: none;
         border-radius: 5px;
         font-size: 18px;
@@ -46,7 +46,7 @@ export const SideNav = styled.aside<SideNavProps>`
         margin-right: 6px;
 
         &:hover {
-          color: ${theme.primaryContrast};
+          color: ${theme.palette.primary.contrast};
         }
       }
 
@@ -66,7 +66,7 @@ export const SideNav = styled.aside<SideNavProps>`
 
       ${shown &&
       css`
-        background-color: ${theme.primary};
+        background-color: ${theme.palette.primary.main};
         width: 180px;
       `}
     }
@@ -81,14 +81,14 @@ export const TabItem = styled.li<TabItemProps>`
 
     ${active &&
     css`
-      background-color: ${theme.secondary};
-      color: ${theme.secondaryContrast};
+      background-color: ${theme.palette.secondary.main};
+      color: ${theme.palette.secondary.contrast};
     `}
 
     &:hover {
       background-color: ${active
-        ? theme.secondaryLowShade
-        : theme.primaryLowShade};
+        ? theme.palette.secondary.dark
+        : theme.palette.primary.dark};
     }
   `}
 `;
@@ -96,7 +96,7 @@ export const TabItem = styled.li<TabItemProps>`
 export const Content = styled.main`
   ${({ theme }) => css`
     width: 100%;
-    background-color: ${theme.primaryLowShade};
+    background-color: ${theme.palette.primary.dark};
     border-radius: 3px;
 
     footer {

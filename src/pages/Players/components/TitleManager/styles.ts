@@ -9,8 +9,8 @@ export const Container = styled(RequestsContainer)`
     justify-content: space-between;
 
     button {
-      background-color: ${({ theme }) => theme.secondary};
-      color: ${({ theme }) => theme.secondaryContrast};
+      background-color: ${({ theme }) => theme.palette.secondary.main};
+      color: ${({ theme }) => theme.palette.secondary.contrast};
       border: none;
       border-radius: 4px;
 
@@ -25,7 +25,7 @@ export const Container = styled(RequestsContainer)`
       cursor: pointer;
 
       &:hover {
-        background-color: ${({ theme }) => theme.secondaryExtraIntense};
+        background-color: ${({ theme }) => theme.palette.secondary.light};
       }
     }
   }
@@ -34,7 +34,7 @@ export const Container = styled(RequestsContainer)`
     margin-top: 8px;
     padding: 4px;
     border-radius: 4px;
-    background-color: ${({ theme }) => theme.primaryLowShade};
+    background-color: ${({ theme }) => theme.palette.primary.dark};
   }
 `;
 

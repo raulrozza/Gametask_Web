@@ -6,13 +6,13 @@ const Button = styled.button<ButtonProps>`
     cursor: pointer;
     ${outline
       ? css`
-          background-color: ${theme.primary};
-          color: ${theme.secondary};
-          border: 1px solid ${theme.secondary};
+          background-color: ${theme.palette.primary.main};
+          color: ${theme.palette.secondary.main};
+          border: 1px solid ${theme.palette.secondary.main};
         `
       : css`
-          background-color: ${theme.secondary};
-          color: ${theme.secondaryContrast};
+          background-color: ${theme.palette.secondary.main};
+          color: ${theme.palette.secondary.contrast};
           border: none;
         `}
 
@@ -25,11 +25,11 @@ const Button = styled.button<ButtonProps>`
     &:hover:not(:disabled) {
       ${outline
         ? css`
-            background-color: ${theme.secondary};
-            color: ${theme.secondaryContrast};
+            background-color: ${theme.palette.secondary.main};
+            color: ${theme.palette.secondary.contrast};
           `
         : css`
-            background-color: ${theme.secondaryShade};
+            background-color: ${theme.palette.secondary.dark};
           `}
     }
 

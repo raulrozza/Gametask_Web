@@ -12,7 +12,12 @@ import { IThemedComponent } from 'interfaces';
 
 const Loading: React.FC<IThemedComponent> = ({ theme }) => (
   <LoadingContainer>
-    <ReactLoading type="bars" color={theme.secondary} height={32} width={32} />
+    <ReactLoading
+      type="bars"
+      color={theme.palette.secondary.main}
+      height={32}
+      width={32}
+    />
   </LoadingContainer>
 );
 
