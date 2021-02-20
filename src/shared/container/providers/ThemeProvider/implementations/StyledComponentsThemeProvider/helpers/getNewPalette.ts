@@ -1,9 +1,9 @@
 import tinyColor from 'tinycolor2';
+import { DefaultTheme } from 'styled-components';
 
-import theme from 'shared/container/providers/ThemeProvider/config/theme';
 import { ISwitchThemeArgs } from 'shared/container/providers/ThemeProvider/models/IThemeProvider';
 
-type Palette = typeof theme.palette;
+type Palette = DefaultTheme['palette'];
 
 const textContrasts = {
   light: '#1F1F1F',

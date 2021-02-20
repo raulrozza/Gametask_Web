@@ -1,4 +1,4 @@
-import theme from 'shared/container/providers/ThemeProvider/config/theme';
+import { DefaultTheme } from 'styled-components';
 
 export interface ISwitchThemeArgs {
   primary: string;
@@ -6,6 +6,6 @@ export interface ISwitchThemeArgs {
 }
 
 export default interface IThemeProvider {
-  theme: typeof theme;
+  theme: DefaultTheme;
   switchTheme: (theme: ISwitchThemeArgs) => Promise<void>;
 }

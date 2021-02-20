@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 
-import defaultTheme from '../../config/theme';
-import { ThemeProviderContext } from '../../contexts/useThemeProvider';
-import IThemeProvider from '../../models/IThemeProvider';
+import defaultTheme from 'config/theme';
+import { ThemeProviderContext } from 'shared/container/providers/ThemeProvider/contexts/useThemeProvider';
+import IThemeProvider from 'shared/container/providers/ThemeProvider/models/IThemeProvider';
 import { getNewPalette, setMobileThemeColor } from './helpers';
 
 const StyledComponentsThemeProvider: React.FC = ({ children }) => {
