@@ -16,7 +16,9 @@ import { initialValues } from './constants';
 import { useSignup } from './hooks';
 
 // Validation
-import SignupSchema from 'modules/landing/validation/Signup';
+import SignupSchema, {
+  passwordsMatchValidation,
+} from 'modules/landing/validation/Signup';
 
 interface SignupProps {
   shown: boolean;
@@ -29,6 +31,7 @@ const Signup: React.FC<SignupProps> = ({ shown }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={SignupSchema}
+      validate={passwordsMatchValidation}
       onSubmit={onSubmit}
     >
       <Form shown={shown}>

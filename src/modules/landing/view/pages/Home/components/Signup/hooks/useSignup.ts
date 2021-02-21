@@ -4,7 +4,6 @@ import { useApiPost } from 'hooks';
 
 // Utils
 import { displaySuccessMessage } from 'utils';
-import { passwordsDontMatch } from '../utils';
 
 // Types
 import { UseSignup } from '../types';
@@ -15,10 +14,7 @@ const useSignup: UseSignup = () => {
   const apiPost = useApiPost();
 
   const onSubmit = useCallback(
-    async (values, actions) => {
-      const passwordsError = passwordsDontMatch(values);
-      if (passwordsError) return actions.setErrors(passwordsError);
-
+    async values => {
       setButtonDisabled(true);
 
       const signupSuccessful = await apiPost('/user/signup', values);
