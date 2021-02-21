@@ -2,8 +2,12 @@ import React from 'react';
 
 // Components
 import { Formik } from 'formik';
-import { Input } from 'shared/view/components';
-import { Form } from 'modules/landing/view/pages/Home/components';
+import { Button, Input } from 'shared/view/components';
+import {
+  Form,
+  FormTitle,
+  InputGroup,
+} from 'modules/landing/view/pages/Home/components';
 
 // Constants
 import { initialValues } from './constants';
@@ -11,17 +15,14 @@ import { initialValues } from './constants';
 // Hooks
 import { useSignup } from './hooks';
 
-// Schemas
-import { SignupSchema } from './schemas';
+// Validation
+import SignupSchema from 'modules/landing/validation/Signup';
 
-// Styles
-import { Button } from 'styles';
-
-export interface FormContainerProps {
+interface SignupProps {
   shown: boolean;
 }
 
-const Signup: React.FC<FormContainerProps> = ({ shown }) => {
+const Signup: React.FC<SignupProps> = ({ shown }) => {
   const { buttonDisabled, onSubmit } = useSignup();
 
   return (
@@ -31,9 +32,9 @@ const Signup: React.FC<FormContainerProps> = ({ shown }) => {
       onSubmit={onSubmit}
     >
       <Form shown={shown}>
-        <h2>Cadastre-se</h2>
+        <FormTitle>Cadastre-se</FormTitle>
 
-        <div className="form-group">
+        <div>
           <Input type="text" name="firstname" placeholder="Nome" />
 
           <Input type="text" name="lastname" placeholder="Sobrenome" />
@@ -48,11 +49,11 @@ const Signup: React.FC<FormContainerProps> = ({ shown }) => {
             placeholder="Confirme a senha"
           />
 
-          <div className="input-group">
+          <InputGroup>
             <Button type="submit" disabled={buttonDisabled}>
               Cadastrar
             </Button>
-          </div>
+          </InputGroup>
         </div>
       </Form>
     </Formik>

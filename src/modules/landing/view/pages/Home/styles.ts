@@ -38,19 +38,6 @@ export const FormWrapper = styled.div`
     border-radius: ${theme.layout.borderRadius.medium};
     overflow: hidden;
 
-    h2 {
-      color: ${theme.palette.secondary.light};
-      margin-bottom: ${theme.layout.spacing(3)};
-
-      @media (max-width: 768px) {
-        display: none;
-      }
-    }
-
-    .input-group {
-      width: 200px;
-    }
-
     @media (max-width: 768px) {
       flex-direction: column;
     }

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Form as FormikForm } from 'formik';
 
-export interface FormProps {
+interface FormProps {
   shown?: boolean;
 }
 
@@ -26,6 +26,19 @@ const Form = styled(FormikForm)<FormProps>`
         margin: 0px;
         padding: 0px;
       `}
+  }
+`;
+
+export const InputGroup = styled.div`
+  width: 200px;
+`;
+
+export const FormTitle = styled.h2`
+  color: ${({ theme }) => theme.palette.secondary.light};
+  margin-bottom: ${({ theme }) => theme.layout.spacing(3)};
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
