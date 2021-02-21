@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Components
 import { Formik } from 'formik';
 import { Button, Input } from 'shared/view/components';
 import {
@@ -9,13 +8,8 @@ import {
   InputGroup,
 } from 'modules/landing/view/pages/Home/components';
 
-// Constants
-import { initialValues } from './constants';
+import useSignupController from 'modules/landing/infra/controllers/useSignupController';
 
-// Hooks
-import { useSignup } from './hooks';
-
-// Validation
 import SignupSchema, {
   passwordsMatchValidation,
 } from 'modules/landing/validation/Signup';
@@ -24,8 +18,16 @@ interface SignupProps {
   shown: boolean;
 }
 
+const initialValues = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const Signup: React.FC<SignupProps> = ({ shown }) => {
-  const { buttonDisabled, onSubmit } = useSignup();
+  const { loading, onSubmit } = useSignupController();
 
   return (
     <Formik
@@ -53,7 +55,7 @@ const Signup: React.FC<SignupProps> = ({ shown }) => {
           />
 
           <InputGroup>
-            <Button type="submit" disabled={buttonDisabled}>
+            <Button type="submit" loading={loading}>
               Cadastrar
             </Button>
           </InputGroup>
