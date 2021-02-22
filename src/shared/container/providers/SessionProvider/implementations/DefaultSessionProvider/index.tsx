@@ -34,7 +34,8 @@ const DefaultSessionProvider: React.FC = ({ children }) => {
 
   const logout = useCallback<ISessionProvider['logout']>(async () => {
     setUserToken(null);
-    await storage.clear();
+    await storage.delete(USER_STORAGE_KEY);
+    await storage.delete(GAME_STORAGE_KEY);
   }, [storage]);
 
   const switchGame = useCallback<ISessionProvider['switchGame']>(

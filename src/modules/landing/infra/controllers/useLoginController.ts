@@ -24,7 +24,7 @@ const useLoginController: UseLoginController = () => {
 
       if (!userId) return setLoading(false);
 
-      return session.login(userId);
+      return await session.login(userId);
     },
     [loginService, session],
   );

@@ -22,7 +22,8 @@ const AxiosHTTPProvider: React.FC = ({ children }) => {
   const deleteMethod = useCallback<IHTTPProvider['delete']>(
     async (path, config) => {
       try {
-        return await axiosInstance.delete(path, config);
+        const response = await axiosInstance.delete(path, config);
+        return response.data;
       } catch (error) {
         throw new RequestError(error);
       }
@@ -32,24 +33,30 @@ const AxiosHTTPProvider: React.FC = ({ children }) => {
 
   const get = useCallback<IHTTPProvider['get']>(async (path, config) => {
     try {
-      return await axiosInstance.get(path, config);
+      const response = await axiosInstance.get(path, config);
+      return response.data;
     } catch (error) {
       throw new RequestError(error);
     }
   }, []);
 
-  const patch = useCallback<IHTTPProvider['patch']>((path, body, config) => {
-    try {
-      return axiosInstance.patch(path, body, config);
-    } catch (error) {
-      throw new RequestError(error);
-    }
-  }, []);
+  const patch = useCallback<IHTTPProvider['patch']>(
+    async (path, body, config) => {
+      try {
+        const response = await axiosInstance.patch(path, body, config);
+        return response.data;
+      } catch (error) {
+        throw new RequestError(error);
+      }
+    },
+    [],
+  );
 
   const post = useCallback<IHTTPProvider['post']>(
     async (path, body, config) => {
       try {
-        return await axiosInstance.post(path, body, config);
+        const response = await axiosInstance.post(path, body, config);
+        return response.data;
       } catch (error) {
         throw new RequestError(error);
       }
@@ -59,7 +66,8 @@ const AxiosHTTPProvider: React.FC = ({ children }) => {
 
   const put = useCallback<IHTTPProvider['put']>(async (path, body, config) => {
     try {
-      return await axiosInstance.put(path, body, config);
+      const response = await axiosInstance.put(path, body, config);
+      return response.data;
     } catch (error) {
       throw new RequestError(error);
     }
