@@ -2,13 +2,13 @@ import React from 'react';
 
 // Components
 import ReactLoading from 'react-loading';
-import useThemeProvider from 'shared/container/providers/ThemeProvider/contexts/useThemeProvider';
+import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
 
 // Styles
 import { LoadingContainer } from './styles';
 
 const Loading: React.FC = () => {
-  const { theme } = useThemeProvider();
+  const { theme } = useThemeContext();
 
   return (
     <LoadingContainer>

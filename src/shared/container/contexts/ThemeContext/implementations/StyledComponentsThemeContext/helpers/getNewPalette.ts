@@ -3,7 +3,7 @@ import { DefaultTheme } from 'styled-components';
 
 import defaultPalette from 'config/theme/palette';
 
-import { ISwitchThemeArgs } from 'shared/container/providers/ThemeProvider/models/IThemeProvider';
+import { ISwitchThemeArgs } from 'shared/container/contexts/ThemeContext/models/IThemeContext';
 
 type Palette = DefaultTheme['palette'];
 

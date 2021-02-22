@@ -5,7 +5,7 @@ export interface ISwitchThemeArgs {
   secondary: string;
 }
 
-export default interface IThemeProvider {
+export default interface IThemeContext {
   theme: DefaultTheme;
   switchTheme: (theme: ISwitchThemeArgs) => Promise<void>;
 }
