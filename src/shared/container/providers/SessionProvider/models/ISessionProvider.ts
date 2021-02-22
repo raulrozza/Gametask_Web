@@ -1,9 +1,9 @@
 export default interface ISessionProvider {
-  loggedUser: string | null;
+  userToken: string | null;
   selectedGame: string | null;
   loading: boolean;
 
-  login(userId: string): Promise<void>;
+  login(token: string): Promise<void>;
   logout(): Promise<void>;
 
   switchGame(gameId?: string): Promise<void>;

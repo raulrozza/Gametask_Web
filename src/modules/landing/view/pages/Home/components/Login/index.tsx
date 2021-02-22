@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Components
 import { Formik } from 'formik';
 import { Button, Input } from 'shared/view/components';
 import {
@@ -9,21 +8,21 @@ import {
   InputGroup,
 } from 'modules/landing/view/pages/Home/components';
 
-// Constants
-import { initialValues } from './constants';
+import useLoginController from 'modules/landing/infra/controllers/useLoginController';
 
-// Hooks
-import { useLogin } from './hooks';
-
-// Validation
 import LoginSchema from 'modules/landing/validation/Login';
 
 interface FormContainerProps {
   shown: boolean;
 }
 
+const initialValues = {
+  email: '',
+  password: '',
+};
+
 const Login: React.FC<FormContainerProps> = ({ shown }) => {
-  const { buttonDisabled, onSubmit } = useLogin();
+  const { loading, onSubmit } = useLoginController();
 
   return (
     <Formik
@@ -41,7 +40,7 @@ const Login: React.FC<FormContainerProps> = ({ shown }) => {
             <Input type="password" name="password" placeholder="Senha" />
 
             <InputGroup>
-              <Button type="submit" disabled={buttonDisabled}>
+              <Button type="submit" loading={loading}>
                 Entrar
               </Button>
             </InputGroup>

@@ -3,11 +3,11 @@ import { SessionProviderContext } from 'shared/container/providers/SessionProvid
 import ISessionProvider from 'shared/container/providers/SessionProvider/models/ISessionProvider';
 import useStorageProvider from 'shared/container/providers/StorageProvider/contexts/useStorageProvider';
 
-const USER_STORAGE_KEY = '@GameTask/user';
+const USER_STORAGE_KEY = '@GameTask/token';
 const GAME_STORAGE_KEY = '@GameTask/game';
 
 const DefaultSessionProvider: React.FC = ({ children }) => {
-  const [loggedUser, setLoggedUser] = useState<string | null>(null);
+  const [userToken, setUserToken] = useState<string | null>(null);
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,23 +17,23 @@ const DefaultSessionProvider: React.FC = ({ children }) => {
     Promise.all([
       storage.get<string>(USER_STORAGE_KEY),
       storage.get<string>(GAME_STORAGE_KEY),
-    ]).then(([user, game]) => {
-      setLoggedUser(user);
+    ]).then(([token, game]) => {
+      setUserToken(token);
       setSelectedGame(game);
       setLoading(false);
     });
   }, [storage]);
 
   const login = useCallback<ISessionProvider['login']>(
-    async userId => {
-      setLoggedUser(userId);
-      await storage.store(USER_STORAGE_KEY, userId);
+    async token => {
+      setUserToken(token);
+      await storage.store(USER_STORAGE_KEY, token);
     },
     [storage],
   );
 
   const logout = useCallback<ISessionProvider['logout']>(async () => {
-    setLoggedUser(null);
+    setUserToken(null);
     await storage.clear();
   }, [storage]);
 
@@ -48,7 +48,7 @@ const DefaultSessionProvider: React.FC = ({ children }) => {
 
   return (
     <SessionProviderContext.Provider
-      value={{ loggedUser, selectedGame, loading, login, logout, switchGame }}
+      value={{ userToken, selectedGame, loading, login, logout, switchGame }}
     >
       {children}
     </SessionProviderContext.Provider>

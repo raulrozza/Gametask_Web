@@ -10,7 +10,7 @@ import Home from 'modules/landing/view/pages/Home';
 const LandingRoutes: React.FC = () => {
   const session = useSessionProvider();
 
-  if (session.loggedUser) return null;
+  if (session.userToken) return null;
 
   return (
     <>
