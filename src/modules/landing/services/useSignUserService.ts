@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
-import useUsersRepository from 'modules/landing/providers/UsersRepositoryProvider/contexts/useUsersRepository';
+import { useCallback, useMemo } from 'react';
 import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
 import IUser from 'modules/landing/entities/IUser';
-import useToastProvider from 'shared/container/providers/ToastProvider/contexts/useToastProvider';
+import makeUsersRepository from 'modules/factories/makeUsersRepository';
+import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 interface UseSignUserService {
   execute(values: IUserSignupDTO): Promise<IUser | null>;
 }
 
 export default function useSignUserService(): UseSignUserService {
-  const usersRepository = useUsersRepository();
-  const toast = useToastProvider();
+  const usersRepository = useMemo(() => makeUsersRepository(), []);
+  const toast = useToastContext();
 
   const execute = useCallback(
     async (values: IUserSignupDTO) => {

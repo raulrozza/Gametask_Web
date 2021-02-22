@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import useHTTPProvider from 'shared/container/providers/HTTPProvider/contexts/useHTTPProvider';
-import { SessionProviderContext } from 'shared/container/providers/SessionProvider/contexts/useSessionProvider';
-import ISessionProvider from 'shared/container/providers/SessionProvider/models/ISessionProvider';
-import useStorageProvider from 'shared/container/providers/StorageProvider/contexts/useStorageProvider';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import Http from 'config/http';
+import makeStorageProvider from 'shared/container/providers/StorageProvider';
+import ISessionContext from 'shared/container/contexts/SessionContext/models/ISessionContext';
+import { SessionContextProvider } from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
 const USER_STORAGE_KEY = '@GameTask/token';
 const GAME_STORAGE_KEY = '@GameTask/game';
@@ -10,13 +10,12 @@ const GAME_STORAGE_KEY = '@GameTask/game';
 const USER_HEADER_KEY = 'Authentication';
 const GAME_HEADER_KEY = 'x-game-id';
 
-const DefaultSessionProvider: React.FC = ({ children }) => {
+const DefaultSessionContext: React.FC = ({ children }) => {
   const [userToken, setUserToken] = useState<string | null>(null);
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const storage = useStorageProvider();
-  const http = useHTTPProvider();
+  const storage = useMemo(() => makeStorageProvider(), []);
 
   useEffect(() => {
     Promise.all([
@@ -29,45 +28,45 @@ const DefaultSessionProvider: React.FC = ({ children }) => {
     });
   }, [storage]);
 
-  const login = useCallback<ISessionProvider['login']>(
+  const login = useCallback<ISessionContext['login']>(
     async token => {
       setUserToken(token);
-      http.addHeader(USER_HEADER_KEY, `Bearer ${token}`);
+      Http.addHeader(USER_HEADER_KEY, `Bearer ${token}`);
 
       await storage.store(USER_STORAGE_KEY, token);
     },
-    [http, storage],
+    [storage],
   );
 
-  const logout = useCallback<ISessionProvider['logout']>(async () => {
+  const logout = useCallback<ISessionContext['logout']>(async () => {
     setUserToken(null);
-    http.removeHeader(USER_HEADER_KEY);
+    Http.removeHeader(USER_HEADER_KEY);
 
     await storage.delete(USER_STORAGE_KEY);
     await storage.delete(GAME_STORAGE_KEY);
-  }, [http, storage]);
+  }, [storage]);
 
-  const switchGame = useCallback<ISessionProvider['switchGame']>(
+  const switchGame = useCallback<ISessionContext['switchGame']>(
     async gameId => {
       setSelectedGame(gameId || null);
       if (gameId) {
-        http.addHeader(GAME_HEADER_KEY, gameId);
+        Http.addHeader(GAME_HEADER_KEY, gameId);
         return await storage.store(GAME_STORAGE_KEY, gameId);
       }
 
-      http.removeHeader(GAME_HEADER_KEY);
+      Http.removeHeader(GAME_HEADER_KEY);
       await storage.delete(GAME_STORAGE_KEY);
     },
-    [http, storage],
+    [storage],
   );
 
   return (
-    <SessionProviderContext.Provider
+    <SessionContextProvider.Provider
       value={{ userToken, selectedGame, loading, login, logout, switchGame }}
     >
       {children}
-    </SessionProviderContext.Provider>
+    </SessionContextProvider.Provider>
   );
 };
 
-export default DefaultSessionProvider;
+export default DefaultSessionContext;

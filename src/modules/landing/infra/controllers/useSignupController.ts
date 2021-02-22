@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
 import useSignUserService from 'modules/landing/services/useSignUserService';
-import useToastProvider from 'shared/container/providers/ToastProvider/contexts/useToastProvider';
+import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 interface Helpers {
   resetForm: () => void;
@@ -19,7 +19,7 @@ const useSignupController: UseSignupController = () => {
   const [loading, setLoading] = useState(false);
 
   const signUserService = useSignUserService();
-  const toast = useToastProvider();
+  const toast = useToastContext();
 
   const onSubmit = useCallback(
     async (values: IUserSignupDTO, helpers: Helpers) => {

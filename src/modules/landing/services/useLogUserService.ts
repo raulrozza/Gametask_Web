@@ -1,15 +1,15 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
-import useUsersRepository from 'modules/landing/providers/UsersRepositoryProvider/contexts/useUsersRepository';
-import useToastProvider from 'shared/container/providers/ToastProvider/contexts/useToastProvider';
+import makeUsersRepository from 'modules/factories/makeUsersRepository';
+import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 interface UseLogUserService {
   execute(values: IUserLoginDTO): Promise<string | null>;
 }
 
 export default function useLogUserService(): UseLogUserService {
-  const usersRepository = useUsersRepository();
-  const toast = useToastProvider();
+  const usersRepository = useMemo(() => makeUsersRepository(), []);
+  const toast = useToastContext();
 
   const execute = useCallback(
     async ({ email, password }: IUserLoginDTO) => {

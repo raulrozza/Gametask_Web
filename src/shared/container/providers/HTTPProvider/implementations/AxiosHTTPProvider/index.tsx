@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useCallback } from 'react';
 import { HTTPProviderContext } from 'shared/container/providers/HTTPProvider/contexts/useHTTPProvider';
 import IHTTPProvider from 'shared/container/providers/HTTPProvider/models/IHTTPProvider';
-import RequestError from './entities/RequestError';
+import RequestError from 'shared/errors/entities/RequestError';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

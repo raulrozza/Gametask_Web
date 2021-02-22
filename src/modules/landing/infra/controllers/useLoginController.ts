@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import useLogUserService from 'modules/landing/services/useLogUserService';
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
-import useSessionProvider from 'shared/container/providers/SessionProvider/contexts/useSessionProvider';
+import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
 interface UseLoginController {
   (): {
@@ -14,7 +14,7 @@ const useLoginController: UseLoginController = () => {
   const [loading, setLoading] = useState(false);
 
   const loginService = useLogUserService();
-  const session = useSessionProvider();
+  const session = useSessionContext();
 
   const onSubmit = useCallback(
     async (values: IUserLoginDTO) => {

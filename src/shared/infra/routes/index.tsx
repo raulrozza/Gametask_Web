@@ -5,13 +5,13 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { Loading, NotFound } from 'shared/view/components';
 
 // Hooks
-import useSessionProvider from 'shared/container/providers/SessionProvider/contexts/useSessionProvider';
+import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
 // Routes
 import LandingRoutes from 'modules/landing/infra/routes';
 
 const Routes: React.FC = () => {
-  const session = useSessionProvider();
+  const session = useSessionContext();
 
   if (session.loading) return <Loading />;
 

@@ -1,4 +1,4 @@
-export default interface ISessionProvider {
+export default interface ISessionContext {
   userToken: string | null;
   selectedGame: string | null;
   loading: boolean;
