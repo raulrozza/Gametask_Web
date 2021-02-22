@@ -36,7 +36,7 @@ const Signup: React.FC<SignupProps> = ({ shown }) => {
       validate={passwordsMatchValidation}
       onSubmit={onSubmit}
     >
-      <Form shown={shown}>
+      <Form $shown={shown}>
         <FormTitle>Cadastre-se</FormTitle>
 
         <div>

@@ -22,13 +22,13 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
     >
       <Spinner
-        visible={loading}
+        $visible={loading}
         width={16}
         height={16}
         type="spinningBubbles"
       />
 
-      <Text visible={!loading}>{children}</Text>
+      <Text $visible={!loading}>{children}</Text>
     </StyledButton>
   );
 };

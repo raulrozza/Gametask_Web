@@ -31,7 +31,7 @@ const Login: React.FC<FormContainerProps> = ({ shown }) => {
       onSubmit={onSubmit}
     >
       {() => (
-        <Form shown={shown}>
+        <Form $shown={shown}>
           <FormTitle>Entre</FormTitle>
 
           <div>

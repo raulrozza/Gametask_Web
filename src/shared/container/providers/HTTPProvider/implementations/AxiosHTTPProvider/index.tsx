@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useCallback } from 'react';
 import { HTTPProviderContext } from 'shared/container/providers/HTTPProvider/contexts/useHTTPProvider';
 import IHTTPProvider from 'shared/container/providers/HTTPProvider/models/IHTTPProvider';
+import RequestError from './entities/RequestError';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -19,29 +20,50 @@ const AxiosHTTPProvider: React.FC = ({ children }) => {
   );
 
   const deleteMethod = useCallback<IHTTPProvider['delete']>(
-    (path, config) => axiosInstance.delete(path, config),
+    async (path, config) => {
+      try {
+        return await axiosInstance.delete(path, config);
+      } catch (error) {
+        throw new RequestError(error);
+      }
+    },
     [],
   );
 
-  const get = useCallback<IHTTPProvider['get']>(
-    (path, config) => axiosInstance.get(path, config),
-    [],
-  );
+  const get = useCallback<IHTTPProvider['get']>(async (path, config) => {
+    try {
+      return await axiosInstance.get(path, config);
+    } catch (error) {
+      throw new RequestError(error);
+    }
+  }, []);
 
-  const patch = useCallback<IHTTPProvider['patch']>(
-    (path, body, config) => axiosInstance.patch(path, body, config),
-    [],
-  );
+  const patch = useCallback<IHTTPProvider['patch']>((path, body, config) => {
+    try {
+      return axiosInstance.patch(path, body, config);
+    } catch (error) {
+      throw new RequestError(error);
+    }
+  }, []);
 
   const post = useCallback<IHTTPProvider['post']>(
-    (path, body, config) => axiosInstance.post(path, body, config),
+    async (path, body, config) => {
+      try {
+        return await axiosInstance.post(path, body, config);
+      } catch (error) {
+        throw new RequestError(error);
+      }
+    },
     [],
   );
 
-  const put = useCallback<IHTTPProvider['put']>(
-    (path, body, config) => axiosInstance.put(path, body, config),
-    [],
-  );
+  const put = useCallback<IHTTPProvider['put']>(async (path, body, config) => {
+    try {
+      return await axiosInstance.put(path, body, config);
+    } catch (error) {
+      throw new RequestError(error);
+    }
+  }, []);
 
   return (
     <HTTPProviderContext.Provider

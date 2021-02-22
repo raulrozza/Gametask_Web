@@ -45,13 +45,13 @@ export const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 interface VisibilityProps {
-  visible: boolean;
+  $visible: boolean;
 }
 
 export const Text = styled.span<VisibilityProps>`
   line-height: 24px;
   font-size: 16px;
-  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
 `;
 
 export const Spinner = styled(Loading)<VisibilityProps>`
@@ -60,5 +60,5 @@ export const Spinner = styled(Loading)<VisibilityProps>`
   left: 50%;
   margin-top: -8px;
   margin-left: -8px;
-  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
 `;

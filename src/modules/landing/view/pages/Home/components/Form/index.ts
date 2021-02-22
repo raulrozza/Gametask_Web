@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { Form as FormikForm } from 'formik';
 
 interface FormProps {
-  shown?: boolean;
+  $shown?: boolean;
 }
 
 const Form = styled(FormikForm)<FormProps>`
@@ -18,8 +18,8 @@ const Form = styled(FormikForm)<FormProps>`
   @media (max-width: 768px) {
     transition: all 0.5s;
 
-    ${({ shown = false }) =>
-      !shown &&
+    ${({ $shown = false }) =>
+      !$shown &&
       css`
         height: 0px;
         overflow: hidden;

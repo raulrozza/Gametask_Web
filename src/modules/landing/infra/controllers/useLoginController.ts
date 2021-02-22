@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import useLogUserService from 'modules/landing/services/useLogUserService';
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
-import useToastProvider from 'shared/container/providers/ToastProvider/contexts/useToastProvider';
 import useSessionProvider from 'shared/container/providers/SessionProvider/contexts/useSessionProvider';
 
 interface UseLoginController {
@@ -15,7 +14,6 @@ const useLoginController: UseLoginController = () => {
   const [loading, setLoading] = useState(false);
 
   const loginService = useLogUserService();
-  const toast = useToastProvider();
   const session = useSessionProvider();
 
   const onSubmit = useCallback(
@@ -24,15 +22,11 @@ const useLoginController: UseLoginController = () => {
 
       const userId = await loginService.execute(values);
 
-      if (!userId) {
-        setLoading(false);
-
-        return toast.showError('Usuário ou senha incorretos');
-      }
+      if (!userId) return setLoading(false);
 
       return session.login(userId);
     },
-    [loginService, session, toast],
+    [loginService, session],
   );
 
   return {
