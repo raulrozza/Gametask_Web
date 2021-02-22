@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
 import IUser from 'modules/landing/entities/IUser';
-import makeUsersRepository from 'modules/factories/makeUsersRepository';
+import makeUsersRepository from 'modules/landing/providers/factories/makeUsersRepository';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 interface UseSignUserService {

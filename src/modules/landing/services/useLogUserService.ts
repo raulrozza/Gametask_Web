@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
-import makeUsersRepository from 'modules/factories/makeUsersRepository';
+import makeUsersRepository from 'modules/landing/providers/factories/makeUsersRepository';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 interface UseLogUserService {
