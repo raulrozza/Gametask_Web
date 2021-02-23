@@ -43,7 +43,7 @@ export const LoggedText = styled.span`
   }
 
   strong {
-    color: ${({ theme }) => theme.palette.secondary.light};
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
 
   span {

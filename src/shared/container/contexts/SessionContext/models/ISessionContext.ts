@@ -1,5 +1,6 @@
 export default interface ISessionContext {
   userToken: string | null;
+  userData: { name: string };
   selectedGame: string | null;
   loading: boolean;
 

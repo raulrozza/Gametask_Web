@@ -13,9 +13,7 @@ import useSessionContext from 'shared/container/contexts/SessionContext/contexts
 import { Container, LobbyTitle, LoggedText, LogoContainer } from './styles';
 
 const Navbar: React.FC = () => {
-  const { userToken, logout } = useSessionContext();
-
-  if (!userToken) return null;
+  const { userData, logout } = useSessionContext();
 
   return (
     <Container>
@@ -28,7 +26,7 @@ const Navbar: React.FC = () => {
       </LogoContainer>
 
       <LoggedText>
-        Você está logado como <strong>{/* user.firstname */}</strong>.{' '}
+        Você está logado como <strong>{userData.name}</strong>.{' '}
         <span
           onClick={logout}
           role="button"

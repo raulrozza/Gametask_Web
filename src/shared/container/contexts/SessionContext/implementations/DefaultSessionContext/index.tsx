@@ -3,6 +3,7 @@ import ISessionContext from 'shared/container/contexts/SessionContext/models/ISe
 import { SessionContextProvider } from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 import {
   makeHttpProvider,
+  makeJwtProvider,
   makeStorageProvider,
 } from 'shared/container/providers';
 
@@ -12,40 +13,57 @@ const GAME_STORAGE_KEY = '@GameTask/game';
 const USER_HEADER_KEY = 'Authorization';
 const GAME_HEADER_KEY = 'x-game-id';
 
+interface IUserData {
+  name: string;
+}
+
 const DefaultSessionContext: React.FC = ({ children }) => {
   const [userToken, setUserToken] = useState<string | null>(null);
+  const [userData, setUserData] = useState<IUserData>({} as IUserData);
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   const storage = useMemo(() => makeStorageProvider(), []);
   const http = useMemo(() => makeHttpProvider(), []);
+  const jwt = useMemo(() => makeJwtProvider(), []);
 
   const addAuthenticationHeader = useCallback(
     (token: string) => http.addHeader(USER_HEADER_KEY, `Bearer ${token}`),
     [http],
   );
 
+  const decodeToken = useCallback(
+    (token: string) => jwt.decode<IUserData>(token),
+    [jwt],
+  );
+
   useEffect(() => {
     Promise.all([
       storage.get<string>(USER_STORAGE_KEY),
       storage.get<string>(GAME_STORAGE_KEY),
-    ]).then(([token, game]) => {
+    ]).then(async ([token, game]) => {
+      const userData = await decodeToken(String(token));
+      if (userData) setUserData(userData);
+
       setUserToken(token);
       setSelectedGame(game);
       if (token) addAuthenticationHeader(token);
       if (game) http.addHeader(GAME_HEADER_KEY, game);
       setLoading(false);
     });
-  }, [addAuthenticationHeader, http, storage]);
+  }, [addAuthenticationHeader, decodeToken, http, storage]);
 
   const login = useCallback<ISessionContext['login']>(
     async token => {
+      const userData = await decodeToken(String(token));
+      if (userData) setUserData(userData);
+
       setUserToken(token);
       addAuthenticationHeader(token);
 
       await storage.store(USER_STORAGE_KEY, token);
     },
-    [addAuthenticationHeader, storage],
+    [addAuthenticationHeader, decodeToken, storage],
   );
 
   const logout = useCallback<ISessionContext['logout']>(async () => {
@@ -72,7 +90,15 @@ const DefaultSessionContext: React.FC = ({ children }) => {
 
   return (
     <SessionContextProvider.Provider
-      value={{ userToken, selectedGame, loading, login, logout, switchGame }}
+      value={{
+        userToken,
+        userData,
+        selectedGame,
+        loading,
+        login,
+        logout,
+        switchGame,
+      }}
     >
       {children}
     </SessionContextProvider.Provider>
