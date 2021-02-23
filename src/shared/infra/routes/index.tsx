@@ -8,7 +8,8 @@ import { Loading, NotFound } from 'shared/view/components';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
 // Routes
-import LandingRoutes from 'modules/landing/infra/routes';
+import PublicRoutes from './public.routes';
+import LoggedRoutes from './logged.routes';
 
 const Routes: React.FC = () => {
   const session = useSessionContext();
@@ -19,9 +20,10 @@ const Routes: React.FC = () => {
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Switch>
-          <LandingRoutes />
+          <LoggedRoutes />
+          <PublicRoutes />
 
-          <Route path="*" exact>
+          <Route>
             <NotFound
               message={
                 <>
