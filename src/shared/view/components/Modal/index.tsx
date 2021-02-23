@@ -1,10 +1,16 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 // Icons
 import { FaTimes } from 'react-icons/fa';
 
 // Styles
-import { Background, Container } from './styles';
+import {
+  Background,
+  ChildrenContainer,
+  CloseButton,
+  Container,
+  ModalTitle,
+} from './styles';
 
 interface ModalProps {
   open: boolean;
@@ -33,20 +39,32 @@ const Modal: React.FC<ModalProps> = ({
   }, [closeModal]);
 
   return (
-    <Background ref={backgroundRef}>
+    <Background ref={backgroundRef} open={open}>
       <Container size={size}>
-        <div className="modal-title">
+        <ModalTitle>
           <h2>{title}</h2>
 
-          <button className="close" type="button" onClick={closeModal}>
+          <CloseButton type="button" onClick={closeModal}>
             <FaTimes />
-          </button>
-        </div>
+          </CloseButton>
+        </ModalTitle>
 
-        <div className="modal-children">{children}</div>
+        <ChildrenContainer>{children}</ChildrenContainer>
       </Container>
     </Background>
   );
 };
+
+type UseModalController = [boolean, () => void, () => void];
+
+export function useModalController(): UseModalController {
+  const [open, setOpen] = useState(false);
+
+  const openModal = useCallback(() => setOpen(true), []);
+
+  const closeModal = useCallback(() => setOpen(false), []);
+
+  return [open, openModal, closeModal];
+}
 
 export default Modal;

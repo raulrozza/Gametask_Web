@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // Components
 import { Loading, PageTitle } from 'shared/view/components';
 import { AddGameCard, GameForm, Navbar, Share } from './components';
+import Modal, { useModalController } from 'shared/view/components/Modal';
 
 // Hooks
 import useLobbyController from 'modules/user/infra/controllers/useLobbyController';
@@ -15,7 +16,11 @@ import { FaPlus, FaLink } from 'react-icons/fa';
 import { Container, GameCard, GamesContainer } from './styles';
 
 const Lobby: React.FC = () => {
-  const [showGameModal, setShowGameModal] = useState(false);
+  const [
+    openGameModal,
+    handleOpenGameModal,
+    handleCloseGameModal,
+  ] = useModalController();
   const [showShareModal, setShowShareModal] = useState(false);
   const [selectedGame, setSelectedGame] = useState('');
 
@@ -58,24 +63,20 @@ const Lobby: React.FC = () => {
             </GameCard>
           ))}
 
-          <AddGameCard onClick={() => setShowGameModal(true)} />
+          <AddGameCard onClick={handleOpenGameModal} />
         </div>
       </GamesContainer>
 
-      {/*  {showGameModal && (
-        <Modal
-          title="Criar Jogo"
-          size="sm"
-          closeModal={() => setShowGameModal(false)}
-        >
-          <GameForm
-            onSuccess={fetchGames}
-            closeModal={() => setShowGameModal(false)}
-          />
-        </Modal>
-      )}
+      <Modal
+        title="Criar Jogo"
+        size="sm"
+        open={openGameModal}
+        closeModal={handleCloseGameModal}
+      >
+        <GameForm onSuccess={fetchGames} closeModal={handleCloseGameModal} />
+      </Modal>
 
-      {showShareModal && (
+      {/*  {showShareModal && (
         <Modal
           title="Compartilhar"
           size="sm"
