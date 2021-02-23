@@ -4,40 +4,40 @@ import React, { memo } from 'react';
 import logo from 'assets/img/logo.png';
 
 // Hooks
-import { useAuth } from 'hooks';
+import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
 // Styles
-import { Container } from './styles';
+import { Container, LobbyTitle, LoggedText, LogoContainer } from './styles';
 
 // Utils
 import { clickOnEnter } from 'utils';
 
 const Navbar: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { userToken, logout } = useSessionContext();
 
-  if (!user) return null;
+  if (!userToken) return null;
 
   return (
     <Container>
-      <div>
+      <LogoContainer>
         <img src={logo} alt="GameTask" />
-        <h2>
-          Lobby <span>Entre ou crie um jogo</span>
-        </h2>
-      </div>
 
-      <span>
-        Você está logado como <strong>{user.firstname}</strong>.{' '}
+        <LobbyTitle>
+          Lobby <span>Entre ou crie um jogo</span>
+        </LobbyTitle>
+      </LogoContainer>
+
+      <LoggedText>
+        Você está logado como <strong>{/* user.firstname */}</strong>.{' '}
         <span
-          className="logout"
-          onClick={signOut}
+          onClick={logout}
           role="button"
           tabIndex={0}
           onKeyUp={clickOnEnter}
         >
           Sair
         </span>
-      </span>
+      </LoggedText>
     </Container>
   );
 };

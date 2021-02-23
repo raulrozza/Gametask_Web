@@ -9,6 +9,7 @@ export default interface IGame {
   description: string;
   theme?: ITheme;
   image?: string;
+  image_url?: string;
   administrators: string[] | IUser[];
   levelInfo: ILevelInfo[];
   newRegisters?: number;

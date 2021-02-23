@@ -4,57 +4,57 @@ export const Container = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-
-  div {
-    display: flex;
-    align-items: center;
-
-    img {
-      height: 48px;
-      margin: 4px;
-    }
-
-    h2 {
-      color: ${({ theme }) => theme.palette.secondary.light};
-
-      @media (max-width: 383px) {
-        display: none;
-      }
-      span {
-        font-family: inherit;
-        color: ${({ theme }) => theme.palette.primary.contrast};
-
-        @media (max-width: 576px) {
-          display: none;
-        }
-      }
-    }
-  }
+  padding: ${({ theme }) => theme.layout.spacing(0, 4)};
 
   span {
     font-size: 14px;
-    font-family: 'Open Sans', sans-serif;
-    text-align: right;
+    font-family: ${({ theme }) => theme.typography.family.title};
+  }
+`;
 
-    @media (max-width: 383px) {
-      font-size: 12px;
-    }
+export const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
 
-    strong {
-      color: ${({ theme }) => theme.palette.secondary.light};
-    }
+  img {
+    height: 48px;
+    margin: ${({ theme }) => theme.layout.spacing(1)};
+  }
+`;
 
-    span.logout {
-      color: ${({ theme }) => theme.palette.secondary.main};
-      cursor: pointer;
+export const LobbyTitle = styled.h2`
+  color: ${({ theme }) => theme.palette.secondary.light};
 
-      transition: color 0.2s;
+  span {
+    font-family: inherit;
+    color: ${({ theme }) => theme.palette.primary.contrast};
+  }
 
-      &:hover {
-        text-decoration: underline;
-        color: ${({ theme }) => theme.palette.secondary.dark};
-      }
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.sm}) {
+    display: none;
+  }
+`;
+
+export const LoggedText = styled.span`
+  text-align: right;
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.sm}) {
+    font-size: 12px;
+  }
+
+  strong {
+    color: ${({ theme }) => theme.palette.secondary.light};
+  }
+
+  span {
+    color: ${({ theme }) => theme.palette.secondary.main};
+    cursor: pointer;
+
+    transition: color 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+      color: ${({ theme }) => theme.palette.secondary.dark};
     }
   }
 `;

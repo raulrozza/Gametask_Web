@@ -20,8 +20,8 @@ const Routes: React.FC = () => {
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Switch>
-          <LoggedRoutes />
-          <PublicRoutes />
+          {!session.userToken && <PublicRoutes />}
+          {session.userToken && !session.selectedGame && <LoggedRoutes />}
 
           <Route>
             <NotFound
