@@ -1,6 +1,6 @@
+import IUser from 'shared/entities/IUser';
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
 import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
-import IUser from 'modules/landing/entities/IUser';
 import IUserAuthentication from 'modules/landing/entities/IUserAuthentication';
 import IUsersRepository from 'modules/landing/repositories/IUsersRepository';
 import { makeHttpProvider } from 'shared/container/providers';
