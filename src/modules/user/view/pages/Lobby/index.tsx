@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Components
 import { Loading, PageTitle } from 'shared/view/components';
-import { GameForm, Navbar, Share } from './components';
+import { AddGameCard, GameForm, Navbar, Share } from './components';
 
 // Hooks
 import useLobbyController from 'modules/user/infra/controllers/useLobbyController';
@@ -12,7 +12,7 @@ import useSessionContext from 'shared/container/contexts/SessionContext/contexts
 import { FaPlus, FaLink } from 'react-icons/fa';
 
 // Styles
-import { Container, GameCard } from './styles';
+import { Container, GameCard, GamesContainer } from './styles';
 
 const Lobby: React.FC = () => {
   const [showGameModal, setShowGameModal] = useState(false);
@@ -31,7 +31,7 @@ const Lobby: React.FC = () => {
 
       <Navbar />
 
-      {/*  <section className="games-container">
+      <GamesContainer>
         <div>
           {games.map(game => (
             <GameCard key={game.id} hasInfo={Boolean(game)}>
@@ -41,7 +41,7 @@ const Lobby: React.FC = () => {
 
               <span>{game.description}</span>
 
-              <div>
+              {/* <div>
                 <Button outline onClick={() => switchGame(game.id)}>
                   Entrar
                 </Button>
@@ -54,21 +54,15 @@ const Lobby: React.FC = () => {
                 >
                   <FaLink />
                 </Button>
-              </div>
+              </div> */}
             </GameCard>
           ))}
 
-          <GameCard>
-            <button type="button" onClick={() => setShowGameModal(true)}>
-              <FaPlus />
-
-              <span>Criar Jogo</span>
-            </button>
-          </GameCard>
+          <AddGameCard onClick={() => setShowGameModal(true)} />
         </div>
-      </section>
+      </GamesContainer>
 
-      {showGameModal && (
+      {/*  {showGameModal && (
         <Modal
           title="Criar Jogo"
           size="sm"

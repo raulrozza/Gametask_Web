@@ -7,31 +7,31 @@ export const Container = styled.main`
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-
-    section.games-container {
-      height: calc(100% - 56px);
-      width: 100%;
-      padding: 0 8px 0 32px;
-
-      overflow-x: auto;
-      scrollbar-width: thin;
-
-      display: flex;
-      align-items: center;
-
-      & > div {
-        height: 320px;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-
-        & > div + div {
-          margin-left: 16px;
-        }
-      }
-    }
   `}
+`;
+
+export const GamesContainer = styled.section`
+  height: calc(100% - 56px);
+  width: 100%;
+  padding: ${({ theme }) => theme.layout.spacing(0, 2, 0, 8)};
+
+  overflow-x: auto;
+  scrollbar-width: thin;
+
+  display: flex;
+  align-items: center;
+
+  & > div {
+    height: 320px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    & > div + div {
+      margin-left: ${({ theme }) => theme.layout.spacing(4)};
+    }
+  }
 `;
 
 export const GameCard = styled.div<IGameCard>`
