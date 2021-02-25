@@ -1,7 +1,8 @@
-import { useCallback, useState } from 'react';
-import useLogUserService from 'modules/landing/services/useLogUserService';
+import { useCallback, useMemo, useState } from 'react';
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import makeLogUserService from 'modules/landing/services/factories/makeLogUserService';
 
 interface UseLoginController {
   (): {
@@ -13,20 +14,24 @@ interface UseLoginController {
 const useLoginController: UseLoginController = () => {
   const [loading, setLoading] = useState(false);
 
-  const loginService = useLogUserService();
+  const loginService = useMemo(() => makeLogUserService(), []);
   const session = useSessionContext();
+  const toast = useToastContext();
 
   const onSubmit = useCallback(
     async (values: IUserLoginDTO) => {
       setLoading(true);
 
-      const userId = await loginService.execute(values);
+      const { result: userId, error } = await loginService.execute(values);
 
-      if (!userId) return setLoading(false);
+      if (error) {
+        toast.showError(error);
+        return setLoading(false);
+      }
 
-      return await session.login(userId);
+      return await session.login(String(userId));
     },
-    [loginService, session],
+    [loginService, session, toast],
   );
 
   return {
