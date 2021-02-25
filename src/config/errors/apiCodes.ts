@@ -10,7 +10,7 @@ const codes: Record<number, string> = {
   203: 'Você já possui esta conquista',
   300: 'Houve um problema com a requisição.',
   403: 'Você não tem permissão para realizar esta ação',
-  404: 'Não não possível encontrar o recurso',
+  404: 'Não foi possível encontrar o recurso',
   500: 'Houve um problema. Tente novamente mais tarde',
 };
 

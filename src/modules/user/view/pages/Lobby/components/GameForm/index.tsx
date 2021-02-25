@@ -62,7 +62,7 @@ const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
                 Cancelar
               </Button>
 
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" loading={loading}>
                 Criar
               </Button>
             </Footer>

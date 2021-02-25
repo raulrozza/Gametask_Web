@@ -12,14 +12,28 @@ export default class GamesRepository implements IGamesRepository {
     return response;
   }
 
-  public async create(values: ICreateGameDTO): Promise<IGame> {
+  public async create({
+    name,
+    description,
+    image,
+  }: ICreateGameDTO): Promise<IGame> {
+    const game = await this.httpProvider.post<IGame>('games', {
+      name,
+      description,
+    });
+
     const data = new FormData();
+    data.append('image', image);
 
-    data.append('name', values.name);
-    data.append('description', values.description);
-    data.append('image', values.image);
-
-    const response = await this.httpProvider.post<IGame>('/game', data);
+    const response = await this.httpProvider.patch<IGame>(
+      'games/avatar',
+      data,
+      {
+        headers: {
+          'x-game-id': game.id,
+        },
+      },
+    );
 
     return response;
   }
