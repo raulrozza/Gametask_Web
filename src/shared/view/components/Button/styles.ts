@@ -54,6 +54,11 @@ export const Text = styled.span<VisibilityProps>`
   visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
 `;
 
+export const ChildrenContainer = styled.div<VisibilityProps>`
+  visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
+  height: 24px;
+`;
+
 export const Spinner = styled(Loading)<VisibilityProps>`
   position: absolute;
   top: 50%;

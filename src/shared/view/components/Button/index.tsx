@@ -1,11 +1,10 @@
 import React, { ButtonHTMLAttributes } from 'react';
 
-import { Spinner, StyledButton, Text } from './styles';
+import { ChildrenContainer, Spinner, StyledButton, Text } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   outlined?: boolean;
   loading?: boolean;
-  children?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -28,7 +27,11 @@ const Button: React.FC<ButtonProps> = ({
         type="spinningBubbles"
       />
 
-      <Text $visible={!loading}>{children}</Text>
+      {typeof children === 'string' ? (
+        <Text $visible={!loading}>{children}</Text>
+      ) : (
+        <ChildrenContainer $visible={!loading}>{children}</ChildrenContainer>
+      )}
     </StyledButton>
   );
 };
