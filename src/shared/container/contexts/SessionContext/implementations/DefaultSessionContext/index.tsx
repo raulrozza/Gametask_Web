@@ -15,6 +15,7 @@ const GAME_HEADER_KEY = 'x-game-id';
 
 interface IUserData {
   name: string;
+  id: string;
 }
 
 const DefaultSessionContext: React.FC = ({ children }) => {

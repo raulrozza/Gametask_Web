@@ -1,35 +1,38 @@
 import React from 'react';
 
 // Hooks
-import { useShare } from './hooks';
+import useShareGameController from 'modules/user/infra/controllers/useShareGameController';
 
 // Icons
 import { MdContentCopy } from 'react-icons/md';
 
 // Styles
-import { Container } from './styles';
+import { CipherInput, Container, CopyButton, InputGroup } from './styles';
 
-// Types
-import { ShareProps } from './types';
+interface ShareProps {
+  gameId: string;
+}
 
 const Share: React.FC<ShareProps> = ({ gameId }) => {
-  const { cipher, inputRef, handleCopyToClipboard } = useShare({ gameId });
+  const { cipher, inputRef, handleCopyToClipboard } = useShareGameController({
+    gameId,
+  });
 
   return (
     <Container>
       <span>Código para convite:</span>
 
-      <div className="input-group">
-        <input type="text" ref={inputRef} value={cipher} readOnly />
+      <InputGroup>
+        <CipherInput type="text" ref={inputRef} value={cipher} readOnly />
 
-        <button
+        <CopyButton
           type="button"
           onClick={handleCopyToClipboard}
           title="Copiar para a área de transferência"
         >
           <MdContentCopy />
-        </button>
-      </div>
+        </CopyButton>
+      </InputGroup>
     </Container>
   );
 };

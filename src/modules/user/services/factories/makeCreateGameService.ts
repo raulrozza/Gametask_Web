@@ -1,4 +1,4 @@
-import makeGamesRepository from 'modules/user/providers/factories/makeGamesRepository';
+import makeGamesRepository from 'modules/user/repositories/factories/makeGamesRepository';
 import CreateGameService from '../CreateGameService';
 
 export default function makeCreateGameService(): CreateGameService {
