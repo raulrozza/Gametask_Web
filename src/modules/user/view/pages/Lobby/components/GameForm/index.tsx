@@ -1,8 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Input, Textarea } from 'shared/view/components';
-import { ImageInput } from 'components';
+import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
 
 // Hooks
 import { useCreateGame } from './hooks';
@@ -14,7 +13,6 @@ import { Formik, Form } from 'formik';
 import GameFormSchema from 'modules/user/validators/GameFormSchema';
 
 // Styles
-import { ErrorField } from 'styles';
 import { Container, Footer } from './styles';
 
 interface IGameValues {
@@ -44,18 +42,9 @@ const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
         validationSchema={GameFormSchema}
         onSubmit={onSubmit}
       >
-        {({ errors, touched, values, setFieldValue }) => (
+        {() => (
           <Form>
-            <div className="input-group image-group">
-              <ImageInput
-                name="image"
-                value={values ? values.image : null}
-                setInput={setFieldValue}
-              />
-              {errors.image && touched.image ? (
-                <ErrorField>{errors.image}</ErrorField>
-              ) : null}
-            </div>
+            <ImageInput name="image" />
 
             <Input name="name" placeholder="O nome do seu jogo" />
 
