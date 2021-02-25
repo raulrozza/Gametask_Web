@@ -3,9 +3,6 @@ import React from 'react';
 // Components
 import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
 
-// Hooks
-import { useCreateGame } from './hooks';
-
 // Libs
 import { Formik, Form } from 'formik';
 
@@ -16,11 +13,12 @@ import GameFormSchema, {
 
 // Styles
 import { Container, Footer } from './styles';
+import useCreateGameController from 'modules/user/infra/controllers/useCreateGameController';
 
 interface IGameValues {
   name: string;
   description: string;
-  image: string | File | null;
+  image: string | File;
 }
 
 interface GameFormProps {
@@ -31,11 +29,14 @@ interface GameFormProps {
 const initialValues: IGameValues = {
   name: '',
   description: '',
-  image: null,
+  image: '',
 };
 
 const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
-  const { loading, onSubmit } = useCreateGame({ onSuccess, closeModal });
+  const { loading, onSubmit } = useCreateGameController({
+    onSuccess,
+    closeModal,
+  });
 
   return (
     <Container>
