@@ -2,7 +2,7 @@ import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IExecute {
-  result?: string;
+  token?: string;
   error?: string;
 }
 
@@ -17,7 +17,7 @@ export default class LogUserService {
       });
 
       return {
-        result: authentication.token,
+        token: authentication.token,
       };
     } catch (error) {
       return {

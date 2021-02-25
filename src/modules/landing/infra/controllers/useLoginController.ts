@@ -22,14 +22,14 @@ const useLoginController: UseLoginController = () => {
     async (values: IUserLoginDTO) => {
       setLoading(true);
 
-      const { result: userId, error } = await loginService.execute(values);
+      const { token, error } = await loginService.execute(values);
 
       if (error) {
         toast.showError(error);
         return setLoading(false);
       }
 
-      return await session.login(String(userId));
+      if (token) return await session.login(token);
     },
     [loginService, session, toast],
   );
