@@ -12,7 +12,6 @@ import { useAuth } from 'hooks';
 
 // Routes
 import InGameRoutes from './inGame.routes';
-import Default from './default.routes';
 
 /*
   The object controls the web page's routes, sending the correct page based on the URL entered by the user
@@ -29,9 +28,7 @@ const Routes: React.FC = () => {
             <Game>
               <InGameRoutes />
             </Game>
-          ) : (
-            <Default />
-          )}
+          ) : null}
 
           <Route
             path="*"
