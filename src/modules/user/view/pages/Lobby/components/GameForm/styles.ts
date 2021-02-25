@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  textarea {
-    min-height: 72px;
+  form {
+    max-width: 240px;
+    margin: 0 auto;
+    padding-top: ${({ theme }) => theme.layout.spacing(2)};
   }
+`;
 
-  .buttons {
-    display: flex;
-    justify-content: space-between;
+export const Footer = styled.footer`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
-    button {
-      width: 48%;
-    }
-  }
+  gap: ${({ theme }) => theme.layout.spacing(1)};
 `;
