@@ -7,9 +7,10 @@ const ErrorField = styled.div`
 
     padding: ${theme.layout.spacing(2, 1, 0.5)};
     font-size: 12px;
-    margin-top: -5px;
-    margin-bottom: 10px;
-    border-radius: 0px 0px 5px 5px;
+    margin-top: ${theme.layout.spacing(-1)};
+    margin-bottom: ${theme.layout.spacing(2)};
+    border-radius: 0px 0px ${theme.layout.borderRadius.small}
+      ${theme.layout.borderRadius.small};
   `}
 `;
 

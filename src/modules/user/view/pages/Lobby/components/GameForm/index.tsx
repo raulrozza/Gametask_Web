@@ -10,7 +10,9 @@ import { useCreateGame } from './hooks';
 import { Formik, Form } from 'formik';
 
 // Schemas
-import GameFormSchema from 'modules/user/validators/GameFormSchema';
+import GameFormSchema, {
+  requiredImageValidation,
+} from 'modules/user/validation/GameFormSchema';
 
 // Styles
 import { Container, Footer } from './styles';
@@ -18,7 +20,7 @@ import { Container, Footer } from './styles';
 interface IGameValues {
   name: string;
   description: string;
-  image: string | null;
+  image: string | File | null;
 }
 
 interface GameFormProps {
@@ -40,6 +42,7 @@ const GameForm: React.FC<GameFormProps> = ({ onSuccess, closeModal }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={GameFormSchema}
+        validate={requiredImageValidation}
         onSubmit={onSubmit}
       >
         {() => (

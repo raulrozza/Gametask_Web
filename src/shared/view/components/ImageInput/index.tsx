@@ -3,14 +3,11 @@ import React, { useCallback, useMemo } from 'react';
 // Assets
 import placeholder from 'assets/img/achievements/placeholder.png';
 
-// Components
-import { ErrorField } from 'shared/view/components';
-
 // Hooks
 import { useField } from 'formik';
 
 // Styles
-import { Container, Label, PlaceholderImage } from './styles';
+import { Container, Label, PlaceholderImage, ErrorMessage } from './styles';
 
 interface ImageInputProps {
   name: string;
@@ -42,7 +39,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ name, fullWidth = false }) => {
         <PlaceholderImage src={placeholder} alt="Select achievement icon" />
       </Label>
 
-      {meta.error && meta.touched && <ErrorField>{meta.error}</ErrorField>}
+      {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}
     </Container>
   );
 };

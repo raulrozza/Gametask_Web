@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import ErrorField from 'shared/view/components/ErrorField';
 
 interface ContainerProps {
   $fullWidth: boolean;
@@ -55,4 +56,10 @@ export const Label = styled.label<LabelProps>`
 export const PlaceholderImage = styled.img`
   width: 100%;
   height: 100%;
+`;
+
+export const ErrorMessage = styled(ErrorField)`
+  margin-top: ${({ theme }) => theme.layout.spacing(1)};
+  border-radius: ${({ theme }) => theme.layout.borderRadius.small};
+  padding: ${({ theme }) => theme.layout.spacing(0.5, 1)};
 `;
