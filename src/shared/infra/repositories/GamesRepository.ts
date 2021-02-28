@@ -1,7 +1,12 @@
-import ICreateGameDTO from 'modules/user/dtos/ICreateGameDTO';
-import IGamesRepository from 'modules/user/repositories/IGamesRepository';
+import IGamesRepository from 'shared/repositories/IGamesRepository';
 import { makeHttpProvider } from 'shared/container/providers';
 import IGame from 'shared/entities/IGame';
+
+interface ICreate {
+  name: string;
+  description: string;
+  image: File | string;
+}
 
 export default class GamesRepository implements IGamesRepository {
   private httpProvider = makeHttpProvider();
@@ -12,11 +17,7 @@ export default class GamesRepository implements IGamesRepository {
     return response;
   }
 
-  public async create({
-    name,
-    description,
-    image,
-  }: ICreateGameDTO): Promise<IGame> {
+  public async create({ name, description, image }: ICreate): Promise<IGame> {
     const game = await this.httpProvider.post<IGame>('games', {
       name,
       description,
