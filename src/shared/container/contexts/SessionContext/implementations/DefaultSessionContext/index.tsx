@@ -76,7 +76,8 @@ const DefaultSessionContext: React.FC = ({ children }) => {
 
     await storage.delete(USER_STORAGE_KEY);
     await storage.delete(GAME_STORAGE_KEY);
-  }, [http, storage]);
+    await theme.switchTheme();
+  }, [http, storage, theme]);
 
   const switchGame = useCallback<ISessionContext['switchGame']>(
     async (gameId, newTheme) => {
