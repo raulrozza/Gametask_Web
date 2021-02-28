@@ -17,6 +17,12 @@ export default class GamesRepository implements IGamesRepository {
     return response;
   }
 
+  public async findOne(): Promise<IGame> {
+    const response = await this.httpProvider.get<IGame>('games/details');
+
+    return response;
+  }
+
   public async create({ name, description, image }: ICreate): Promise<IGame> {
     const game = await this.httpProvider.post<IGame>('games', {
       name,
