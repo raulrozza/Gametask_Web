@@ -31,6 +31,11 @@ const StyledComponentsThemeContext: React.FC = ({ children }) => {
 
   const switchTheme = useCallback<IThemeContext['switchTheme']>(
     async newTheme => {
+      if (!newTheme) {
+        await storage.delete(THEME_STORAGE);
+        return setTheme(defaultTheme);
+      }
+
       if (lodash.isEqual(theme, newTheme)) return;
 
       await storage.store(THEME_STORAGE, newTheme);

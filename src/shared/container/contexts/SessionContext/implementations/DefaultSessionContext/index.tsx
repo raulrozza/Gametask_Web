@@ -90,6 +90,7 @@ const DefaultSessionContext: React.FC = ({ children }) => {
 
       http.removeHeader(GAME_HEADER_KEY);
       await storage.delete(GAME_STORAGE_KEY);
+      await theme.switchTheme();
     },
     [http, storage, theme],
   );
