@@ -7,11 +7,11 @@ export default interface IGame {
   id: string;
   name: string;
   description: string;
-  theme?: ITheme;
+  theme: ITheme;
   image?: string;
   image_url?: string;
   administrators: string[] | IUser[];
   levelInfo: ILevelInfo[];
-  newRegisters?: number;
+  newRegisters: number;
   ranks: IRank[];
 }

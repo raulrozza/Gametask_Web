@@ -6,6 +6,7 @@ import {
   makeJwtProvider,
   makeStorageProvider,
 } from 'shared/container/providers';
+import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
 
 const USER_STORAGE_KEY = '@GameTask/token';
 const GAME_STORAGE_KEY = '@GameTask/game';
@@ -23,6 +24,8 @@ const DefaultSessionContext: React.FC = ({ children }) => {
   const [userData, setUserData] = useState<IUserData>({} as IUserData);
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const theme = useThemeContext();
 
   const storage = useMemo(() => makeStorageProvider(), []);
   const http = useMemo(() => makeHttpProvider(), []);
@@ -76,17 +79,19 @@ const DefaultSessionContext: React.FC = ({ children }) => {
   }, [http, storage]);
 
   const switchGame = useCallback<ISessionContext['switchGame']>(
-    async gameId => {
+    async (gameId, newTheme) => {
       setSelectedGame(gameId || null);
       if (gameId) {
         http.addHeader(GAME_HEADER_KEY, gameId);
-        return await storage.store(GAME_STORAGE_KEY, gameId);
+        await storage.store(GAME_STORAGE_KEY, gameId);
+        if (newTheme) await theme.switchTheme(newTheme);
+        return;
       }
 
       http.removeHeader(GAME_HEADER_KEY);
       await storage.delete(GAME_STORAGE_KEY);
     },
-    [http, storage],
+    [http, storage, theme],
   );
 
   return (

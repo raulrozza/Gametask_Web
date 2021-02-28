@@ -6,9 +6,9 @@ import StyledComponentsThemeContext from 'shared/container/contexts/ThemeContext
 const AppContainer: React.FC = ({ children }) => {
   return (
     <ReactToastifyToastContext>
-      <DefaultSessionContext>
-        <StyledComponentsThemeContext>{children}</StyledComponentsThemeContext>
-      </DefaultSessionContext>
+      <StyledComponentsThemeContext>
+        <DefaultSessionContext>{children}</DefaultSessionContext>
+      </StyledComponentsThemeContext>
     </ReactToastifyToastContext>
   );
 };

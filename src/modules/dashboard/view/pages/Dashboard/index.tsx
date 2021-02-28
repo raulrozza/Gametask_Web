@@ -11,17 +11,15 @@ import {
 } from './components';
 
 // Hooks
-import { useGameData } from 'hooks';
+import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
 
 // Styles
 import { Main } from './styles';
 
 const Dashboard: React.FC = () => {
-  const { loading, game } = useGameData();
+  const { loading, game } = useGetGameController();
 
   if (loading) return <Loading />;
-
-  if (!game) return null;
 
   const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
 

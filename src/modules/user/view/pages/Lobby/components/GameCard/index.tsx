@@ -15,6 +15,7 @@ const GameCard: React.FC<GameCardProps> = ({
   name,
   image_url,
   description,
+  theme,
   onShareClick,
 }) => {
   const session = useSessionContext();
@@ -28,7 +29,7 @@ const GameCard: React.FC<GameCardProps> = ({
       <span>{description}</span>
 
       <div>
-        <Button outlined onClick={() => session.switchGame(id)}>
+        <Button outlined onClick={() => session.switchGame(id, theme)}>
           Entrar
         </Button>
 

@@ -1,3 +1,8 @@
+interface ITheme {
+  primary: string;
+  secondary: string;
+}
+
 export default interface ISessionContext {
   userToken: string | null;
   userData: { id: string; name: string };
@@ -7,5 +12,5 @@ export default interface ISessionContext {
   login(token: string): Promise<void>;
   logout(): Promise<void>;
 
-  switchGame(gameId?: string): Promise<void>;
+  switchGame(gameId?: string, theme?: ITheme): Promise<void>;
 }
