@@ -10,6 +10,7 @@ import useSessionContext from 'shared/container/contexts/SessionContext/contexts
 // Routes
 import PublicRoutes from './public.routes';
 import LoggedRoutes from './logged.routes';
+import SelectedGameRoutes from './selectedGame.routes';
 
 const Routes: React.FC = () => {
   const session = useSessionContext();
@@ -22,6 +23,7 @@ const Routes: React.FC = () => {
         <Switch>
           {!session.userToken && <PublicRoutes />}
           {session.userToken && !session.selectedGame && <LoggedRoutes />}
+          {session.userToken && session.selectedGame && <SelectedGameRoutes />}
 
           <Route>
             <NotFound
