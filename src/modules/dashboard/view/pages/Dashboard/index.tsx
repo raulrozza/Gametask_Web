@@ -1,12 +1,11 @@
 import React from 'react';
 
 // Custom Components
-import { Helmet } from 'react-helmet';
 import { Loading } from 'components';
 import {
   AchievementContainer,
   ActivityContainer,
-  GameContainer,
+  GameSummary,
   Ranking,
 } from './components';
 
@@ -15,28 +14,28 @@ import useGetGameController from 'modules/dashboard/infra/controllers/useGetGame
 
 // Styles
 import { Main } from './styles';
+import { PageTitle } from 'shared/view/components';
+import { getPageTitle } from './helpers';
 
 const Dashboard: React.FC = () => {
   const { loading, game } = useGetGameController();
 
   if (loading) return <Loading />;
 
-  const registerTitle = game.newRegisters ? `(${game.newRegisters}) ` : '';
+  const title = getPageTitle(game.newRegisters);
 
   return (
     <Main>
-      <Helmet>
-        <title>{registerTitle}Dashboard - GameTask</title>
-      </Helmet>
+      <PageTitle title={title} />
 
       {/* <Ranking />
 
       <div className="column">
         <AchievementContainer />
         <ActivityContainer />
-      </div>
+      </div> */}
 
-      <GameContainer /> */}
+      <GameSummary game={game} />
     </Main>
   );
 };

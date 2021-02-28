@@ -1,23 +1,25 @@
 import styled, { css } from 'styled-components';
 
 export const Main = styled.main`
-  background-color: ${({ theme }) => theme.palette.primary.dark};
-  min-height: 100vh;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-
-  .column {
+  ${({ theme }) => css`
+    background-color: ${theme.palette.primary.dark};
+    min-height: 100vh;
+    padding: ${theme.layout.spacing(2)};
     display: flex;
-    flex-direction: column;
-  }
+    justify-content: center;
+    align-items: flex-start;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
+    .column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: ${theme.layout.breakpoints.md}) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  `}
 `;
 
 export const InfoBox = styled.div`
