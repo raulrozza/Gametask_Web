@@ -1,6 +1,5 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 
-// Components
 import { Link } from 'react-router-dom';
 import {
   AchievementCard,
@@ -9,17 +8,18 @@ import {
   NoAchievements,
 } from '..';
 
-// Icons
-import { FaSortUp, FaSortDown } from 'react-icons/fa';
-
-// Styles
-import { AchievementsWrapper } from './styles';
-
-// Utils
+import { useExpandController } from 'modules/dashboard/view/hooks';
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
 
+import { AchievementsWrapper } from './styles';
+
 const AchievementContainer: React.FC = () => {
-  const [expanded, setExpanded] = useState(false);
+  const {
+    expanded,
+    toggleExpand,
+    legend,
+    Icon: ExpandIcon,
+  } = useExpandController();
   const { achievements, loading } = useFetchAchievementsController();
 
   const hasNoAchievements = !loading && achievements.length === 0;
@@ -42,17 +42,8 @@ const AchievementContainer: React.FC = () => {
 
       <ExpandableBox.Footer>
         <Link to="/achievements">Gerenciar Conquistas</Link>
-        {expanded ? (
-          <FaSortUp
-            onClick={() => setExpanded(!expanded)}
-            title={`${expanded ? 'Minimizar' : 'Maximizar'} conquistas.`}
-          />
-        ) : (
-          <FaSortDown
-            onClick={() => setExpanded(!expanded)}
-            title={`${expanded ? 'Minimizar' : 'Maximizar'} conquistas.`}
-          />
-        )}
+
+        <ExpandIcon onClick={toggleExpand} title={legend} />
       </ExpandableBox.Footer>
     </ExpandableBox.Box>
   );
