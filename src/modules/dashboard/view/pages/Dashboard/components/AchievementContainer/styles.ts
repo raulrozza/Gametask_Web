@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { MinMaxBox } from '../../styles';
+import ExpandableBox from '../ExpandableBox';
 
-export const AchievementBox = styled(MinMaxBox)`
+export const AchievementBox = styled(ExpandableBox)`
   .achievement-container {
     max-height: 226px; /* 109px for each row, plus 4px for each row's margin */
     grid-template-columns: repeat(5, 1fr);

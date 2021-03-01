@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Custom Components
-import { Loading } from 'components';
+import { PageTitle, Loading } from 'shared/view/components';
 import {
   AchievementContainer,
   ActivityContainer,
@@ -9,13 +9,10 @@ import {
   Ranking,
 } from './components';
 
-// Hooks
 import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
 
-// Styles
-import { Main } from './styles';
-import { PageTitle } from 'shared/view/components';
 import { getPageTitle } from './helpers';
+import { Column, Main } from './styles';
 
 const Dashboard: React.FC = () => {
   const { loading, game } = useGetGameController();
@@ -28,12 +25,13 @@ const Dashboard: React.FC = () => {
     <Main>
       <PageTitle title={title} />
 
-      {/* <Ranking />
+      {/* <Ranking /> */}
 
-      <div className="column">
+      <Column>
         <AchievementContainer />
-        <ActivityContainer />
-      </div> */}
+
+        {/* <ActivityContainer /> */}
+      </Column>
 
       <GameSummary game={game} />
     </Main>

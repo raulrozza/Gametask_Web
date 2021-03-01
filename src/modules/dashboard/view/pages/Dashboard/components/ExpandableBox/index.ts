@@ -1,40 +1,7 @@
 import styled, { css } from 'styled-components';
+import Box from '../Box';
 
-export const Main = styled.main`
-  ${({ theme }) => css`
-    background-color: ${theme.palette.primary.dark};
-    min-height: 100vh;
-    padding: ${theme.layout.spacing(2)};
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    .column {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @media (max-width: ${theme.layout.breakpoints.md}) {
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-    }
-  `}
-`;
-
-export const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const InfoBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.primary.contrast};
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px;
-`;
-
-export const MinMaxBox = styled(InfoBox)`
+const ExpandableBox = styled(Box)`
   ${({ theme }) => css`
     .container {
       display: grid;
@@ -86,3 +53,5 @@ export const MinMaxBox = styled(InfoBox)`
     }
   `}
 `;
+
+export default ExpandableBox;
