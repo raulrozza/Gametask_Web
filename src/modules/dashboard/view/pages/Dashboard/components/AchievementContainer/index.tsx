@@ -1,11 +1,13 @@
 import React, { useState, memo } from 'react';
 
-// Assets
-import placeholder from 'assets/img/achievements/placeholder.png';
-
 // Components
 import { Link } from 'react-router-dom';
-import { AchievementSkeletons, ExpandableBox, NoAchievements } from '..';
+import {
+  AchievementCard,
+  AchievementSkeletons,
+  ExpandableBox,
+  NoAchievements,
+} from '..';
 
 // Icons
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
@@ -32,26 +34,7 @@ const AchievementContainer: React.FC = () => {
             <AchievementSkeletons />
           ) : (
             achievements.map(achievement => (
-              <div
-                className="achievement"
-                key={`achievement-${achievement.id}`}
-              >
-                <picture>
-                  <source
-                    srcSet={
-                      achievement.image ? achievement.image_url : undefined
-                    }
-                  />
-
-                  <img
-                    className="achievement-image"
-                    src={placeholder}
-                    alt={`achievement-${achievement.id}-img`}
-                  />
-                </picture>
-
-                <div className="achievement-name">{achievement.name}</div>
-              </div>
+              <AchievementCard {...achievement} key={achievement.id} />
             ))
           )}
         </AchievementsWrapper>

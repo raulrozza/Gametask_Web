@@ -1,3 +1,4 @@
+export { default as AchievementCard } from './AchievementCard';
 export { default as AchievementContainer } from './AchievementContainer';
 export { default as AchievementSkeletons } from './AchievementSkeletons';
 export { default as ActivityContainer } from './ActivityContainer';
