@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ActivitiesSkeletons, ExpandableBox, NoActivities } from '..';
 
 // Hooks
-import { useActivities } from './hooks';
+import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 import { useExpandController } from 'modules/dashboard/view/hooks';
 
 // Styles
@@ -18,7 +18,7 @@ const ActivityContainer: React.FC = () => {
     legend,
     Icon: ExpandIcon,
   } = useExpandController();
-  const { loading, activities } = useActivities();
+  const { loading, activities } = useFetchActivitiesController();
 
   const hasNoActivities = !loading && activities.length === 0;
 
@@ -32,7 +32,7 @@ const ActivityContainer: React.FC = () => {
             <ActivitiesSkeletons />
           ) : (
             activities.map(activity => (
-              <ActivityContainer key={activity._id} {...activity} />
+              <ActivityContainer key={activity.id} {...activity} />
             ))
           )}
         </ActivitiesWrapper>
