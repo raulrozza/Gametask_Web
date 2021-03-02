@@ -32,13 +32,7 @@ const ActivityContainer: React.FC = () => {
             <ActivitiesSkeletons />
           ) : (
             activities.map(activity => (
-              <div className="activity" key={`activity-${activity._id}`}>
-                <div className="activity-name">{activity.name}</div>
-
-                <div className="activity-experience">
-                  {activity.experience} XP
-                </div>
-              </div>
+              <ActivityContainer key={activity._id} {...activity} />
             ))
           )}
         </ActivitiesWrapper>

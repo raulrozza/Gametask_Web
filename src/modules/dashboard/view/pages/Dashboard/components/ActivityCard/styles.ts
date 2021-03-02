@@ -2,23 +2,27 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   ${({ theme }) => css`
-    width: 80px;
     padding: ${theme.layout.spacing(1)};
-
-    .image {
-      width: 80px;
-      height: 80px;
-      margin-bottom: ${theme.layout.spacing(1)};
-      border-radius: 50%;
-    }
+    margin: ${theme.layout.spacing(1)};
+    border-radius: ${theme.layout.borderRadius.medium};
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid ${theme.palette.secondary.dark};
 
     .name {
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 20px;
-      height: 20px;
-      width: inherit;
-      text-align: center;
+      font-size: 16px;
+      text-transform: uppercase;
+      height: 40px;
+      margin-bottom: ${theme.layout.spacing(1)};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .experience {
+      color: ${theme.palette.secondary.main};
+      font-size: 20px;
+      height: 32px;
     }
   `}
 `;

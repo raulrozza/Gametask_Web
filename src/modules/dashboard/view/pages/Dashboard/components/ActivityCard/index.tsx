@@ -1,20 +1,14 @@
 import React from 'react';
-import IAchievement from 'modules/dashboard/entities/IAchievement';
-
-import placeholder from 'assets/img/achievements/placeholder.png';
+import IActivity from 'modules/dashboard/entities/IActivity';
 
 import { Container } from './styles';
 
-const AchievementCard: React.FC<IAchievement> = ({ name, image_url }) => (
+const ActivityCard: React.FC<IActivity> = ({ name, experience }) => (
   <Container>
-    <picture>
-      <source srcSet={image_url || undefined} />
-
-      <img className="image" src={placeholder} alt={name} />
-    </picture>
-
     <div className="name">{name}</div>
+
+    <div className="experience">{experience} XP</div>
   </Container>
 );
 
-export default AchievementCard;
+export default ActivityCard;
