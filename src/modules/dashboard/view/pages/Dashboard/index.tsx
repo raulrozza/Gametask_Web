@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
       <Column>
         <AchievementContainer />
 
-        {/* <ActivityContainer /> */}
+        <ActivityContainer />
       </Column>
 
       <GameSummary game={game} />

@@ -3,25 +3,24 @@ import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/use
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 import { Container } from './styles';
 
-const NUMBER_OF_SKELETONS = 9;
+const NUMBER_OF_SKELETONS = 5;
 const SKELETONS_ITERATOR = Array.from(Array(NUMBER_OF_SKELETONS).keys());
 
-const AchievementsSkeletons: React.FC = () => {
+const ActivitiesSkeletons: React.FC = () => {
   const { theme } = useThemeContext();
 
   return (
     <>
       {SKELETONS_ITERATOR.map(index => (
-        <Container key={`achievement-skeleton-${index}`}>
-          <div className="image">
+        <Container key={`activity-skeleton-${index}`}>
+          <div className="name">
             <SkeletonLoader
               background={theme.palette.primary.dark}
-              height="80px"
-              circle
+              height="100%"
             />
           </div>
 
-          <div className="name">
+          <div className="experience">
             <SkeletonLoader
               background={theme.palette.primary.dark}
               height="100%"
@@ -33,4 +32,4 @@ const AchievementsSkeletons: React.FC = () => {
   );
 };
 
-export default AchievementsSkeletons;
+export default ActivitiesSkeletons;

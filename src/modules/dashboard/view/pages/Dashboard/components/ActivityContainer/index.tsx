@@ -1,86 +1,55 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 
 // Components
 import { Link } from 'react-router-dom';
-import SkeletonLoader from 'tiny-skeleton-loader-react';
+import { ActivitiesSkeletons, ExpandableBox, NoActivities } from '..';
 
 // Hooks
 import { useActivities } from './hooks';
-import { useTheme } from 'styled-components';
-
-// Icons
-import { FaSortUp, FaSortDown } from 'react-icons/fa';
+import { useExpandController } from 'modules/dashboard/view/hooks';
 
 // Styles
-import { ActivityBox } from './styles';
+import { ActivitiesWrapper } from './styles';
 
 const ActivityContainer: React.FC = () => {
-  const [minmax, setMinmax] = useState(false);
+  const {
+    expanded,
+    toggleExpand,
+    legend,
+    Icon: ExpandIcon,
+  } = useExpandController();
   const { loading, activities } = useActivities();
 
-  const theme = useTheme();
+  const hasNoActivities = !loading && activities.length === 0;
 
   return (
-    <ActivityBox>
-      {!(!loading && activities.length === 0) ? (
-        <div
-          className={`activity-container container ${
-            minmax ? 'maximized' : ''
-          }`}
-        >
-          {!loading
-            ? activities.map(activity => (
-                <div className="activity" key={`activity-${activity._id}`}>
-                  <div className="activity-name">{activity.name}</div>
-
-                  <div className="activity-experience">
-                    {activity.experience} XP
-                  </div>
-                </div>
-              ))
-            : [1, 2, 3, 4, 5].map(item => (
-                <div
-                  className="activity no-border"
-                  key={`activity-skeleton-${item}`}
-                >
-                  <div className="activity-name">
-                    <SkeletonLoader
-                      background={theme.palette.primary.dark}
-                      height="100%"
-                    />
-                  </div>
-
-                  <div className="activity-experience">
-                    <SkeletonLoader
-                      background={theme.palette.primary.dark}
-                      height="100%"
-                    />
-                  </div>
-                </div>
-              ))}
-        </div>
+    <ExpandableBox.Box>
+      {hasNoActivities ? (
+        <NoActivities />
       ) : (
-        <div className="no-data">
-          Não há nenhuma atividade. <Link to="/activities">Cadastre</Link>{' '}
-          alguma para que os jogadores possam pontuar!
-        </div>
+        <ActivitiesWrapper $expanded={expanded}>
+          {loading ? (
+            <ActivitiesSkeletons />
+          ) : (
+            activities.map(activity => (
+              <div className="activity" key={`activity-${activity._id}`}>
+                <div className="activity-name">{activity.name}</div>
+
+                <div className="activity-experience">
+                  {activity.experience} XP
+                </div>
+              </div>
+            ))
+          )}
+        </ActivitiesWrapper>
       )}
 
-      <div className="min-max">
+      <ExpandableBox.Footer>
         <Link to="/activities">Gerenciar Atividades</Link>
-        {minmax ? (
-          <FaSortUp
-            onClick={() => setMinmax(!minmax)}
-            title={`${minmax ? 'Minimizar' : 'Maximizar'} conquistas.`}
-          />
-        ) : (
-          <FaSortDown
-            onClick={() => setMinmax(!minmax)}
-            title={`${minmax ? 'Minimizar' : 'Maximizar'} conquistas.`}
-          />
-        )}
-      </div>
-    </ActivityBox>
+
+        <ExpandIcon onClick={toggleExpand} title={legend} />
+      </ExpandableBox.Footer>
+    </ExpandableBox.Box>
   );
 };
 

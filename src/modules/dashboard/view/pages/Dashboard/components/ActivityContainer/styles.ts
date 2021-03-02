@@ -1,5 +1,20 @@
 import styled, { css } from 'styled-components';
+import ExpandableBox from '../ExpandableBox';
 import { MinMaxBox } from '../../styles';
+
+export const ActivitiesWrapper = styled(ExpandableBox.Container)`
+  max-height: 198px; /* 89px for each row, plus 10px for each row's margin */
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${({ theme }) => theme.layout.spacing(1)};
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.lg}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.md}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
 
 export const ActivityBox = styled(MinMaxBox)`
   ${({ theme }) => css`
