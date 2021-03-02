@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
     <Main>
       <PageTitle title={title} />
 
-      <Ranking />
+      <Ranking newRegisters={game.newRegisters} />
 
       <Column>
         <AchievementContainer />

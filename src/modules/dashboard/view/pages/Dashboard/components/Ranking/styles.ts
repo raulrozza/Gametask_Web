@@ -1,101 +1,127 @@
+import { getContrastColor } from 'modules/dashboard/view/helpers';
+import Box from 'modules/dashboard/view/pages/Dashboard/components/Box';
 import styled, { css } from 'styled-components';
-import { InfoBox } from '../../styles';
 
-export const RankingContainer = styled(InfoBox)`
+export const Container = styled(Box)`
+  width: 100%;
+  max-width: 330px;
+`;
+
+export const Footer = styled.footer`
   ${({ theme }) => css`
+    border-top: 1px solid ${theme.palette.primary.dark};
+    margin-top: ${theme.layout.spacing(2)};
+    padding-top: ${theme.layout.spacing(1)};
+
     width: 100%;
-    max-width: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    ul {
-      list-style: none;
+    font-size: 14px;
+  `}
+`;
 
-      li {
-        margin-bottom: 5px;
-        display: flex;
-        height: 30px;
+export const List = styled.ul`
+  list-style: none;
+`;
 
-        div {
-          &.points {
-            width: 30%;
-          }
+const listCommonCss = css`
+  ${({ theme }) => css`
+    margin-bottom: ${theme.layout.spacing(1)};
+    display: flex;
+    align-items: center;
 
-          &.user {
-            width: 65%;
-          }
+    height: 30px;
+  `}
+`;
 
-          &.registers-box {
-            background-color: ${theme.palette.secondary.dark};
-            color: ${theme.palette.secondary.contrast};
+export const ListTitle = styled.li`
+  ${({ theme }) => css`
+    ${listCommonCss}
+    justify-content: space-between;
 
-            height: 20px;
-            padding: 4px;
-            border-radius: 4px;
+    font-weight: bold;
+    border-bottom: 1px solid ${theme.palette.primary.dark};
+    font-family: ${theme.typography.family.title};
+  `}
+`;
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        }
+export const ListRank = styled.li`
+  ${listCommonCss}
 
-        &:not(.list-title) {
-          justify-content: center;
-          font-family: Verdana, Geneva, Tahoma, sans-serif;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 
-          .name {
-            font-size: 14px;
-          }
-        }
+  font-size: 14px;
+`;
 
-        &.list-title {
-          font-weight: bold;
-          align-items: center;
-          justify-content: space-between;
-          border-bottom: 1px solid ${theme.palette.primary.dark};
-          font-family: 'Open Sans', sans-serif;
+export const PointsTitle = styled.div`
+  width: 30%;
+`;
 
-          ul li div {
-            height: 100%;
-            display: flex;
-            align-items: center;
-          }
-        }
-      }
+export const PointsLabel = styled.div`
+  width: 30%;
 
-      > span {
-        display: flex;
-        height: 60px;
-        align-items: center;
-        font-size: 14px;
-        justify-content: center;
-        text-decoration: underline;
-        color: ${theme.palette.secondary.main};
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
 
-        svg {
-          margin-left: 4px;
-        }
-      }
+export const PlayerNameColumn = styled.div`
+  width: 65%;
+`;
 
-      .rank {
-        font-weight: bold;
-        padding: 4px;
-        margin-right: 4px;
-        border-radius: 4px;
-        font-size: 12px;
-        text-transform: uppercase;
-        cursor: default;
-        font-family: Open-Sans, Roboto, sans-serif;
-      }
-    }
+export const RegistersBox = styled.div`
+  ${({ theme }) => css`
+    background-color: ${theme.palette.secondary.dark};
+    color: ${theme.palette.secondary.contrast};
 
-    footer {
-      border-top: 1px solid ${theme.palette.primary.dark};
-      margin-top: 8px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-top: 5px;
-      font-size: 14px;
+    height: 20px;
+    padding: ${theme.layout.spacing(1)};
+    border-radius: ${theme.layout.spacing(1)};
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `}
+`;
+
+interface RankBoxProps {
+  color: string;
+}
+
+export const RankBox = styled.div<RankBoxProps>`
+  ${({ theme, color }) => css`
+    padding: ${theme.layout.spacing(1)};
+    margin-right: ${theme.layout.spacing(1)};
+
+    border-radius: ${theme.layout.borderRadius.small};
+
+    display: inline-block;
+
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: ${theme.typography.family.title};
+
+    background-color: ${color};
+    color: ${getContrastColor(color)};
+  `}
+`;
+
+export const EmptyLeaderboard = styled.span`
+  ${({ theme }) => css`
+    display: flex;
+    height: 60px;
+    align-items: center;
+    font-size: 14px;
+    justify-content: center;
+    text-decoration: underline;
+    color: ${theme.palette.secondary.dark};
+
+    svg {
+      margin-left: ${theme.layout.spacing(1)};
     }
   `}
 `;

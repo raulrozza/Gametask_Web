@@ -4,79 +4,79 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Hooks
-import { useGameData } from 'hooks';
+import useGetCurrentLeaderboardController from 'modules/dashboard/infra/controllers/useGetCurrentLeaderboardController';
 
 // Icons
 import { FaFrown } from 'react-icons/fa';
 
 // Styles
-import { RankingContainer } from './styles';
+import {
+  Container,
+  EmptyLeaderboard,
+  Footer,
+  List,
+  ListRank,
+  ListTitle,
+  PlayerNameColumn,
+  PointsLabel,
+  PointsTitle,
+  RankBox,
+  RegistersBox,
+} from './styles';
 
-// Utils
-import { getTextColor } from 'utils';
+interface RankingProps {
+  newRegisters: number;
+}
 
-const Ranking: React.FC = () => {
-  const { game } = useGameData();
-
-  if (!game) return null;
+const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
+  const { leaderboard, loading } = useGetCurrentLeaderboardController();
 
   return (
-    <RankingContainer>
-      <ul>
-        <li className="list-title">
-          <div className="points">Pontuação</div>
-          <div className="user">Jogador</div>
-          {game.newRegisters > 0 && (
-            <div
-              className="registers-box"
-              title="Novas requisições de pontuação."
-            >
-              {game.newRegisters}
-            </div>
+    <Container>
+      <List>
+        <ListTitle>
+          <PointsTitle>Pontuação</PointsTitle>
+
+          <PlayerNameColumn>Jogador</PlayerNameColumn>
+
+          {newRegisters > 0 && (
+            <RegistersBox title="Novas requisições de pontuação.">
+              {newRegisters}
+            </RegistersBox>
           )}
-        </li>
-        {game.weeklyRanking.length > 0 ? (
-          game.weeklyRanking.map(({ player, currentExperience }) => {
-            return (
-              <li key={player._id}>
-                <div className="points">{currentExperience}</div>
+        </ListTitle>
 
-                <div className="user">
-                  <span
-                    className="rank"
-                    style={{
-                      backgroundColor: player.rank.color,
-                      color: getTextColor(player.rank.color),
-                    }}
-                    title={player.rank.name}
-                  >
-                    {player.rank.tag}
-                  </span>
+        {leaderboard?.position?.length === 0 ? (
+          leaderboard?.position.map(({ player, experience }) => (
+            <ListRank key={player.id}>
+              <PointsLabel>{experience}</PointsLabel>
 
-                  <span className="name">
-                    {player.user.firstname}
-                    {player.user.lastname ? ` ${player.user.lastname}` : ''}
-                  </span>
+              <PlayerNameColumn>
+                <RankBox color={player.rank.color} title={player.rank.name}>
+                  {player.rank.tag}
+                </RankBox>
 
-                  {player.currentTitle && (
-                    <span className="title">, {player.currentTitle.name}</span>
-                  )}
-                </div>
-              </li>
-            );
-          })
+                {player.user.firstname}
+                {player.user.lastname ? ` ${player.user.lastname}` : ''}
+
+                {player.currentTitle && (
+                  <span className="title">, {player.currentTitle.name}</span>
+                )}
+              </PlayerNameColumn>
+            </ListRank>
+          ))
         ) : (
-          <span>
+          <EmptyLeaderboard>
             Ninguém pontuou ainda
             <FaFrown />
-          </span>
+          </EmptyLeaderboard>
         )}
-      </ul>
+      </List>
 
-      <footer>
+      <Footer>
         <Link to="/players">Gerenciar Jogadores</Link>
-      </footer>
-    </RankingContainer>
+      </Footer>
+    </Container>
   );
 };
 
