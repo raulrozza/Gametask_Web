@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 
 export const Main = styled.main`
   ${({ theme }) => css`
-    background-color: ${theme.palette.primary.dark};
     min-height: 100vh;
     padding: ${theme.layout.spacing(2)};
     display: flex;

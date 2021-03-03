@@ -22,6 +22,11 @@ ${({ theme }) => css`
     color: ${theme.palette.primary.contrast};
   }
 
+  body {
+    background-color: ${theme.palette.primary.dark};
+    min-height: 100vh;
+  }
+
   a {
     color: ${theme.palette.secondary.main};
     transition: all 0.2s;
