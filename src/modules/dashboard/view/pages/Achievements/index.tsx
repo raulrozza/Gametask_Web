@@ -1,28 +1,24 @@
 import React from 'react';
 
 // Components
+import { Button } from 'shared/view/components';
 import {
   DefaultPageContainer,
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
+import { AchievementEditor } from './components';
+import { EmptyContent } from './styles';
 import AchievementForm from './AchievementForm';
-import Loading from 'components/Loading';
 
 // Hooks
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
+import { useItemEditorController } from 'modules/dashboard/view/hooks';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
 
 // Styles
-import { Container } from './styles';
-import {
-  EmptyContainer,
-  Footer,
-  Loader,
-  Editor,
-  Row,
-} from 'components/PageWrapper/styles';
+import { Editor } from 'components/PageWrapper/styles';
 
 // Types
 import { IAchievement } from 'interfaces/api/Achievement';
@@ -30,10 +26,11 @@ import { IAchievement } from 'interfaces/api/Achievement';
 // Utils
 import { findAchievementById } from './utils';
 import AchievementCard from './AchievementCard';
-import { Button } from 'shared/view/components';
 
 const Achievements: React.FC = () => {
   const { achievements, loading } = useFetchAchievementsController();
+
+  const editorController = useItemEditorController();
   /* const [
     selectedAchievement,
     setSelectedAchievement,
@@ -83,11 +80,18 @@ const Achievements: React.FC = () => {
       ) : (
         <>
           <DefaultPageContainer.Content>
-            {achievements.length === 0 ? 'Não há conquistas ainda.' : null}
+            {achievements.length === 0 ? (
+              <EmptyContent>Não há conquistas ainda.</EmptyContent>
+            ) : null}
+
+            <AchievementEditor
+              visible={editorController.visible}
+              closeEditor={editorController.close}
+            />
           </DefaultPageContainer.Content>
 
           <DefaultPageContainer.Footer>
-            <Button>Nova Conquista</Button>
+            <Button onClick={editorController.open}>Nova Conquista</Button>
           </DefaultPageContainer.Footer>
         </>
       )}

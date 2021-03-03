@@ -1,7 +1,16 @@
 import styled, { css } from 'styled-components';
 import { ReducingDiv } from 'components/PageWrapper/styles';
 
-export const Container = styled(ReducingDiv)`
+export const EmptyContent = styled.div`
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const OldContainer = styled(ReducingDiv)`
   ${({ reduced = false }) => css`
     width: 100%;
     display: grid;
