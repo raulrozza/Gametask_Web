@@ -1,12 +1,15 @@
 import React from 'react';
 
 // Components
-import { DefaultPageContainer } from 'modules/dashboard/view/components';
+import {
+  DefaultPageContainer,
+  DefaultPageLoading,
+} from 'modules/dashboard/view/components';
 import AchievementForm from './AchievementForm';
 import Loading from 'components/Loading';
 
 // Hooks
-import { useApiFetch } from 'hooks/api/useApiFetch';
+import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
@@ -29,6 +32,7 @@ import { findAchievementById } from './utils';
 import AchievementCard from './AchievementCard';
 
 const Achievements: React.FC = () => {
+  const { achievements, loading } = useFetchAchievementsController();
   /* const [
     selectedAchievement,
     setSelectedAchievement,
@@ -73,6 +77,7 @@ const Achievements: React.FC = () => {
 
   return (
     <DefaultPageContainer title="Conquistas">
+      {loading ? <DefaultPageLoading /> : <></>}
       {/* {!loading ? (
         <>
           <Row>
@@ -113,11 +118,7 @@ const Achievements: React.FC = () => {
             </button>
           </Footer>
         </>
-      ) : (
-        <Loader>
-          <Loading />
-        </Loader>
-      )} */}
+      ) */}
     </DefaultPageContainer>
   );
 };
