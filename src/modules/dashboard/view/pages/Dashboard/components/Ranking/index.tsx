@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import { Link } from 'react-router-dom';
+import RankingSkeletons from 'modules/dashboard/view/pages/Dashboard/components/RankingSkeletons';
 
 // Hooks
 import useGetCurrentLeaderboardController from 'modules/dashboard/infra/controllers/useGetCurrentLeaderboardController';
@@ -46,7 +47,9 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
           )}
         </ListTitle>
 
-        {leaderboard?.position?.length === 0 ? (
+        {loading ? (
+          <RankingSkeletons />
+        ) : leaderboard?.position?.length === 0 ? (
           leaderboard?.position.map(({ player, experience }) => (
             <ListRank key={player.id}>
               <PointsLabel>{experience}</PointsLabel>

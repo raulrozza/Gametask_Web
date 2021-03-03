@@ -26,10 +26,3 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-export const InfoBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.primary.contrast};
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px;
-`;
