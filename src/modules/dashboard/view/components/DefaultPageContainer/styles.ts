@@ -17,3 +17,17 @@ export const Container = styled.main`
     }
   `}
 `;
+
+export const Content = styled.div`
+  flex: 1;
+  min-height: 50vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Footer = styled.footer`
+  display: flex;
+  justify-content: flex-end;
+`;

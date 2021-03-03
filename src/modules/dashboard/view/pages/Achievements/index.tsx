@@ -30,6 +30,7 @@ import { IAchievement } from 'interfaces/api/Achievement';
 // Utils
 import { findAchievementById } from './utils';
 import AchievementCard from './AchievementCard';
+import { Button } from 'shared/view/components';
 
 const Achievements: React.FC = () => {
   const { achievements, loading } = useFetchAchievementsController();
@@ -77,7 +78,19 @@ const Achievements: React.FC = () => {
 
   return (
     <DefaultPageContainer title="Conquistas">
-      {loading ? <DefaultPageLoading /> : <></>}
+      {loading ? (
+        <DefaultPageLoading />
+      ) : (
+        <>
+          <DefaultPageContainer.Content>
+            {achievements.length === 0 ? 'Não há conquistas ainda.' : null}
+          </DefaultPageContainer.Content>
+
+          <DefaultPageContainer.Footer>
+            <Button>Nova Conquista</Button>
+          </DefaultPageContainer.Footer>
+        </>
+      )}
       {/* {!loading ? (
         <>
           <Row>
@@ -94,10 +107,6 @@ const Achievements: React.FC = () => {
                   ))}
                 </Container>
               </div>
-            ) : (
-              <EmptyContainer reduced={showPanel}>
-                Não há conquistas ainda.
-              </EmptyContainer>
             )}
 
             <Editor shown={showPanel}>
@@ -107,16 +116,6 @@ const Achievements: React.FC = () => {
               />
             </Editor>
           </Row>
-
-          <Footer>
-            <button onClick={handleAddAchievement}>
-              <span>Nova Conquista</span>
-
-              <span className="plus-icon">
-                <FaPlus />
-              </span>
-            </button>
-          </Footer>
         </>
       ) */}
     </DefaultPageContainer>
