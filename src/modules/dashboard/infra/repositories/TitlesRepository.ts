@@ -5,6 +5,14 @@ import { makeHttpProvider } from 'shared/container/providers';
 export default class TitlesRepository implements ITitlesRepository {
   private httpProvider = makeHttpProvider();
 
+  public async create({ name }: Pick<ITitle, 'name'>): Promise<ITitle> {
+    const response = await this.httpProvider.post<ITitle>('titles', {
+      name,
+    });
+
+    return response;
+  }
+
   public async findAllWithName(name?: string): Promise<ITitle[]> {
     const params = name ? { name } : {};
 
