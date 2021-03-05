@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import AchievementSchema from 'modules/dashboard/validation/AchievementSchema';
 import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
+import { TitleInput } from '..';
 
 import { ButtonContainer, Container, Form } from './styles';
 
@@ -41,6 +42,12 @@ const AchievementEditor: React.FC<AchievementEditorProps> = ({ visible }) => {
             <Textarea
               name="description"
               placeholder="Descreva como obter esta conquista"
+              fullWidth
+            />
+
+            <TitleInput
+              name="title"
+              placeholder="Completar a conquista garante um título?"
               fullWidth
             />
 
