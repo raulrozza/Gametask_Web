@@ -1,10 +1,11 @@
-import React, { InputHTMLAttributes, useCallback } from 'react';
+import React, { InputHTMLAttributes, useCallback, useState } from 'react';
 
 // Components
 import { ErrorField } from 'shared/view/components';
 
 // Hooks
 import { useField } from 'formik';
+import useCreateTitleController from 'modules/dashboard/infra/controllers/useCreateTitleController';
 import useFilterTitlesByNameController from 'modules/dashboard/infra/controllers/useFilterTitlesByNameController';
 import { useTitleOptionsController } from './hooks';
 
@@ -23,7 +24,10 @@ const TitleInput: React.FC<InputProps> = ({
 }) => {
   const [field, meta, helpers] = useField(name);
 
+  const [titleName, setTitleName] = useState('');
+
   const { titles, filterTitles } = useFilterTitlesByNameController();
+  const { createTitle } = useCreateTitleController();
 
   const titleOptions = useTitleOptionsController();
 
@@ -33,40 +37,39 @@ const TitleInput: React.FC<InputProps> = ({
 
       filterTitles(value);
 
-      field.onChange(event);
+      setTitleName(value);
     },
-    [field, filterTitles],
+    [filterTitles],
   );
 
-  const handleFocus = useCallback(() => {
-    titleOptions.show();
+  const handleAddTitle = useCallback(async () => {
+    const title = await createTitle({ name: field.value });
 
-    helpers.setTouched(true);
-  }, [helpers, titleOptions]);
-
-  const handleBlur = useCallback(
-    (event: React.FocusEvent<HTMLInputElement>) => {
+    if (title) {
       titleOptions.hide();
-
-      field.onBlur(event);
-    },
-    [field, titleOptions],
-  );
+      helpers.setValue(title.id);
+    }
+  }, [createTitle, field.value, helpers, titleOptions]);
 
   return (
-    <Container $fullWidth={fullWidth}>
+    <Container
+      $fullWidth={fullWidth}
+      onFocus={titleOptions.show}
+      onBlur={titleOptions.hide}
+    >
       <InputField
         {...field}
         {...inputProps}
+        value={titleName}
         onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
       />
 
       {meta.error && meta.touched && <ErrorField>{meta.error}</ErrorField>}
 
-      <TitleOptions visible={titleOptions.visible}>
-        <AddTitleButton>Adicionar título: {field.value}</AddTitleButton>
+      <TitleOptions ref={titleOptions.menuRef} visible={titleOptions.visible}>
+        <AddTitleButton onClick={handleAddTitle}>
+          Adicionar título: {titleName}
+        </AddTitleButton>
       </TitleOptions>
     </Container>
   );
