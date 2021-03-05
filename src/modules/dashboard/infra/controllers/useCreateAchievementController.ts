@@ -40,6 +40,7 @@ export default function useCreateAchievementController(): UseCreateAchievementCo
         return null;
       }
 
+      toast.showSuccess('Conquista criada!');
       return achievement || null;
     },
     [createAchievementService, session, toast],

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import IAchievement from 'modules/dashboard/entities/IAchievement';
 import makeListAchievementsService from 'modules/dashboard/services/factories/makeListAchievementsService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
@@ -7,6 +7,7 @@ import useToastContext from 'shared/container/contexts/ToastContext/contexts/use
 interface UseFetchAchievementsController {
   loading: boolean;
   achievements: IAchievement[];
+  fetchAchievements(): Promise<void>;
 }
 
 export default function useFetchAchievementsController(): UseFetchAchievementsController {
@@ -17,26 +18,35 @@ export default function useFetchAchievementsController(): UseFetchAchievementsCo
   const session = useSessionContext();
   const toast = useToastContext();
 
-  useEffect(() => {
-    listAchievements
-      .execute()
-      .then(async ({ achievements, error, shouldLogout }) => {
-        if (error) {
-          toast.showError(error);
+  const fetchAchievements = useCallback(async () => {
+    setLoading(true);
 
-          if (shouldLogout) await session.logout();
+    const {
+      achievements,
+      error,
+      shouldLogout,
+    } = await listAchievements.execute();
 
-          return;
-        }
+    if (error) {
+      toast.showError(error);
 
-        if (achievements) setAchievements(achievements);
+      if (shouldLogout) await session.logout();
 
-        setLoading(false);
-      });
+      return;
+    }
+
+    if (achievements) setAchievements(achievements);
+
+    setLoading(false);
   }, [listAchievements, session, toast]);
+
+  useEffect(() => {
+    fetchAchievements();
+  }, [fetchAchievements, listAchievements, session, toast]);
 
   return {
     loading,
     achievements,
+    fetchAchievements,
   };
 }

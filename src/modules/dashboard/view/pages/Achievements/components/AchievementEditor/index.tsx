@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Formik } from 'formik';
 import AchievementSchema from 'modules/dashboard/validation/AchievementSchema';
 import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
 import { TitleInput } from '..';
+import useCreateAchievementController from 'modules/dashboard/infra/controllers/useCreateAchievementController';
 
 import { ButtonContainer, Container, Form } from './styles';
-
-interface AchievementEditorProps {
-  visible: boolean;
-  closeEditor: () => void;
-}
 
 interface IFormValues {
   name: string;
@@ -25,13 +21,37 @@ const defaultInitialValues: IFormValues = {
   image: '',
 };
 
-const AchievementEditor: React.FC<AchievementEditorProps> = ({ visible }) => {
+interface AchievementEditorProps {
+  visible: boolean;
+  closeEditor: () => void;
+  updateAchievements: () => void;
+}
+
+const AchievementEditor: React.FC<AchievementEditorProps> = ({
+  visible,
+  closeEditor,
+  updateAchievements,
+}) => {
+  const { loading, createAchievement } = useCreateAchievementController();
+
+  const handleSubmit = useCallback(
+    async (values: IFormValues) => {
+      const success = await createAchievement(values);
+
+      if (success) {
+        closeEditor();
+        updateAchievements();
+      }
+    },
+    [closeEditor, createAchievement, updateAchievements],
+  );
+
   return (
     <Container $visible={visible}>
       <Formik
         initialValues={defaultInitialValues}
         validationSchema={AchievementSchema}
-        onSubmit={console.log}
+        onSubmit={handleSubmit}
       >
         {() => (
           <Form>
@@ -52,7 +72,9 @@ const AchievementEditor: React.FC<AchievementEditorProps> = ({ visible }) => {
             />
 
             <ButtonContainer>
-              <Button type="submit">Enviar</Button>
+              <Button type="submit" loading={loading}>
+                Enviar
+              </Button>
             </ButtonContainer>
           </Form>
         )}

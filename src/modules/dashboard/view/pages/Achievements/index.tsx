@@ -14,7 +14,11 @@ import useFetchAchievementsController from 'modules/dashboard/infra/controllers/
 import { useItemEditorController } from 'modules/dashboard/view/hooks';
 
 const Achievements: React.FC = () => {
-  const { achievements, loading } = useFetchAchievementsController();
+  const {
+    achievements,
+    loading,
+    fetchAchievements,
+  } = useFetchAchievementsController();
 
   const editorController = useItemEditorController();
   /* const [
@@ -61,6 +65,7 @@ const Achievements: React.FC = () => {
             <AchievementEditor
               visible={editorController.visible}
               closeEditor={editorController.close}
+              updateAchievements={fetchAchievements}
             />
           </DefaultPageContainer.Content>
 
