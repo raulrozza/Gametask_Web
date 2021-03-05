@@ -1,4 +1,4 @@
-import { lighten } from 'polished';
+import { darken, lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface ContainerProps {
@@ -58,56 +58,48 @@ export const TitleOptions = styled.div<TitleOptionsProps>`
 
       return `0 0 ${radius} ${radius}`;
     }};
+  `}
+`;
 
-    /* max-height: 80%;
+const buttonStyle = css`
+  ${({ theme }) => css`
+    border: none;
+    width: 100%;
+    min-height: 20px;
+    padding: ${theme.layout.spacing(1, 2)};
+
+    transition: background-color 0.2s;
+  `}
+`;
+
+export const OptionButton = styled.button`
+  ${({ theme }) => css`
+    ${buttonStyle}
+
     background-color: ${theme.palette.primary.dark};
-    border: 1px solid ${theme.palette.primary.contrast};
-    font-size: 14px;
-    visibility: ${visible ? 'visible' : 'hidden'}; */
 
-    /* ul {
-      list-style: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${darken(0.1, theme.palette.primary.dark)};
     }
-
-    li,
-    button {
-      min-height: 20px;
-      padding: 2px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-
-      &:hover {
-        background-color: ${theme.palette.primary.main};
-      }
-    }
-
-    button {
-      border: none;
-      width: 100%;
-      height: 100%;
-      transition: background-color 0.2s;
-    } */
   `}
 `;
 
 export const AddTitleButton = styled.button`
   ${({ theme, disabled }) => css`
-    border: none;
-    width: 100%;
-    min-height: 20px;
-    padding: ${theme.layout.spacing(1, 2)};
+    ${buttonStyle}
+
     cursor: ${disabled ? 'default' : 'pointer'};
 
-    transition: background-color 0.2s;
-
-    ${!disabled
+    ${disabled
       ? css`
           opacity: 0.7;
-
+        `
+      : css`
           &:hover {
             background-color: ${lighten(0.1, theme.palette.primary.light)};
           }
-        `
-      : ''}
+        `}
   `}
 `;

@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title }) => (
   <Container>
-    <BackLink to="/dashboard" title="Voltar">
+    <BackLink to="/" title="Voltar">
       <FaArrowCircleLeft />
     </BackLink>
 

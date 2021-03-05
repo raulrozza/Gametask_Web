@@ -3,7 +3,7 @@ import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 interface UseTitleOptionsController {
   menuRef: RefObject<HTMLDivElement>;
   visible: boolean;
-  hide(): void;
+  hide(force?: boolean): void;
   show(): void;
 }
 
@@ -25,9 +25,12 @@ export default function useTitleOptionsController(): UseTitleOptionsController {
     }
   }, []);
 
-  const hide = useCallback(() => {
-    if (!menuHovered) setVisible(false);
-  }, [menuHovered]);
+  const hide = useCallback(
+    (force = false) => {
+      if (force || !menuHovered) setVisible(false);
+    },
+    [menuHovered],
+  );
 
   const show = useCallback(() => setVisible(true), []);
 

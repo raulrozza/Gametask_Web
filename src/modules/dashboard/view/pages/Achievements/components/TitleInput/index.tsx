@@ -10,7 +10,14 @@ import useFilterTitlesByNameController from 'modules/dashboard/infra/controllers
 import { useTitleOptionsController } from './hooks';
 
 // Styles
-import { AddTitleButton, Container, InputField, TitleOptions } from './styles';
+import {
+  AddTitleButton,
+  Container,
+  InputField,
+  OptionButton,
+  TitleOptions,
+} from './styles';
+import ITitle from 'modules/dashboard/entities/ITitle';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -50,11 +57,21 @@ const TitleInput: React.FC<InputProps> = ({
     titleOptions.hide();
   }, [createTitle, helpers, titleName, titleOptions]);
 
+  const handleSelectTitle = useCallback(
+    (title: ITitle) => () => {
+      helpers.setValue(title.id);
+
+      titleOptions.hide(true);
+      setTitleName(title.name);
+    },
+    [helpers, titleOptions],
+  );
+
   return (
     <Container
       $fullWidth={fullWidth}
       onFocus={titleOptions.show}
-      onBlur={titleOptions.hide}
+      onBlur={() => titleOptions.hide()}
     >
       <InputField
         {...field}
@@ -66,12 +83,22 @@ const TitleInput: React.FC<InputProps> = ({
       {meta.error && meta.touched && <ErrorField>{meta.error}</ErrorField>}
 
       <TitleOptions ref={titleOptions.menuRef} visible={titleOptions.visible}>
+        {titles.map(title => (
+          <OptionButton
+            key={title.id}
+            onClick={handleSelectTitle(title)}
+            type="button"
+          >
+            {title.name}
+          </OptionButton>
+        ))}
+
         <AddTitleButton
           onClick={handleAddTitle}
           type="button"
           disabled={loading}
         >
-          Adicionar título: {titleName}
+          Criar novo {titleName}
         </AddTitleButton>
       </TitleOptions>
     </Container>
