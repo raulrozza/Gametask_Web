@@ -1,12 +1,15 @@
 import { useCallback, useMemo, useState } from 'react';
+import lodash from 'lodash';
 import ITitle from 'modules/dashboard/entities/ITitle';
 import makeGetGamesTitlesService from 'modules/dashboard/services/factories/makeGetGamesTitlesService';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
+const DEBOUNCE_TIME = 500;
+
 interface UseFilterTitlesByNameController {
   titles: ITitle[];
-  filterTitles: (name?: string) => Promise<void>;
+  filterTitles: (name?: string) => Promise<void> | undefined;
 }
 
 export default function useFilterTitlesByNameController(): UseFilterTitlesByNameController {
@@ -18,7 +21,7 @@ export default function useFilterTitlesByNameController(): UseFilterTitlesByName
   const session = useSessionContext();
 
   const filterTitles = useCallback(
-    async (name?: string) => {
+    lodash.debounce(async (name?: string) => {
       const {
         titles,
         error,
@@ -34,7 +37,7 @@ export default function useFilterTitlesByNameController(): UseFilterTitlesByName
       }
 
       if (titles) setTitles(titles);
-    },
+    }, DEBOUNCE_TIME),
     [getGameTitlesService, session, toast],
   );
 
