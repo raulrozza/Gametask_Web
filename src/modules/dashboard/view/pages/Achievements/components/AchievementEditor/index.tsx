@@ -18,7 +18,7 @@ interface IFormValues {
   image?: string | File;
 }
 
-const initialValues: IFormValues = {
+const defaultInitialValues: IFormValues = {
   name: '',
   description: '',
   title: '',
@@ -29,7 +29,7 @@ const AchievementEditor: React.FC<AchievementEditorProps> = ({ visible }) => {
   return (
     <Container $visible={visible}>
       <Formik
-        initialValues={initialValues}
+        initialValues={defaultInitialValues}
         validationSchema={AchievementSchema}
         onSubmit={console.log}
       >
