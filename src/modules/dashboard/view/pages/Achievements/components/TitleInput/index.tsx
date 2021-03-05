@@ -27,7 +27,7 @@ const TitleInput: React.FC<InputProps> = ({
   const [titleName, setTitleName] = useState('');
 
   const { titles, filterTitles } = useFilterTitlesByNameController();
-  const { createTitle } = useCreateTitleController();
+  const { loading, createTitle } = useCreateTitleController();
 
   const titleOptions = useTitleOptionsController();
 
@@ -43,13 +43,12 @@ const TitleInput: React.FC<InputProps> = ({
   );
 
   const handleAddTitle = useCallback(async () => {
-    const title = await createTitle({ name: field.value });
+    const title = await createTitle({ name: titleName });
 
-    if (title) {
-      titleOptions.hide();
-      helpers.setValue(title.id);
-    }
-  }, [createTitle, field.value, helpers, titleOptions]);
+    if (title) helpers.setValue(title.id);
+
+    titleOptions.hide();
+  }, [createTitle, helpers, titleName, titleOptions]);
 
   return (
     <Container
@@ -67,7 +66,11 @@ const TitleInput: React.FC<InputProps> = ({
       {meta.error && meta.touched && <ErrorField>{meta.error}</ErrorField>}
 
       <TitleOptions ref={titleOptions.menuRef} visible={titleOptions.visible}>
-        <AddTitleButton onClick={handleAddTitle}>
+        <AddTitleButton
+          onClick={handleAddTitle}
+          type="button"
+          disabled={loading}
+        >
           Adicionar título: {titleName}
         </AddTitleButton>
       </TitleOptions>

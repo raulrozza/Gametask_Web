@@ -11,9 +11,11 @@ interface IExecute {
 export default class CreateTitleService {
   constructor(private titlesRepository: ITitlesRepository) {}
 
-  public async execute(data: ICreateTitleDTO): Promise<IExecute> {
+  public async execute({ name }: ICreateTitleDTO): Promise<IExecute> {
+    if (!name) return {};
+
     try {
-      const title = await this.titlesRepository.create(data);
+      const title = await this.titlesRepository.create({ name });
 
       return { title };
     } catch (error) {

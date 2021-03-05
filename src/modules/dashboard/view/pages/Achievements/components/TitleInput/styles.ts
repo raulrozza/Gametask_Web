@@ -91,16 +91,23 @@ export const TitleOptions = styled.div<TitleOptionsProps>`
 `;
 
 export const AddTitleButton = styled.button`
-  ${({ theme }) => css`
+  ${({ theme, disabled }) => css`
     border: none;
     width: 100%;
     min-height: 20px;
     padding: ${theme.layout.spacing(1, 2)};
-    cursor: pointer;
+    cursor: ${disabled ? 'default' : 'pointer'};
 
     transition: background-color 0.2s;
-    &:hover {
-      background-color: ${lighten(0.1, theme.palette.primary.light)};
-    }
+
+    ${!disabled
+      ? css`
+          opacity: 0.7;
+
+          &:hover {
+            background-color: ${lighten(0.1, theme.palette.primary.light)};
+          }
+        `
+      : ''}
   `}
 `;
