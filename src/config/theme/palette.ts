@@ -5,7 +5,7 @@ interface PaletteOptions {
   contrast: string;
 }
 
-type PaletteKeys = 'primary' | 'secondary';
+type PaletteKeys = 'primary' | 'secondary' | 'error';
 
 const gray = {
   0: '#FFFFFF',
@@ -36,6 +36,12 @@ const palette: Record<PaletteKeys, PaletteOptions> &
     light: '#ab39a5',
     main: '#852c80',
     dark: '#5f1f5b',
+    contrast: '#F5F5F5',
+  },
+  error: {
+    light: '#DF2935',
+    main: '#BF252D',
+    dark: '#8E1E20',
     contrast: '#F5F5F5',
   },
   gray,

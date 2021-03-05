@@ -6,8 +6,8 @@ import {
   DefaultPageContainer,
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
-import { AchievementEditor } from './components';
-import { EmptyContent } from './styles';
+import { AchievementCard, AchievementEditor } from './components';
+import { AchievementsContainer, EmptyContent } from './styles';
 
 // Hooks
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
@@ -60,7 +60,16 @@ const Achievements: React.FC = () => {
           <DefaultPageContainer.Content>
             {achievements.length === 0 ? (
               <EmptyContent>Não há conquistas ainda.</EmptyContent>
-            ) : null}
+            ) : (
+              <AchievementsContainer>
+                {achievements.map(achievement => (
+                  <AchievementCard
+                    key={achievement.id}
+                    achievement={achievement}
+                  />
+                ))}
+              </AchievementsContainer>
+            )}
 
             <AchievementEditor
               visible={editorController.visible}

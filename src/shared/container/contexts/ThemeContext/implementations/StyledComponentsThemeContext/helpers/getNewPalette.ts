@@ -54,6 +54,7 @@ export default function getNewPalette(theme: ISwitchThemeArgs): Palette {
   const gray = getGrayScale(theme.primary);
 
   return {
+    ...defaultPalette,
     primary,
     secondary,
     gray,
