@@ -38,9 +38,9 @@ const getGrayScale = (primary: string): Palette['gray'] => {
     : Object.values(defaultGrayScale).reverse();
 
   const newScale: Palette['gray'] = scaleKeys.reduce(
-    (accumulatedScale, key) => ({
+    (accumulatedScale, key, index) => ({
       ...accumulatedScale,
-      [key]: scaleValues[Number(key)],
+      [key]: scaleValues[index],
     }),
     {} as Palette['gray'],
   );

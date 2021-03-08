@@ -4,7 +4,7 @@ import React from 'react';
 import placeholder from 'assets/img/achievements/placeholder.png';
 
 // Components
-import { RemoveButton } from 'modules/dashboard/view/components';
+import { EditButton, RemoveButton } from 'modules/dashboard/view/components';
 import { Container, Description, Image, Name } from './styles';
 
 // Icons
@@ -55,13 +55,12 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement }) => {
         onClick={handleDeleteAchievement}
       />
 
-      <button
-        className="edit-button"
+      <EditButton
         title="Editar conquista"
         /* onClick={() => onEdit(achievement._id)} */
       >
         <FaEdit />
-      </button>
+      </EditButton>
     </Container>
   );
 };
