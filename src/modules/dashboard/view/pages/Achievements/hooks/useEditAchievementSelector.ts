@@ -3,6 +3,7 @@ import ITitle from 'modules/dashboard/entities/ITitle';
 import { useMemo, useState } from 'react';
 
 interface IAchievementValues {
+  id: string;
   name: string;
   description: string;
   title: string;
@@ -26,6 +27,7 @@ export default function useEditAchievementSelector(): UseEditAchievementSelector
     const title = selectedAchievement.title as ITitle | undefined;
 
     return {
+      id: selectedAchievement.id,
       name: selectedAchievement.name,
       description: selectedAchievement.description,
       title: title?.id || '',

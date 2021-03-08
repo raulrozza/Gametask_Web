@@ -6,12 +6,18 @@ import { TitleInput } from '..';
 import useCreateAchievementController from 'modules/dashboard/infra/controllers/useCreateAchievementController';
 
 import { ButtonContainer, Container, Form } from './styles';
+import useEditAchievementController from 'modules/dashboard/infra/controllers/useEditAchievementController';
 
 interface IFormValues {
   name: string;
   description: string;
   title: string;
   image?: string | File;
+}
+
+interface IAchievementInitialValues extends IFormValues {
+  id: string;
+  titleName: string;
 }
 
 const defaultInitialValues: IFormValues = {
@@ -23,7 +29,7 @@ const defaultInitialValues: IFormValues = {
 
 interface AchievementEditorProps {
   visible: boolean;
-  initialValues?: IFormValues & { titleName: string };
+  initialValues?: IAchievementInitialValues;
   closeEditor: () => void;
   updateAchievements: () => void;
 }
@@ -34,18 +40,35 @@ const AchievementEditor: React.FC<AchievementEditorProps> = ({
   closeEditor,
   updateAchievements,
 }) => {
-  const { loading, createAchievement } = useCreateAchievementController();
+  const {
+    loading: loadingCreate,
+    createAchievement,
+  } = useCreateAchievementController();
+  const {
+    loading: loadingEdit,
+    editAchievement,
+  } = useEditAchievementController();
+
+  const loading = loadingCreate || loadingEdit;
 
   const handleSubmit = useCallback(
     async (values: IFormValues) => {
-      const success = initialValues ? null : await createAchievement(values);
+      const success = initialValues
+        ? await editAchievement({ ...values, id: initialValues.id })
+        : await createAchievement(values);
 
       if (success) {
         closeEditor();
         updateAchievements();
       }
     },
-    [closeEditor, createAchievement, initialValues, updateAchievements],
+    [
+      closeEditor,
+      createAchievement,
+      editAchievement,
+      initialValues,
+      updateAchievements,
+    ],
   );
 
   const formik = useFormik({
