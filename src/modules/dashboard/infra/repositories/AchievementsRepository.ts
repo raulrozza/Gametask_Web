@@ -1,4 +1,5 @@
 import ICreateAchievementDTO from 'modules/dashboard/dtos/ICreateAchievementDTO';
+import IEditAchievementDTO from 'modules/dashboard/dtos/IEditAchievementDTO';
 import IAchievement from 'modules/dashboard/entities/IAchievement';
 import IAchievementsRepository from 'modules/dashboard/repositories/IAchievementsRepository';
 import { makeHttpProvider } from 'shared/container/providers';
@@ -35,6 +36,37 @@ export default class AchievementsRepository implements IAchievementsRepository {
 
     const response = await this.httpProvider.patch<IAchievement>(
       `achievements/${achievement.id}/avatar`,
+      data,
+    );
+
+    return response;
+  }
+
+  public async edit({
+    id,
+    name,
+    description,
+    title,
+    image,
+  }: IEditAchievementDTO): Promise<IAchievement> {
+    const payload: Omit<ICreateAchievementDTO, 'image'> = {
+      name,
+      description,
+      title,
+    };
+
+    const achievement = await this.httpProvider.put<IAchievement>(
+      `achievements/${id}`,
+      payload,
+    );
+
+    if (!image || typeof image === 'string') return achievement;
+
+    const data = new FormData();
+    data.append('image', image);
+
+    const response = await this.httpProvider.patch<IAchievement>(
+      `achievements/${id}/avatar`,
       data,
     );
 
