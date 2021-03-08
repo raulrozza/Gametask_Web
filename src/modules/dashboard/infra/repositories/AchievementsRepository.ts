@@ -52,7 +52,7 @@ export default class AchievementsRepository implements IAchievementsRepository {
     const payload: Omit<ICreateAchievementDTO, 'image'> = {
       name,
       description,
-      title,
+      title: title || undefined,
     };
 
     const achievement = await this.httpProvider.put<IAchievement>(

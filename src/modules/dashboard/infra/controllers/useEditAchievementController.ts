@@ -40,7 +40,7 @@ export default function useEditAchievementController(): UseEditAchievementContro
         return null;
       }
 
-      toast.showSuccess('Conquista editada com sucesso!');
+      toast.showSuccess('Conquista alterada com sucesso!');
       return achievement || null;
     },
     [editAchievementService, session, toast],
