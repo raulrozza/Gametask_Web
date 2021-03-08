@@ -5,5 +5,6 @@ import IAchievement from 'modules/dashboard/entities/IAchievement';
 export default interface IAchievementsRepository {
   findAll(): Promise<IAchievement[]>;
   create(data: ICreateAchievementDTO): Promise<IAchievement>;
+  delete(id: string): Promise<void>;
   edit(data: IEditAchievementDTO): Promise<IAchievement>;
 }

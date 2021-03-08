@@ -42,6 +42,10 @@ export default class AchievementsRepository implements IAchievementsRepository {
     return response;
   }
 
+  public async delete(id: string): Promise<void> {
+    return this.httpProvider.delete(`achievements/${id}`);
+  }
+
   public async edit({
     id,
     name,
