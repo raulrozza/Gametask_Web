@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Components
 import { Button } from 'shared/view/components';
@@ -12,6 +12,8 @@ import { AchievementsContainer, EmptyContent } from './styles';
 // Hooks
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
 import { useItemEditorController } from 'modules/dashboard/view/hooks';
+import { useEditAchievementSelector } from 'modules/dashboard/view/pages/Achievements/hooks';
+import IAchievement from 'modules/dashboard/entities/IAchievement';
 
 const Achievements: React.FC = () => {
   const {
@@ -21,35 +23,16 @@ const Achievements: React.FC = () => {
   } = useFetchAchievementsController();
 
   const editorController = useItemEditorController();
-  /* const [
-    selectedAchievement,
-    setSelectedAchievement,
-  ] = useState<IAchievement | null>(null);
 
-  const handleEditAchievement = (id: string) => {
-    if (!achievements) return;
+  const { achievementValues, openEditorWith } = useEditAchievementSelector();
 
-    const foundAchievement = findAchievementById(achievements, id);
-
-    if (!foundAchievement) return;
-
-    const achievement = {
-      ...foundAchievement,
-      image: foundAchievement.image ? foundAchievement.image_url : undefined,
-    };
-
-    setSelectedAchievement(achievement);
-
-    const isAchievementAlreadySelected =
-      selectedAchievement && foundAchievement._id === selectedAchievement._id;
-
-    if (!showPanel || isAchievementAlreadySelected) setShowPanel(!showPanel);
-  };
-
-  const handleAddAchievement = () => {
-    setSelectedAchievement(null);
-    setShowPanel(true);
-  }; */
+  const handleOpenEditorWith = useCallback(
+    (achievement?: IAchievement) => {
+      openEditorWith(achievement);
+      editorController.toggle();
+    },
+    [editorController, openEditorWith],
+  );
 
   return (
     <DefaultPageContainer title="Conquistas">
@@ -66,6 +49,7 @@ const Achievements: React.FC = () => {
                   <AchievementCard
                     key={achievement.id}
                     achievement={achievement}
+                    openEditorWith={handleOpenEditorWith}
                   />
                 ))}
               </AchievementsContainer>
@@ -75,6 +59,7 @@ const Achievements: React.FC = () => {
               visible={editorController.visible}
               closeEditor={editorController.close}
               updateAchievements={fetchAchievements}
+              initialValues={achievementValues}
             />
           </DefaultPageContainer.Content>
 

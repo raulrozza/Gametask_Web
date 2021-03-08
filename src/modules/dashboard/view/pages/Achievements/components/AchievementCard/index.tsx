@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Assets
 import placeholder from 'assets/img/achievements/placeholder.png';
@@ -16,9 +16,13 @@ import ITitle from 'modules/dashboard/entities/ITitle';
 
 interface AchievementCardProps {
   achievement: IAchievement;
+  openEditorWith(achievement: IAchievement): void;
 }
 
-const AchievementCard: React.FC<AchievementCardProps> = ({ achievement }) => {
+const AchievementCard: React.FC<AchievementCardProps> = ({
+  achievement,
+  openEditorWith,
+}) => {
   const handleDeleteAchievement = async () => {
     /* const response = window.confirm(
       'Deseja mesmo excluir esta conquista? Esta ação não pode ser desfeita.',
@@ -30,6 +34,11 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement }) => {
 
     if (success) onDelete(); */
   };
+
+  const handleEditAchievement = useCallback(() => openEditorWith(achievement), [
+    achievement,
+    openEditorWith,
+  ]);
 
   return (
     <Container>
@@ -55,10 +64,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement }) => {
         onClick={handleDeleteAchievement}
       />
 
-      <EditButton
-        title="Editar conquista"
-        /* onClick={() => onEdit(achievement._id)} */
-      >
+      <EditButton title="Editar conquista" onClick={handleEditAchievement}>
         <FaEdit />
       </EditButton>
     </Container>

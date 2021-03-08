@@ -1,4 +1,9 @@
-import React, { InputHTMLAttributes, useCallback, useState } from 'react';
+import React, {
+  InputHTMLAttributes,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 // Components
 import { ErrorField } from 'shared/view/components';
@@ -21,12 +26,14 @@ import ITitle from 'modules/dashboard/entities/ITitle';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  initialValue?: string;
   fullWidth?: boolean;
 }
 
 const TitleInput: React.FC<InputProps> = ({
   fullWidth = false,
   name,
+  initialValue,
   ...inputProps
 }) => {
   const [field, meta, helpers] = useField(name);
@@ -66,6 +73,10 @@ const TitleInput: React.FC<InputProps> = ({
     },
     [helpers, titleOptions],
   );
+
+  useEffect(() => {
+    if (initialValue) setTitleName(initialValue);
+  }, [initialValue]);
 
   return (
     <Container
