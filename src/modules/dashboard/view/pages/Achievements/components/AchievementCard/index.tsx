@@ -17,23 +17,18 @@ import ITitle from 'modules/dashboard/entities/ITitle';
 interface AchievementCardProps {
   achievement: IAchievement;
   openEditorWith(achievement: IAchievement): void;
+  removeAchievement(id: string): void;
 }
 
 const AchievementCard: React.FC<AchievementCardProps> = ({
   achievement,
   openEditorWith,
+  removeAchievement,
 }) => {
-  const handleDeleteAchievement = async () => {
-    /* const response = window.confirm(
-      'Deseja mesmo excluir esta conquista? Esta ação não pode ser desfeita.',
-    );
-
-    if (!response) return;
-
-    const success = await apiDelete(`/achievement/${achievement._id}`);
-
-    if (success) onDelete(); */
-  };
+  const handleDeleteAchievement = useCallback(
+    () => removeAchievement(achievement.id),
+    [achievement.id, removeAchievement],
+  );
 
   const handleEditAchievement = useCallback(() => openEditorWith(achievement), [
     achievement,

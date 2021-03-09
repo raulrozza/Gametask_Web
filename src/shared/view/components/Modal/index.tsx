@@ -57,6 +57,10 @@ const Modal: React.FC<ModalProps> = ({
 
 type UseModalController = [boolean, () => void, () => void];
 
+/**
+ *
+ * @returns [openState, openMethodHandler, closeMethodHandler]
+ */
 export function useModalController(): UseModalController {
   const [open, setOpen] = useState(false);
 

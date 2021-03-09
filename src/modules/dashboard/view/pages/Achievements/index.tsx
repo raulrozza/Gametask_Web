@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Components
 import { Button } from 'shared/view/components';
@@ -6,14 +6,18 @@ import {
   DefaultPageContainer,
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
+import Modal, { useModalController } from 'shared/view/components/Modal';
 import { AchievementCard, AchievementEditor } from './components';
-import { AchievementsContainer, EmptyContent } from './styles';
+import { AchievementsContainer, EmptyContent, Row } from './styles';
 
 // Hooks
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
 import { useItemEditorController } from 'modules/dashboard/view/hooks';
 import { useEditAchievementSelector } from 'modules/dashboard/view/pages/Achievements/hooks';
+
+// Types
 import IAchievement from 'modules/dashboard/entities/IAchievement';
+import useDeleteAchievementController from 'modules/dashboard/infra/controllers/useDeleteAchievementController';
 
 const Achievements: React.FC = () => {
   const {
@@ -25,6 +29,28 @@ const Achievements: React.FC = () => {
   const editorController = useItemEditorController();
 
   const { achievementValues, openEditorWith } = useEditAchievementSelector();
+  const {
+    loading: loadingDelete,
+    deleteAchievement,
+  } = useDeleteAchievementController();
+
+  const [selectedAchievementId, setSelectedAchievementId] = useState('');
+
+  const [modalOpen, openModal, closeModal] = useModalController();
+
+  const handleOpenRemoveAchievementModal = useCallback(
+    (id: string) => {
+      setSelectedAchievementId(id);
+      openModal();
+    },
+    [openModal],
+  );
+
+  const handleRemoveAchievement = useCallback(async () => {
+    await deleteAchievement(selectedAchievementId);
+    closeModal();
+    fetchAchievements();
+  }, [closeModal, deleteAchievement, fetchAchievements, selectedAchievementId]);
 
   const handleOpenEditorWith = useCallback(
     (achievement?: IAchievement) => {
@@ -50,6 +76,7 @@ const Achievements: React.FC = () => {
                     key={achievement.id}
                     achievement={achievement}
                     openEditorWith={handleOpenEditorWith}
+                    removeAchievement={handleOpenRemoveAchievementModal}
                   />
                 ))}
               </AchievementsContainer>
@@ -68,6 +95,24 @@ const Achievements: React.FC = () => {
           </DefaultPageContainer.Footer>
         </>
       )}
+
+      <Modal
+        title="Confirmação necessária"
+        closeModal={closeModal}
+        open={modalOpen}
+        size="sm"
+      >
+        Deseja realmente excluir esta conquista?
+        <Row>
+          <Button outlined onClick={closeModal}>
+            Cancelar
+          </Button>
+
+          <Button onClick={handleRemoveAchievement} loading={loadingDelete}>
+            Confirmar
+          </Button>
+        </Row>
+      </Modal>
     </DefaultPageContainer>
   );
 };
