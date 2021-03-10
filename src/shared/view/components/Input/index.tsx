@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { memo, InputHTMLAttributes } from 'react';
 
 // Components
 import { ErrorField } from 'shared/view/components';
@@ -30,4 +30,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default memo(Input);

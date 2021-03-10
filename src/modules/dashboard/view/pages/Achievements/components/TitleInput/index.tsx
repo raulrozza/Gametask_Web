@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useState,
+  memo,
 } from 'react';
 
 // Components
@@ -116,4 +117,4 @@ const TitleInput: React.FC<InputProps> = ({
   );
 };
 
-export default TitleInput;
+export default memo(TitleInput);

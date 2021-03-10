@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, memo } from 'react';
 
 // Assets
 import placeholder from 'assets/img/achievements/placeholder.png';
@@ -44,4 +44,4 @@ const ImageInput: React.FC<ImageInputProps> = ({ name, fullWidth = false }) => {
   );
 };
 
-export default ImageInput;
+export default memo(ImageInput);

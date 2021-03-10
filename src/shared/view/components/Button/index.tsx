@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { memo, ButtonHTMLAttributes } from 'react';
 
 import { ChildrenContainer, Spinner, StyledButton, Text } from './styles';
 
@@ -36,4 +36,4 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default memo(Button);

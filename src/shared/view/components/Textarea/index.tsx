@@ -1,4 +1,4 @@
-import React, { TextareaHTMLAttributes } from 'react';
+import React, { memo, TextareaHTMLAttributes } from 'react';
 
 // Components
 import { ErrorField } from 'shared/view/components';
@@ -30,4 +30,4 @@ const Textarea: React.FC<TextareaProps> = ({
   );
 };
 
-export default Textarea;
+export default memo(Textarea);
