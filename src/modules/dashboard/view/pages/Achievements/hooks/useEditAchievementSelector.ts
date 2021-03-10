@@ -32,7 +32,7 @@ export default function useEditAchievementSelector(): UseEditAchievementSelector
       description: selectedAchievement.description,
       title: title?.id || '',
       titleName: title?.name || '',
-      image: selectedAchievement.image,
+      image: selectedAchievement.image_url,
     };
   }, [selectedAchievement]);
 
