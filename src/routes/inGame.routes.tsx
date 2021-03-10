@@ -8,7 +8,6 @@ import { Loading } from 'components';
 import { useGameData } from 'hooks';
 
 // Pages
-const Achievements = lazy(() => import('pages/Achievements'));
 const Activities = lazy(() => import('pages/Activities'));
 const Game = lazy(() => import('pages/Game'));
 const Players = lazy(() => import('pages/Players'));
@@ -25,7 +24,6 @@ const InGameRoutes: React.FC = () => {
     <Switch>
       {!game ? null : (
         <>
-          <Route path="/achievements" exact component={Achievements} />
           <Route path="/activities" exact component={Activities} />
           <Route path="/game" component={Game} />
           <Route path="/players" component={Players} />
