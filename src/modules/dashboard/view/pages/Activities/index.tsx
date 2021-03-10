@@ -7,19 +7,19 @@ import {
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
 import Modal, { useModalController } from 'shared/view/components/Modal';
+import { ActivityEditor } from './components';
 import { FaEdit, FaTimes } from 'react-icons/fa';
-import ActivityForm from './ActivityForm';
 
 // Hooks
 import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 
 // Styles
-import { ActivityContainer, Container } from './styles';
+import { ActivityContainer } from './styles';
 import { RemoveButton } from 'styles';
-import { EmptyContainer, Editor, Row } from 'components/PageWrapper/styles';
 
 // Types
 import { IActivity } from 'interfaces/api/Activity';
+import { useItemEditorController } from 'modules/dashboard/view/hooks';
 
 const Activities: React.FC = () => {
   const {
@@ -27,6 +27,8 @@ const Activities: React.FC = () => {
     loading,
     fetchActivities,
   } = useFetchActivitiesController();
+
+  const editorController = useItemEditorController();
 
   // Edit panel
   const [showPanel, setShowPanel] = useState(false);
@@ -151,16 +153,15 @@ const Activities: React.FC = () => {
               </ActivityContainer>
             )}
 
-            <Editor shown={showPanel}>
-              <ActivityForm
-                activity={selectedActivity}
-                submitCallback={onSubmit}
-              />
-            </Editor>
+            <ActivityEditor
+              visible={editorController.visible}
+              closeEditor={editorController.close}
+              updateActivities={fetchActivities}
+            />
           </DefaultPageContainer.Content>
 
           <DefaultPageContainer.Footer>
-            <Button onClick={createActivity}>Nova Atividade</Button>
+            <Button onClick={editorController.open}>Nova Atividade</Button>
           </DefaultPageContainer.Footer>
         </>
       )}
