@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { FormikProvider, useFormik } from 'formik';
+import { FormikHelpers, FormikProvider, useFormik } from 'formik';
 import AchievementSchema from 'modules/dashboard/validation/AchievementSchema';
 import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
 import { TitleInput } from '..';
@@ -52,7 +52,7 @@ const AchievementEditor: React.FC<AchievementEditorProps> = ({
   const loading = loadingCreate || loadingEdit;
 
   const handleSubmit = useCallback(
-    async (values: IFormValues) => {
+    async (values: IFormValues, helpers: FormikHelpers<IFormValues>) => {
       const success = initialValues
         ? await editAchievement({ ...values, id: initialValues.id })
         : await createAchievement(values);
@@ -60,6 +60,9 @@ const AchievementEditor: React.FC<AchievementEditorProps> = ({
       if (success) {
         closeEditor();
         updateAchievements();
+        helpers.resetForm({
+          values: defaultInitialValues,
+        });
       }
     },
     [

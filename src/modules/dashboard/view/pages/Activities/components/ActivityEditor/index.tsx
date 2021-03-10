@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
-import { FormikProvider, useFormik } from 'formik';
+import { FormikHelpers, FormikProvider, useFormik } from 'formik';
 import { Button, Input, Textarea } from 'shared/view/components';
 import ActivitySchema from 'modules/dashboard/validation/ActivitySchema';
 
 import { ButtonContainer, Container, Form } from './styles';
+import useCreateActivityController from 'modules/dashboard/infra/controllers/useCreateActivityController';
 
 interface IFormValues {
   name: string;
@@ -36,29 +37,34 @@ const ActivityEditor: React.FC<ActivityEditorProps> = ({
   closeEditor,
   updateActivities,
 }) => {
-  /* const {
-    loading: loadingCreate,
-    createAchievement,
-  } = useCreateAchievementController();
   const {
+    loading: loadingCreate,
+    createActivity,
+  } = useCreateActivityController();
+  /* const {
     loading: loadingEdit,
     editAchievement,
   } = useEditAchievementController(); */
 
-  const loading = false; // loadingCreate || loadingEdit;
+  const loading = loadingCreate; // loadingCreate || loadingEdit;
 
   const handleSubmit = useCallback(
-    async (values: IFormValues) => {
-      const success = false; /* initialValues
+    async (values: IFormValues, helpers: FormikHelpers<IFormValues>) => {
+      const success = await createActivity(
+        values,
+      ); /* initialValues
         ? await editAchievement({ ...values, id: initialValues.id })
         : await createAchievement(values); */
 
       if (success) {
         closeEditor();
         updateActivities();
+        helpers.resetForm({
+          values: defaultInitialValues,
+        });
       }
     },
-    [closeEditor, updateActivities],
+    [closeEditor, createActivity, updateActivities],
   );
 
   const formik = useFormik({

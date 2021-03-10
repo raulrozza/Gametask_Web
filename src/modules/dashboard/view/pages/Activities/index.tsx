@@ -7,7 +7,7 @@ import {
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
 import Modal, { useModalController } from 'shared/view/components/Modal';
-import { ActivityEditor } from './components';
+import { ActivityCard, ActivityEditor } from './components';
 import { FaEdit, FaTimes } from 'react-icons/fa';
 
 // Hooks
@@ -111,44 +111,12 @@ const Activities: React.FC = () => {
             ) : (
               <ActivityContainer>
                 {activities.map(activity => (
-                  <div
+                  <ActivityCard
                     key={activity.id}
-                    className={`activity ${
-                      !activity.description && !activity.dmRules ? 'center' : ''
-                    }`}
-                  >
-                    <div className="activity-xp">{activity.experience} XP</div>
-
-                    <div className="activity-name">{activity.name}</div>
-
-                    {activity.description && (
-                      <div className="activity-description">
-                        {activity.description}
-                      </div>
-                    )}
-
-                    {activity.dmRules && (
-                      <div className="activity-rules">
-                        Regras: <cite>{activity.dmRules}</cite>
-                      </div>
-                    )}
-
-                    <RemoveButton
-                      horizontalPosition="right"
-                      title="Excluir conquista"
-                      onClick={() => deleteActivity(activity.id)}
-                    >
-                      <FaTimes />
-                    </RemoveButton>
-
-                    <button
-                      className="edit-button"
-                      title="Editar conquista"
-                      onClick={() => editActivity(activity.id)}
-                    >
-                      <FaEdit />
-                    </button>
-                  </div>
+                    activity={activity}
+                    openEditorWith={() => undefined}
+                    removeActivity={() => undefined}
+                  />
                 ))}
               </ActivityContainer>
             )}
