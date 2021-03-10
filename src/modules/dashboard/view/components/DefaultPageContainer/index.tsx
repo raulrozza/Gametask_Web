@@ -6,7 +6,7 @@ import { DefaultTheme, StyledComponent } from 'styled-components';
 import Header from './Header';
 
 // Styles
-import { Container, Content, Footer } from './styles';
+import { Container, Content, EmptyContent, Footer } from './styles';
 
 interface DefaultPageContainer {
   title: string;
@@ -14,6 +14,7 @@ interface DefaultPageContainer {
 
 interface IContainer extends React.FC<DefaultPageContainer> {
   Content: StyledComponent<'div', DefaultTheme>;
+  EmptyContent: StyledComponent<'div', DefaultTheme>;
   Footer: StyledComponent<'footer', DefaultTheme>;
 }
 
@@ -30,6 +31,7 @@ const DefaultPageContainer: IContainer = (({ title, children }) => (
 )) as IContainer;
 
 DefaultPageContainer.Content = Content;
+DefaultPageContainer.EmptyContent = EmptyContent;
 DefaultPageContainer.Footer = Footer;
 
 export default DefaultPageContainer;

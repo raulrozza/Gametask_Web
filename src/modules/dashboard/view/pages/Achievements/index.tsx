@@ -8,7 +8,7 @@ import {
 } from 'modules/dashboard/view/components';
 import Modal, { useModalController } from 'shared/view/components/Modal';
 import { AchievementCard, AchievementEditor } from './components';
-import { AchievementsContainer, EmptyContent, Row } from './styles';
+import { AchievementsContainer, Row } from './styles';
 
 // Hooks
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
@@ -68,7 +68,9 @@ const Achievements: React.FC = () => {
         <>
           <DefaultPageContainer.Content>
             {achievements.length === 0 ? (
-              <EmptyContent>Não há conquistas ainda.</EmptyContent>
+              <DefaultPageContainer.EmptyContent>
+                Não há conquistas ainda.
+              </DefaultPageContainer.EmptyContent>
             ) : (
               <AchievementsContainer>
                 {achievements.map(achievement => (

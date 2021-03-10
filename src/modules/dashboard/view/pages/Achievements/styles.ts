@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const EmptyContent = styled.div`
-  flex: 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-`;
-
 export const AchievementsContainer = styled.div`
   flex: 1;
   width: 100%;

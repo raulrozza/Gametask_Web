@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import IActivity from 'modules/dashboard/entities/IActivity';
 import makeListActivitiesService from 'modules/dashboard/services/factories/makeListActivitiesService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
@@ -7,6 +7,7 @@ import useToastContext from 'shared/container/contexts/ToastContext/contexts/use
 interface UseFetchActivitiesController {
   loading: boolean;
   activities: IActivity[];
+  fetchActivities(): Promise<void>;
 }
 
 export default function useFetchActivitiesController(): UseFetchActivitiesController {
@@ -17,26 +18,29 @@ export default function useFetchActivitiesController(): UseFetchActivitiesContro
   const session = useSessionContext();
   const toast = useToastContext();
 
-  useEffect(() => {
-    listActivities
-      .execute()
-      .then(async ({ activities, error, shouldLogout }) => {
-        if (error) {
-          toast.showError(error);
+  const fetchActivities = useCallback(async () => {
+    const { activities, error, shouldLogout } = await listActivities.execute();
 
-          if (shouldLogout) await session.logout();
+    if (error) {
+      toast.showError(error);
 
-          return;
-        }
+      if (shouldLogout) await session.logout();
 
-        if (activities) setActivities(activities);
+      return;
+    }
 
-        setLoading(false);
-      });
+    if (activities) setActivities(activities);
+
+    setLoading(false);
   }, [listActivities, session, toast]);
+
+  useEffect(() => {
+    fetchActivities();
+  }, [fetchActivities, listActivities, session, toast]);
 
   return {
     loading,
     activities,
+    fetchActivities,
   };
 }

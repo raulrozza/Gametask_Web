@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 // Components
 import { Button } from 'shared/view/components';
@@ -11,46 +11,36 @@ import { FaEdit, FaTimes } from 'react-icons/fa';
 import ActivityForm from './ActivityForm';
 
 // Hooks
-import { useAuth } from 'hooks/contexts/useAuth';
-
-// Services
-import { api } from 'services';
+import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 
 // Styles
-import { Container } from './styles';
+import { ActivityContainer, Container } from './styles';
 import { RemoveButton } from 'styles';
 import { EmptyContainer, Editor, Row } from 'components/PageWrapper/styles';
-
-// Utils
-import {
-  addItemToArray,
-  updateItemInArray,
-  removeItemFromArray,
-} from 'utils/arrayMethods';
-import handleApiErrors from 'utils/handleApiErrors';
 
 // Types
 import { IActivity } from 'interfaces/api/Activity';
 
 const Activities: React.FC = () => {
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    activities,
+    loading,
+    fetchActivities,
+  } = useFetchActivitiesController();
+
   // Edit panel
   const [showPanel, setShowPanel] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
     null,
   );
-  // Context
-  const { signOut } = useAuth();
 
   const createActivity = useCallback(() => {
     setSelectedActivity(null);
     setShowPanel(true);
   }, []);
 
-  const editActivity = useCallback(
-    (id: string) => {
-      const activity = activities.find(activity => activity._id === id);
+  const editActivity = useCallback((id: string) => {
+    /* const activity = activities.find(activity => activity._id === id);
 
       if (activity) {
         if (
@@ -62,13 +52,11 @@ const Activities: React.FC = () => {
         }
         setSelectedActivity(activity);
         setShowPanel(!showPanel);
-      }
-    },
-    [activities, showPanel, selectedActivity],
-  );
+      } */
+  }, []);
 
   const deleteActivity = useCallback(async (id: string) => {
-    const response = window.confirm(
+    /* const response = window.confirm(
       'Deseja mesmo excluir esta atividade? Esta ação não pode ser desfeita.',
     );
     if (response) {
@@ -86,24 +74,11 @@ const Activities: React.FC = () => {
       }
 
       setLoading(false);
-    }
+    } */
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.instance.get('/activity');
-
-        setActivities(data);
-        setLoading(false);
-      } catch (error) {
-        handleApiErrors(error, signOut);
-      }
-    })();
-  }, [signOut]);
-
   const onSubmit = useCallback(async (id: string) => {
-    try {
+    /* try {
       const { data } = await api.instance.get(`/activity/${id}`);
 
       setActivities(activities => {
@@ -117,7 +92,7 @@ const Activities: React.FC = () => {
       setShowPanel(false);
     } catch (error) {
       handleApiErrors(error);
-    }
+    } */
   }, []);
 
   return (
@@ -126,60 +101,54 @@ const Activities: React.FC = () => {
         <DefaultPageLoading />
       ) : (
         <>
-          <Row reduced={showPanel}>
-            {activities.length > 0 ? (
-              <div>
-                <Container reduced={showPanel}>
-                  {activities.map(activity => (
-                    <div
-                      key={activity._id}
-                      className={`activity ${
-                        !activity.description && !activity.dmRules
-                          ? 'center'
-                          : ''
-                      }`}
-                    >
-                      <div className="activity-xp">
-                        {activity.experience} XP
-                      </div>
-
-                      <div className="activity-name">{activity.name}</div>
-
-                      {activity.description && (
-                        <div className="activity-description">
-                          {activity.description}
-                        </div>
-                      )}
-
-                      {activity.dmRules && (
-                        <div className="activity-rules">
-                          Regras: <cite>{activity.dmRules}</cite>
-                        </div>
-                      )}
-
-                      <RemoveButton
-                        horizontalPosition="right"
-                        title="Excluir conquista"
-                        onClick={() => deleteActivity(activity._id)}
-                      >
-                        <FaTimes />
-                      </RemoveButton>
-
-                      <button
-                        className="edit-button"
-                        title="Editar conquista"
-                        onClick={() => editActivity(activity._id)}
-                      >
-                        <FaEdit />
-                      </button>
-                    </div>
-                  ))}
-                </Container>
-              </div>
+          <DefaultPageContainer.Content>
+            {activities.length === 0 ? (
+              <DefaultPageContainer.EmptyContent>
+                Não há nenhuma atividade ainda..
+              </DefaultPageContainer.EmptyContent>
             ) : (
-              <EmptyContainer reduced={showPanel}>
-                Não há nenhuma atividade ainda.
-              </EmptyContainer>
+              <ActivityContainer>
+                {activities.map(activity => (
+                  <div
+                    key={activity.id}
+                    className={`activity ${
+                      !activity.description && !activity.dmRules ? 'center' : ''
+                    }`}
+                  >
+                    <div className="activity-xp">{activity.experience} XP</div>
+
+                    <div className="activity-name">{activity.name}</div>
+
+                    {activity.description && (
+                      <div className="activity-description">
+                        {activity.description}
+                      </div>
+                    )}
+
+                    {activity.dmRules && (
+                      <div className="activity-rules">
+                        Regras: <cite>{activity.dmRules}</cite>
+                      </div>
+                    )}
+
+                    <RemoveButton
+                      horizontalPosition="right"
+                      title="Excluir conquista"
+                      onClick={() => deleteActivity(activity.id)}
+                    >
+                      <FaTimes />
+                    </RemoveButton>
+
+                    <button
+                      className="edit-button"
+                      title="Editar conquista"
+                      onClick={() => editActivity(activity.id)}
+                    >
+                      <FaEdit />
+                    </button>
+                  </div>
+                ))}
+              </ActivityContainer>
             )}
 
             <Editor shown={showPanel}>
@@ -188,7 +157,7 @@ const Activities: React.FC = () => {
                 submitCallback={onSubmit}
               />
             </Editor>
-          </Row>
+          </DefaultPageContainer.Content>
 
           <DefaultPageContainer.Footer>
             <Button onClick={createActivity}>Nova Atividade</Button>
