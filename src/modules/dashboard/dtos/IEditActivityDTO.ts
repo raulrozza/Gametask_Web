@@ -2,6 +2,6 @@ export default interface IEditActivityDTO {
   id: string;
   name: string;
   description?: string;
-  experience: number;
+  experience: string;
   dmRules?: string;
 }

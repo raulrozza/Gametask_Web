@@ -5,6 +5,7 @@ import ActivitySchema from 'modules/dashboard/validation/ActivitySchema';
 
 import { ButtonContainer, Container, Form } from './styles';
 import useCreateActivityController from 'modules/dashboard/infra/controllers/useCreateActivityController';
+import useEditActivityController from 'modules/dashboard/infra/controllers/useEditActivityController';
 
 interface IFormValues {
   name: string;
@@ -41,20 +42,18 @@ const ActivityEditor: React.FC<ActivityEditorProps> = ({
     loading: loadingCreate,
     createActivity,
   } = useCreateActivityController();
-  /* const {
-    loading: loadingEdit,
-    editAchievement,
-  } = useEditAchievementController(); */
+  const { loading: loadingEdit, editActivity } = useEditActivityController();
 
-  const loading = loadingCreate; // loadingCreate || loadingEdit;
+  const loading = loadingCreate || loadingEdit;
 
   const handleSubmit = useCallback(
     async (values: IFormValues, helpers: FormikHelpers<IFormValues>) => {
-      const success = await createActivity(
-        values,
-      ); /* initialValues
-        ? await editAchievement({ ...values, id: initialValues.id })
-        : await createAchievement(values); */
+      const success = initialValues
+        ? await editActivity({
+            ...values,
+            id: initialValues.id,
+          })
+        : await createActivity(values);
 
       if (success) {
         closeEditor();
@@ -64,7 +63,13 @@ const ActivityEditor: React.FC<ActivityEditorProps> = ({
         });
       }
     },
-    [closeEditor, createActivity, updateActivities],
+    [
+      closeEditor,
+      createActivity,
+      editActivity,
+      initialValues,
+      updateActivities,
+    ],
   );
 
   const formik = useFormik({
@@ -74,8 +79,6 @@ const ActivityEditor: React.FC<ActivityEditorProps> = ({
   });
 
   useEffect(() => {
-    console.log(visible);
-
     if (!initialValues)
       formik.setValues({
         name: defaultInitialValues.name,

@@ -36,7 +36,10 @@ export default class ActivitiesRepository implements IActivitiesRepository {
     if (dmRules) payload.dmRules = dmRules;
     if (description) payload.description = description;
 
-    const response = await this.httpProvider.put<IActivity>(`activities/${id}`);
+    const response = await this.httpProvider.put<IActivity>(
+      `activities/${id}`,
+      payload,
+    );
 
     return response;
   }
