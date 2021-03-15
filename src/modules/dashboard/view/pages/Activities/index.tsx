@@ -15,8 +15,9 @@ import { useEditActivitySelector } from './hooks';
 import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 
 // Styles
-import { ActivityContainer } from './styles';
+import { ActivityContainer, Row } from './styles';
 import IActivity from 'modules/dashboard/entities/IActivity';
+import useDeleteActivityController from 'modules/dashboard/infra/controllers/useDeleteActivityController';
 
 const Activities: React.FC = () => {
   const {
@@ -42,32 +43,28 @@ const Activities: React.FC = () => {
     [activityValues, editorController, openEditorWith],
   );
 
-  // Edit panel
-  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
-    null,
+  const [selectedActivityId, setSelectedActivityId] = useState('');
+
+  const [modalOpen, openModal, closeModal] = useModalController();
+
+  const {
+    loading: loadingDelete,
+    deleteActivity,
+  } = useDeleteActivityController();
+
+  const handleOpenRemoveActivityModal = useCallback(
+    (id: string) => {
+      setSelectedActivityId(id);
+      openModal();
+    },
+    [openModal],
   );
 
-  const deleteActivity = useCallback(async (id: string) => {
-    /* const response = window.confirm(
-      'Deseja mesmo excluir esta atividade? Esta ação não pode ser desfeita.',
-    );
-    if (response) {
-      setLoading(true);
-      try {
-        await api.instance.delete(`/activity/${id}`);
-
-        setActivities(activities => {
-          const index = activities.findIndex(item => item._id === id);
-
-          return removeItemFromArray(activities, index);
-        });
-      } catch (error) {
-        handleApiErrors(error);
-      }
-
-      setLoading(false);
-    } */
-  }, []);
+  const handleRemoveActivity = useCallback(async () => {
+    await deleteActivity(selectedActivityId);
+    closeModal();
+    fetchActivities();
+  }, [closeModal, deleteActivity, fetchActivities, selectedActivityId]);
 
   return (
     <DefaultPageContainer title="Atividades">
@@ -87,7 +84,7 @@ const Activities: React.FC = () => {
                     key={activity.id}
                     activity={activity}
                     openEditorWith={handleOpenEditorWith}
-                    removeActivity={() => undefined}
+                    removeActivity={handleOpenRemoveActivityModal}
                   />
                 ))}
               </ActivityContainer>
@@ -106,6 +103,24 @@ const Activities: React.FC = () => {
           </DefaultPageContainer.Footer>
         </>
       )}
+
+      <Modal
+        title="Confirmação necessária"
+        closeModal={closeModal}
+        open={modalOpen}
+        size="sm"
+      >
+        Deseja realmente excluir esta atividade?
+        <Row>
+          <Button outlined onClick={closeModal}>
+            Cancelar
+          </Button>
+
+          <Button onClick={handleRemoveActivity} loading={loadingDelete}>
+            Confirmar
+          </Button>
+        </Row>
+      </Modal>
     </DefaultPageContainer>
   );
 };
