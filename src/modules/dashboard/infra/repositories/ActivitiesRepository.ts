@@ -1,4 +1,5 @@
 import ICreateActivityDTO from 'modules/dashboard/dtos/ICreateActivityDTO';
+import IEditActivityDTO from 'modules/dashboard/dtos/IEditActivityDTO';
 import IActivity from 'modules/dashboard/entities/IActivity';
 import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
 import { makeHttpProvider } from 'shared/container/providers';
@@ -20,6 +21,22 @@ export default class ActivitiesRepository implements IActivitiesRepository {
       'activities',
       payload,
     );
+
+    return response;
+  }
+
+  public async edit({
+    id,
+    name,
+    description,
+    experience,
+    dmRules,
+  }: IEditActivityDTO): Promise<IActivity> {
+    const payload: Omit<IEditActivityDTO, 'id'> = { name, experience };
+    if (dmRules) payload.dmRules = dmRules;
+    if (description) payload.description = description;
+
+    const response = await this.httpProvider.put<IActivity>(`activities/${id}`);
 
     return response;
   }
