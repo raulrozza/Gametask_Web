@@ -55,9 +55,17 @@ const Achievements: React.FC = () => {
   const handleOpenEditorWith = useCallback(
     (achievement?: IAchievement) => {
       openEditorWith(achievement);
+
+      const isTheAlreadySelectedAchievement =
+        achievement &&
+        achievementValues &&
+        achievement.id === achievementValues.id;
+
+      if (isTheAlreadySelectedAchievement) return editorController.toggle();
+      editorController.open();
       editorController.toggle();
     },
-    [editorController, openEditorWith],
+    [achievementValues, editorController, openEditorWith],
   );
 
   return (

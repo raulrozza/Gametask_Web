@@ -74,6 +74,8 @@ const ActivityEditor: React.FC<ActivityEditorProps> = ({
   });
 
   useEffect(() => {
+    console.log(visible);
+
     if (!initialValues)
       formik.setValues({
         name: defaultInitialValues.name,
@@ -84,8 +86,8 @@ const ActivityEditor: React.FC<ActivityEditorProps> = ({
     else
       formik.setValues({
         name: initialValues.name,
-        description: initialValues.description,
-        dmRules: initialValues.dmRules,
+        description: initialValues.description || '',
+        dmRules: initialValues.dmRules || '',
         experience: initialValues.experience,
       });
   }, [initialValues]); // eslint-disable-line react-hooks/exhaustive-deps

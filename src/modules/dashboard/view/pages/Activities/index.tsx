@@ -8,18 +8,15 @@ import {
 } from 'modules/dashboard/view/components';
 import Modal, { useModalController } from 'shared/view/components/Modal';
 import { ActivityCard, ActivityEditor } from './components';
-import { FaEdit, FaTimes } from 'react-icons/fa';
 
 // Hooks
+import { useItemEditorController } from 'modules/dashboard/view/hooks';
+import { useEditActivitySelector } from './hooks';
 import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 
 // Styles
 import { ActivityContainer } from './styles';
-import { RemoveButton } from 'styles';
-
-// Types
-import { IActivity } from 'interfaces/api/Activity';
-import { useItemEditorController } from 'modules/dashboard/view/hooks';
+import IActivity from 'modules/dashboard/entities/IActivity';
 
 const Activities: React.FC = () => {
   const {
@@ -30,16 +27,25 @@ const Activities: React.FC = () => {
 
   const editorController = useItemEditorController();
 
+  const { activityValues, openEditorWith } = useEditActivitySelector();
+
+  const handleOpenEditorWith = useCallback(
+    (activity?: IActivity) => {
+      openEditorWith(activity);
+
+      const isTheAlreadySelectedActivity =
+        activity && activityValues && activity.id === activityValues.id;
+
+      if (isTheAlreadySelectedActivity) return editorController.toggle();
+      editorController.open();
+    },
+    [activityValues, editorController, openEditorWith],
+  );
+
   // Edit panel
-  const [showPanel, setShowPanel] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
     null,
   );
-
-  const createActivity = useCallback(() => {
-    setSelectedActivity(null);
-    setShowPanel(true);
-  }, []);
 
   const editActivity = useCallback((id: string) => {
     /* const activity = activities.find(activity => activity._id === id);
@@ -114,7 +120,7 @@ const Activities: React.FC = () => {
                   <ActivityCard
                     key={activity.id}
                     activity={activity}
-                    openEditorWith={() => undefined}
+                    openEditorWith={handleOpenEditorWith}
                     removeActivity={() => undefined}
                   />
                 ))}
@@ -123,6 +129,7 @@ const Activities: React.FC = () => {
 
             <ActivityEditor
               visible={editorController.visible}
+              initialValues={activityValues}
               closeEditor={editorController.close}
               updateActivities={fetchActivities}
             />
