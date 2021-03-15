@@ -44,6 +44,10 @@ export default class ActivitiesRepository implements IActivitiesRepository {
     return response;
   }
 
+  public async delete(id: string): Promise<void> {
+    return this.httpProvider.delete(`activities/${id}`);
+  }
+
   public async findAll(): Promise<IActivity[]> {
     const response = await this.httpProvider.get<IActivity[]>('activities');
 

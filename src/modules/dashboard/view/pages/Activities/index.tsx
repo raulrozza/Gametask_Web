@@ -47,22 +47,6 @@ const Activities: React.FC = () => {
     null,
   );
 
-  const editActivity = useCallback((id: string) => {
-    /* const activity = activities.find(activity => activity._id === id);
-
-      if (activity) {
-        if (
-          showPanel &&
-          (!selectedActivity || activity._id !== selectedActivity._id)
-        ) {
-          setSelectedActivity(activity);
-          return;
-        }
-        setSelectedActivity(activity);
-        setShowPanel(!showPanel);
-      } */
-  }, []);
-
   const deleteActivity = useCallback(async (id: string) => {
     /* const response = window.confirm(
       'Deseja mesmo excluir esta atividade? Esta ação não pode ser desfeita.',
@@ -82,24 +66,6 @@ const Activities: React.FC = () => {
       }
 
       setLoading(false);
-    } */
-  }, []);
-
-  const onSubmit = useCallback(async (id: string) => {
-    /* try {
-      const { data } = await api.instance.get(`/activity/${id}`);
-
-      setActivities(activities => {
-        const index = activities.findIndex(item => item._id === id);
-
-        if (index === -1) return addItemToArray(activities, data);
-
-        return updateItemInArray(activities, data, index);
-      });
-
-      setShowPanel(false);
-    } catch (error) {
-      handleApiErrors(error);
     } */
   }, []);
 
