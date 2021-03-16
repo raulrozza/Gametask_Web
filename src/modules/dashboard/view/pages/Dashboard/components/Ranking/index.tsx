@@ -77,7 +77,7 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
       </List>
 
       <Footer>
-        <Link to="/players">Gerenciar Jogadores</Link>
+        <Link to="/manage-players">Gerenciar Jogadores</Link>
       </Footer>
     </Container>
   );

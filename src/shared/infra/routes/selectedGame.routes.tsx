@@ -1,10 +1,12 @@
 import React from 'react';
-import DashboardRoutes from 'modules/dashboard/infra/routes';
 import { Redirect, Switch } from 'react-router';
+import DashboardRoutes from 'modules/dashboard/infra/routes';
+import ManagePlayersRoutes from 'modules/managePlayers/infra/routes';
 
 const SelectedGameRoutes: React.FC = () => (
   <Switch>
-    <DashboardRoutes />
+    {DashboardRoutes()}
+    <ManagePlayersRoutes />
     <Redirect from="*" to="/" />
   </Switch>
 );

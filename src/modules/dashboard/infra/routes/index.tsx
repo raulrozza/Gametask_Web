@@ -9,12 +9,15 @@ const Activities = React.lazy(
   () => import('modules/dashboard/view/pages/Activities'),
 );
 
-const DashboardRoutes: React.FC = () => (
-  <>
-    <Route path="/" exact component={Dashboard} />
-    <Route path="/achievements" exact component={Achievements} />
-    <Route path="/activities" exact component={Activities} />
-  </>
-);
+const DashboardRoutes = (): JSX.Element[] => [
+  <Route key="dashboard" path="/" exact component={Dashboard} />,
+  <Route
+    key="achievements"
+    path="/achievements"
+    exact
+    component={Achievements}
+  />,
+  <Route key="activities" path="/activities" exact component={Activities} />,
+];
 
 export default DashboardRoutes;
