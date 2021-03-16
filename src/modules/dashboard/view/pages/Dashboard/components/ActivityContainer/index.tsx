@@ -2,7 +2,12 @@ import React, { memo } from 'react';
 
 // Components
 import { Link } from 'react-router-dom';
-import { ActivitiesSkeletons, ExpandableBox, NoActivities } from '..';
+import {
+  ActivityCard,
+  ActivitiesSkeletons,
+  ExpandableBox,
+  NoActivities,
+} from '..';
 
 // Hooks
 import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
@@ -12,13 +17,13 @@ import { useExpandController } from 'modules/dashboard/view/hooks';
 import { ActivitiesWrapper } from './styles';
 
 const ActivityContainer: React.FC = () => {
+  const { activities, loading } = useFetchActivitiesController();
   const {
     expanded,
     toggleExpand,
     legend,
     Icon: ExpandIcon,
   } = useExpandController();
-  const { activities, loading } = useFetchActivitiesController();
 
   const hasNoActivities = !loading && activities.length === 0;
 
@@ -32,7 +37,7 @@ const ActivityContainer: React.FC = () => {
             <ActivitiesSkeletons />
           ) : (
             activities.map(activity => (
-              <ActivityContainer {...activity} key={activity.id} />
+              <ActivityCard {...activity} key={activity.id} />
             ))
           )}
         </ActivitiesWrapper>

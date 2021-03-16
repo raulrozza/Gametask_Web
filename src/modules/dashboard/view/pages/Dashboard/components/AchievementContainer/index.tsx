@@ -14,13 +14,13 @@ import useFetchAchievementsController from 'modules/dashboard/infra/controllers/
 import { AchievementsWrapper } from './styles';
 
 const AchievementContainer: React.FC = () => {
+  const { achievements, loading } = useFetchAchievementsController();
   const {
     expanded,
     toggleExpand,
     legend,
     Icon: ExpandIcon,
   } = useExpandController();
-  const { achievements, loading } = useFetchAchievementsController();
 
   const hasNoAchievements = !loading && achievements.length === 0;
 

@@ -21,16 +21,16 @@ export default function useFetchActivitiesController(): UseFetchActivitiesContro
   const fetchActivities = useCallback(async () => {
     setLoading(true);
 
-    const { activities, error, shouldLogout } = await listActivities.execute();
-    if (error) {
-      toast.showError(error);
+    const response = await listActivities.execute();
+    if (response.error) {
+      toast.showError(response.error);
 
-      if (shouldLogout) await session.logout();
+      if (response.shouldLogout) await session.logout();
 
       return;
     }
 
-    // if (activities) setActivities(activities);
+    if (response.activities) setActivities(response.activities);
 
     setLoading(false);
   }, [listActivities, session, toast]);
