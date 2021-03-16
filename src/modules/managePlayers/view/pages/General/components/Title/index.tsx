@@ -18,6 +18,7 @@ import ITitle from 'modules/managePlayers/entities/ITitle';
 // Utils
 import handleApiErrors from 'utils/handleApiErrors';
 import { api } from 'services';
+import useEditTitlesController from 'modules/managePlayers/infra/controllers/useEditTitlesController';
 
 interface TitleProps {
   title: ITitle;
@@ -28,6 +29,8 @@ const Title: React.FC<TitleProps> = ({ title, onDelete }) => {
   const [name, setName] = useState(title.name);
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { loading, editTitle } = useEditTitlesController();
 
   useEffect(() => {
     if (inputRef.current)
@@ -43,14 +46,15 @@ const Title: React.FC<TitleProps> = ({ title, onDelete }) => {
       if (event.key === 'Enter') {
         setEditing(false);
 
-        try {
-          await api.instance.put(`/title/${title.id}`, { name });
-        } catch (error) {
-          handleApiErrors(error);
-        }
+        const payload = {
+          id: title.id,
+          name,
+        };
+
+        await editTitle(payload);
       }
     },
-    [editing, name, title],
+    [editTitle, editing, name, title.id],
   );
 
   const handleDelete = useCallback(async () => {
@@ -70,10 +74,11 @@ const Title: React.FC<TitleProps> = ({ title, onDelete }) => {
         ref={inputRef}
         type="text"
         value={name}
+        disabled={loading}
         onChange={event => setName(event.target.value)}
         onClick={enableEditing}
         onKeyUp={handleFinishEditing}
-        readOnly={!editing}
+        readOnly={!editing || loading}
         editing={editing}
       />
 

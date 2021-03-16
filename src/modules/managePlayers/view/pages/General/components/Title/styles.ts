@@ -15,22 +15,24 @@ export const Container = styled.li`
 `;
 
 export const Input = styled.input<MutableOnEditionProps>`
-  ${({ theme, editing }) => css`
+  ${({ theme, editing, disabled }) => css`
     padding: ${theme.layout.spacing(1)};
 
     border-radius: ${theme.layout.borderRadius.small};
 
-    ${editing
+    background-color: ${disabled || !editing
+      ? 'transparent'
+      : theme.palette.primary.light};
+
+    ${editing || disabled
       ? css`
           border: 1px solid ${theme.palette.primary.contrast};
 
-          background-color: ${theme.palette.primary.light};
           color: ${theme.palette.primary.contrast};
         `
       : css`
           cursor: pointer;
           border: 1px solid transparent;
-          background-color: transparent;
 
           color: ${theme.palette.secondary.main};
 
@@ -39,7 +41,7 @@ export const Input = styled.input<MutableOnEditionProps>`
           &:hover {
             border-bottom: 1px solid ${theme.palette.secondary.main};
           }
-        `}
+        `};
   `}
 `;
 
