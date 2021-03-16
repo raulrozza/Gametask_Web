@@ -6,6 +6,9 @@ import React, {
   useEffect,
 } from 'react';
 
+// Hooks
+import useEditTitlesController from 'modules/managePlayers/infra/controllers/useEditTitlesController';
+
 // Icons
 import { FaTrashAlt } from 'react-icons/fa';
 
@@ -15,17 +18,12 @@ import { Container, DeleteButton, Input } from './styles';
 // Types
 import ITitle from 'modules/managePlayers/entities/ITitle';
 
-// Utils
-import handleApiErrors from 'utils/handleApiErrors';
-import { api } from 'services';
-import useEditTitlesController from 'modules/managePlayers/infra/controllers/useEditTitlesController';
-
 interface TitleProps {
   title: ITitle;
-  onDelete: () => void;
+  deleteTitle: (id: string) => void;
 }
 
-const Title: React.FC<TitleProps> = ({ title, onDelete }) => {
+const Title: React.FC<TitleProps> = ({ title, deleteTitle }) => {
   const [name, setName] = useState(title.name);
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,16 +55,10 @@ const Title: React.FC<TitleProps> = ({ title, onDelete }) => {
     [editTitle, editing, name, title.id],
   );
 
-  const handleDelete = useCallback(async () => {
-    if (window.confirm('Deseja mesmo excluir este título?'))
-      try {
-        await api.instance.delete(`/title/${title.id}`);
-
-        onDelete();
-      } catch (error) {
-        handleApiErrors(error);
-      }
-  }, [onDelete, title.id]);
+  const handleDelete = useCallback(async () => deleteTitle(title.id), [
+    deleteTitle,
+    title.id,
+  ]);
 
   return (
     <Container>

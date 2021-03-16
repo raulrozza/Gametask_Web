@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Components
 import { Loading } from 'shared/view/components';
@@ -24,6 +24,8 @@ const TitleManager: React.FC = () => {
   const { loading, titles, fetchTitles } = useFetchTitlesController();
   const { handleAddTitle } = useTitle();
 
+  const handleDeleteTitle = useCallback(() => undefined, []);
+
   return (
     <Container>
       <Header>
@@ -43,7 +45,11 @@ const TitleManager: React.FC = () => {
       ) : (
         <TitleList>
           {titles.map(title => (
-            <Title key={title.id} title={title} onDelete={fetchTitles} />
+            <Title
+              key={title.id}
+              title={title}
+              deleteTitle={handleDeleteTitle}
+            />
           ))}
 
           {titles.length === 0 && (
