@@ -1,64 +1,69 @@
 import styled, { css } from 'styled-components';
-import { TitleElementContainerProps } from './types';
 
-export const Container = styled.li<TitleElementContainerProps>`
+interface MutableOnEditionProps {
+  editing: boolean;
+}
+
+export const Container = styled.li`
+  display: grid;
+  padding: ${({ theme }) => theme.layout.spacing(1)};
+  height: 40px;
+  gap: 0px;
+  grid-template-columns: 1fr 32px;
+
+  position: relative;
+`;
+
+export const Input = styled.input<MutableOnEditionProps>`
   ${({ theme, editing }) => css`
-    display: grid;
-    padding: 4px;
-    height: 40px;
-    gap: 0;
-    grid-template-columns: 1fr 32px;
+    padding: ${theme.layout.spacing(1)};
 
-    position: relative;
+    border-radius: ${theme.layout.borderRadius.small};
 
-    input {
-      padding: 4px;
+    ${editing
+      ? css`
+          border: 1px solid ${theme.palette.primary.contrast};
 
-      ${editing
-        ? css`
-            border: 1px solid ${theme.palette.primary.contrast};
-            border-right: none;
+          background-color: ${theme.palette.primary.light};
+          color: ${theme.palette.primary.contrast};
+        `
+      : css`
+          cursor: pointer;
+          border: 1px solid transparent;
+          background-color: transparent;
 
-            background-color: ${theme.palette.primary.light};
-            color: ${theme.palette.primary.contrast};
-          `
-        : css`
-            cursor: pointer;
-            border: 1px solid transparent;
-            background-color: transparent;
+          color: ${theme.palette.secondary.main};
 
-            color: ${theme.palette.secondary.main};
+          transition: border-color 0.2s;
 
-            transition: border-color 0.2s;
+          &:hover {
+            border-bottom: 1px solid ${theme.palette.secondary.main};
+          }
+        `}
+  `}
+`;
 
-            &:hover {
-              border-bottom: 1px solid ${theme.palette.secondary.main};
-            }
-          `}
-    }
+export const DeleteButton = styled.button<MutableOnEditionProps>`
+  ${({ theme, editing }) => css`
+    background-color: ${theme.palette.error.dark};
+    border: 1px solid ${theme.palette.error.dark};
+    color: white;
+    cursor: pointer;
 
-    button {
-      background-color: darkred;
-      border: 1px solid darkred;
-      color: white;
-      cursor: pointer;
+    border-radius: ${theme.layout.borderRadius.small};
 
-      position: absolute;
-      right: 0;
-      top: 4px;
-      bottom: 4px;
+    width: 32px;
 
-      width: 32px;
+    transition: all 0.2s;
 
-      ${!editing &&
-      css`
-        display: none;
-      `}
+    ${!editing &&
+    css`
+      display: none;
+    `}
 
-      &:hover {
-        background-color: red;
-        border: 1px solid red;
-      }
+    &:hover {
+      background-color: ${theme.palette.error.main};
+      border: 1px solid ${theme.palette.error.main};
     }
   `}
 `;
