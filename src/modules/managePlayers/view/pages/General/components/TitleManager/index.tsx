@@ -5,6 +5,7 @@ import { Loading } from 'shared/view/components';
 import { Title } from '..';
 
 // Hooks
+import useFetchTitlesController from 'modules/managePlayers/infra/controllers/useFetchTitlesController';
 import { useTitle } from './hooks';
 
 // Icons
@@ -20,7 +21,8 @@ import {
 } from './styles';
 
 const TitleManager: React.FC = () => {
-  const { titles, loading, handleAddTitle, deleteCallback } = useTitle();
+  const { loading, titles, fetchTitles } = useFetchTitlesController();
+  const { handleAddTitle } = useTitle();
 
   return (
     <Container>
@@ -41,7 +43,7 @@ const TitleManager: React.FC = () => {
       ) : (
         <TitleList>
           {titles.map(title => (
-            <Title key={title._id} title={title} onDelete={deleteCallback} />
+            <Title key={title.id} title={title} onDelete={fetchTitles} />
           ))}
 
           {titles.length === 0 && (

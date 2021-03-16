@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ITitle from 'modules/managePlayers/entities/ITitle';
 import makeGetTitlesService from 'modules/managePlayers/services/factories/makeGetTitlesService';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
@@ -6,10 +6,12 @@ import useSessionContext from 'shared/container/contexts/SessionContext/contexts
 
 interface UseFetchTitlesController {
   titles: ITitle[];
+  loading: boolean;
   fetchTitles: () => Promise<void> | undefined;
 }
 
 export default function useFetchTitlesController(): UseFetchTitlesController {
+  const [loading, setLoading] = useState(true);
   const [titles, setTitles] = useState<ITitle[]>([]);
 
   const getTitlesService = useMemo(() => makeGetTitlesService(), []);
@@ -18,7 +20,11 @@ export default function useFetchTitlesController(): UseFetchTitlesController {
   const session = useSessionContext();
 
   const fetchTitles = useCallback(async () => {
+    setLoading(true);
+
     const { titles, error, shouldLogout } = await getTitlesService.execute();
+
+    setLoading(false);
 
     if (error) {
       toast.showError(error);
@@ -31,8 +37,13 @@ export default function useFetchTitlesController(): UseFetchTitlesController {
     if (titles) setTitles(titles);
   }, [getTitlesService, session, toast]);
 
+  useEffect(() => {
+    fetchTitles();
+  }, [fetchTitles]);
+
   return {
     titles,
+    loading,
     fetchTitles,
   };
 }
