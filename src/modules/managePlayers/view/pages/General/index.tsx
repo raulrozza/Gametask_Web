@@ -10,7 +10,7 @@ import AchievementRegister from './AchievementRegister';
 import { getPageTitle } from 'modules/managePlayers/view/pages/General/helpers';
 
 // Hooks
-import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
+import useGetGameController from 'modules/managePlayers/infra/controllers/useGetGameController';
 
 // Icons
 import { FaArrowCircleLeft } from 'react-icons/fa';
