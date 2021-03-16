@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Loading } from 'components';
+import { Loading } from 'shared/view/components';
 import { Title } from '..';
 
 // Hooks
@@ -11,24 +11,35 @@ import { useTitle } from './hooks';
 import { FaPlus } from 'react-icons/fa';
 
 // Styles
-import { Container, NoTitles } from './styles';
+import {
+  AddTitleButton,
+  Container,
+  Header,
+  NoTitles,
+  TitleList,
+} from './styles';
 
 const TitleManager: React.FC = () => {
   const { titles, loading, handleAddTitle, deleteCallback } = useTitle();
 
   return (
     <Container>
-      <header>
+      <Header>
         <h3>Gerenciar Títulos</h3>
 
-        <button type="button" title="Adicionar título" onClick={handleAddTitle}>
+        <AddTitleButton
+          type="button"
+          title="Adicionar título"
+          onClick={handleAddTitle}
+        >
           <FaPlus />
-        </button>
-      </header>
+        </AddTitleButton>
+      </Header>
+
       {loading ? (
         <Loading />
       ) : (
-        <ul>
+        <TitleList>
           {titles.map(title => (
             <Title key={title._id} title={title} onDelete={deleteCallback} />
           ))}
@@ -36,7 +47,7 @@ const TitleManager: React.FC = () => {
           {titles.length === 0 && (
             <NoTitles>Não há nenhum título cadastrado.</NoTitles>
           )}
-        </ul>
+        </TitleList>
       )}
     </Container>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
 
 // Components
-import { Link } from 'react-router-dom';
 import { Loading, PageTitle } from 'shared/view/components';
 import { ActivityRegister, TitleManager } from './components';
 import AchievementRegister from './AchievementRegister';
@@ -16,7 +15,7 @@ import useGetGameController from 'modules/managePlayers/infra/controllers/useGet
 import { FaArrowCircleLeft } from 'react-icons/fa';
 
 // Styles
-import { PlayersContainer } from './styles';
+import { BackButton, PlayersContainer } from './styles';
 
 const General: React.FC = () => {
   const { loading, game } = useGetGameController();
@@ -31,9 +30,9 @@ const General: React.FC = () => {
     <PlayersContainer>
       <PageTitle title={title} />
 
-      <Link to="/dashboard" title="Voltar" className="back-button">
+      <BackButton to="/dashboard" title="Voltar">
         <FaArrowCircleLeft />
-      </Link>
+      </BackButton>
 
       <ActivityRegister />
 

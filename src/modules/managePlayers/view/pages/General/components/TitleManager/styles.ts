@@ -1,41 +1,43 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { RequestsContainer } from '../../styles';
 
 export const Container = styled(RequestsContainer)`
   width: 360px;
+`;
 
-  header {
-    display: flex;
-    justify-content: space-between;
+export const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+`;
 
-    button {
-      background-color: ${({ theme }) => theme.palette.secondary.main};
-      color: ${({ theme }) => theme.palette.secondary.contrast};
-      border: none;
-      border-radius: 4px;
+export const AddTitleButton = styled.button`
+  background-color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.secondary.contrast};
+  border: none;
+  border-radius: ${({ theme }) => theme.layout.borderRadius.small};
 
-      height: 28px;
-      width: 28px;
-      font-size: 14px;
+  height: 28px;
+  width: 28px;
+  font-size: 14px;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-      cursor: pointer;
+  cursor: pointer;
 
-      &:hover {
-        background-color: ${({ theme }) => theme.palette.secondary.light};
-      }
-    }
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.secondary.light};
   }
+`;
 
-  ul {
-    margin-top: 8px;
-    padding: 4px;
-    border-radius: 4px;
-    background-color: ${({ theme }) => theme.palette.primary.dark};
-  }
+export const TitleList = styled.ul`
+  ${({ theme }) => css`
+    margin-top: ${theme.layout.spacing(2)};
+    padding: ${theme.layout.spacing(1)};
+    border-radius: ${theme.layout.borderRadius.small};
+    background-color: ${theme.palette.primary.dark};
+  `}
 `;
 
 export const NoTitles = styled.div`

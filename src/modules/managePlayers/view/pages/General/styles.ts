@@ -1,25 +1,28 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const PlayersContainer = styled.div`
   background-color: ${({ theme }) => theme.palette.primary.dark};
   min-height: 100vh;
-  padding: 10px;
+  padding: ${({ theme }) => theme.layout.spacing(2)};
   display: flex;
   justify-content: center;
   align-items: flex-start;
-
-  .back-button {
-    position: fixed;
-    top: 8px;
-    left: 8px;
-    font-size: 28px;
-  }
 
   @media (max-width: 768px) {
     flex-direction: column;
     justify-content: flex-start;
     padding: 0;
   }
+`;
+
+export const BackButton = styled(Link)`
+  ${({ theme }) => css`
+    position: fixed;
+    top: ${theme.layout.spacing(2)};
+    left: ${theme.layout.spacing(2)};
+    font-size: 28px;
+  `}
 `;
 
 export const RequestsContainer = styled.div`
