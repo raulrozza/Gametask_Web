@@ -63,7 +63,6 @@ const Achievements: React.FC = () => {
 
       if (isTheAlreadySelectedAchievement) return editorController.toggle();
       editorController.open();
-      editorController.toggle();
     },
     [achievementValues, editorController, openEditorWith],
   );

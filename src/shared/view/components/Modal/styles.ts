@@ -14,7 +14,7 @@ export const Background = styled.div<BackgroundProps>`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 500;
+  z-index: ${({ open }) => (open ? 500 : -500)};
 
   display: flex;
   align-items: center;

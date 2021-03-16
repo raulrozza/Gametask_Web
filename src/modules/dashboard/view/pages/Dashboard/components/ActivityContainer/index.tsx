@@ -18,7 +18,7 @@ const ActivityContainer: React.FC = () => {
     legend,
     Icon: ExpandIcon,
   } = useExpandController();
-  const { loading, activities } = useFetchActivitiesController();
+  const { activities, loading } = useFetchActivitiesController();
 
   const hasNoActivities = !loading && activities.length === 0;
 
@@ -32,7 +32,7 @@ const ActivityContainer: React.FC = () => {
             <ActivitiesSkeletons />
           ) : (
             activities.map(activity => (
-              <ActivityContainer key={activity.id} {...activity} />
+              <ActivityContainer {...activity} key={activity.id} />
             ))
           )}
         </ActivitiesWrapper>

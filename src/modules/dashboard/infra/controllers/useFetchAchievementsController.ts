@@ -42,7 +42,7 @@ export default function useFetchAchievementsController(): UseFetchAchievementsCo
 
   useEffect(() => {
     fetchAchievements();
-  }, [fetchAchievements, listAchievements, session, toast]);
+  }, [fetchAchievements]);
 
   return {
     loading,

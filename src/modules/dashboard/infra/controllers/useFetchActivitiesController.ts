@@ -11,16 +11,17 @@ interface UseFetchActivitiesController {
 }
 
 export default function useFetchActivitiesController(): UseFetchActivitiesController {
-  const [loading, setLoading] = useState(true);
   const [activities, setActivities] = useState<IActivity[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const listActivities = useMemo(() => makeListActivitiesService(), []);
   const session = useSessionContext();
   const toast = useToastContext();
 
   const fetchActivities = useCallback(async () => {
-    const { activities, error, shouldLogout } = await listActivities.execute();
+    setLoading(true);
 
+    const { activities, error, shouldLogout } = await listActivities.execute();
     if (error) {
       toast.showError(error);
 
@@ -29,14 +30,14 @@ export default function useFetchActivitiesController(): UseFetchActivitiesContro
       return;
     }
 
-    if (activities) setActivities(activities);
+    // if (activities) setActivities(activities);
 
     setLoading(false);
   }, [listActivities, session, toast]);
 
   useEffect(() => {
     fetchActivities();
-  }, [fetchActivities, listActivities, session, toast]);
+  }, [fetchActivities]);
 
   return {
     loading,
