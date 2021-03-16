@@ -1,4 +1,5 @@
 import ICreateTitleDTO from 'modules/managePlayers/dtos/ICreateTitleDTO';
+import IUpdateTitleDTO from 'modules/managePlayers/dtos/IUpdateTitleDTO';
 import ITitle from 'modules/managePlayers/entities/ITitle';
 import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
 import { makeHttpProvider } from 'shared/container/providers';
@@ -8,6 +9,14 @@ export default class TitlesRepository implements ITitlesRepository {
 
   public async create({ name }: ICreateTitleDTO): Promise<ITitle> {
     const response = await this.httpProvider.post<ITitle>('titles', {
+      name,
+    });
+
+    return response;
+  }
+
+  public async edit({ id, name }: IUpdateTitleDTO): Promise<ITitle> {
+    const response = await this.httpProvider.put<ITitle>(`titles/${id}`, {
       name,
     });
 
