@@ -23,6 +23,10 @@ export default class TitlesRepository implements ITitlesRepository {
     return response;
   }
 
+  public async delete(id: string): Promise<void> {
+    await this.httpProvider.delete(`titles/${id}`);
+  }
+
   public async findAll(): Promise<ITitle[]> {
     const response = await this.httpProvider.get<ITitle[]>('titles');
 

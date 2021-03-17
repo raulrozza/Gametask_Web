@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 // Components
-import { Button } from 'shared/view/components';
+import { Button, Row } from 'shared/view/components';
 import {
   DefaultPageContainer,
   DefaultPageLoading,
@@ -15,7 +15,7 @@ import { useEditActivitySelector } from './hooks';
 import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 
 // Styles
-import { ActivityContainer, Row } from './styles';
+import { ActivityContainer } from './styles';
 import IActivity from 'modules/dashboard/entities/IActivity';
 import useDeleteActivityController from 'modules/dashboard/infra/controllers/useDeleteActivityController';
 

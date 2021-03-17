@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from 'react';
 
 // Components
-import { Button } from 'shared/view/components';
+import { Button, Row } from 'shared/view/components';
 import {
   DefaultPageContainer,
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
 import Modal, { useModalController } from 'shared/view/components/Modal';
 import { AchievementCard, AchievementEditor } from './components';
-import { AchievementsContainer, Row } from './styles';
+import { AchievementsContainer } from './styles';
 
 // Hooks
 import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';

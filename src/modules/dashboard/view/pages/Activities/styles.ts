@@ -12,10 +12,3 @@ export const ActivityContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(100px, 150px));
   grid-template-rows: repeat(auto-fill, 200px);
 `;
-
-export const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: ${({ theme }) => theme.layout.spacing(1, 4)};
-  margin-top: ${({ theme }) => theme.layout.spacing(2)};
-`;
