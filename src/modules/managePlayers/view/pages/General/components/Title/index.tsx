@@ -26,13 +26,30 @@ interface TitleProps {
 const Title: React.FC<TitleProps> = ({ title, deleteTitle }) => {
   const [name, setName] = useState(title.name);
   const [editing, setEditing] = useState(false);
+
+  const isDeleteButtonHovered = useRef(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   const { loading, editTitle } = useEditTitlesController();
 
   useEffect(() => {
     if (inputRef.current)
-      inputRef.current.addEventListener('blur', () => setEditing(false));
+      inputRef.current.addEventListener('blur', () => {
+        if (!isDeleteButtonHovered.current) setEditing(false);
+      });
+
+    if (deleteButtonRef.current) {
+      deleteButtonRef.current.addEventListener(
+        'mouseenter',
+        () => (isDeleteButtonHovered.current = true),
+      );
+      deleteButtonRef.current.addEventListener(
+        'mouseleave',
+        () => (isDeleteButtonHovered.current = false),
+      );
+    }
   }, []);
 
   const enableEditing = useCallback(() => setEditing(true), []);
@@ -55,10 +72,10 @@ const Title: React.FC<TitleProps> = ({ title, deleteTitle }) => {
     [editTitle, editing, name, title.id],
   );
 
-  const handleDelete = useCallback(async () => deleteTitle(title.id), [
-    deleteTitle,
-    title.id,
-  ]);
+  const handleDelete = useCallback(async () => {
+    deleteTitle(title.id);
+    setEditing(false);
+  }, [deleteTitle, title.id]);
 
   return (
     <Container>
@@ -75,6 +92,7 @@ const Title: React.FC<TitleProps> = ({ title, deleteTitle }) => {
       />
 
       <DeleteButton
+        ref={deleteButtonRef}
         title="Excluir título"
         editing={editing}
         onClick={handleDelete}

@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Components
-import { Loading } from 'shared/view/components';
+import { Button, Loading, Modal, Row } from 'shared/view/components';
 import { Title } from '..';
 
 // Hooks
@@ -19,10 +19,23 @@ import {
   NoTitles,
   TitleList,
 } from './styles';
+import { useModalController } from 'shared/view/components/Modal';
 
 const TitleManager: React.FC = () => {
   const { loading, titles, fetchTitles } = useFetchTitlesController();
   const { handleAddTitle } = useTitle();
+
+  const [selectedTitleId, setSelectedTitleId] = useState('');
+
+  const [modalOpen, handleOpenModal, handleCloseModal] = useModalController();
+
+  const onClickDeleteTitle = useCallback(
+    (id: string) => {
+      setSelectedTitleId(id);
+      handleOpenModal();
+    },
+    [handleOpenModal],
+  );
 
   const handleDeleteTitle = useCallback(() => undefined, []);
 
@@ -48,7 +61,7 @@ const TitleManager: React.FC = () => {
             <Title
               key={title.id}
               title={title}
-              deleteTitle={handleDeleteTitle}
+              deleteTitle={onClickDeleteTitle}
             />
           ))}
 
@@ -57,6 +70,24 @@ const TitleManager: React.FC = () => {
           )}
         </TitleList>
       )}
+
+      <Modal
+        closeModal={handleCloseModal}
+        open={modalOpen}
+        size="sm"
+        title="Confirmação Necessária"
+      >
+        Deseja realmente excluir este título?
+        <Row>
+          <Button outlined onClick={handleCloseModal}>
+            Cancelar
+          </Button>
+
+          <Button onClick={handleDeleteTitle} loading={false}>
+            Confirmar
+          </Button>
+        </Row>
+      </Modal>
     </Container>
   );
 };

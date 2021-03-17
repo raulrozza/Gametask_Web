@@ -6,4 +6,5 @@ export { default as Loading } from './Loading';
 export { default as Modal } from './Modal';
 export { default as NotFound } from './NotFound';
 export { default as PageTitle } from './PageTitle';
+export { default as Row } from './Row';
 export { default as Textarea } from './Textarea';
