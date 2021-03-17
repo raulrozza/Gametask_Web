@@ -20,10 +20,12 @@ import {
   TitleList,
 } from './styles';
 import { useModalController } from 'shared/view/components/Modal';
+import useDeleteTitlesController from 'modules/managePlayers/infra/controllers/useDeleteTitlesController';
 
 const TitleManager: React.FC = () => {
   const { loading, titles, fetchTitles } = useFetchTitlesController();
   const { handleAddTitle } = useTitle();
+  const { loading: loadingDelete, deleteTitle } = useDeleteTitlesController();
 
   const [selectedTitleId, setSelectedTitleId] = useState('');
 
@@ -37,7 +39,13 @@ const TitleManager: React.FC = () => {
     [handleOpenModal],
   );
 
-  const handleDeleteTitle = useCallback(() => undefined, []);
+  const handleDeleteTitle = useCallback(async () => {
+    const success = await deleteTitle(selectedTitleId);
+
+    if (success) fetchTitles();
+
+    handleCloseModal();
+  }, [deleteTitle, fetchTitles, handleCloseModal, selectedTitleId]);
 
   return (
     <Container>
@@ -83,7 +91,7 @@ const TitleManager: React.FC = () => {
             Cancelar
           </Button>
 
-          <Button onClick={handleDeleteTitle} loading={false}>
+          <Button onClick={handleDeleteTitle} loading={loadingDelete}>
             Confirmar
           </Button>
         </Row>

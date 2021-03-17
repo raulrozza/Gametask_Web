@@ -30,7 +30,7 @@ const General: React.FC = () => {
     <PlayersContainer>
       <PageTitle title={title} />
 
-      <BackButton to="/dashboard" title="Voltar">
+      <BackButton to="/" title="Voltar">
         <FaArrowCircleLeft />
       </BackButton>
 

@@ -5,7 +5,7 @@ import useToastContext from 'shared/container/contexts/ToastContext/contexts/use
 
 interface UseDeleteTitlesController {
   loading: boolean;
-  deleteTitle(id: string): Promise<void>;
+  deleteTitle(id: string): Promise<boolean>;
 }
 
 export default function useDeleteTitlesController(): UseDeleteTitlesController {
@@ -29,10 +29,12 @@ export default function useDeleteTitlesController(): UseDeleteTitlesController {
 
         if (shouldLogout) await session.logout();
 
-        return;
+        return false;
       }
 
       toast.showSuccess('Título removido com sucesso.');
+
+      return true;
     },
     [deleteTitleService, session, toast],
   );
