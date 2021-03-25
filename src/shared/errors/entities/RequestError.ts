@@ -14,11 +14,20 @@ interface GetAxiosMessage {
 const isAxiosError = (error: Error | AxiosError): error is AxiosError =>
   (error as AxiosError).isAxiosError;
 
+const isAuthenticationError = (
+  response: AxiosError<IErrorResponseDetails>['response'],
+): boolean =>
+  response
+    ? response.status === 403 ||
+      response.status === 401 ||
+      response.data.errorCode === 403
+    : false;
+
 const getAxiosErrorMessage = (
   error: AxiosError<IErrorResponseDetails>,
 ): GetAxiosMessage => {
   const details = error.response?.data;
-  const shouldLogout = error.response?.status === 403;
+  const shouldLogout = isAuthenticationError(error.response);
 
   if (!details) return { message: error.message, shouldLogout };
 

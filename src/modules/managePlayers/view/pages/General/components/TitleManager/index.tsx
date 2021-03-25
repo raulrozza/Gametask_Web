@@ -5,8 +5,10 @@ import { Button, Loading, Modal, Row } from 'shared/view/components';
 import { Title } from '..';
 
 // Hooks
+import { useModalController } from 'shared/view/components/Modal';
+import useDeleteTitlesController from 'modules/managePlayers/infra/controllers/useDeleteTitlesController';
+import useCreateNewTitleController from 'modules/managePlayers/infra/controllers/useCreateNewTitleController';
 import useFetchTitlesController from 'modules/managePlayers/infra/controllers/useFetchTitlesController';
-import { useTitle } from './hooks';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
@@ -19,12 +21,10 @@ import {
   NoTitles,
   TitleList,
 } from './styles';
-import { useModalController } from 'shared/view/components/Modal';
-import useDeleteTitlesController from 'modules/managePlayers/infra/controllers/useDeleteTitlesController';
 
 const TitleManager: React.FC = () => {
   const { loading, titles, fetchTitles } = useFetchTitlesController();
-  const { handleAddTitle } = useTitle();
+  const { createTitle } = useCreateNewTitleController();
   const { loading: loadingDelete, deleteTitle } = useDeleteTitlesController();
 
   const [selectedTitleId, setSelectedTitleId] = useState('');
@@ -55,7 +55,7 @@ const TitleManager: React.FC = () => {
         <AddTitleButton
           type="button"
           title="Adicionar título"
-          onClick={handleAddTitle}
+          onClick={createTitle}
         >
           <FaPlus />
         </AddTitleButton>

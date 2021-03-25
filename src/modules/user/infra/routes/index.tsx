@@ -4,10 +4,8 @@ import React from 'react';
 import Lobby from 'modules/user/view/pages/Lobby';
 import { Route } from 'react-router-dom';
 
-const UserRoutes: React.FC = () => (
-  <>
-    <Route path="/" exact component={Lobby} />
-  </>
-);
+const UserRoutes = (): JSX.Element[] => [
+  <Route path="/" key="lobby" exact component={Lobby} />,
+];
 
 export default UserRoutes;
