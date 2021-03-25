@@ -39,6 +39,12 @@ const TitleManager: React.FC = () => {
     [handleOpenModal],
   );
 
+  const handleCreateTitle = useCallback(async () => {
+    const success = await createTitle();
+
+    if (success) fetchTitles();
+  }, [createTitle, fetchTitles]);
+
   const handleDeleteTitle = useCallback(async () => {
     const success = await deleteTitle(selectedTitleId);
 
@@ -55,7 +61,7 @@ const TitleManager: React.FC = () => {
         <AddTitleButton
           type="button"
           title="Adicionar título"
-          onClick={createTitle}
+          onClick={handleCreateTitle}
         >
           <FaPlus />
         </AddTitleButton>
