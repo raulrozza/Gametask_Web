@@ -18,7 +18,14 @@ import { useModalController } from 'shared/view/components/Modal';
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 
 // Styles
-import { SRequestsContainer } from './styles';
+import {
+  SRequestsContainer,
+  RequestItem,
+  Grid,
+  Image,
+  Info,
+  Title,
+} from './styles';
 import { RequestFooter } from '../../styles';
 
 // Types
@@ -84,15 +91,15 @@ const ActivityRequestsList: React.FC = () => {
         <SRequestsContainer.List>
           {activityRequests.length > 0 ? (
             activityRequests.map(({ requester, activity, ...request }) => (
-              <li className="request" key={request.id}>
-                <section className="main">
-                  <img
+              <RequestItem key={request.id}>
+                <Grid>
+                  <Image
                     src={requester.user.profile_url || userPlaceholder}
                     alt={requester.user.firstname}
                   />
 
                   <div>
-                    <span className="title">
+                    <Title>
                       <strong>{requester.user.firstname}</strong>
 
                       {` | `}
@@ -100,11 +107,12 @@ const ActivityRequestsList: React.FC = () => {
                       <strong>
                         {activity.name} ({activity.experience} XP)
                       </strong>
-                    </span>
+                    </Title>
 
-                    <span className="info">{request.information}</span>
+                    <Info>{request.information}</Info>
                   </div>
-                </section>
+                </Grid>
+
                 <RequestFooter>
                   <span>
                     {new Date(request.requestDate).toLocaleDateString()}
@@ -145,7 +153,7 @@ const ActivityRequestsList: React.FC = () => {
                     </button>
                   </div>
                 </RequestFooter>
-              </li>
+              </RequestItem>
             ))
           ) : (
             <NoRequests />

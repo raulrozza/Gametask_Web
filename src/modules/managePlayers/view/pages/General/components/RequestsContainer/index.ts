@@ -17,38 +17,6 @@ const RequestsContainer: IRequestsContainer = (styled.div`
     border-radius: ${theme.layout.borderRadius.medium};
     width: 480px;
 
-    .request {
-      display: flex;
-      flex-direction: column;
-      padding: 4px;
-
-      section {
-        display: flex;
-        margin-bottom: 4px;
-      }
-
-      img {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        margin-right: 8px;
-      }
-
-      .main > div {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .title strong {
-        text-transform: capitalize;
-      }
-
-      .info {
-        font-size: 14px;
-        margin-top: 4px;
-      }
-    }
-
     @media (max-width: ${theme.layout.breakpoints.lg}) {
       width: calc(100% - ${theme.layout.spacing(4)});
     }
