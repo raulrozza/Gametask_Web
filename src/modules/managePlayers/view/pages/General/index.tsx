@@ -4,7 +4,7 @@ import React from 'react';
 import { Loading, PageTitle } from 'shared/view/components';
 import {
   AchievementRegister,
-  ActivityRegister,
+  ActivityRequestsList,
   TitleManager,
 } from './components';
 
@@ -37,7 +37,7 @@ const General: React.FC = () => {
         <FaArrowCircleLeft />
       </BackButton>
 
-      <ActivityRegister />
+      <ActivityRequestsList />
 
       <AchievementRegister />
 

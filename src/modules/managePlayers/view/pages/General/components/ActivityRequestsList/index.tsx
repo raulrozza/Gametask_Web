@@ -9,52 +9,79 @@ import { Modal } from 'components';
 import { ActivityModal, NoRequests } from '..';
 
 // Hooks
+import useAcceptActivityRequestController from 'modules/managePlayers/infra/controllers/useAcceptActivityRequestController';
+import useDeleteActivityRequestController from 'modules/managePlayers/infra/controllers/useDeleteActivityRequestController';
 import useFetchActivityRequestsController from 'modules/managePlayers/infra/controllers/useFetchActivityRequestsController';
-import { useActivityRequests } from './hooks';
+import { useModalController } from 'shared/view/components/Modal';
 
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 
 // Styles
-import { RequestsContainer } from './styles';
+import { SRequestsContainer } from './styles';
 import { RequestFooter } from '../../styles';
 
 // Types
 import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
 
-const ActivityRegister: React.FC = () => {
+const ActivityRequestsList: React.FC = () => {
   const {
     loading,
     activityRequests,
     fetchActivityRequests,
   } = useFetchActivityRequestsController();
-  const { handleAcceptRegister, handleDeleteRegister } = useActivityRequests();
+  const { acceptActivityRequest } = useAcceptActivityRequestController();
+  const { deleteActivityRequest } = useDeleteActivityRequestController();
+
+  const [
+    openDetails,
+    handleOpenDetails,
+    handleCloseDetails,
+  ] = useModalController();
+
   const [
     selectedRequest,
     setSelectedRequest,
   ] = useState<IActivityRequest | null>(null);
-  const [showModal, setShowModal] = useState(false);
 
-  const onAcceptRegister = useCallback(
+  const onAcceptRequest = useCallback(
     async (id: string) => {
-      const success = await handleAcceptRegister(id);
+      const success = await acceptActivityRequest(id);
 
-      if (success) setShowModal(false);
+      if (success) {
+        fetchActivityRequests();
+        handleCloseDetails();
+      }
     },
-    [handleAcceptRegister],
+    [acceptActivityRequest, fetchActivityRequests, handleCloseDetails],
   );
 
-  const handleShowDetails = useCallback((request: IActivityRequest) => {
-    setSelectedRequest(request);
-    setShowModal(true);
-  }, []);
+  const onDeleteRequest = useCallback(
+    async (id: string) => {
+      const success = await deleteActivityRequest(id);
+
+      if (success) {
+        fetchActivityRequests();
+        handleCloseDetails();
+      }
+    },
+    [deleteActivityRequest, fetchActivityRequests, handleCloseDetails],
+  );
+
+  const handleShowDetails = useCallback(
+    (request: IActivityRequest) => {
+      setSelectedRequest(request);
+      handleOpenDetails();
+    },
+    [handleOpenDetails],
+  );
 
   return (
-    <RequestsContainer>
+    <SRequestsContainer>
       {loading ? (
         <Loading />
       ) : (
-        <ul className="request-list">
+        <SRequestsContainer.List>
           {activityRequests.length > 0 ? (
             activityRequests.map(({ requester, activity, ...request }) => (
               <li className="request" key={request.id}>
@@ -103,7 +130,7 @@ const ActivityRegister: React.FC = () => {
                       className="confirm"
                       type="button"
                       title="Aceitar Requisição"
-                      onClick={() => onAcceptRegister(request.id)}
+                      onClick={() => onAcceptRequest(request.id)}
                     >
                       <FaCheck />
                     </button>
@@ -112,7 +139,7 @@ const ActivityRegister: React.FC = () => {
                       className="delete"
                       type="button"
                       title="Remover Requisição"
-                      onClick={() => handleDeleteRegister(request.id)}
+                      onClick={() => onDeleteRequest(request.id)}
                     >
                       <FaTrashAlt />
                     </button>
@@ -123,20 +150,20 @@ const ActivityRegister: React.FC = () => {
           ) : (
             <NoRequests />
           )}
-        </ul>
+        </SRequestsContainer.List>
       )}
 
-      {showModal && selectedRequest && (
-        <Modal closeModal={() => setShowModal(false)} title="Atividade">
+      {openDetails && selectedRequest && (
+        <Modal closeModal={handleCloseDetails} title="Atividade">
           <ActivityModal
             request={selectedRequest}
-            deleteRequest={handleDeleteRegister}
-            acceptRequest={handleAcceptRegister}
+            deleteRequest={onDeleteRequest}
+            acceptRequest={onAcceptRequest}
           />
         </Modal>
       )}
-    </RequestsContainer>
+    </SRequestsContainer>
   );
 };
 
-export default ActivityRegister;
+export default ActivityRequestsList;
