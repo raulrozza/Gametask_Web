@@ -1,13 +1,4 @@
-import { IAchievement, IActivity, IPlayer } from 'interfaces';
-
-export interface IActivityRequest {
-  _id: string;
-  requester: IPlayer;
-  activity: IActivity;
-  completionDate: string;
-  information: string;
-  requestDate: string;
-}
+import { IAchievement, IPlayer } from 'interfaces';
 
 export interface IAchievementRequest {
   _id: string;
