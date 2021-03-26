@@ -4,9 +4,8 @@ import React, { useState, useCallback } from 'react';
 import userPlaceholder from 'assets/img/users/placeholder.png';
 
 // Components
-import { Loading } from 'shared/view/components';
-import { Modal } from 'components';
-import { ActivityModal, NoRequests, RequestFooter } from '..';
+import { Loading, Modal } from 'shared/view/components';
+import { ActivityDetails, NoRequests, RequestFooter } from '..';
 
 // Hooks
 import useAcceptActivityRequestController from 'modules/managePlayers/infra/controllers/useAcceptActivityRequestController';
@@ -129,15 +128,18 @@ const ActivityRequestsList: React.FC = () => {
         </SRequestsContainer.List>
       )}
 
-      {openDetails && selectedRequest && (
-        <Modal closeModal={handleCloseDetails} title="Atividade">
-          <ActivityModal
-            request={selectedRequest}
-            deleteRequest={onDeleteRequest}
-            acceptRequest={onAcceptRequest}
-          />
-        </Modal>
-      )}
+      <Modal
+        size="md"
+        open={openDetails}
+        closeModal={handleCloseDetails}
+        title="Atividade"
+      >
+        <ActivityDetails
+          request={selectedRequest}
+          deleteRequest={onDeleteRequest}
+          acceptRequest={onAcceptRequest}
+        />
+      </Modal>
     </SRequestsContainer>
   );
 };

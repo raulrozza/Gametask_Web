@@ -10,32 +10,41 @@ import {
   DateText,
   DeleteButton,
   DetailsButton,
+  Information,
 } from './styles';
 
 interface RequestFooterProps {
-  date: Date;
-  showDetails(): void;
+  information?: string;
+  date?: Date;
+  showDetails?: () => void;
   handleAccept(): void;
   handleDecline(): void;
+  className?: string;
 }
 
 const RequestFooter: React.FC<RequestFooterProps> = ({
+  information,
   date,
   showDetails,
   handleAccept,
   handleDecline,
+  className,
 }) => (
-  <Container>
-    <DateText>{date.toLocaleDateString()}</DateText>
+  <Container className={className}>
+    {information && <Information>{information}</Information>}
+
+    {date && <DateText>{date.toLocaleDateString()}</DateText>}
 
     <div>
-      <DetailsButton
-        type="button"
-        title="Detalhes da Requisição"
-        onClick={showDetails}
-      >
-        Ver Mais
-      </DetailsButton>
+      {showDetails && (
+        <DetailsButton
+          type="button"
+          title="Detalhes da Requisição"
+          onClick={showDetails}
+        >
+          Ver Mais
+        </DetailsButton>
+      )}
 
       <ConfirmButton
         type="button"

@@ -10,6 +10,11 @@ export const Container = styled.footer`
   }
 `;
 
+export const Information = styled.cite`
+  font-size: 14px;
+  margin-right: ${({ theme }) => theme.layout.spacing(1)};
+`;
+
 export const DateText = styled.span`
   color: ${({ theme }) => theme.palette.primary.dark};
   font-size: 14px;
