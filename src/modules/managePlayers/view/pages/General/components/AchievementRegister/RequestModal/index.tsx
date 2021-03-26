@@ -8,11 +8,11 @@ import userPlaceholder from 'assets/img/users/placeholder.png';
 import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
 
 // Types
-import { AchievementRequestModalProps } from '../../types';
+import { AchievementRequestModalProps } from '../../../types';
 
 // Styles
 import { ModalContainer } from './styles';
-import { RequestFooter } from '../../styles';
+import { RequestFooter } from '../../../styles';
 
 const RequestModal: React.FC<AchievementRequestModalProps> = ({
   request,

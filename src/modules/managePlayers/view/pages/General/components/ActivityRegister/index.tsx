@@ -4,30 +4,31 @@ import React, { useState, useCallback } from 'react';
 import userPlaceholder from 'assets/img/users/placeholder.png';
 
 // Components
-import { Loading, Modal } from 'components';
-import { ActivityModal } from '..';
+import { Loading } from 'shared/view/components';
+import { Modal } from 'components';
+import { ActivityModal, NoRequests } from '..';
 
 // Hooks
+import useFetchActivityRequestsController from 'modules/managePlayers/infra/controllers/useFetchActivityRequestsController';
 import { useActivityRequests } from './hooks';
 
 // Icons
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
-import { BsController } from 'react-icons/bs';
 
 // Styles
 import { RequestsContainer } from './styles';
-import { NoRequests, RequestFooter } from '../../styles';
+import { RequestFooter } from '../../styles';
 
 // Types
-import { IActivityRequest } from '../../types';
+import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
 
 const ActivityRegister: React.FC = () => {
   const {
-    requests,
     loading,
-    handleAcceptRegister,
-    handleDeleteRegister,
-  } = useActivityRequests();
+    activityRequests,
+    fetchActivityRequests,
+  } = useFetchActivityRequestsController();
+  const { handleAcceptRegister, handleDeleteRegister } = useActivityRequests();
   const [
     selectedRequest,
     setSelectedRequest,
@@ -54,16 +55,12 @@ const ActivityRegister: React.FC = () => {
         <Loading />
       ) : (
         <ul className="request-list">
-          {requests.length > 0 ? (
-            requests.map(({ requester, activity, ...request }) => (
-              <li className="request" key={request._id}>
+          {activityRequests.length > 0 ? (
+            activityRequests.map(({ requester, activity, ...request }) => (
+              <li className="request" key={request.id}>
                 <section className="main">
                   <img
-                    src={
-                      requester.user.image
-                        ? requester.user.profile_url
-                        : userPlaceholder
-                    }
+                    src={requester.user.profile_url || userPlaceholder}
                     alt={requester.user.firstname}
                   />
 
@@ -106,7 +103,7 @@ const ActivityRegister: React.FC = () => {
                       className="confirm"
                       type="button"
                       title="Aceitar Requisição"
-                      onClick={() => onAcceptRegister(request._id)}
+                      onClick={() => onAcceptRegister(request.id)}
                     >
                       <FaCheck />
                     </button>
@@ -115,7 +112,7 @@ const ActivityRegister: React.FC = () => {
                       className="delete"
                       type="button"
                       title="Remover Requisição"
-                      onClick={() => handleDeleteRegister(request._id)}
+                      onClick={() => handleDeleteRegister(request.id)}
                     >
                       <FaTrashAlt />
                     </button>
@@ -124,10 +121,7 @@ const ActivityRegister: React.FC = () => {
               </li>
             ))
           ) : (
-            <NoRequests>
-              <BsController />
-              Não há requisições!
-            </NoRequests>
+            <NoRequests />
           )}
         </ul>
       )}

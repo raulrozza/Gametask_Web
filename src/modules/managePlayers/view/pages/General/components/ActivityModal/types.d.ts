@@ -1,4 +1,4 @@
-import { IActivityRequest } from 'pages/Players/types';
+import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
 
 export interface ActivityModalProps {
   request: IActivityRequest;

@@ -2,8 +2,11 @@ import React from 'react';
 
 // Components
 import { Loading, PageTitle } from 'shared/view/components';
-import { ActivityRegister, TitleManager } from './components';
-import AchievementRegister from './AchievementRegister';
+import {
+  AchievementRegister,
+  ActivityRegister,
+  TitleManager,
+} from './components';
 
 // Helpers
 import { getPageTitle } from 'modules/managePlayers/view/pages/General/helpers';

@@ -142,15 +142,3 @@ export const RequestFooter = styled.footer`
     }
   `}
 `;
-
-export const NoRequests = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  svg {
-    font-size: 48px;
-    color: ${({ theme }) => theme.palette.secondary.main};
-  }
-`;

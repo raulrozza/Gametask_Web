@@ -21,11 +21,7 @@ const ActivityModal: React.FC<ActivityModalProps> = ({
   <ModalContainer>
     <header>
       <img
-        src={
-          request.requester.user.image
-            ? request.requester.user.profile_url
-            : userPlaceholder
-        }
+        src={request.requester.user.profile_url || userPlaceholder}
         alt={request.requester.user.firstname}
       />
 
@@ -63,7 +59,7 @@ const ActivityModal: React.FC<ActivityModalProps> = ({
           className="confirm"
           type="button"
           title="Aceitar Requisição"
-          onClick={() => acceptRequest(request._id)}
+          onClick={() => acceptRequest(request.id)}
         >
           <FaCheck />
         </button>
@@ -72,7 +68,7 @@ const ActivityModal: React.FC<ActivityModalProps> = ({
           className="delete"
           type="button"
           title="Remover Requisição"
-          onClick={() => deleteRequest(request._id)}
+          onClick={() => deleteRequest(request.id)}
         >
           <FaTrash />
         </button>

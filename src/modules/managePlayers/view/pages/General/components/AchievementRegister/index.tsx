@@ -8,6 +8,7 @@ import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
 import Loading from 'components/Loading';
 import Modal from 'components/Modal';
 import RequestModal from './RequestModal';
+import { NoRequests } from '..';
 
 // Hooks
 import { useAuth } from 'hooks/contexts/useAuth';
@@ -20,7 +21,7 @@ import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 // Styles
-import { NoRequests, RequestsContainer, RequestFooter } from '../styles';
+import { RequestsContainer, RequestFooter } from '../../styles';
 
 // Services
 import { api } from 'services';
@@ -30,7 +31,7 @@ import { removeItemFromArray } from 'utils/arrayMethods';
 import handleApiErrors from 'utils/handleApiErrors';
 
 // Types
-import { IAchievementRequest } from '../types';
+import { IAchievementRequest } from '../../types';
 import { BsController } from 'react-icons/bs';
 
 const AchievementRegister: React.FC = () => {
