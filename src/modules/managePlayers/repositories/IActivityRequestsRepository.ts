@@ -1,4 +1,4 @@
-import { IActivityRequest } from 'modules/managePlayers/view/pages/General/types';
+import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
 
 export default interface IActivityRequestsRepository {
   accept(id: string): Promise<void>;
