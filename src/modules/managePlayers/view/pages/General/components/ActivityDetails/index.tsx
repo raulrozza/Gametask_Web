@@ -4,7 +4,13 @@ import React from 'react';
 import userPlaceholder from 'assets/img/users/placeholder.png';
 
 // Styles
-import { ModalContainer, SRequestFooter } from './styles';
+import {
+  Container,
+  DescriptionBlock,
+  Divider,
+  SRequestFooter,
+  UserInfo,
+} from './styles';
 
 // Types
 import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
@@ -21,8 +27,8 @@ const ActivityDetails: React.FC<ActivityModalProps> = ({
   acceptRequest,
 }) =>
   request ? (
-    <ModalContainer>
-      <header>
+    <Container>
+      <UserInfo>
         <img
           src={request.requester.user.profile_url || userPlaceholder}
           alt={request.requester.user.firstname}
@@ -39,9 +45,11 @@ const ActivityDetails: React.FC<ActivityModalProps> = ({
           </strong>{' '}
           em {new Date(request.completionDate).toLocaleDateString()}
         </span>
-      </header>
+      </UserInfo>
 
-      <section>
+      <Divider />
+
+      <DescriptionBlock>
         <span>{request.requester.user.firstname} informa: </span>
 
         <span>{request.information}</span>
@@ -49,7 +57,7 @@ const ActivityDetails: React.FC<ActivityModalProps> = ({
         {request.activity.dmRules && (
           <cite>Recomendações: &quot;{request.activity.dmRules}&quot;</cite>
         )}
-      </section>
+      </DescriptionBlock>
 
       <SRequestFooter
         information={`Requisição feita em ${new Date(
@@ -60,7 +68,7 @@ const ActivityDetails: React.FC<ActivityModalProps> = ({
         handleAccept={() => acceptRequest(request.id)}
         handleDecline={() => deleteRequest(request.id)}
       />
-    </ModalContainer>
+    </Container>
   ) : null;
 
 export default ActivityDetails;

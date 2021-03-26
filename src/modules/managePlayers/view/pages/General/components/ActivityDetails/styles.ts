@@ -1,72 +1,79 @@
 import RequestFooter from 'modules/managePlayers/view/pages/General/components/RequestFooter';
 import styled from 'styled-components';
 
-export const ModalContainer = styled.div`
-  padding: 8px;
+export const Container = styled.div`
+  padding: ${({ theme }) => theme.layout.spacing(2)};
+`;
 
-  header {
-    display: grid;
-    grid-template-areas:
-      'image title'
-      'image description';
-    grid-template-columns: 1fr 3fr;
-    gap: 8px;
-    place-items: center;
-    width: 100%;
+export const UserInfo = styled.header`
+  display: grid;
+  grid-template-areas:
+    'image title'
+    'image description';
+  grid-template-columns: 1fr 3fr;
+  gap: ${({ theme }) => theme.layout.spacing(2)};
+  place-items: center;
+  width: 100%;
 
+  > img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    grid-area: image;
+  }
+
+  > strong {
+    text-transform: capitalize;
+    grid-area: title;
+    font-size: 24px;
+  }
+
+  > span {
+    grid-area: description;
+  }
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.md}) {
     > img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      grid-area: image;
+      height: 80px;
+      width: 80px;
     }
 
     > strong {
-      text-transform: capitalize;
-      grid-area: title;
-      font-size: 24px;
+      font-size: 18px;
     }
 
     > span {
-      grid-area: description;
+      font-size: 14px;
     }
   }
+`;
 
-  section {
-    display: grid;
-    grid-template-areas:
-      '. .'
-      'rules rules';
-    grid-template-columns: 1fr 2fr;
-    margin: 16px 0;
+export const Divider = styled.hr`
+  width: 100%;
+  margin: ${({ theme }) => theme.layout.spacing(2, 0)};
+  border-bottom: none;
+  border-color: ${({ theme }) => theme.palette.gray['100']};
+`;
 
-    cite {
-      grid-area: rules;
-    }
+export const DescriptionBlock = styled.section`
+  display: grid;
+  grid-template-areas:
+    '. .'
+    'rules rules';
+  grid-template-columns: auto 1fr;
+  margin: ${({ theme }) => theme.layout.spacing(4, 0)};
+
+  span:nth-child(2) {
+    margin-left: ${({ theme }) => theme.layout.spacing(2)};
   }
 
-  @media (max-width: 768px) {
-    header {
-      > img {
-        height: 80px;
-        width: 80px;
-      }
-
-      > strong {
-        font-size: 18px;
-      }
-
-      > span {
-        font-size: 14px;
-      }
-    }
+  cite {
+    grid-area: rules;
   }
 
-  @media (max-width: 576px) {
-    section {
-      display: flex;
-      flex-direction: column;
-    }
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.sm}) {
+    display: flex;
+    flex-direction: column;
   }
 `;
 

@@ -11,7 +11,7 @@ export default class ActivityRequestsRepository
   }
 
   public async delete(id: string): Promise<void> {
-    await this.httpProvider.patch(`requests/activities/${id}`);
+    await this.httpProvider.delete(`requests/activities/${id}`);
   }
 
   public async findAllFromGame(): Promise<IActivityRequest[]> {
