@@ -6,16 +6,13 @@ import userPlaceholder from 'assets/img/users/placeholder.png';
 // Components
 import { Loading } from 'shared/view/components';
 import { Modal } from 'components';
-import { ActivityModal, NoRequests } from '..';
+import { ActivityModal, NoRequests, RequestFooter } from '..';
 
 // Hooks
 import useAcceptActivityRequestController from 'modules/managePlayers/infra/controllers/useAcceptActivityRequestController';
 import useDeleteActivityRequestController from 'modules/managePlayers/infra/controllers/useDeleteActivityRequestController';
 import useFetchActivityRequestsController from 'modules/managePlayers/infra/controllers/useFetchActivityRequestsController';
 import { useModalController } from 'shared/view/components/Modal';
-
-// Icons
-import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 
 // Styles
 import {
@@ -26,7 +23,6 @@ import {
   Info,
   Title,
 } from './styles';
-import { RequestFooter } from '../../styles';
 
 // Types
 import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
@@ -113,46 +109,18 @@ const ActivityRequestsList: React.FC = () => {
                   </div>
                 </Grid>
 
-                <RequestFooter>
-                  <span>
-                    {new Date(request.requestDate).toLocaleDateString()}
-                  </span>
-
-                  <div>
-                    <button
-                      className="details"
-                      type="button"
-                      title="Detalhes da Requisição"
-                      onClick={() =>
-                        handleShowDetails({
-                          ...request,
-                          requester,
-                          activity,
-                        })
-                      }
-                    >
-                      Ver Mais
-                    </button>
-
-                    <button
-                      className="confirm"
-                      type="button"
-                      title="Aceitar Requisição"
-                      onClick={() => onAcceptRequest(request.id)}
-                    >
-                      <FaCheck />
-                    </button>
-
-                    <button
-                      className="delete"
-                      type="button"
-                      title="Remover Requisição"
-                      onClick={() => onDeleteRequest(request.id)}
-                    >
-                      <FaTrashAlt />
-                    </button>
-                  </div>
-                </RequestFooter>
+                <RequestFooter
+                  date={new Date(request.requestDate)}
+                  showDetails={() =>
+                    handleShowDetails({
+                      ...request,
+                      requester,
+                      activity,
+                    })
+                  }
+                  handleAccept={() => onAcceptRequest(request.id)}
+                  handleDecline={() => onDeleteRequest(request.id)}
+                />
               </RequestItem>
             ))
           ) : (
