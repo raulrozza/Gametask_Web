@@ -1,3 +1,4 @@
+export { default as AchievementDetails } from './AchievementDetails';
 export { default as AchievementRequestsList } from './AchievementRequestsList';
 export { default as ActivityDetails } from './ActivityDetails';
 export { default as ActivityRequestsList } from './ActivityRequestsList';

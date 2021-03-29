@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { RequestsContainer } from '../../styles';
+import RequestsContainer from 'modules/managePlayers/view/pages/General/components/RequestsContainer';
 
 export const Container = styled(RequestsContainer)`
   width: 360px;

@@ -6,19 +6,19 @@ import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
 
 // Components
 import { Loading, Modal } from 'shared/view/components';
-import RequestModal from './RequestModal';
-import { NoRequests, RequestsContainer } from '..';
+import {
+  AchievementDetails,
+  NoRequests,
+  RequestsContainer,
+  RequestFooter,
+} from '..';
 
 // Hooks
 import useFetchAchievementRequestsController from 'modules/managePlayers/infra/controllers/useFetchAchievementRequests';
 import { useModalController } from 'shared/view/components/Modal';
 
-// Icons
-import { FaCheck, FaTrashAlt } from 'react-icons/fa';
-
 // Styles
 import { RequestItem, Grid, Image, Info, Title } from './styles';
-import { RequestFooter } from '../../styles';
 
 // Types
 import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
@@ -105,46 +105,18 @@ const AchievementRequestsList: React.FC = () => {
                     </div>
                   </Grid>
 
-                  <RequestFooter>
-                    <span>
-                      {new Date(request.requestDate).toLocaleDateString()}
-                    </span>
-
-                    <div>
-                      <button
-                        className="details"
-                        type="button"
-                        title="Detalhes da Requisição"
-                        onClick={() =>
-                          handleShowDetails({
-                            ...request,
-                            requester,
-                            achievement,
-                          })
-                        }
-                      >
-                        Ver Mais
-                      </button>
-
-                      <button
-                        className="confirm"
-                        type="button"
-                        title="Aceitar Requisição"
-                        onClick={() => onGrantAchievement(request.id)}
-                      >
-                        <FaCheck />
-                      </button>
-
-                      <button
-                        className="delete"
-                        type="button"
-                        title="Remover Requisição"
-                        onClick={() => onDeleteRequest(request.id)}
-                      >
-                        <FaTrashAlt />
-                      </button>
-                    </div>
-                  </RequestFooter>
+                  <RequestFooter
+                    date={new Date(request.requestDate)}
+                    showDetails={() =>
+                      handleShowDetails({
+                        ...request,
+                        requester,
+                        achievement,
+                      })
+                    }
+                    handleAccept={() => onGrantAchievement(request.id)}
+                    handleDecline={() => onDeleteRequest(request.id)}
+                  />
                 </RequestItem>
               ),
             )
@@ -160,7 +132,7 @@ const AchievementRequestsList: React.FC = () => {
         closeModal={handleCloseDetails}
         title="Conquista"
       >
-        <RequestModal
+        <AchievementDetails
           request={selectedRequest}
           deleteRequest={onDeleteRequest}
           acceptRequest={onGrantAchievement}

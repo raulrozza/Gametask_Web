@@ -1,26 +1,28 @@
 import React from 'react';
 
-// Icons
-import { FaCheck, FaTrash } from 'react-icons/fa';
-
 // Assets
 import userPlaceholder from 'assets/img/users/placeholder.png';
 import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
 
-// Types
-import { AchievementRequestModalProps } from '../../../types';
-
 // Styles
-import { ModalContainer } from './styles';
-import { RequestFooter } from '../../../styles';
+import { Container, SRequestFooter } from './styles';
 
-const RequestModal: React.FC<AchievementRequestModalProps> = ({
+// Types
+import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
+
+interface AchievementRequestModalProps {
+  request: IAchievementRequest | null;
+  deleteRequest: (id: string) => void;
+  acceptRequest: (id: string) => void;
+}
+
+const AchievementDetails: React.FC<AchievementRequestModalProps> = ({
   request,
   deleteRequest,
   acceptRequest,
 }) =>
   request ? (
-    <ModalContainer>
+    <Container>
       <header>
         <img
           className="user-image"
@@ -56,34 +58,16 @@ const RequestModal: React.FC<AchievementRequestModalProps> = ({
         <span>{request.information}</span>
       </section>
 
-      <RequestFooter>
-        <cite>
-          Requisição feita em{' '}
-          {new Date(request.requestDate).toLocaleDateString()},{' '}
-          {new Date(request.requestDate).toLocaleTimeString()}
-        </cite>
-
-        <div>
-          <button
-            className="confirm"
-            type="button"
-            title="Aceitar Requisição"
-            onClick={() => acceptRequest(request.id)}
-          >
-            <FaCheck />
-          </button>
-
-          <button
-            className="delete"
-            type="button"
-            title="Remover Requisição"
-            onClick={() => deleteRequest(request.id)}
-          >
-            <FaTrash />
-          </button>
-        </div>
-      </RequestFooter>
-    </ModalContainer>
+      <SRequestFooter
+        information={`Requisição feita em ${new Date(
+          request.requestDate,
+        ).toLocaleDateString()}, ${new Date(
+          request.requestDate,
+        ).toLocaleTimeString()}`}
+        handleAccept={() => acceptRequest(request.id)}
+        handleDecline={() => deleteRequest(request.id)}
+      />
+    </Container>
   ) : null;
 
-export default RequestModal;
+export default AchievementDetails;
