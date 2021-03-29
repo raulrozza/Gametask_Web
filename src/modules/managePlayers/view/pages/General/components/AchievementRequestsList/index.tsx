@@ -17,6 +17,7 @@ import { useModalController } from 'shared/view/components/Modal';
 import { FaCheck, FaTrashAlt } from 'react-icons/fa';
 
 // Styles
+import { RequestItem, Grid, Image, Info, Title } from './styles';
 import { RequestFooter } from '../../styles';
 
 // Types
@@ -26,6 +27,7 @@ const AchievementRequestsList: React.FC = () => {
   const {
     loading,
     achievementRequests,
+    fetchAchievementRequests,
   } = useFetchAchievementRequestsController();
 
   const [
@@ -39,9 +41,29 @@ const AchievementRequestsList: React.FC = () => {
     handleCloseDetails,
   ] = useModalController();
 
-  const handleDeleteRegister = useCallback(async (id: string) => undefined, []);
+  const onDeleteRequest = useCallback(
+    async (id: string) => {
+      const success = 1 + 1 === 2;
 
-  const handleAcceptRegister = useCallback(async (id: string) => undefined, []);
+      if (success) {
+        fetchAchievementRequests();
+        handleCloseDetails();
+      }
+    },
+    [fetchAchievementRequests, handleCloseDetails],
+  );
+
+  const onGrantAchievement = useCallback(
+    async (id: string) => {
+      const success = 1 + 1 === 2;
+
+      if (success) {
+        fetchAchievementRequests();
+        handleCloseDetails();
+      }
+    },
+    [fetchAchievementRequests, handleCloseDetails],
+  );
 
   const handleShowDetails = useCallback(
     (request: IAchievementRequest) => {
@@ -60,28 +82,28 @@ const AchievementRequestsList: React.FC = () => {
           {achievementRequests.length > 0 ? (
             achievementRequests.map(
               ({ requester, achievement, ...request }) => (
-                <li className="request" key={request.id}>
-                  <section className="main">
-                    <img
+                <RequestItem key={request.id}>
+                  <Grid>
+                    <Image
                       src={requester.user.profile_url || userPlaceholder}
                       alt={requester.user.firstname}
                     />
 
-                    <img
+                    <Image
                       src={achievement.image_url || achievementPlaceholder}
                       alt={achievement.name}
                     />
 
                     <div>
-                      <span className="title">
+                      <Title>
                         <strong>{requester.user.firstname}</strong>
                         {` | `}
                         <strong>{achievement.name}</strong>
-                      </span>
+                      </Title>
 
-                      <span className="info">{request.information}</span>
+                      <Info>{request.information}</Info>
                     </div>
-                  </section>
+                  </Grid>
 
                   <RequestFooter>
                     <span>
@@ -108,7 +130,7 @@ const AchievementRequestsList: React.FC = () => {
                         className="confirm"
                         type="button"
                         title="Aceitar Requisição"
-                        onClick={() => handleAcceptRegister(request.id)}
+                        onClick={() => onGrantAchievement(request.id)}
                       >
                         <FaCheck />
                       </button>
@@ -117,13 +139,13 @@ const AchievementRequestsList: React.FC = () => {
                         className="delete"
                         type="button"
                         title="Remover Requisição"
-                        onClick={() => handleDeleteRegister(request.id)}
+                        onClick={() => onDeleteRequest(request.id)}
                       >
                         <FaTrashAlt />
                       </button>
                     </div>
                   </RequestFooter>
-                </li>
+                </RequestItem>
               ),
             )
           ) : (
@@ -140,8 +162,8 @@ const AchievementRequestsList: React.FC = () => {
       >
         <RequestModal
           request={selectedRequest}
-          deleteRequest={handleDeleteRegister}
-          acceptRequest={handleAcceptRegister}
+          deleteRequest={onDeleteRequest}
+          acceptRequest={onGrantAchievement}
         />
       </Modal>
     </RequestsContainer>
