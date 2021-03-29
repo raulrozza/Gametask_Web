@@ -14,6 +14,8 @@ import {
 } from '..';
 
 // Hooks
+import useDeleteAchievementRequestController from 'modules/managePlayers/infra/controllers/useDeleteAchievementRequestController';
+import useGrantAchievementController from 'modules/managePlayers/infra/controllers/useGrantAchievementController';
 import useFetchAchievementRequestsController from 'modules/managePlayers/infra/controllers/useFetchAchievementRequests';
 import { useModalController } from 'shared/view/components/Modal';
 
@@ -22,7 +24,7 @@ import { RequestItem, Grid, Image, Info, Title } from './styles';
 
 // Types
 import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
-import useDeleteAchievementRequestController from 'modules/managePlayers/infra/controllers/useDeleteAchievementRequestController';
+import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
 
 const AchievementRequestsList: React.FC = () => {
   const {
@@ -32,6 +34,8 @@ const AchievementRequestsList: React.FC = () => {
   } = useFetchAchievementRequestsController();
 
   const { deleteAchievementRequest } = useDeleteAchievementRequestController();
+
+  const { grantAchievement } = useGrantAchievementController();
 
   const [
     selectedRequest,
@@ -57,15 +61,15 @@ const AchievementRequestsList: React.FC = () => {
   );
 
   const onGrantAchievement = useCallback(
-    async (id: string) => {
-      const success = 1 + 1 === 2;
+    async (data: IGrantAchievementDTO) => {
+      const success = await grantAchievement(data);
 
       if (success) {
         fetchAchievementRequests();
         handleCloseDetails();
       }
     },
-    [fetchAchievementRequests, handleCloseDetails],
+    [fetchAchievementRequests, grantAchievement, handleCloseDetails],
   );
 
   const handleShowDetails = useCallback(
@@ -117,7 +121,14 @@ const AchievementRequestsList: React.FC = () => {
                         achievement,
                       })
                     }
-                    handleAccept={() => onGrantAchievement(request.id)}
+                    handleAccept={() =>
+                      onGrantAchievement({
+                        achievementId: achievement.id,
+                        playerId: requester.id,
+                        userId: requester.user.id,
+                        requestId: request.id,
+                      })
+                    }
                     handleDecline={() => onDeleteRequest(request.id)}
                   />
                 </RequestItem>

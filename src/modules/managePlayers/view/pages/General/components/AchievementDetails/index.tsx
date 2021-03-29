@@ -18,11 +18,12 @@ import {
 
 // Types
 import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
+import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
 
 interface AchievementRequestModalProps {
   request: IAchievementRequest | null;
   deleteRequest: (id: string) => void;
-  acceptRequest: (id: string) => void;
+  acceptRequest: (data: IGrantAchievementDTO) => void;
 }
 
 const AchievementDetails: React.FC<AchievementRequestModalProps> = ({
@@ -73,7 +74,14 @@ const AchievementDetails: React.FC<AchievementRequestModalProps> = ({
         ).toLocaleDateString()}, ${new Date(
           request.requestDate,
         ).toLocaleTimeString()}`}
-        handleAccept={() => acceptRequest(request.id)}
+        handleAccept={() =>
+          acceptRequest({
+            achievementId: request.achievement.id,
+            playerId: request.requester.id,
+            userId: request.requester.user.id,
+            requestId: request.id,
+          })
+        }
         handleDecline={() => deleteRequest(request.id)}
       />
     </Container>
