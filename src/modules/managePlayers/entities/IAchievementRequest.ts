@@ -24,4 +24,6 @@ export default interface IAchievementRequest {
   id: string;
   requester: IRequester;
   achievement: IAchievement;
+  information: string;
+  requestDate: string;
 }

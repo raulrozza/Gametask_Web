@@ -3,7 +3,7 @@ import React from 'react';
 // Components
 import { Loading, PageTitle } from 'shared/view/components';
 import {
-  AchievementRegister,
+  AchievementRequestsList,
   ActivityRequestsList,
   TitleManager,
 } from './components';
@@ -39,7 +39,7 @@ const General: React.FC = () => {
 
       <ActivityRequestsList />
 
-      <AchievementRegister />
+      <AchievementRequestsList />
 
       <TitleManager />
     </PlayersContainer>

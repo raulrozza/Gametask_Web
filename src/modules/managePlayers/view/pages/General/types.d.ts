@@ -1,15 +1,7 @@
-import { IAchievement, IPlayer } from 'interfaces';
-
-export interface IAchievementRequest {
-  _id: string;
-  requester: IPlayer;
-  achievement: IAchievement;
-  information: string;
-  requestDate: string;
-}
+import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
 
 export interface AchievementRequestModalProps {
-  request: IAchievementRequest;
+  request: IAchievementRequest | null;
   deleteRequest: (id: string) => void;
   acceptRequest: (id: string) => void;
 }
