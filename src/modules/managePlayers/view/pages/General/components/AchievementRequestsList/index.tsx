@@ -22,6 +22,7 @@ import { RequestItem, Grid, Image, Info, Title } from './styles';
 
 // Types
 import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
+import useDeleteAchievementRequestController from 'modules/managePlayers/infra/controllers/useDeleteAchievementRequestController';
 
 const AchievementRequestsList: React.FC = () => {
   const {
@@ -29,6 +30,8 @@ const AchievementRequestsList: React.FC = () => {
     achievementRequests,
     fetchAchievementRequests,
   } = useFetchAchievementRequestsController();
+
+  const { deleteAchievementRequest } = useDeleteAchievementRequestController();
 
   const [
     selectedRequest,
@@ -43,14 +46,14 @@ const AchievementRequestsList: React.FC = () => {
 
   const onDeleteRequest = useCallback(
     async (id: string) => {
-      const success = 1 + 1 === 2;
+      const success = await deleteAchievementRequest(id);
 
       if (success) {
         fetchAchievementRequests();
         handleCloseDetails();
       }
     },
-    [fetchAchievementRequests, handleCloseDetails],
+    [deleteAchievementRequest, fetchAchievementRequests, handleCloseDetails],
   );
 
   const onGrantAchievement = useCallback(
