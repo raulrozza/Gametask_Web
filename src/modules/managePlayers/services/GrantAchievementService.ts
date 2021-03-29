@@ -6,7 +6,7 @@ interface IExecute {
   shouldLogout?: boolean;
 }
 
-export default class GrantAchievementRequestService {
+export default class GrantAchievementService {
   constructor(
     private achievementRequestsRepository: IAchievementRequestsRepository,
   ) {}
