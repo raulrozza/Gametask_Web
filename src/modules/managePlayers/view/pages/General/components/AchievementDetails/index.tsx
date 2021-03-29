@@ -5,7 +5,16 @@ import userPlaceholder from 'assets/img/users/placeholder.png';
 import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
 
 // Styles
-import { Container, SRequestFooter } from './styles';
+import {
+  AchievementImage,
+  Container,
+  Description,
+  ObtainedBy,
+  Title,
+  UserInfo,
+  UserImage,
+  SRequestFooter,
+} from './styles';
 
 // Types
 import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
@@ -23,34 +32,34 @@ const AchievementDetails: React.FC<AchievementRequestModalProps> = ({
 }) =>
   request ? (
     <Container>
-      <header>
-        <img
-          className="user-image"
+      <UserInfo>
+        <UserImage
           src={request.requester.user.profile_url || userPlaceholder}
           alt={request.requester.user.firstname}
         />
-        <img
-          className="achievement-image"
+
+        <AchievementImage
           src={request.achievement.image_url || achievementPlaceholder}
           alt={request.achievement.name}
         />
 
-        <strong>
+        <Title>
           {request.achievement.name}
+
           {request.achievement.title && (
             <span> [{request.achievement.title.name}]</span>
           )}
-        </strong>
+        </Title>
 
-        <span className="description">{request.achievement.description}</span>
+        <Description>{request.achievement.description}</Description>
 
-        <span className="obtained-by">
-          obtida por{' '}
+        <ObtainedBy>
+          Obtida por{' '}
           <strong>
             {request.requester.user.firstname} {request.requester.user.lastname}
           </strong>
-        </span>
-      </header>
+        </ObtainedBy>
+      </UserInfo>
 
       <section>
         <span>{request.requester.user.firstname} informa: </span>
