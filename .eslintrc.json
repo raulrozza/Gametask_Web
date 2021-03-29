@@ -9,6 +9,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:styled-components-a11y/recommended",
     "prettier/react",
     "prettier/standard",
     "prettier/@typescript-eslint",
@@ -31,6 +32,7 @@
     "prettier",
     "react-hooks",
 		"jsx-a11y",
+    "styled-components-a11y",
 		"jest",
 		"jest-dom",
 		"testing-library"
