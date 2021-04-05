@@ -1,3 +1,4 @@
+import { lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
 export const Row = styled.div`
@@ -130,7 +131,7 @@ export const TabItem = styled.button<TabItemProps>`
 export const Content = styled.main`
   ${({ theme }) => css`
     width: 100%;
-    background-color: ${theme.palette.primary.dark};
+    background-color: ${lighten(0.1, theme.palette.primary.dark)};
     border-radius: ${theme.layout.borderRadius.small};
 
     footer {

@@ -29,6 +29,8 @@ export const TextareaField = styled.textarea`
 
     transition: border-color 0.5s;
 
+    resize: vertical;
+
     &:focus {
       border-color: ${theme.palette.secondary.main};
     }

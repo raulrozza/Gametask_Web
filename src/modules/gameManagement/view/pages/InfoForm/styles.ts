@@ -1,7 +1,15 @@
 import styled from 'styled-components';
-import DefaultForm from 'styles/Form';
+import { Form } from 'formik';
 
-export const Form = styled(DefaultForm)`
+export const SForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: ${({ theme }) => theme.layout.spacing(3, 6)};
+`;
+
+export const OTODO = styled.div`
   .input-group button[type='reset'] {
     color: ${({ theme }) => theme.palette.secondary.main};
     background-color: transparent;
