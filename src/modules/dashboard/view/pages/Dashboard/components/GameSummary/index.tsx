@@ -58,7 +58,7 @@ const GameSummary: React.FC<GameSummaryProps> = ({ game }) => {
       </LoggedInfoText>
 
       <ConfigButton type="button" title="Configurações">
-        <Link to="/game">
+        <Link to="/settings">
           <FaCog />
         </Link>
       </ConfigButton>
