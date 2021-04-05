@@ -1,15 +1,33 @@
 import React, { useState, useMemo, lazy, Suspense, useCallback } from 'react';
 
 // Component
-import Loading from 'components/Loading';
-import PageWrapper from 'components/PageWrapper';
+import { Loading, PageTitle } from 'shared/view/components';
+import { Header } from './components';
 
 // Libs
 import { FaBars } from 'react-icons/fa';
 
 // Styles
-import { Row, SideNav, TabItem, Content, MenuButton, TabList } from './styles';
-import { PageTitle } from 'shared/view/components';
+import {
+  Container,
+  Row,
+  SideNav,
+  TabItem,
+  Content,
+  MenuButton,
+  TabList,
+} from './styles';
+
+// Subpages
+const InfoForm = lazy(
+  () => import('modules/gameManagement/view/pages/InfoForm'),
+);
+const LevelConfig = lazy(
+  () => import('modules/gameManagement/view/pages/LevelConfig'),
+);
+const RankConfig = lazy(
+  () => import('modules/gameManagement/view/pages/RankConfig'),
+);
 
 type RoutesEnum = 'info' | 'leveling' | 'ranks';
 
@@ -23,11 +41,6 @@ interface ISidenavItem {
   key: RoutesEnum;
   title: string;
 }
-
-// Subpages
-const InfoForm = lazy(() => import('../InfoForm'));
-const LevelConfig = lazy(() => import('../LevelConfig'));
-const RankConfig = lazy(() => import('../RankConfig'));
 
 const Settings: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -66,7 +79,9 @@ const Settings: React.FC = () => {
     <>
       <PageTitle title="Configurações" />
 
-      <PageWrapper title="Configurações">
+      <Container title="Configurações">
+        <Header title="Configurações" />
+
         <Row>
           <SideNav shown={showMenu}>
             <MenuButton type="button" onClick={() => setShowMenu(!showMenu)}>
@@ -90,17 +105,13 @@ const Settings: React.FC = () => {
             <Suspense fallback={<Loading />}>
               {renderedRoute === ROUTES_ENUM.info && <InfoForm />}
 
-              {/* <Route path={`${match.path}/leveling`} exact>
-                  <LevelConfig />
-                </Route>
+              {renderedRoute === ROUTES_ENUM.leveling && <LevelConfig />}
 
-                <Route path={`${match.path}/ranks`} exact>
-                  <RankConfig />
-                </Route> */}
+              {renderedRoute === ROUTES_ENUM.ranks && <RankConfig />}
             </Suspense>
           </Content>
         </Row>
-      </PageWrapper>
+      </Container>
     </>
   );
 };
