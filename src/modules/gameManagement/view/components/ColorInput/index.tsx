@@ -20,7 +20,7 @@ const ColorInput: React.FC<ColorInputProps> = ({
   label = '',
   className,
 }) => {
-  const [field, meta, helpers] = useField(name);
+  const [field, , helpers] = useField(name);
 
   const [showPicker, setShowPicker] = useState(false);
 
@@ -77,9 +77,10 @@ const ColorInput: React.FC<ColorInputProps> = ({
 
   return (
     <Container className={className}>
-      {label && <label>{label}:</label>}
+      {label && <label htmlFor={`${name}-color`}>{label}:</label>}
 
       <ColorViewer
+        id={`${name}-color`}
         color={field.value}
         onClick={handleViewerClick}
         onBlur={handleViewerBlur}
