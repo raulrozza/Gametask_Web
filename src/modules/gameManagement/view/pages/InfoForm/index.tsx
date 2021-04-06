@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 
 // Components
 import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
-import ColorInput from 'components/ColorInput';
+import { ColorInput } from 'modules/gameManagement/view/components';
 import { SForm } from './styles';
 
 // Config
@@ -10,7 +10,7 @@ import { SForm } from './styles';
 
 // Hooks
 import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
-/* import { useTheme } from 'hooks/contexts/useTheme'; */
+import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
 
 // Libraries
 import { Formik } from 'formik';
@@ -26,29 +26,40 @@ interface IInitialValues {
   name: string;
   description: string;
   image: string;
-  theme: {
-    primary: string;
-    secondary: string;
-  };
+  primary: string;
+  secondary: string;
 }
 
 const InfoForm: React.FC = () => {
   const { game, fetchGame } = useGetGameController();
-  /* const { changeTheme } = useTheme(); */
+  const { theme } = useThemeContext();
 
   const initialValues: IInitialValues = useMemo(
     () => ({
       name: game.name,
       description: game.description,
-      theme: game.theme,
+      primary: theme.palette.primary.main,
+      secondary: theme.palette.secondary.main,
       image: game.image_url || '',
     }),
-    [game.description, game.image_url, game.name, game.theme],
+    [
+      game.description,
+      game.image_url,
+      game.name,
+      theme.palette.primary.main,
+      theme.palette.secondary.main,
+    ],
   );
   const [disabledBtn, setDisabledBtn] = useState(false);
 
   const submitForm = useCallback(
-    async ({ name, description, theme, image }: IUpdateGameDTO) => {
+    async ({
+      name,
+      description,
+      primary,
+      secondary,
+      image,
+    }: IUpdateGameDTO) => {
       setDisabledBtn(true);
 
       const data = new FormData();
@@ -56,11 +67,8 @@ const InfoForm: React.FC = () => {
       if (name !== game.name) data.append('name', name);
       if (description !== game.description)
         data.append('description', description);
-      if (
-        theme.primary !== game.theme.primary ||
-        theme.secondary !== game.theme.secondary
-      )
-        data.append('theme', JSON.stringify(theme));
+      if (primary !== game.theme.primary || secondary !== game.theme.secondary)
+        data.append('theme', JSON.stringify({ primary, secondary }));
       if (image !== game.image_url) data.append('image', image);
 
       /* await api.instance.put(`/game/${game.id}`, data); */
@@ -106,22 +114,11 @@ const InfoForm: React.FC = () => {
         <div className="input-group">
           <h3>Tema</h3>
 
-          {/* <ColorInput
-          label="Cor de fundo"
-          value={form.values.theme.palette.primary.contrast}
-          onChange={color => handleColorChange('primary', color.hex)}
-          onShowPanel={() => changeTheme(form.values.theme)}
-          onHidePanel={() => changeTheme(game.theme)}
-        />
+          <ColorInput name="primary" label="Cor de fundo" />
 
-        <ColorInput
-          label="Cor dos botões"
-          value={form.values.palette.secondary.main}
-          onChange={color => handleColorChange('secondary', color.hex)}
-          onShowPanel={() => changeTheme(form.values.theme)}
-          onHidePanel={() => changeTheme(game.theme)}
-        />
+          <ColorInput name="secondary" label="Cor dos botões" />
 
+          {/*
         <button
           type="reset"
           onClick={() => {
