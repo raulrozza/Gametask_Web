@@ -1,7 +1,13 @@
 import React, { useState, useCallback, useMemo } from 'react';
 
 // Components
-import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
+import {
+  Button,
+  ImageInput,
+  Input,
+  Loading,
+  Textarea,
+} from 'shared/view/components';
 import { ColorInput } from 'modules/gameManagement/view/components';
 import { SForm } from './styles';
 
@@ -31,21 +37,25 @@ interface IInitialValues {
 }
 
 const InfoForm: React.FC = () => {
-  const { game, fetchGame } = useGetGameController();
+  const { loading, game, fetchGame } = useGetGameController();
   const { theme } = useThemeContext();
 
   const initialValues: IInitialValues = useMemo(
-    () => ({
-      name: game.name,
-      description: game.description,
-      primary: theme.palette.primary.main,
-      secondary: theme.palette.secondary.main,
-      image: game.image_url || '',
-    }),
+    () =>
+      loading
+        ? ({} as any)
+        : {
+            name: game.name,
+            description: game.description,
+            primary: theme.palette.primary.main,
+            secondary: theme.palette.secondary.main,
+            image: game.image_url || '',
+          },
     [
       game.description,
       game.image_url,
       game.name,
+      loading,
       theme.palette.primary.main,
       theme.palette.secondary.main,
     ],
@@ -62,14 +72,16 @@ const InfoForm: React.FC = () => {
     }: IUpdateGameDTO) => {
       setDisabledBtn(true);
 
-      const data = new FormData();
+      console.log(name, description, primary, secondary, image);
+
+      /* const data = new FormData();
 
       if (name !== game.name) data.append('name', name);
       if (description !== game.description)
         data.append('description', description);
       if (primary !== game.theme.primary || secondary !== game.theme.secondary)
         data.append('theme', JSON.stringify({ primary, secondary }));
-      if (image !== game.image_url) data.append('image', image);
+      if (image !== game.image_url) data.append('image', image); */
 
       /* await api.instance.put(`/game/${game.id}`, data); */
 
@@ -79,7 +91,7 @@ const InfoForm: React.FC = () => {
 
       setDisabledBtn(false);
     },
-    [fetchGame, game],
+    [fetchGame],
   );
 
   /* const handleColorChange = useCallback(
@@ -94,6 +106,8 @@ const InfoForm: React.FC = () => {
     },
     [form],
   ); */
+
+  if (loading) return <Loading />;
 
   return (
     <Formik
