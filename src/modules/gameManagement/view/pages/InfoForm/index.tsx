@@ -9,6 +9,7 @@ import {
   Textarea,
 } from 'shared/view/components';
 import { ColorInput } from 'modules/gameManagement/view/components';
+import { ColorPreview } from './components';
 import { SForm } from './styles';
 
 // Config
@@ -131,6 +132,8 @@ const InfoForm: React.FC = () => {
           <ColorInput name="primary" label="Cor de fundo" />
 
           <ColorInput name="secondary" label="Cor dos botões" />
+
+          <ColorPreview />
 
           {/*
         <button
