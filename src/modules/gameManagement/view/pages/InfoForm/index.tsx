@@ -16,12 +16,6 @@ import useGetGameController from 'modules/gameManagement/infra/controller/useGet
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 
-// Services
-import { api } from 'services';
-
-// Utils
-import handleApiErrors from 'utils/handleApiErrors';
-
 // Types
 import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
 
@@ -54,33 +48,26 @@ const InfoForm: React.FC = () => {
   const [disabledBtn, setDisabledBtn] = useState(false);
 
   const submitForm = useCallback(
-    async (values: IUpdateGameDTO) => {
-      const { name, description, theme, image } = values;
+    async ({ name, description, theme, image }: IUpdateGameDTO) => {
       setDisabledBtn(true);
 
-      if (!game) return;
+      const data = new FormData();
 
-      try {
-        const data = new FormData();
+      if (name !== game.name) data.append('name', name);
+      if (description !== game.description)
+        data.append('description', description);
+      if (
+        theme.primary !== game.theme.primary ||
+        theme.secondary !== game.theme.secondary
+      )
+        data.append('theme', JSON.stringify(theme));
+      if (image !== game.image_url) data.append('image', image);
 
-        if (name !== game.name) data.append('name', name);
-        if (description !== game.description)
-          data.append('description', description);
-        if (
-          theme.primary !== game.theme.primary ||
-          theme.secondary !== game.theme.secondary
-        )
-          data.append('theme', JSON.stringify(theme));
-        if (image !== game.image_url) data.append('image', image);
+      /* await api.instance.put(`/game/${game.id}`, data); */
 
-        await api.instance.put(`/game/${game.id}`, data);
+      toast.success('Informações alteradas com sucesso.');
 
-        toast.success('Informações alteradas com sucesso.');
-
-        fetchGame();
-      } catch (error) {
-        handleApiErrors(error);
-      }
+      fetchGame();
 
       setDisabledBtn(false);
     },
