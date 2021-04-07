@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, {
+  DefaultTheme,
+  StyledComponent,
+  StyledComponentBase,
+} from 'styled-components';
 import { Form } from 'formik';
 
 export const SForm = styled(Form)`
@@ -9,17 +13,28 @@ export const SForm = styled(Form)`
   padding: ${({ theme }) => theme.layout.spacing(3, 6)};
 `;
 
-export const ColorInputGroup = styled.div``;
+interface IColorInputGroup extends StyledComponentBase<'div', DefaultTheme> {
+  Column: StyledComponent<'div', DefaultTheme>;
+  Row: StyledComponent<'div', DefaultTheme>;
+}
 
-export const OTODO = styled.div`
-  .input-group button[type='reset'] {
-    color: ${({ theme }) => theme.palette.secondary.main};
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+export const ColorInputGroup = (styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${({ theme }) => theme.layout.spacing(1)};
+` as unknown) as IColorInputGroup;
 
-    &:hover {
-      text-decoration: underline;
-    }
+ColorInputGroup.Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-right: ${({ theme }) => theme.layout.spacing(1)};
+  width: 200px;
+`;
+
+ColorInputGroup.Row = styled.div`
+  display: flex;
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.md}) {
+    flex-direction: column;
   }
 `;

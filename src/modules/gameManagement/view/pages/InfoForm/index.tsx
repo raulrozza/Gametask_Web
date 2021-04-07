@@ -12,9 +12,6 @@ import { ColorInput } from 'modules/gameManagement/view/components';
 import { ColorPreview, RestoreDefaultThemeButton } from './components';
 import { ColorInputGroup, SForm } from './styles';
 
-// Config
-/* import { defaultTheme } from 'config/defaultTheme'; */
-
 // Hooks
 import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
 import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
@@ -95,19 +92,6 @@ const InfoForm: React.FC = () => {
     [fetchGame],
   );
 
-  /* const handleColorChange = useCallback(
-    (key: 'primary' | 'secondary', color: string) => {
-      const newTheme = {
-        ...form.values.theme,
-      };
-      newTheme[key] = color;
-
-      /* changeTheme(newTheme);
-      form.setFieldValue('theme', newTheme);
-    },
-    [form],
-  ); */
-
   if (loading) return <Loading />;
 
   return (
@@ -126,33 +110,20 @@ const InfoForm: React.FC = () => {
           placeholder="Descreva seu jogo: o que ele representa? Onde será jogado? Quem participará?"
         />
 
+        <h3>Tema</h3>
+
         <ColorInputGroup>
-          <h3>Tema</h3>
+          <ColorInputGroup.Row>
+            <ColorInputGroup.Column>
+              <ColorInput name="primary" label="Cor de fundo" />
 
-          <ColorInput name="primary" label="Cor de fundo" />
+              <ColorInput name="secondary" label="Cor dos botões" />
+            </ColorInputGroup.Column>
 
-          <ColorInput name="secondary" label="Cor dos botões" />
-
-          <ColorPreview />
+            <ColorPreview />
+          </ColorInputGroup.Row>
 
           <RestoreDefaultThemeButton />
-
-          {/*
-        <button
-          type="reset"
-          onClick={() => {
-            changeTheme(defaultTheme);
-            setValues({
-              ...form.values,
-              theme: {
-                primary: defaultTheme.primary,
-                secondary: defaultTheme.secondary,
-              },
-            });
-          }}
-        >
-          Restaurar tema padrão
-        </button> */}
         </ColorInputGroup>
 
         <Button outlined type="submit" disabled={disabledBtn}>
