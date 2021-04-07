@@ -1,17 +1,15 @@
 import React from 'react';
 
 // Components
-import { Loading } from 'shared/view/components';
+import { Button, Loading } from 'shared/view/components';
+import { FieldArray, Formik } from 'formik';
 import { LevelsContainer } from './components';
-
-// Contexts
-import LevelContext from 'modules/gameManagement/container/contexts/LevelContext/implementations/LevelContext';
 
 // Hooks
 import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
 
 // Styles
-import { Column, Container, Title } from './styles';
+import { Column, Container, LevelForm, Title } from './styles';
 
 const LevelConfig: React.FC = () => {
   const { game, loading } = useGetGameController();
@@ -29,9 +27,20 @@ const LevelConfig: React.FC = () => {
           partir do nível anterior.
         </p>
 
-        <LevelContext initialLevels={game.levelInfo || []}>
-          <LevelsContainer />
-        </LevelContext>
+        <Formik
+          initialValues={{ levels: game.levelInfo || [] }}
+          onSubmit={values => console.log(values)}
+        >
+          <LevelForm>
+            <FieldArray name="levels">
+              {props => <LevelsContainer {...props} />}
+            </FieldArray>
+
+            <footer>
+              <Button type="submit">Salvar</Button>
+            </footer>
+          </LevelForm>
+        </Formik>
       </Column>
     </Container>
   );

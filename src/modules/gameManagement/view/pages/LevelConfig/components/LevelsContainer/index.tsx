@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Components
-import { Button } from 'shared/view/components';
-import { Container, AddLevelButton } from './styles';
-
-// Hooks
-import useLevelContext from 'modules/gameManagement/container/contexts/LevelContext/contexts/useLevelContext';
+import { RemoveButton } from '..';
+import { AddLevelButton } from './styles';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
 
 // Types
-import { RemoveButton } from 'modules/dashboard/view/components';
+import ILevelInfo from 'shared/entities/ILevelInfo';
+import { FieldArrayRenderProps, FormikProps } from 'formik';
 
-const LevelsContainer: React.FC = () => {
-  const { levels, addLevel } = useLevelContext();
+interface LevelsContainerProps extends FieldArrayRenderProps {
+  form: FormikProps<{
+    levels: ILevelInfo[];
+  }>;
+}
+
+const LevelsContainer: React.FC<LevelsContainerProps> = ({
+  form,
+  push,
+  handleRemove,
+}) => {
+  const handlePush = useCallback(() => {
+    const newLevel: ILevelInfo = {
+      level: 0,
+      requiredExperience: 0,
+    };
+
+    push(newLevel);
+  }, [push]);
 
   return (
-    <Container>
-      {levels.map((info, index) => (
+    <>
+      {form.values.levels.map((info, index) => (
         <div className="info-item" key={`info-${index}`}>
-          <RemoveButton onClick={() => undefined} />
+          <RemoveButton onClick={handleRemove(index)} />
 
           <span className="level">Nível {index + 1}</span>
           <input
@@ -42,21 +57,10 @@ const LevelsContainer: React.FC = () => {
         </div>
       ))}
 
-      <AddLevelButton type="button" onClick={addLevel}>
+      <AddLevelButton type="button" onClick={handlePush}>
         <FaPlus />
       </AddLevelButton>
-
-      <footer>
-        <Button
-          type="button"
-          className="save"
-          /* onClick={handleSubmit}
-              disabled={disabledBtn} */
-        >
-          Salvar
-        </Button>
-      </footer>
-    </Container>
+    </>
   );
 };
 

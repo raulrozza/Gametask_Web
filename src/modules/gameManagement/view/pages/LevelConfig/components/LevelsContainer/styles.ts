@@ -1,13 +1,6 @@
 import { transparentize } from 'polished';
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
-  background-color: ${({ theme }) => theme.palette.primary.light};
-  opacity: 0.8;
-  padding: ${({ theme }) => theme.layout.spacing(2)};
-  border-radius: ${({ theme }) => theme.layout.borderRadius.small};
-`;
-
 export const AddLevelButton = styled.button`
   ${({ theme }) => css`
     width: 100%;

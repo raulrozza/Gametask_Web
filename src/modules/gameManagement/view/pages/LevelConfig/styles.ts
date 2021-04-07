@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Form } from 'formik';
 
 export const Container = styled.section`
   ${({ theme }) => css`
@@ -119,4 +120,11 @@ export const Column = styled.div`
 export const Title = styled.h2`
   color: ${({ theme }) => theme.palette.secondary.main};
   margin-bottom: ${({ theme }) => theme.layout.spacing(3)};
+`;
+
+export const LevelForm = styled(Form)`
+  background-color: ${({ theme }) => theme.palette.primary.light};
+  opacity: 0.8;
+  padding: ${({ theme }) => theme.layout.spacing(2)};
+  border-radius: ${({ theme }) => theme.layout.borderRadius.small};
 `;
