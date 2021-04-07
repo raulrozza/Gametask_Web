@@ -9,8 +9,8 @@ import {
   Textarea,
 } from 'shared/view/components';
 import { ColorInput } from 'modules/gameManagement/view/components';
-import { ColorPreview } from './components';
-import { SForm } from './styles';
+import { ColorPreview, RestoreDefaultThemeButton } from './components';
+import { ColorInputGroup, SForm } from './styles';
 
 // Config
 /* import { defaultTheme } from 'config/defaultTheme'; */
@@ -126,7 +126,7 @@ const InfoForm: React.FC = () => {
           placeholder="Descreva seu jogo: o que ele representa? Onde será jogado? Quem participará?"
         />
 
-        <div className="input-group">
+        <ColorInputGroup>
           <h3>Tema</h3>
 
           <ColorInput name="primary" label="Cor de fundo" />
@@ -134,6 +134,8 @@ const InfoForm: React.FC = () => {
           <ColorInput name="secondary" label="Cor dos botões" />
 
           <ColorPreview />
+
+          <RestoreDefaultThemeButton />
 
           {/*
         <button
@@ -151,7 +153,7 @@ const InfoForm: React.FC = () => {
         >
           Restaurar tema padrão
         </button> */}
-        </div>
+        </ColorInputGroup>
 
         <Button outlined type="submit" disabled={disabledBtn}>
           Atualizar

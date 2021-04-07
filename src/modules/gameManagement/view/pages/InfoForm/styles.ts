@@ -9,6 +9,8 @@ export const SForm = styled(Form)`
   padding: ${({ theme }) => theme.layout.spacing(3, 6)};
 `;
 
+export const ColorInputGroup = styled.div``;
+
 export const OTODO = styled.div`
   .input-group button[type='reset'] {
     color: ${({ theme }) => theme.palette.secondary.main};

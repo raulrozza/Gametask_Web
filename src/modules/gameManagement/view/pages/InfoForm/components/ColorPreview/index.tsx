@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useFormikContext } from 'formik';
 
 import { Container, LightText, NormalButton, OutlinedButton } from './styles';
@@ -17,15 +17,25 @@ const ColorPreview: React.FC = () => {
         Some light text
       </LightText>
 
-      <NormalButton primary={values.primary} secondary={values.secondary}>
+      <NormalButton
+        disabled
+        primary={values.primary}
+        secondary={values.secondary}
+        title=""
+      >
         Normal button
       </NormalButton>
 
-      <OutlinedButton primary={values.primary} secondary={values.secondary}>
+      <OutlinedButton
+        disabled
+        primary={values.primary}
+        secondary={values.secondary}
+        title=""
+      >
         outlined button
       </OutlinedButton>
     </Container>
   );
 };
 
-export default ColorPreview;
+export default memo(ColorPreview);
