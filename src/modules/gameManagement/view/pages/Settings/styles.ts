@@ -1,4 +1,4 @@
-import { lighten } from 'polished';
+import { darken, lighten } from 'polished';
 import styled, { css } from 'styled-components';
 
 export const Row = styled.div`
@@ -120,11 +120,15 @@ export const TabItem = styled.button<TabItemProps>`
     border: none;
     cursor: pointer;
 
-    ${active &&
-    css`
-      background-color: ${theme.palette.secondary.main};
-      color: ${theme.palette.secondary.contrast};
-    `}
+    ${active
+      ? css`
+          background-color: ${theme.palette.secondary.main};
+          color: ${theme.palette.secondary.contrast};
+        `
+      : css`
+          background-color: ${darken(0.1, theme.palette.primary.main)};
+          color: ${theme.palette.primary.contrast};
+        `}
 
     &:hover {
       background-color: ${active
@@ -137,7 +141,7 @@ export const TabItem = styled.button<TabItemProps>`
 export const Content = styled.main`
   ${({ theme }) => css`
     width: 100%;
-    background-color: ${lighten(0.1, theme.palette.primary.dark)};
+    background-color: ${theme.palette.gray['100']};
     border-radius: ${theme.layout.borderRadius.small};
 
     footer {

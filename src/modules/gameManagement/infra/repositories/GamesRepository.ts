@@ -21,6 +21,8 @@ export default class GamesRepository implements IGamesRepository {
       },
     });
 
+    if (typeof image === 'string') return;
+
     const data = new FormData();
     data.append('image', image);
 

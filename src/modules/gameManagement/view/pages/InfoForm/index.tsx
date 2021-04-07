@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 // Components
 import {
@@ -25,6 +25,7 @@ import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
 
 // Validation
 import GameSchema from 'modules/gameManagement/view/validation/GameSchema';
+import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
 
 interface IInitialValues {
   name: string;
@@ -35,8 +36,9 @@ interface IInitialValues {
 }
 
 const InfoForm: React.FC = () => {
-  const { loading, game, fetchGame } = useGetGameController();
-  const { theme } = useThemeContext();
+  const { loading, game } = useGetGameController();
+  const { loading: loadingUpdate, updateGame } = useUpdateGameController();
+  const { theme, switchTheme } = useThemeContext();
 
   const initialValues: IInitialValues = useMemo(
     () =>
@@ -58,7 +60,6 @@ const InfoForm: React.FC = () => {
       theme.palette.secondary.main,
     ],
   );
-  const [disabledBtn, setDisabledBtn] = useState(false);
 
   const submitForm = useCallback(
     async ({
@@ -68,28 +69,24 @@ const InfoForm: React.FC = () => {
       secondary,
       image,
     }: IUpdateGameDTO) => {
-      setDisabledBtn(true);
+      const success = await updateGame({
+        name,
+        description,
+        primary,
+        secondary,
+        image,
+      });
 
-      console.log(name, description, primary, secondary, image);
+      if (success) {
+        toast.success('Informações alteradas com sucesso.');
 
-      /* const data = new FormData();
-
-      if (name !== game.name) data.append('name', name);
-      if (description !== game.description)
-        data.append('description', description);
-      if (primary !== game.theme.primary || secondary !== game.theme.secondary)
-        data.append('theme', JSON.stringify({ primary, secondary }));
-      if (image !== game.image_url) data.append('image', image); */
-
-      /* await api.instance.put(`/game/${game.id}`, data); */
-
-      toast.success('Informações alteradas com sucesso.');
-
-      fetchGame();
-
-      setDisabledBtn(false);
+        switchTheme({
+          primary,
+          secondary,
+        });
+      }
     },
-    [fetchGame],
+    [switchTheme, updateGame],
   );
 
   if (loading) return <Loading />;
@@ -126,7 +123,7 @@ const InfoForm: React.FC = () => {
           <RestoreDefaultThemeButton />
         </ColorInputGroup>
 
-        <Button outlined type="submit" disabled={disabledBtn}>
+        <Button outlined type="submit" disabled={loadingUpdate}>
           Atualizar
         </Button>
       </SForm>
