@@ -1,50 +1,31 @@
 import styled, { css } from 'styled-components';
 
-export const LevelConfigContainer = styled.section`
+export const Container = styled.section`
   ${({ theme }) => css`
     width: 100%;
+    max-height: 200vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 18px;
-    max-height: 200vh;
+
+    padding: ${theme.layout.spacing(4)};
     overflow-y: auto;
-
-    > div {
-      width: 100%;
-      max-width: 540px;
-      text-align: center;
-    }
-
-    h2 {
-      color: ${theme.palette.secondary.main};
-      margin-bottom: 12px;
-    }
-
-    p {
-      margin-bottom: 12px;
-    }
-
-    .level-info-container {
-      background-color: ${theme.palette.primary.light};
-      opacity: 0.8;
-      padding: 8px;
-      border-radius: 8px;
-    }
+    scrollbar-width: thin;
 
     .info-item {
       background-color: ${theme.palette.primary.dark};
-      border-radius: 10px;
-      padding: 10px;
+      border-radius: ${theme.layout.borderRadius.medium};
+      padding: ${theme.layout.spacing(2)};
       transition: all 0.2s;
       display: grid;
       grid-template-columns: 60px 100px 1fr;
-      grid-gap: 12px;
+      grid-gap: ${theme.layout.spacing(3)};
       position: relative;
 
       + .info-item,
       + button {
-        margin-top: 12px;
+        margin-top: ${theme.layout.spacing(3)};
       }
 
       &:hover {
@@ -55,7 +36,7 @@ export const LevelConfigContainer = styled.section`
         color: ${theme.palette.primary.contrast};
         display: flex;
         align-items: flex-end;
-        padding-bottom: 4px;
+        padding-bottom: ${theme.layout.spacing(1)};
         font-size: 14px;
       }
 
@@ -64,9 +45,13 @@ export const LevelConfigContainer = styled.section`
         background-color: transparent;
         border: none;
         border-bottom: 2px groove ${theme.palette.secondary.main};
-        border-radius: 5px 5px 0 0;
+        border-radius: ${() => {
+          const radius = theme.layout.borderRadius.small;
+
+          return `${radius} ${radius} 0 0`;
+        }};
         transition: all 0.2s;
-        padding: 8px 12px 4px;
+        padding: ${theme.layout.spacing(2, 3, 1)};
 
         &:focus {
           background-color: ${theme.palette.primary.light};
@@ -105,7 +90,7 @@ export const LevelConfigContainer = styled.section`
       }
 
       @media (max-width: 440px) {
-        padding: 10px;
+        padding: ${theme.layout.spacing(2)};
       }
 
       @media (max-width: 400px) {
@@ -114,26 +99,24 @@ export const LevelConfigContainer = styled.section`
         align-items: center;
       }
     }
-
-    .add-item {
-      width: 100%;
-      height: 60px;
-      border-radius: 10px;
-      background-color: transparent;
-      border: 1px dashed ${theme.palette.primary.contrast};
-      cursor: pointer;
-      font-size: 18px;
-      transition: all 0.4s;
-
-      &:hover {
-        background-color: ${theme.palette.secondary.main}55;
-        color: ${theme.palette.secondary.contrast};
-        border-color: ${theme.palette.secondary.contrast};
-      }
-    }
-
-    footer {
-      margin: 5px 0;
-    }
   `}
+`;
+
+export const Column = styled.div`
+  width: 100%;
+  max-width: 540px;
+  text-align: center;
+
+  p {
+    margin-bottom: ${({ theme }) => theme.layout.spacing(3)};
+  }
+
+  footer {
+    margin: ${({ theme }) => theme.layout.spacing(1, 0)};
+  }
+`;
+
+export const Title = styled.h2`
+  color: ${({ theme }) => theme.palette.secondary.main};
+  margin-bottom: ${({ theme }) => theme.layout.spacing(3)};
 `;

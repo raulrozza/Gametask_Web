@@ -5,17 +5,6 @@ export interface RankItemProps {
   textColor: string;
 }
 
-export interface InfoFormValues {
-  name: string;
-  description: string;
-  theme: {
-    primary: string;
-    secondary: string;
-    [key: string]: string;
-  };
-  image: string | null;
-}
-
 export interface ILevelInfo {
   requiredExperience: number;
   title?: string;

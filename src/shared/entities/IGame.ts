@@ -11,7 +11,7 @@ export default interface IGame {
   image?: string;
   image_url?: string;
   administrators: string[] | IUser[];
-  levelInfo: ILevelInfo[];
+  levelInfo: ILevelInfo[] | null;
   newRegisters: number;
-  ranks: IRank[];
+  ranks: IRank[] | null;
 }
