@@ -11,6 +11,8 @@ export default class GamesRepository implements IGamesRepository {
     description,
     primary,
     secondary,
+    levelInfo,
+    ranks,
   }: IUpdateGameDTO): Promise<void> {
     await this.httpProvider.put('games', {
       name,
@@ -19,6 +21,8 @@ export default class GamesRepository implements IGamesRepository {
         primary,
         secondary,
       },
+      levelInfo,
+      ranks,
     });
 
     if (typeof image === 'string') return;

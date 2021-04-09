@@ -15,19 +15,16 @@ import { ColorInputGroup, SForm } from './styles';
 // Hooks
 import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
 import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 // Libraries
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
-
-// Types
-import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
 
 // Validation
 import GameSchema from 'modules/gameManagement/view/validation/GameSchema';
 import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
 
-interface IInitialValues {
+interface IGameValues {
   name: string;
   description: string;
   image: string;
@@ -40,7 +37,9 @@ const InfoForm: React.FC = () => {
   const { loading: loadingUpdate, updateGame } = useUpdateGameController();
   const { theme, switchTheme } = useThemeContext();
 
-  const initialValues: IInitialValues = useMemo(
+  const toast = useToastContext();
+
+  const initialValues: IGameValues = useMemo(
     () =>
       loading
         ? ({} as any)
@@ -62,23 +61,19 @@ const InfoForm: React.FC = () => {
   );
 
   const submitForm = useCallback(
-    async ({
-      name,
-      description,
-      primary,
-      secondary,
-      image,
-    }: IUpdateGameDTO) => {
+    async ({ name, description, primary, secondary, image }: IGameValues) => {
       const success = await updateGame({
         name,
         description,
         primary,
         secondary,
         image,
+        levelInfo: game.levelInfo || [],
+        ranks: game.ranks || [],
       });
 
       if (success) {
-        toast.success('Informações alteradas com sucesso.');
+        toast.showSuccess('Informações alteradas com sucesso.');
 
         switchTheme({
           primary,
@@ -86,7 +81,7 @@ const InfoForm: React.FC = () => {
         });
       }
     },
-    [switchTheme, updateGame],
+    [game.levelInfo, game.ranks, switchTheme, toast, updateGame],
   );
 
   if (loading) return <Loading />;
@@ -123,7 +118,7 @@ const InfoForm: React.FC = () => {
           <RestoreDefaultThemeButton />
         </ColorInputGroup>
 
-        <Button outlined type="submit" disabled={loadingUpdate}>
+        <Button outlined type="submit" loading={loadingUpdate}>
           Atualizar
         </Button>
       </SForm>
