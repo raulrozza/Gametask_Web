@@ -5,12 +5,6 @@ export interface RankItemProps {
   textColor: string;
 }
 
-export interface ILevelInfo {
-  requiredExperience: number;
-  title?: string;
-  [key: string]: number | string;
-}
-
 export interface IndexableRank extends IRank {
   [key: string]: string | number;
 }

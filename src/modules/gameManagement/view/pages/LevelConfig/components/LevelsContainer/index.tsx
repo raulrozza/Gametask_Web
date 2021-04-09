@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 
 // Components
-import { RemoveButton } from '..';
-import { AddLevelButton } from './styles';
+import { ExperienceInput, RemoveButton, TitleInput } from '..';
+import { AddLevelButton, LevelItem, LevelText } from './styles';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
@@ -34,27 +34,15 @@ const LevelsContainer: React.FC<LevelsContainerProps> = ({
   return (
     <>
       {form.values.levels.map((info, index) => (
-        <div className="info-item" key={`info-${index}`}>
+        <LevelItem key={`level-${index}`}>
           <RemoveButton onClick={handleRemove(index)} />
 
-          <span className="level">Nível {index + 1}</span>
-          <input
-            type="number"
-            placeholder="Experiência"
-            className="experience"
-            name="requiredExperience"
-            value={info.requiredExperience}
-            /* onChange={({ target }) => handleChangeItem(target, index)} */
-          />
-          <input
-            type="text"
-            placeholder="Título do nível"
-            className="title"
-            name="title"
-            value={info.title || ''}
-            /* onChange={({ target }) => handleChangeItem(target, index)} */
-          />
-        </div>
+          <LevelText>Nível {index + 1}</LevelText>
+
+          <ExperienceInput index={index} />
+
+          <TitleInput index={index} />
+        </LevelItem>
       ))}
 
       <AddLevelButton type="button" onClick={handlePush}>
@@ -64,4 +52,4 @@ const LevelsContainer: React.FC<LevelsContainerProps> = ({
   );
 };
 
-export default LevelsContainer;
+export default memo(LevelsContainer);

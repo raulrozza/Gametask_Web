@@ -20,8 +20,16 @@ export const ContainerProps = styled.button`
 
     cursor: pointer;
 
+    grid-area: remove;
+
+    justify-self: center;
+
     &:hover {
       background-color: ${theme.palette.error.dark};
+    }
+
+    @media (max-width: ${theme.layout.breakpoints.md}) {
+      margin-top: ${theme.layout.spacing(2)};
     }
   `}
 `;

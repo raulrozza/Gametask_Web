@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { ContainerProps } from './styles';
@@ -13,4 +13,4 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({ onClick }) => (
   </ContainerProps>
 );
 
-export default RemoveButton;
+export default memo(RemoveButton);
