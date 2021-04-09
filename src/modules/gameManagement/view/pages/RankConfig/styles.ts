@@ -1,45 +1,32 @@
 import styled, { css } from 'styled-components';
-import { RankItemProps } from '../Settings/types';
 
 // Components
 import ColorInputDefault from 'components/ColorInput';
 
-export const RankConfigContainer = styled.section`
+interface RankItemProps {
+  backgroundColor: string;
+  textColor: string;
+}
+
+export const Container = styled.section`
   ${({ theme }) => css`
     margin: 0 auto;
     width: 100%;
     max-width: 550px;
-    padding: 18px;
+    padding: ${theme.layout.spacing(4)};
     text-align: center;
 
     h2 {
       color: ${theme.palette.secondary.main};
-      margin-bottom: 12px;
+      margin-bottom: ${theme.layout.spacing(3)};
     }
 
     p {
-      margin-bottom: 12px;
-    }
-
-    .add-item {
-      width: 100%;
-      height: 60px;
-      border-radius: 10px;
-      background-color: ${theme.palette.primary.main}55;
-      border: 1px dashed ${theme.palette.primary.contrast};
-      cursor: pointer;
-      font-size: 18px;
-      transition: all 0.4s;
-
-      &:hover {
-        background-color: ${theme.palette.secondary.main}55;
-        color: ${theme.palette.secondary.contrast};
-        border-color: ${theme.palette.secondary.contrast};
-      }
+      margin-bottom: ${theme.layout.spacing(3)};
     }
 
     footer {
-      margin: 5px 0;
+      margin: ${theme.layout.spacing(1, 0)};
     }
   `}
 `;
@@ -47,12 +34,12 @@ export const RankConfigContainer = styled.section`
 export const RankItem = styled.div<RankItemProps>`
   ${({ theme, backgroundColor, textColor }) => css`
     border: 1px solid ${theme.palette.primary.contrast};
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: ${theme.layout.borderRadius.medium};
+    padding: ${theme.layout.spacing(2)};
     transition: all 0.2s;
     display: grid;
     grid-template-columns: 2fr 60px 2fr 80px;
-    grid-gap: 12px;
+    grid-gap: ${theme.layout.spacing(3)};
     position: relative;
     align-items: center;
 
@@ -61,7 +48,7 @@ export const RankItem = styled.div<RankItemProps>`
 
     + .item,
     + button {
-      margin-top: 12px;
+      margin-top: ${theme.layout.spacing(3)};
     }
 
     input,
@@ -69,9 +56,13 @@ export const RankItem = styled.div<RankItemProps>`
       background-color: transparent;
       border: none;
       border-bottom: 2px groove ${theme.palette.secondary.main};
-      border-radius: 5px 5px 0 0;
+      border-radius: ${() => {
+        const radius = theme.layout.borderRadius.small;
+
+        return `${radius} ${radius} 0 0`;
+      }}
       transition: all 0.2s;
-      padding: 8px 12px 4px;
+      padding: ${theme.layout.spacing(2, 3, 1)};
     }
 
     select {

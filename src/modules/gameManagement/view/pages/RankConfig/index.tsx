@@ -1,195 +1,144 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
+
+// Components
+import {
+  FieldArray,
+  FieldArrayRenderProps,
+  Form,
+  Formik,
+  FormikProps,
+} from 'formik';
+import { Button, Loading } from 'shared/view/components';
+import { AddItemButton } from './components';
+import { RemoveButton } from 'styles';
+import { Container, RankItem, ColorInput } from './styles';
 
 // Hooks
-import { useGameData } from 'hooks/contexts/useGameData';
+import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
 
-// Libs
-import { FaPlus, FaTimes } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-
-// Services
-import { api } from 'services';
-
-// Styles
-import Button from 'styles/Button';
-import { RemoveButton } from 'styles';
-import { RankConfigContainer, RankItem, ColorInput } from './styles';
-
-// Types
-import { IndexableRank } from '../Settings/types';
+// Icons
+import { FaTimes } from 'react-icons/fa';
 
 // Utils
-import {
-  addItemToArray,
-  removeItemFromArray,
-  updateItemInArray,
-} from 'utils/arrayMethods';
-import handleApiErrors from 'utils/handleApiErrors';
 import { getTextColor } from 'utils/theme';
 
+// Types
+import IRank from 'shared/entities/IRank';
+
+interface IRankValues {
+  ranks: IRank[];
+}
+
+interface FieldArrayProps extends FieldArrayRenderProps {
+  form: FormikProps<IRankValues>;
+}
+
 const RankConfig: React.FC = () => {
-  const { game, refreshGame } = useGameData();
-  const [disabledBtn, disableButton] = useState(false);
-  const [ranks, setRanks] = useState<IndexableRank[]>(
-    (game?.ranks as IndexableRank[]) || [],
-  );
+  const { game, loading } = useGetGameController();
 
-  const handleAddItem = useCallback(() => {
-    if (!game) return;
+  const handleRemoveItem = useCallback(() => undefined, []);
 
-    const newLevel = {
-      level: game.levelInfo[game.levelInfo.length - 1].level,
-      tag: '',
-      name: '',
-      color: '',
-    };
+  const handleSelectChange = useCallback(() => undefined, []);
 
-    setRanks(ranks => addItemToArray(ranks, newLevel));
-  }, [game]);
+  const handleChangeItem = useCallback(() => undefined, []);
 
-  const handleRemoveItem = useCallback((index: number) => {
-    if (window.confirm('Deseja mesmo remover esta patente?'))
-      setRanks(ranks => removeItemFromArray(ranks, index));
-  }, []);
+  const handleColorChange = useCallback(() => undefined, []);
 
-  const handleSelectChange = useCallback((value: string, index: number) => {
-    setRanks(ranks => {
-      const item = ranks[index];
-      item.level = parseInt(value);
-
-      return updateItemInArray(ranks, item, index).sort(
-        (a, b) => a.level - b.level,
-      );
-    });
-  }, []);
-
-  const handleChangeItem = useCallback(
-    (target: HTMLInputElement, index: number) => {
-      setRanks(ranks => {
-        const item = ranks[index];
-        item[target.name] = target.value;
-
-        return updateItemInArray(ranks, item, index);
-      });
-    },
-    [],
-  );
-
-  const handleColorChange = useCallback((color: string, index: number) => {
-    setRanks(ranks => {
-      const item = ranks[index];
-      const newItem = {
-        ...item,
-        color,
-      };
-
-      return updateItemInArray(ranks, newItem, index);
-    });
-  }, []);
-
-  const handleSubmit = useCallback(async () => {
-    disableButton(true);
-
-    if (!game) return;
-
-    try {
-      await api.instance.put(`/rank/${game._id}`, { ranks });
-
-      toast.success('Patente alterada com sucesso.');
-
-      await refreshGame();
-    } catch (error) {
-      handleApiErrors(error);
-    }
-
-    disableButton(false);
-  }, [game, ranks, refreshGame]);
-
-  if (!game) return null;
+  if (loading) return <Loading />;
 
   return (
-    <RankConfigContainer>
+    <Container>
       <h2>Configurar patentes</h2>
+
       <p>
         Crie, edite e remova patentes. Defina uma cor e a partir de qual nível
         um jogador a obtém.
       </p>
-      <div className="rank-container">
-        {ranks.map((rank, index) => {
-          const textColor = getTextColor(rank.color || game.theme.primary);
 
-          return (
-            <RankItem
-              key={`${index}-${rank.level}`}
-              backgroundColor={rank.color || 'transparent'}
-              textColor={textColor}
-            >
-              <RemoveButton
-                type="button"
-                title="Remover"
-                onClick={() => handleRemoveItem(index)}
-              >
-                <FaTimes />
-              </RemoveButton>
-              <div className="select">
-                <label htmlFor="level">Nível: </label>
+      <Formik
+        initialValues={{ ranks: game.ranks || [] } as IRankValues}
+        onSubmit={values => console.log(values)}
+      >
+        <Form>
+          <FieldArray name="ranks">
+            {(props: FieldArrayProps) => (
+              <>
+                {props.form.values.ranks.map((rank, index) => {
+                  const textColor = getTextColor(
+                    rank.color || game.theme.primary,
+                  );
 
-                <select
-                  name="level"
-                  value={rank.level}
-                  onBlur={({ target }) =>
-                    handleSelectChange(target.value, index)
-                  }
-                >
-                  {game.levelInfo.map(info => (
-                    <option value={info.level} key={info.level}>
-                      {info.level}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  return (
+                    <RankItem
+                      key={`${index}-${rank.level}`}
+                      backgroundColor={rank.color || 'transparent'}
+                      textColor={textColor}
+                    >
+                      <RemoveButton
+                        type="button"
+                        title="Remover"
+                        /* onClick={() => handleRemoveItem(index)} */
+                      >
+                        <FaTimes />
+                      </RemoveButton>
+                      <div className="select">
+                        <label htmlFor="level">Nível: </label>
 
-              <input
-                type="text"
-                placeholder="Tag"
-                className="tag"
-                name="tag"
-                value={rank.tag}
-                onChange={({ target }) => handleChangeItem(target, index)}
-              />
+                        <select
+                          name="level"
+                          value={rank.level}
+                          /* onBlur={({ target }) =>
+                        handleSelectChange(target.value, index)
+                      } */
+                        >
+                          {game.levelInfo?.map(info => (
+                            <option value={info.level} key={info.level}>
+                              {info.level}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-              <input
-                type="text"
-                placeholder="Nome da patente"
-                className="name"
-                name="name"
-                value={rank.name}
-                onChange={({ target }) => handleChangeItem(target, index)}
-              />
+                      <input
+                        type="text"
+                        placeholder="Tag"
+                        className="tag"
+                        name="tag"
+                        value={rank.tag}
+                        /* onChange={({ target }) => handleChangeItem(target, index)} */
+                      />
 
-              <ColorInput
-                value={rank.color}
-                onChange={color => handleColorChange(color.hex, index)}
-              />
-            </RankItem>
-          );
-        })}
-        <button type="button" onClick={handleAddItem} className="add-item">
-          <FaPlus />
-        </button>
+                      <input
+                        type="text"
+                        placeholder="Nome da patente"
+                        className="name"
+                        name="name"
+                        value={rank.name}
+                        /* onChange={({ target }) => handleChangeItem(target, index)} */
+                      />
 
-        <footer>
-          <Button
-            type="button"
-            className="save"
-            onClick={handleSubmit}
-            disabled={disabledBtn}
-          >
-            Salvar
-          </Button>
-        </footer>
-      </div>
-    </RankConfigContainer>
+                      <ColorInput
+                        value={rank.color}
+                        onChange={() => undefined}
+                        /* onChange={color => handleColorChange(color.hex, index)} */
+                      />
+                    </RankItem>
+                  );
+                })}
+
+                <AddItemButton handlePush={props.push} />
+              </>
+            )}
+          </FieldArray>
+
+          <footer>
+            <Button type="submit" loading={false}>
+              Salvar
+            </Button>
+          </footer>
+        </Form>
+      </Formik>
+    </Container>
   );
 };
 
