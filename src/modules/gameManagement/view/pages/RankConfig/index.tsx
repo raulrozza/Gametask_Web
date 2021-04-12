@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Components
 import {
@@ -17,6 +17,8 @@ import useGetGameController from 'modules/dashboard/infra/controllers/useGetGame
 
 // Types
 import IRank from 'shared/entities/IRank';
+import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
+import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 export interface IRankValues {
   ranks: IRank[];
@@ -28,6 +30,29 @@ interface FieldArrayProps extends FieldArrayRenderProps {
 
 const RankConfig: React.FC = () => {
   const { game, loading } = useGetGameController();
+  const { loading: loadingUpdate, updateGame } = useUpdateGameController();
+  const toast = useToastContext();
+
+  const submitRanks = useCallback(
+    async ({ ranks }: IRankValues) => {
+      if (!game) return;
+
+      const success = await updateGame({
+        name: game.name,
+        description: game.description,
+        primary: game.theme.primary,
+        secondary: game.theme.secondary,
+        image: game.image || '',
+        levelInfo: game.levelInfo || [],
+        ranks: ranks,
+      });
+
+      if (success) {
+        toast.showSuccess('Patentes alteradas com sucesso!');
+      }
+    },
+    [game, toast, updateGame],
+  );
 
   if (loading) return <Loading />;
 
@@ -42,7 +67,7 @@ const RankConfig: React.FC = () => {
 
       <Formik
         initialValues={{ ranks: game.ranks || [] } as IRankValues}
-        onSubmit={values => console.log(values)}
+        onSubmit={submitRanks}
       >
         <Form>
           <FieldArray name="ranks">
@@ -63,7 +88,7 @@ const RankConfig: React.FC = () => {
           </FieldArray>
 
           <footer>
-            <Button type="submit" loading={false}>
+            <Button type="submit" loading={loadingUpdate}>
               Salvar
             </Button>
           </footer>
