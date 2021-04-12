@@ -31,7 +31,7 @@ const LevelConfig: React.FC = () => {
       const levelInfo = levels.map((level, index) => ({
         requiredExperience: level.requiredExperience,
         title: level.title,
-        level: index,
+        level: index + 1,
       }));
 
       if (!game) return;

@@ -1,7 +1,8 @@
 import React, { memo, useCallback } from 'react';
 
 // Components
-import { ExperienceInput, RemoveButton, TitleInput } from '..';
+import { RemoveButton } from 'modules/gameManagement/view/components';
+import { ExperienceInput, TitleInput } from '..';
 import { AddLevelButton, LevelItem, LevelText } from './styles';
 
 // Icons
