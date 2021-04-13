@@ -51,6 +51,14 @@ export const Container = styled.div<ContainerProps>`
     overflow: hidden;
 
     width: ${containerSizes[size]};
+
+    @media (max-width: ${theme.layout.breakpoints.md}) {
+      width: ${size === 'sm' ? '75vw' : '100vw'};
+    }
+
+    @media (max-width: ${theme.layout.breakpoints.sm}) {
+      width: 100vw;
+    }
   `}
 `;
 

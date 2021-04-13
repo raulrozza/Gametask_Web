@@ -10,7 +10,7 @@ export const Container = styled.main`
 `;
 
 export const GamesContainer = styled.section`
-  height: calc(100% - 56px);
+  height: 100%;
   width: 100%;
   padding: ${({ theme }) => theme.layout.spacing(0, 2, 0, 8)};
 
