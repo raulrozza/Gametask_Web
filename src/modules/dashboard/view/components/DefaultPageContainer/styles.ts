@@ -33,6 +33,8 @@ export const Content = styled.div`
 
   @media (max-width: ${({ theme }) => theme.layout.breakpoints.lg}) {
     flex-direction: column-reverse;
+
+    min-height: 0vh;
   }
 `;
 

@@ -12,7 +12,7 @@ export const Container = styled.div<ContainerProps>`
 
       overflow: hidden;
 
-      transition: width 0.2s;
+      transition: width 0.2s, height 0.2s;
 
       ${$visible
         ? css`
@@ -24,6 +24,18 @@ export const Container = styled.div<ContainerProps>`
 
       @media(max-width: ${theme.layout.breakpoints.lg}) {
         border-left: none;
+
+        width: 100%;
+
+        height: 0px;
+
+        ${$visible
+          ? css`
+              border-bottom: 1px solid ${theme.palette.primary.dark};
+
+              height: 330px;
+            `
+          : ''}
       }
     `}
 `;

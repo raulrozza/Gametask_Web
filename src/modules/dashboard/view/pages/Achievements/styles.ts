@@ -11,4 +11,9 @@ export const AchievementsContainer = styled.div`
 
   grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
   grid-template-rows: repeat(auto-fill, 200px);
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.lg}) {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 160px));
+    grid-template-rows: auto;
+  }
 `;
