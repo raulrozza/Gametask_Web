@@ -6,6 +6,8 @@ export const Button = styled.button`
   border: none;
   cursor: pointer;
 
+  align-self: center;
+
   &:hover {
     text-decoration: underline;
   }
