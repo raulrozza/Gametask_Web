@@ -28,6 +28,7 @@ export const Container = styled.main`
     @media (max-width: ${theme.layout.breakpoints.sm}) {
       margin: ${theme.layout.spacing(0)};
       width: 100%;
+      min-height: 100%;
       border-radius: 0px;
     }
   `}
