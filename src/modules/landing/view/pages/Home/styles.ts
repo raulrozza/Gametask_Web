@@ -8,8 +8,10 @@ export const Container = styled.section`
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+
+    padding: ${theme.layout.spacing(3, 0)};
   `}
 `;
 
@@ -36,7 +38,6 @@ export const FormWrapper = styled.div`
     flex-direction: row;
 
     border-radius: ${theme.layout.borderRadius.medium};
-    overflow: hidden;
 
     @media (max-width: 768px) {
       flex-direction: column;
