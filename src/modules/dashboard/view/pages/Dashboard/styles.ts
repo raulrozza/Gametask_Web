@@ -8,11 +8,6 @@ export const Main = styled.main`
     justify-content: center;
     align-items: flex-start;
 
-    .column {
-      display: flex;
-      flex-direction: column;
-    }
-
     @media (max-width: ${theme.layout.breakpoints.md}) {
       flex-direction: column;
       align-items: center;
@@ -24,4 +19,6 @@ export const Main = styled.main`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
+
+  max-width: 100vw;
 `;

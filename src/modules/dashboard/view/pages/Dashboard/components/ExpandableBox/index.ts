@@ -42,6 +42,7 @@ const Footer = styled.footer`
 const ExpandableBox = {
   Box: styled(Box)`
     width: 600px;
+    max-width: calc(100% - 16px);
   `,
   Container,
   Footer,
