@@ -3,6 +3,11 @@ import RequestsContainer from 'modules/managePlayers/view/pages/General/componen
 
 export const Container = styled(RequestsContainer)`
   width: 360px;
+  max-width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.lg}) {
+    width: calc(100% - ${({ theme }) => theme.layout.spacing(4)});
+  }
 `;
 
 export const Header = styled.header`
@@ -36,7 +41,7 @@ export const TitleList = styled.ul`
     margin-top: ${theme.layout.spacing(2)};
     padding: ${theme.layout.spacing(1)};
     border-radius: ${theme.layout.borderRadius.small};
-    background-color: ${theme.palette.primary.dark};
+    background-color: ${theme.palette.gray[100]};
   `}
 `;
 

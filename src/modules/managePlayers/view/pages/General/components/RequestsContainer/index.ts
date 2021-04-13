@@ -16,6 +16,7 @@ const RequestsContainer: IRequestsContainer = (styled.div`
     margin: ${theme.layout.spacing(2)};
     border-radius: ${theme.layout.borderRadius.medium};
     width: 480px;
+    max-width: calc(100% - ${theme.layout.spacing(4)});
 
     @media (max-width: ${theme.layout.breakpoints.lg}) {
       width: calc(100% - ${theme.layout.spacing(4)});

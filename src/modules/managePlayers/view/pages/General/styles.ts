@@ -9,7 +9,7 @@ export const PlayersContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.lg}) {
     flex-direction: column;
     justify-content: flex-start;
     padding: 0;

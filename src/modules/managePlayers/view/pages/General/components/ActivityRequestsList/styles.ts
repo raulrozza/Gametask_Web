@@ -3,6 +3,11 @@ import styled from 'styled-components';
 
 export const SRequestsContainer = styled(RequestsContainer)`
   width: 320px;
+  max-width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.layout.breakpoints.lg}) {
+    width: calc(100% - ${({ theme }) => theme.layout.spacing(4)});
+  }
 `;
 
 export const RequestItem = styled.li`
