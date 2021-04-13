@@ -12,6 +12,8 @@ export const Container = styled.main`
     width: calc(100% - ${theme.layout.spacing(4)});
     max-width: ${theme.layout.breakpoints.lg};
 
+    overflow: auto;
+
     @media (max-width: ${theme.layout.breakpoints.lg}) {
       margin: ${theme.layout.spacing(2)};
     }
@@ -19,6 +21,7 @@ export const Container = styled.main`
     @media (max-width: ${theme.layout.breakpoints.sm}) {
       margin: ${theme.layout.spacing(0)};
       width: 100%;
+      height: 100%;
       border-radius: 0px;
     }
   `}
@@ -50,5 +53,5 @@ export const EmptyContent = styled.div`
 export const Footer = styled.footer`
   display: flex;
   justify-content: flex-end;
-  padding-top: ${({ theme }) => theme.layout.spacing(2)};
+  padding: ${({ theme }) => theme.layout.spacing(2, 0)};
 `;
