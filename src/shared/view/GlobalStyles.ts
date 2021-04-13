@@ -23,7 +23,7 @@ ${({ theme }) => css`
   }
 
   body {
-    background-color: ${theme.palette.primary.dark};
+    background-color: ${theme.palette.gray[100]};
     min-height: 100vh;
   }
 

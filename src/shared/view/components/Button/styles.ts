@@ -38,7 +38,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     }
 
     &:disabled {
-      opacity: 0.3;
+      opacity: 0.6;
       cursor: default;
     }
   `}
@@ -65,5 +65,6 @@ export const Spinner = styled(Loading)<VisibilityProps>`
   left: 50%;
   margin-top: -8px;
   margin-left: -8px;
+  color: inherit;
   visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
 `;

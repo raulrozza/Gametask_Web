@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const PlayersContainer = styled.div`
-  background-color: ${({ theme }) => theme.palette.primary.dark};
+  background-color: ${({ theme }) => theme.palette.gray[100]};
   min-height: 100vh;
   padding: ${({ theme }) => theme.layout.spacing(2)};
   display: flex;

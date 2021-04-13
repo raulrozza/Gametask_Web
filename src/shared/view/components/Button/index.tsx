@@ -1,4 +1,5 @@
 import React, { memo, ButtonHTMLAttributes } from 'react';
+import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
 
 import { ChildrenContainer, Spinner, StyledButton, Text } from './styles';
 
@@ -14,6 +15,8 @@ const Button: React.FC<ButtonProps> = ({
   children,
   ...buttonProps
 }) => {
+  const { theme } = useThemeContext();
+
   return (
     <StyledButton
       outline={outlined}
@@ -25,6 +28,11 @@ const Button: React.FC<ButtonProps> = ({
         width={16}
         height={16}
         type="spinningBubbles"
+        color={
+          outlined
+            ? theme.palette.secondary.main
+            : theme.palette.secondary.contrast
+        }
       />
 
       {typeof children === 'string' ? (
