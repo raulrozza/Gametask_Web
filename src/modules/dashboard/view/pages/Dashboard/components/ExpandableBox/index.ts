@@ -13,7 +13,7 @@ const Container = styled.div<ContainerProps>`
   ${({ $expanded }) =>
     $expanded &&
     css`
-      max-height: 2000px;
+      max-height: 2000px !important;
     `}
 `;
 

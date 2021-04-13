@@ -49,7 +49,7 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
 
         {loading ? (
           <RankingSkeletons />
-        ) : leaderboard?.position?.length === 0 ? (
+        ) : leaderboard?.position?.length ? (
           leaderboard?.position.map(({ player, experience }) => (
             <ListRank key={player.id}>
               <PointsLabel>{experience}</PointsLabel>

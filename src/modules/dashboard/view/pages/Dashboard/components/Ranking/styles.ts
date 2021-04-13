@@ -118,7 +118,7 @@ export const EmptyLeaderboard = styled.span`
     font-size: 14px;
     justify-content: center;
     text-decoration: underline;
-    color: ${theme.palette.secondary.dark};
+    color: ${theme.palette.secondary.main};
 
     svg {
       margin-left: ${theme.layout.spacing(1)};
