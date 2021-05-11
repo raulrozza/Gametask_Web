@@ -1,45 +1,59 @@
 {
   "env": {
-      "browser": true,
-      "es2020": true
+    "browser": true,
+    "es2020": true
   },
   "extends": [
-      "plugin:react/recommended",
-      "standard",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:prettier/recommended",
-      "prettier/react",
-      "prettier/standard",
-      "prettier/@typescript-eslint"
+    "plugin:react/recommended",
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:styled-components-a11y/recommended",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/@typescript-eslint",
+		"plugin:jest/style",
+		"plugin:jest-dom/recommended",
+		"plugin:testing-library/recommended",
+		"plugin:testing-library/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-      "ecmaFeatures": {
-          "jsx": true
-      },
-      "ecmaVersion": 11,
-      "sourceType": "module"
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
   },
   "plugins": [
-      "react",
-      "@typescript-eslint",
-      "prettier",
-      "react-hooks"
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "react-hooks",
+		"jsx-a11y",
+    "styled-components-a11y",
+		"jest",
+		"jest-dom",
+		"testing-library"
   ],
   "rules": {
     "prettier/prettier":[
       "error",
       {
-          "singleQuote": true,
-          "semi": true,
-          "trailingComma": "all",
-          "arrowParens": "avoid"
+        "singleQuote": true,
+        "semi": true,
+        "trailingComma": "all",
+        "arrowParens": "avoid"
       }
     ],
     "camelcase": 0,
+    "no-useless-constructor": 0,
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-empty-interface": 0,
     "react/prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/label-has-for": 0
   }
 }
