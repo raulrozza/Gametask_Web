@@ -9,6 +9,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:styled-components-a11y/recommended",
     "prettier/react",
     "prettier/standard",
     "prettier/@typescript-eslint",
@@ -31,6 +32,7 @@
     "prettier",
     "react-hooks",
 		"jsx-a11y",
+    "styled-components-a11y",
 		"jest",
 		"jest-dom",
 		"testing-library"
@@ -46,9 +48,12 @@
       }
     ],
     "camelcase": 0,
+    "no-useless-constructor": 0,
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-empty-interface": 0,
     "react/prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/label-has-for": 0
   }
 }
