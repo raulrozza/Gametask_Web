@@ -1,10 +1,13 @@
 import { getContrastColor } from 'modules/dashboard/view/helpers';
 import Box from 'modules/dashboard/view/pages/Dashboard/components/Box';
+import { Button } from 'shared/view/components';
 import styled, { css } from 'styled-components';
 
 export const Container = styled(Box)`
   width: 100%;
   max-width: 330px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Footer = styled.footer`
@@ -124,4 +127,21 @@ export const EmptyLeaderboard = styled.span`
       margin-left: ${theme.layout.spacing(1)};
     }
   `}
+`;
+
+export const ResetButton = styled(Button)`
+  align-self: center;
+
+  margin-top: ${({ theme }) => theme.layout.spacing(2)};
+  padding: ${({ theme }) => theme.layout.spacing(1, 2)};
+
+  span {
+    font-size: 12px;
+  }
+`;
+
+export const ModalText = styled.p`
+  margin-top: ${({ theme }) => theme.layout.spacing(1)};
+
+  text-align: center;
 `;

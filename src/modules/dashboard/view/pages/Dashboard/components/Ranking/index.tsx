@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Components
+import { Button, Modal, Row } from 'shared/view/components';
 import { Link } from 'react-router-dom';
 import RankingSkeletons from 'modules/dashboard/view/pages/Dashboard/components/RankingSkeletons';
 
 // Hooks
+import { useModalController } from 'shared/view/components/Modal';
 import useGetCurrentLeaderboardController from 'modules/dashboard/infra/controllers/useGetCurrentLeaderboardController';
+import useResetLeaderboardsController from 'modules/dashboard/infra/controllers/useResetLeaderboardsController';
 
 // Icons
 import { FaFrown } from 'react-icons/fa';
@@ -18,11 +21,13 @@ import {
   List,
   ListRank,
   ListTitle,
+  ModalText,
   PlayerNameColumn,
   PointsLabel,
   PointsTitle,
   RankBox,
   RegistersBox,
+  ResetButton,
 } from './styles';
 
 interface RankingProps {
@@ -30,7 +35,24 @@ interface RankingProps {
 }
 
 const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
-  const { leaderboard, loading } = useGetCurrentLeaderboardController();
+  const {
+    leaderboard,
+    loading,
+    getLeaderboard,
+  } = useGetCurrentLeaderboardController();
+  const {
+    loading: loadingReset,
+    resetLeaderboards,
+  } = useResetLeaderboardsController();
+  const [open, openModal, closeModal] = useModalController();
+
+  const handleResetLeaderboard = useCallback(async () => {
+    const success = await resetLeaderboards();
+    if (success) {
+      closeModal();
+      getLeaderboard();
+    }
+  }, [closeModal, getLeaderboard, resetLeaderboards]);
 
   return (
     <Container>
@@ -76,9 +98,35 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
         )}
       </List>
 
+      <ResetButton onClick={openModal}>Resetar Pontuações</ResetButton>
+
       <Footer>
         <Link to="/manage-players">Gerenciar Jogadores</Link>
       </Footer>
+
+      <Modal
+        open={open}
+        closeModal={closeModal}
+        size="sm"
+        title="Deseja Resetar as Pontuações?"
+      >
+        <ModalText>
+          As pontuações de todos os jogadores ficarão zeradas e uma nova Tabela
+          de Pontuação será criada. A experiência acumulada será mantida.
+        </ModalText>
+
+        <ModalText>Deseja mesmo resetar?</ModalText>
+
+        <Row>
+          <Button onClick={closeModal} outlined>
+            Cancelar
+          </Button>
+
+          <Button onClick={handleResetLeaderboard} loading={loadingReset}>
+            Confirmar
+          </Button>
+        </Row>
+      </Modal>
     </Container>
   );
 };
