@@ -12,4 +12,8 @@ export default class LeaderboardsRepository implements ILeaderboardsRepository {
 
     return response || null;
   }
+
+  public async reset(): Promise<void> {
+    await this.httpProvider.post('leaderboards/reset');
+  }
 }

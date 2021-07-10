@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import ILeaderboard from 'shared/entities/ILeaderboard';
@@ -7,6 +7,7 @@ import makeGetCurrentLeaderboard from 'modules/dashboard/services/factories/make
 interface UseGetCurrentLeaderboardController {
   loading: boolean;
   leaderboard: ILeaderboard | null;
+  getLeaderboard(): Promise<void>;
 }
 
 export default function useGetCurrentLeaderboardController(): UseGetCurrentLeaderboardController {
@@ -17,26 +18,35 @@ export default function useGetCurrentLeaderboardController(): UseGetCurrentLeade
   const session = useSessionContext();
   const toast = useToastContext();
 
-  useEffect(() => {
-    getCurrentLeaderboard
-      .execute()
-      .then(async ({ leaderboard, error, shouldLogout }) => {
-        if (error) {
-          toast.showError(error);
+  const getLeaderboard = useCallback(async () => {
+    setLoading(true);
 
-          if (shouldLogout) await session.logout();
+    const {
+      leaderboard,
+      error,
+      shouldLogout,
+    } = await getCurrentLeaderboard.execute();
 
-          return;
-        }
+    if (error) {
+      toast.showError(error);
 
-        if (leaderboard) setLeaderboard(leaderboard);
+      if (shouldLogout) await session.logout();
 
-        setLoading(false);
-      });
+      return;
+    }
+
+    if (leaderboard) setLeaderboard(leaderboard);
+
+    setLoading(false);
   }, [getCurrentLeaderboard, session, toast]);
+
+  useEffect(() => {
+    getLeaderboard();
+  }, [getLeaderboard]);
 
   return {
     loading,
     leaderboard,
+    getLeaderboard,
   };
 }
