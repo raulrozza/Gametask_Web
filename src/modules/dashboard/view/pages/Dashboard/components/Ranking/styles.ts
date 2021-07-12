@@ -91,7 +91,7 @@ export const RegistersBox = styled.div`
 `;
 
 interface RankBoxProps {
-  color: string;
+  color?: string;
 }
 
 export const RankBox = styled.div<RankBoxProps>`
@@ -108,8 +108,8 @@ export const RankBox = styled.div<RankBoxProps>`
     text-transform: uppercase;
     font-family: ${theme.typography.family.title};
 
-    background-color: ${color};
-    color: ${getContrastColor(color)};
+    background-color: ${color || theme.palette.secondary.main};
+    color: ${getContrastColor(color) || theme.palette.secondary.contrast};
   `}
 `;
 
