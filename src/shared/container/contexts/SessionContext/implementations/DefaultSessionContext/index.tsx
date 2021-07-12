@@ -84,8 +84,8 @@ const DefaultSessionContext: React.FC = ({ children }) => {
     async (gameId, newTheme) => {
       setSelectedGame(gameId || null);
       if (gameId) {
-        if (newTheme) await theme.switchTheme(newTheme);
         http.addHeader(GAME_HEADER_KEY, gameId);
+        if (newTheme) await theme.switchTheme(newTheme);
         await storage.store(GAME_STORAGE_KEY, gameId);
         return;
       }
