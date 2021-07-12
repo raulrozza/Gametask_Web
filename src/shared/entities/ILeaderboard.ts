@@ -5,7 +5,7 @@ export interface IPosition {
   player: {
     id: string;
     level: number;
-    rank: IRank;
+    rank?: IRank;
     user: IUser;
     currentTitle?: {
       name: string;
