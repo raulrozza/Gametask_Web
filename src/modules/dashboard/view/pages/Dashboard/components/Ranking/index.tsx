@@ -82,9 +82,11 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
               <PointsLabel>{experience}</PointsLabel>
 
               <PlayerNameColumn>
-                <RankBox color={player.rank.color} title={player.rank.name}>
-                  {player.rank.tag}
-                </RankBox>
+                {player.rank && (
+                  <RankBox color={player.rank.color} title={player.rank.name}>
+                    {player.rank.tag}
+                  </RankBox>
+                )}
 
                 {player.user.firstname}
                 {player.user.lastname ? ` ${player.user.lastname}` : ''}
