@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 // Components
 import { Button, Modal, Row } from 'shared/view/components';
@@ -54,6 +54,11 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
     }
   }, [closeModal, getLeaderboard, resetLeaderboards]);
 
+  const orderedPositions = useMemo(
+    () => leaderboard?.position?.sort((a, b) => b.experience - a.experience),
+    [leaderboard],
+  );
+
   return (
     <Container>
       <List>
@@ -71,8 +76,8 @@ const Ranking: React.FC<RankingProps> = ({ newRegisters }) => {
 
         {loading ? (
           <RankingSkeletons />
-        ) : leaderboard?.position?.length ? (
-          leaderboard?.position.map(({ player, experience }) => (
+        ) : orderedPositions?.length ? (
+          orderedPositions.map(({ player, experience }) => (
             <ListRank key={player.id}>
               <PointsLabel>{experience}</PointsLabel>
 
