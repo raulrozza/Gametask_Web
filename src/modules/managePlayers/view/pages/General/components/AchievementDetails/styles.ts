@@ -52,6 +52,9 @@ export const UserImage = styled.img`
   height: 120px;
   border-radius: 50%;
   grid-area: user-image;
+
+  object-fit: cover;
+  object-position: top;
 `;
 
 export const AchievementImage = styled.img`
@@ -59,6 +62,9 @@ export const AchievementImage = styled.img`
   height: 60px;
   border-radius: 50%;
   grid-area: achievement-image;
+
+  object-fit: cover;
+  object-position: top;
 `;
 
 export const Title = styled.strong`
