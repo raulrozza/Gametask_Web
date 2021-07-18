@@ -10,6 +10,9 @@ export const Container = styled.div`
     text-align: center;
     position: relative;
 
+    overflow-y: auto;
+    scrollbar-width: thin;
+
     button {
       visibility: hidden;
     }

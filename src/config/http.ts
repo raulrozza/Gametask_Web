@@ -6,6 +6,7 @@ const instance = Axios.create({
 
 instance.defaults.headers = {
   'Cache-Control': 'no-cache',
+  'x-amz-acl': 'public-read',
   Pragma: 'no-cache',
   Expires: '0',
 };
