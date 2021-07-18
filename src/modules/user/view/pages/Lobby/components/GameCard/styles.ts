@@ -37,6 +37,8 @@ export const Container = styled.div`
       height: 72px;
       width: 72px;
       border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
     }
 
     div {
