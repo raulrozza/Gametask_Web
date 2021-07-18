@@ -10,6 +10,8 @@ export const Container = styled.div`
       height: 80px;
       margin-bottom: ${theme.layout.spacing(1)};
       border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
     }
 
     .name {

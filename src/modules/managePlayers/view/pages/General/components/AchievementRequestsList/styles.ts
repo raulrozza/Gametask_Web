@@ -21,6 +21,9 @@ export const Image = styled.img`
   height: 48px;
   border-radius: 50%;
   margin-right: ${({ theme }) => theme.layout.spacing(2)};
+
+  object-fit: cover;
+  object-position: top;
 `;
 
 export const Title = styled.span`
