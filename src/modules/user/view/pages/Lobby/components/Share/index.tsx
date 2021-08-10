@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Components
+import QRCode from 'react-qr-code';
+
 // Hooks
 import useShareGameController from 'modules/user/infra/controllers/useShareGameController';
 
@@ -7,7 +10,13 @@ import useShareGameController from 'modules/user/infra/controllers/useShareGameC
 import { MdContentCopy } from 'react-icons/md';
 
 // Styles
-import { CipherInput, Container, CopyButton, InputGroup } from './styles';
+import {
+  CipherInput,
+  Container,
+  CopyButton,
+  InputGroup,
+  QRContainer,
+} from './styles';
 
 interface ShareProps {
   gameId: string;
@@ -20,7 +29,13 @@ const Share: React.FC<ShareProps> = ({ gameId }) => {
 
   return (
     <Container>
-      <span>Código para convite:</span>
+      <span>Leia o Código QR abaixo:</span>
+
+      <QRContainer>
+        <QRCode value={cipher} />
+      </QRContainer>
+
+      <span>Ou copie o código para convite:</span>
 
       <InputGroup>
         <CipherInput type="text" ref={inputRef} value={cipher} readOnly />
