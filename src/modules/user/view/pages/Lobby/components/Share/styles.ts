@@ -34,6 +34,12 @@ export const InputGroup = styled.div`
   `}
 `;
 
+export const QRContainer = styled.div`
+  ${({ theme }) => css`
+    margin: ${theme.layout.spacing(2)};
+  `}
+`;
+
 export const CipherInput = styled.input`
   ${({ theme }) => css`
     flex: 1;
