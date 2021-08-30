@@ -1,5 +1,5 @@
 import IGame from 'shared/domain/entities/IGame';
-import IGamesRepository from 'shared/repositories/IGamesRepository';
+import IGamesRepository from 'shared/domain/repositories/IGamesRepository';
 
 interface IExecute {
   games?: IGame[];

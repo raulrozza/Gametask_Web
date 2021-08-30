@@ -1,4 +1,4 @@
-import IGamesRepository from 'shared/repositories/IGamesRepository';
+import IGamesRepository from 'shared/domain/repositories/IGamesRepository';
 import ICreateGameDTO from 'modules/user/dtos/ICreateGameDTO';
 import IGame from 'shared/domain/entities/IGame';
 
