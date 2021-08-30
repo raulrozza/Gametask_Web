@@ -1,4 +1,5 @@
 import React, { memo, ButtonHTMLAttributes } from 'react';
+
 import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
 
 import { ChildrenContainer, Spinner, StyledButton, Text } from './styles';
