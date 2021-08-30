@@ -16,7 +16,7 @@ import { Container } from './styles';
 import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
 
 // Types
-import IRank from 'shared/entities/IRank';
+import IRank from 'shared/domain/entities/IRank';
 import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 

@@ -1,4 +1,4 @@
-import IGame from 'shared/entities/IGame';
+import IGame from 'shared/domain/entities/IGame';
 import IGamesRepository from 'shared/repositories/IGamesRepository';
 
 interface IExecute {

@@ -3,8 +3,8 @@ import { FieldArrayRenderProps, useField } from 'formik';
 import { RemoveButton } from 'modules/gameManagement/view/components';
 import { Select } from 'modules/gameManagement/view/pages/RankConfig/components';
 import React, { useMemo } from 'react';
-import ILevelInfo from 'shared/entities/ILevelInfo';
-import IRank from 'shared/entities/IRank';
+import ILevelInfo from 'shared/domain/entities/ILevelInfo';
+import IRank from 'shared/domain/entities/IRank';
 
 import { Container, ColorInput, SInput } from './styles';
 

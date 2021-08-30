@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import ILeaderboard from 'shared/entities/ILeaderboard';
+import ILeaderboard from 'shared/domain/entities/ILeaderboard';
 import makeGetCurrentLeaderboard from 'modules/dashboard/services/factories/makeGetCurrentLeaderboard';
 
 interface UseGetCurrentLeaderboardController {

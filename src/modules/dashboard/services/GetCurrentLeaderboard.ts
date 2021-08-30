@@ -1,5 +1,5 @@
 import ILeaderboardsRepository from 'modules/dashboard/repositories/ILeaderboardsRepository';
-import ILeaderboard from 'shared/entities/ILeaderboard';
+import ILeaderboard from 'shared/domain/entities/ILeaderboard';
 
 interface IExecute {
   leaderboard?: ILeaderboard | null;

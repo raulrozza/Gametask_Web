@@ -9,7 +9,7 @@ import { AddLevelButton, LevelItem, LevelText } from './styles';
 import { FaPlus } from 'react-icons/fa';
 
 // Types
-import ILevelInfo from 'shared/entities/ILevelInfo';
+import ILevelInfo from 'shared/domain/entities/ILevelInfo';
 import { FieldArrayRenderProps, FormikProps } from 'formik';
 
 interface LevelsContainerProps extends FieldArrayRenderProps {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import IGame from 'shared/entities/IGame';
+import IGame from 'shared/domain/entities/IGame';
 import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 import makeListAllGamesService from 'modules/user/services/factories/makeListAllGamesService';

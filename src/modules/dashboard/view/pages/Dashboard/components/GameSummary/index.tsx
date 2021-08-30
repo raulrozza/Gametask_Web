@@ -22,7 +22,7 @@ import {
 } from './styles';
 
 // Types
-import IGame from 'shared/entities/IGame';
+import IGame from 'shared/domain/entities/IGame';
 
 interface GameSummaryProps {
   game: IGame;

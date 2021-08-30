@@ -1,4 +1,4 @@
-import IGame from 'shared/entities/IGame';
+import IGame from 'shared/domain/entities/IGame';
 import ICreateGameDTO from 'modules/user/dtos/ICreateGameDTO';
 
 export default interface IGamesRepository {

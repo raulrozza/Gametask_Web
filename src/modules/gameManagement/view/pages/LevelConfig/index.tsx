@@ -14,7 +14,7 @@ import useToastContext from 'shared/container/contexts/ToastContext/contexts/use
 import { Column, Container, LevelForm, Title } from './styles';
 
 // Types
-import ILevelInfo from 'shared/entities/ILevelInfo';
+import ILevelInfo from 'shared/domain/entities/ILevelInfo';
 
 interface ILevelValues {
   levels: ILevelInfo[];
