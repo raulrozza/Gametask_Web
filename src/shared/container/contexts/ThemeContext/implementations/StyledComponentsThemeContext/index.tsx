@@ -8,7 +8,7 @@ import IThemeContext, {
   ISwitchThemeArgs,
 } from 'shared/container/contexts/ThemeContext/models/IThemeContext';
 import { ThemeContextProvider } from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
-import { makeStorageProvider } from 'shared/container/providers';
+import makeStorageProvider from 'shared/domain/providers/factories/makeStorageProvider';
 
 const THEME_STORAGE = '@GameTask/GameTheme';
 

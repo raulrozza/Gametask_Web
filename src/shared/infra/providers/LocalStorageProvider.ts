@@ -1,4 +1,4 @@
-import IStorageProvider from 'shared/container/providers/StorageProvider/models/IStorageProvider';
+import IStorageProvider from 'shared/domain/providers/IStorageProvider';
 
 export default class LocalStorageProvider implements IStorageProvider {
   public async clear(): Promise<void> {

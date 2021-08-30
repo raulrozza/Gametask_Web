@@ -1,4 +1,4 @@
-import IHTTPProvider from 'shared/container/providers/HTTPProvider/models/IHTTPProvider';
+import IHTTPProvider from 'shared/domain/providers/IHTTPProvider';
 import Http from 'config/http';
 import RequestError from 'shared/infra/errors/RequestError';
 

@@ -1,6 +1,6 @@
 import IGamesRepository from 'shared/domain/repositories/IGamesRepository';
-import { makeHttpProvider } from 'shared/container/providers';
 import IGame from 'shared/domain/entities/IGame';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 interface ICreate {
   name: string;

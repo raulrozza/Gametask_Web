@@ -3,7 +3,7 @@ import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
 import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
 import IUserAuthentication from 'modules/landing/entities/IUserAuthentication';
 import IUsersRepository from 'modules/landing/repositories/IUsersRepository';
-import { makeHttpProvider } from 'shared/container/providers';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class UsersRepository implements IUsersRepository {
   private httpProvider = makeHttpProvider();
