@@ -7,7 +7,7 @@ import useGetGameController from 'modules/gameManagement/infra/controller/useGet
 import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
 import { ColorInput } from 'modules/gameManagement/view/components';
 import GameSchema from 'modules/gameManagement/view/validation/GameSchema';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+import { useThemeContext} from 'shared/view/contexts';
 import {
   Button,
   ImageInput,

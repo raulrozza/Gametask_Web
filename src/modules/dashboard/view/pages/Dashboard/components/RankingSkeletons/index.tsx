@@ -1,5 +1,5 @@
 import React from 'react';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+import { useThemeContext} from 'shared/view/contexts';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import { ListRank, PointsColumn, PlayerNameColumn } from './styles';

@@ -3,7 +3,7 @@ import ISessionContext from 'shared/container/contexts/SessionContext/models/ISe
 import { SessionContextProvider } from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 import makeStorageProvider from 'shared/domain/providers/factories/makeStorageProvider';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+import { useThemeContext} from 'shared/view/contexts';
 import makeJwtProvider from 'shared/domain/providers/factories/makeJwtProvider';
 
 const USER_STORAGE_KEY = '@GameTask/token';
