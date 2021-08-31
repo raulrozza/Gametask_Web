@@ -1,5 +1,5 @@
 import IGame from 'shared/domain/entities/IGame';
-import ICreateGameDTO from 'modules/user/dtos/ICreateGameDTO';
+import ICreateGameDTO from 'modules/user/domain/dtos/ICreateGameDTO';
 
 export default interface IGamesRepository {
   findAll(): Promise<IGame[]>;
