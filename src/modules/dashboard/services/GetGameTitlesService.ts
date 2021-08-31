@@ -1,5 +1,5 @@
 import ITitle from 'modules/dashboard/domain/entities/ITitle';
-import ITitlesRepository from 'modules/dashboard/repositories/ITitlesRepository';
+import ITitlesRepository from 'modules/dashboard/domain/repositories/ITitlesRepository';
 
 interface IExecute {
   titles?: ITitle[];

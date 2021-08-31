@@ -1,4 +1,4 @@
-import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
+import IActivitiesRepository from 'modules/dashboard/domain/repositories/IActivitiesRepository';
 import IActivity from 'modules/dashboard/domain/entities/IActivity';
 
 interface IExecute {

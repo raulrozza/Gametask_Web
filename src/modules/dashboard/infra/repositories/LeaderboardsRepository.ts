@@ -1,4 +1,4 @@
-import ILeaderboardsRepository from 'modules/dashboard/repositories/ILeaderboardsRepository';
+import ILeaderboardsRepository from 'modules/dashboard/domain/repositories/ILeaderboardsRepository';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 import ILeaderboard from 'shared/domain/entities/ILeaderboard';
 

@@ -1,7 +1,7 @@
 import ICreateActivityDTO from 'modules/dashboard/domain/dtos/ICreateActivityDTO';
 import IEditActivityDTO from 'modules/dashboard/domain/dtos/IEditActivityDTO';
 import IActivity from 'modules/dashboard/domain/entities/IActivity';
-import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
+import IActivitiesRepository from 'modules/dashboard/domain/repositories/IActivitiesRepository';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class ActivitiesRepository implements IActivitiesRepository {

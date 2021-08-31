@@ -1,4 +1,4 @@
-import IAchievementsRepository from 'modules/dashboard/repositories/IAchievementsRepository';
+import IAchievementsRepository from 'modules/dashboard/domain/repositories/IAchievementsRepository';
 
 interface IExecute {
   error?: string;

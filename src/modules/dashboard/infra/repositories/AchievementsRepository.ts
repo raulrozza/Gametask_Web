@@ -1,7 +1,7 @@
 import ICreateAchievementDTO from 'modules/dashboard/domain/dtos/ICreateAchievementDTO';
 import IEditAchievementDTO from 'modules/dashboard/domain/dtos/IEditAchievementDTO';
 import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
-import IAchievementsRepository from 'modules/dashboard/repositories/IAchievementsRepository';
+import IAchievementsRepository from 'modules/dashboard/domain/repositories/IAchievementsRepository';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class AchievementsRepository implements IAchievementsRepository {

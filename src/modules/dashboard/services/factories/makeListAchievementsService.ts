@@ -1,4 +1,5 @@
-import makeAchievementsRepository from 'modules/dashboard/repositories/factories/makeAchievementsRepository';
+import makeAchievementsRepository from 'modules/dashboard/domain/repositories/factories/makeAchievementsRepository';
+
 import ListAchievementsService from '../ListAchievementsService';
 
 export default function makeListAchievementsService(): ListAchievementsService {

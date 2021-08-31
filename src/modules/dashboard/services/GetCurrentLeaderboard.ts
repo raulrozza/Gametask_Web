@@ -1,4 +1,4 @@
-import ILeaderboardsRepository from 'modules/dashboard/repositories/ILeaderboardsRepository';
+import ILeaderboardsRepository from 'modules/dashboard/domain/repositories/ILeaderboardsRepository';
 import ILeaderboard from 'shared/domain/entities/ILeaderboard';
 
 interface IExecute {

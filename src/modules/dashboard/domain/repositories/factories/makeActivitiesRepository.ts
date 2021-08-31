@@ -1,5 +1,5 @@
+import IActivitiesRepository from 'modules/dashboard/domain/repositories/IActivitiesRepository';
 import ActivitiesRepository from 'modules/dashboard/infra/repositories/ActivitiesRepository';
-import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
 
 export default function makeActivitiesRepository(): IActivitiesRepository {
   const repository = new ActivitiesRepository();
