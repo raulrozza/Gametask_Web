@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
+
 import { useFormikContext } from 'formik';
 
+import IUpdateGameDTO from 'modules/gameManagement/domain/dtos/IUpdateGameDTO';
+
 import { Container, LightText, NormalButton, OutlinedButton } from './styles';
-import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
 
 const ColorPreview: React.FC = () => {
   const { values } = useFormikContext<IUpdateGameDTO>();
