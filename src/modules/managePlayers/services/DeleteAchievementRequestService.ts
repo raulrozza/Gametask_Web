@@ -1,4 +1,4 @@
-import IAchievementRequestsRepository from 'modules/managePlayers/repositories/IAchievementRequestsRepository';
+import IAchievementRequestsRepository from 'modules/managePlayers/domain/repositories/IAchievementRequestsRepository';
 
 interface IExecute {
   error?: string;

@@ -1,5 +1,5 @@
 import IGrantAchievementDTO from 'modules/managePlayers/domain/dtos/IGrantAchievementDTO';
-import IAchievementRequestsRepository from 'modules/managePlayers/repositories/IAchievementRequestsRepository';
+import IAchievementRequestsRepository from 'modules/managePlayers/domain/repositories/IAchievementRequestsRepository';
 
 interface IExecute {
   error?: string;

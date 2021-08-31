@@ -1,5 +1,5 @@
 import IActivityRequest from 'modules/managePlayers/domain/entities/IActivityRequest';
-import IActivityRequestsRepository from 'modules/managePlayers/repositories/IActivityRequestsRepository';
+import IActivityRequestsRepository from 'modules/managePlayers/domain/repositories/IActivityRequestsRepository';
 
 interface IExecute {
   activityRequests?: IActivityRequest[];

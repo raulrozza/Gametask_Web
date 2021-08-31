@@ -1,7 +1,7 @@
 import ICreateTitleDTO from 'modules/managePlayers/domain/dtos/ICreateTitleDTO';
 import IEditTitleDTO from 'modules/managePlayers/domain/dtos/IEditTitleDTO';
 import ITitle from 'modules/managePlayers/domain/entities/ITitle';
-import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
+import ITitlesRepository from 'modules/managePlayers/domain/repositories/ITitlesRepository';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class TitlesRepository implements ITitlesRepository {
