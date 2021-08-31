@@ -1,8 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
+
 import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import makeLogUserService from 'modules/landing/services/factories/makeLogUserService';
+import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseLoginController {
   (): {

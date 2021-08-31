@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import IEditAchievementDTO from 'modules/dashboard/dtos/IEditAchievementDTO';
 import makeEditAchievementService from 'modules/dashboard/services/factories/makeEditAchievementService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import { useToastContext } from 'shared/view/contexts';
 import IAchievement from 'modules/dashboard/entities/IAchievement';
 
 interface UseEditAchievementController {

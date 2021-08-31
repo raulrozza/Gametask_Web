@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import makeDeleteActivityService from 'modules/dashboard/services/factories/makeDeleteActivityService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseDeleteActivityController {
   loading: boolean;

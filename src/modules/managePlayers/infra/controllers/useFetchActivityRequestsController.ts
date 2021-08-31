@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
 import makeListActivityRequestsService from 'modules/managePlayers/services/factories/makeListActivityRequestsService';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseFetchActivityRequestsController {
   activityRequests: IActivityRequest[];

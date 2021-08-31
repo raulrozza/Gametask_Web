@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
+
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { ToastContextProvider } from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import IToastContext from 'shared/container/contexts/ToastContext/models/IToastContext';
+
+import IToastContext from 'shared/domain/providers/IToastContext';
+import { ToastContextProvider } from 'shared/view/contexts/ToastContext/hooks/useToastContext';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 

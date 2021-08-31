@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import ITitle from 'modules/managePlayers/entities/ITitle';
 import makeGetTitlesService from 'modules/managePlayers/services/factories/makeGetTitlesService';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseFetchTitlesController {
   titles: ITitle[];

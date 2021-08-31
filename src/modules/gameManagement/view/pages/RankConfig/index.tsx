@@ -8,17 +8,19 @@ import {
   Formik,
   FormikProps,
 } from 'formik';
+
+import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
+import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
+import IRank from 'shared/domain/entities/IRank';
 import { Button, Loading } from 'shared/view/components';
+import { useToastContext } from 'shared/view/contexts';
+
 import { AddItemButton, RankItem } from './components';
 import { Container } from './styles';
 
 // Hooks
-import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
 
 // Types
-import IRank from 'shared/domain/entities/IRank';
-import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 export interface IRankValues {
   ranks: IRank[];

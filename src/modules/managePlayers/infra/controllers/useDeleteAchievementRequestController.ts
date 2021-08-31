@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
+
 import makeDeleteAchievementRequestService from 'modules/managePlayers/services/factories/makeDeleteAchievementRequestService';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseDeleteAchievementRequestController {
   loading: boolean;

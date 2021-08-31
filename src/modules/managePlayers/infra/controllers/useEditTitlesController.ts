@@ -1,8 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import makeEditTitleService from 'modules/managePlayers/services/factories/makeEditTitleService';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+
 import IEditTitleDTO from 'modules/managePlayers/dtos/IEditTitleDTO';
+import makeEditTitleService from 'modules/managePlayers/services/factories/makeEditTitleService';
+import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseEditTitlesController {
   loading: boolean;

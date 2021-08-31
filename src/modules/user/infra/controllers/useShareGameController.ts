@@ -1,8 +1,8 @@
 import { RefObject, useCallback, useMemo, useRef } from 'react';
 
 import makeCryptoProvider from 'modules/user/providers/CryptoProvider';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseShareGameController {
   (props: { gameId: string }): {

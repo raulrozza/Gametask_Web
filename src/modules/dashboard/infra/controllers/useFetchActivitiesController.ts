@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import IActivity from 'modules/dashboard/entities/IActivity';
 import makeListActivitiesService from 'modules/dashboard/services/factories/makeListActivitiesService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseFetchActivitiesController {
   loading: boolean;

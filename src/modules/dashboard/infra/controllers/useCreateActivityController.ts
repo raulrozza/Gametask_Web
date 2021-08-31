@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import ICreateActivityDTO from 'modules/dashboard/dtos/ICreateActivityDTO';
 import makeCreateActivityService from 'modules/dashboard/services/factories/makeCreateActivityService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import { useToastContext } from 'shared/view/contexts';
 import IActivity from 'modules/dashboard/entities/IActivity';
 
 interface UseCreateActivityController {

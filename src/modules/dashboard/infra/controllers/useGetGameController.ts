@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import makeGetGameDetailsService from 'modules/dashboard/services/factories/makeGetGameDetailsService';
 import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import { useToastContext } from 'shared/view/contexts';
 import IGame from 'shared/domain/entities/IGame';
 
 interface UseGetGameController {
