@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import IActivity from 'modules/dashboard/entities/IActivity';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
 import { EditButton, RemoveButton } from 'modules/dashboard/view/components';
 import { Container, Experience, Name, Rules } from './styles';
 

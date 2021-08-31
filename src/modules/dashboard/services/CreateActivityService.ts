@@ -1,5 +1,5 @@
-import ICreateActivityDTO from 'modules/dashboard/dtos/ICreateActivityDTO';
-import IActivity from 'modules/dashboard/entities/IActivity';
+import ICreateActivityDTO from 'modules/dashboard/domain/dtos/ICreateActivityDTO';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
 import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
 
 interface IExecute {

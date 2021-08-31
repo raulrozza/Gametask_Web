@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import lodash from 'lodash';
 
-import ITitle from 'modules/dashboard/entities/ITitle';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 import makeGetGamesTitlesService from 'modules/dashboard/services/factories/makeGetGamesTitlesService';
 import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';

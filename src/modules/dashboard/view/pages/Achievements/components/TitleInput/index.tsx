@@ -23,7 +23,7 @@ import {
   OptionButton,
   TitleOptions,
 } from './styles';
-import ITitle from 'modules/dashboard/entities/ITitle';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;

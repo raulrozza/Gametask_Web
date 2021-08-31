@@ -1,5 +1,5 @@
-import ICreateTitleDTO from 'modules/dashboard/dtos/ICreateTitleDTO';
-import ITitle from 'modules/dashboard/entities/ITitle';
+import ICreateTitleDTO from 'modules/dashboard/domain/dtos/ICreateTitleDTO';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 import ITitlesRepository from 'modules/dashboard/repositories/ITitlesRepository';
 
 interface IExecute {

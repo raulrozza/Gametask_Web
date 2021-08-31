@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import IAchievement from 'modules/dashboard/entities/IAchievement';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 import makeListAchievementsService from 'modules/dashboard/services/factories/makeListAchievementsService';
 import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';

@@ -1,4 +1,4 @@
-import ITitle from 'modules/dashboard/entities/ITitle';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 import ITitlesRepository from 'modules/dashboard/repositories/ITitlesRepository';
 
 interface IExecute {

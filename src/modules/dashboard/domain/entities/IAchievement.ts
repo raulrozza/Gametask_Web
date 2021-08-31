@@ -1,4 +1,4 @@
-import ITitle from 'modules/dashboard/entities/ITitle';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 
 export default interface IAchievement {
   id: string;

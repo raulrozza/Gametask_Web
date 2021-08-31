@@ -1,5 +1,5 @@
-import ICreateAchievementDTO from 'modules/dashboard/dtos/ICreateAchievementDTO';
-import IAchievement from 'modules/dashboard/entities/IAchievement';
+import ICreateAchievementDTO from 'modules/dashboard/domain/dtos/ICreateAchievementDTO';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 import IAchievementsRepository from 'modules/dashboard/repositories/IAchievementsRepository';
 
 interface IExecute {

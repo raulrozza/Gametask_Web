@@ -1,5 +1,5 @@
 import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
-import IActivity from 'modules/dashboard/entities/IActivity';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
 
 interface IExecute {
   activities?: IActivity[];
