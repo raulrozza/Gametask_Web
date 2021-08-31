@@ -1,5 +1,6 @@
+import IUserSignupDTO from 'modules/landing/domain/dtos/IUserSignupDTO';
 import IUser from 'shared/domain/entities/IUser';
-import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
+
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IExecute {

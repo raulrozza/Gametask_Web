@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import IUserSignupDTO from 'modules/landing/dtos/IUserSignupDTO';
+import IUserSignupDTO from 'modules/landing/domain/dtos/IUserSignupDTO';
 import { useToastContext } from 'shared/view/contexts';
 import makeSignUserService from 'modules/landing/services/factories/makeSignUserService';
 
