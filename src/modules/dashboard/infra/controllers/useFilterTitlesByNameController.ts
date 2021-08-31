@@ -1,9 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
+
 import lodash from 'lodash';
-import ITitle from 'modules/dashboard/entities/ITitle';
+
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 import makeGetGamesTitlesService from 'modules/dashboard/services/factories/makeGetGamesTitlesService';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
+import { useToastContext } from 'shared/view/contexts';
 
 const DEBOUNCE_TIME = 500;
 

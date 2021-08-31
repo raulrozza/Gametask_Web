@@ -1,10 +1,13 @@
 import React from 'react';
 
 // Assets
-import userPlaceholder from 'assets/img/users/placeholder.png';
 import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
+import userPlaceholder from 'assets/img/users/placeholder.png';
 
 // Styles
+import IGrantAchievementDTO from 'modules/managePlayers/domain/dtos/IGrantAchievementDTO';
+import IAchievementRequest from 'modules/managePlayers/domain/entities/IAchievementRequest';
+
 import {
   AchievementImage,
   Container,
@@ -17,8 +20,6 @@ import {
 } from './styles';
 
 // Types
-import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
-import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
 
 interface AchievementRequestModalProps {
   request: IAchievementRequest | null;

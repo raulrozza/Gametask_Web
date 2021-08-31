@@ -1,5 +1,5 @@
-import IAchievement from 'modules/dashboard/entities/IAchievement';
-import ITitle from 'modules/dashboard/entities/ITitle';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 import { useMemo, useState } from 'react';
 
 interface IAchievementValues {

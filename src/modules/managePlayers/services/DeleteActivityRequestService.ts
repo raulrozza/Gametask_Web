@@ -1,4 +1,4 @@
-import IActivityRequestsRepository from 'modules/managePlayers/repositories/IActivityRequestsRepository';
+import IActivityRequestsRepository from 'modules/managePlayers/domain/repositories/IActivityRequestsRepository';
 
 interface IExecute {
   error?: string;

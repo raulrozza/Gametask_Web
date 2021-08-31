@@ -1,5 +1,5 @@
 import React from 'react';
-import IAchievement from 'modules/dashboard/entities/IAchievement';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 
 import placeholder from 'assets/img/achievements/placeholder.png';
 

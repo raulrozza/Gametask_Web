@@ -1,6 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 
 // Components
+import { Formik } from 'formik';
+
+import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
+import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
+import { ColorInput } from 'modules/gameManagement/view/components';
+import GameSchema from 'modules/gameManagement/view/validation/GameSchema';
+import { useThemeContext} from 'shared/view/contexts';
 import {
   Button,
   ImageInput,
@@ -8,21 +15,16 @@ import {
   Loading,
   Textarea,
 } from 'shared/view/components';
-import { ColorInput } from 'modules/gameManagement/view/components';
+import { useToastContext } from 'shared/view/contexts';
+
 import { ColorPreview, RestoreDefaultThemeButton } from './components';
 import { ColorInputGroup, SForm } from './styles';
 
 // Hooks
-import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 // Libraries
-import { Formik } from 'formik';
 
 // Validation
-import GameSchema from 'modules/gameManagement/view/validation/GameSchema';
-import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
 
 interface IGameValues {
   name: string;

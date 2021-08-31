@@ -1,5 +1,6 @@
 import React from 'react';
-import IActivity from 'modules/dashboard/entities/IActivity';
+
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
 
 import { Container } from './styles';
 

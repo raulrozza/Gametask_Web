@@ -1,6 +1,6 @@
-import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
-import IActivityRequestsRepository from 'modules/managePlayers/repositories/IActivityRequestsRepository';
-import { makeHttpProvider } from 'shared/container/providers';
+import IActivityRequest from 'modules/managePlayers/domain/entities/IActivityRequest';
+import IActivityRequestsRepository from 'modules/managePlayers/domain/repositories/IActivityRequestsRepository';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class ActivityRequestsRepository
   implements IActivityRequestsRepository {

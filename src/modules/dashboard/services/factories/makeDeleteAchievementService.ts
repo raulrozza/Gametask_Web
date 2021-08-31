@@ -1,4 +1,4 @@
-import makeAchievementsRepository from 'modules/dashboard/repositories/factories/makeAchievementsRepository';
+import makeAchievementsRepository from 'modules/dashboard/domain/repositories/factories/makeAchievementsRepository';
 import DeleteAchievementService from 'modules/dashboard/services/DeleteAchievementService';
 
 export default function makeDeleteAchievementService(): DeleteAchievementService {

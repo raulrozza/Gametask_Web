@@ -1,4 +1,4 @@
-import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
+import IActivitiesRepository from 'modules/dashboard/domain/repositories/IActivitiesRepository';
 
 interface IExecute {
   error?: string;

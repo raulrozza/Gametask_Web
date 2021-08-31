@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
+
+import ICreateTitleDTO from 'modules/dashboard/domain/dtos/ICreateTitleDTO';
+import ITitle from 'modules/dashboard/domain/entities/ITitle';
 import makeCreateTitleService from 'modules/dashboard/services/factories/makeCreateTitleService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import ICreateTitleDTO from 'modules/dashboard/dtos/ICreateTitleDTO';
-import ITitle from 'modules/dashboard/entities/ITitle';
+import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface UseCreateTitleController {
   loading: boolean;

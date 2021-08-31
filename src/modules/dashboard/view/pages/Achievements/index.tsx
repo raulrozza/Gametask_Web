@@ -16,7 +16,7 @@ import { useItemEditorController } from 'modules/dashboard/view/hooks';
 import { useEditAchievementSelector } from 'modules/dashboard/view/pages/Achievements/hooks';
 
 // Types
-import IAchievement from 'modules/dashboard/entities/IAchievement';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 import useDeleteAchievementController from 'modules/dashboard/infra/controllers/useDeleteAchievementController';
 
 const Achievements: React.FC = () => {

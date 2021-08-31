@@ -1,4 +1,4 @@
-import makeTitlesRepository from 'modules/managePlayers/repositories/factories/makeTitlesRepository';
+import makeTitlesRepository from 'modules/managePlayers/domain/repositories/factories/makeTitlesRepository';
 import GetTitlesService from 'modules/managePlayers/services/GetTitlesService';
 
 export default function makeGetTitlesService(): GetTitlesService {

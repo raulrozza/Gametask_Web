@@ -7,7 +7,7 @@ import placeholder from 'assets/img/games/placeholder.png';
 import { Link } from 'react-router-dom';
 
 // Hooks
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
 
 // Icons
 import { FaCog } from 'react-icons/fa';
@@ -22,7 +22,7 @@ import {
 } from './styles';
 
 // Types
-import IGame from 'shared/entities/IGame';
+import IGame from 'shared/domain/entities/IGame';
 
 interface GameSummaryProps {
   game: IGame;

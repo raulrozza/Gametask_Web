@@ -1,6 +1,6 @@
-import ILeaderboardsRepository from 'modules/dashboard/repositories/ILeaderboardsRepository';
-import { makeHttpProvider } from 'shared/container/providers';
-import ILeaderboard from 'shared/entities/ILeaderboard';
+import ILeaderboardsRepository from 'modules/dashboard/domain/repositories/ILeaderboardsRepository';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
+import ILeaderboard from 'shared/domain/entities/ILeaderboard';
 
 export default class LeaderboardsRepository implements ILeaderboardsRepository {
   private httpProvider = makeHttpProvider();

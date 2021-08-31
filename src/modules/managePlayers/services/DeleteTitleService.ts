@@ -1,4 +1,4 @@
-import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
+import ITitlesRepository from 'modules/managePlayers/domain/repositories/ITitlesRepository';
 
 interface IExecute {
   error?: string;

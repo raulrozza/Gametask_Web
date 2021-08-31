@@ -16,7 +16,7 @@ import useFetchActivitiesController from 'modules/dashboard/infra/controllers/us
 
 // Styles
 import { ActivityContainer } from './styles';
-import IActivity from 'modules/dashboard/entities/IActivity';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
 import useDeleteActivityController from 'modules/dashboard/infra/controllers/useDeleteActivityController';
 
 const Activities: React.FC = () => {
