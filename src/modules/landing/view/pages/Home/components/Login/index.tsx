@@ -1,16 +1,15 @@
 import React from 'react';
 
 import { Formik } from 'formik';
-import { Button, Input } from 'shared/view/components';
+
+import useLoginController from 'modules/landing/infra/controllers/useLoginController';
 import {
   Form,
   FormTitle,
   InputGroup,
 } from 'modules/landing/view/pages/Home/components';
-
-import useLoginController from 'modules/landing/infra/controllers/useLoginController';
-
-import LoginSchema from 'modules/landing/validation/Login';
+import LoginSchema from 'modules/landing/view/validation/Login';
+import { Button, Input } from 'shared/view/components';
 
 interface FormContainerProps {
   shown: boolean;
