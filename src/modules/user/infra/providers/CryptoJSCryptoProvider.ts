@@ -1,5 +1,6 @@
 import crypto from 'crypto-js';
-import ICryptoProvider from 'modules/user/providers/CryptoProvider/models/ICryptoProvider';
+
+import ICryptoProvider from 'modules/user/domain/providers/ICryptoProvider';
 
 const SECRET = String(process.env.REACT_APP_SECRET);
 

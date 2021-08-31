@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useMemo, useRef } from 'react';
 
-import makeCryptoProvider from 'modules/user/providers/CryptoProvider';
+import makeCryptoProvider from 'modules/user/domain/providers/factories/makeCryptoProvider';
 import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface UseShareGameController {
