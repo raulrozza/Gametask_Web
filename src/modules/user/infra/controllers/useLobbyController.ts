@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import makeListAllGamesService from 'modules/user/services/factories/makeListAllGamesService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 import IGame from 'shared/domain/entities/IGame';
-import { useToastContext } from 'shared/view/contexts';
+import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface UseLobbyController {
   (): {

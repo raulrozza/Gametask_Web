@@ -2,14 +2,15 @@ import React, { Suspense } from 'react';
 
 // Components
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+
 import { Loading, NotFound } from 'shared/view/components';
 
 // Hooks
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext } from 'shared/view/contexts';
 
 // Routes
-import PublicRoutes from './public.routes';
 import LoggedRoutes from './logged.routes';
+import PublicRoutes from './public.routes';
 import SelectedGameRoutes from './selectedGame.routes';
 
 const Routes: React.FC = () => {

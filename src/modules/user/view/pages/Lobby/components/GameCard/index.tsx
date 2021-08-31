@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { FaLink } from 'react-icons/fa';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+
 import IGame from 'shared/domain/entities/IGame';
 import { Button } from 'shared/view/components';
+import { useSessionContext } from 'shared/view/contexts';
 
 import { Container } from './styles';
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';
 import ILeaderboard from 'shared/domain/entities/ILeaderboard';
 import makeGetCurrentLeaderboard from 'modules/dashboard/services/factories/makeGetCurrentLeaderboard';

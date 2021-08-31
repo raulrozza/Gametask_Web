@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
 import makeUpdateGameService from 'modules/gameManagement/services/factories/makeUpdateGameService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';
 
 interface UseUpdateGameController {

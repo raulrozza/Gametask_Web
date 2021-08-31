@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import IEditActivityDTO from 'modules/dashboard/dtos/IEditActivityDTO';
 import IActivity from 'modules/dashboard/entities/IActivity';
 import makeEditActivityService from 'modules/dashboard/services/factories/makeEditActivityService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';
 
 interface UseEditActivityController {

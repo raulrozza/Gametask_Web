@@ -4,7 +4,7 @@ import lodash from 'lodash';
 
 import ITitle from 'modules/dashboard/entities/ITitle';
 import makeGetGamesTitlesService from 'modules/dashboard/services/factories/makeGetGamesTitlesService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';
 
 const DEBOUNCE_TIME = 500;

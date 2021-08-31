@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import ICreateAchievementDTO from 'modules/dashboard/dtos/ICreateAchievementDTO';
 import IAchievement from 'modules/dashboard/entities/IAchievement';
 import makeCreateAchievementService from 'modules/dashboard/services/factories/makeCreateAchievementService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';
 
 interface UseCreateAchievementController {
