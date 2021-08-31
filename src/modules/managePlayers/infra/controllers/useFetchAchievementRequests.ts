@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
+import IAchievementRequest from 'modules/managePlayers/domain/entities/IAchievementRequest';
 import makeListAchievementRequestsService from 'modules/managePlayers/services/factories/makeListAchievementRequestsService';
-import { useSessionContext} from 'shared/view/contexts';
-import { useToastContext } from 'shared/view/contexts';
+import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface UseFetchAchievementRequestsController {
   achievementRequests: IAchievementRequest[];

@@ -1,4 +1,4 @@
-import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
+import IGrantAchievementDTO from 'modules/managePlayers/domain/dtos/IGrantAchievementDTO';
 import IAchievementRequestsRepository from 'modules/managePlayers/repositories/IAchievementRequestsRepository';
 
 interface IExecute {

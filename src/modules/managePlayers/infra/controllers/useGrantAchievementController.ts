@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
+import IGrantAchievementDTO from 'modules/managePlayers/domain/dtos/IGrantAchievementDTO';
 import makeGrantAchievementService from 'modules/managePlayers/services/factories/makeGrantAchievementService';
 import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';

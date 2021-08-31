@@ -7,16 +7,17 @@ import React, {
 } from 'react';
 
 // Hooks
+import { FaTrashAlt } from 'react-icons/fa';
+
+import ITitle from 'modules/managePlayers/domain/entities/ITitle';
 import useEditTitlesController from 'modules/managePlayers/infra/controllers/useEditTitlesController';
 
 // Icons
-import { FaTrashAlt } from 'react-icons/fa';
 
 // Styles
 import { Container, DeleteButton, Input } from './styles';
 
 // Types
-import ITitle from 'modules/managePlayers/entities/ITitle';
 
 interface TitleProps {
   title: ITitle;

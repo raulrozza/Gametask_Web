@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import IEditTitleDTO from 'modules/managePlayers/dtos/IEditTitleDTO';
+import IEditTitleDTO from 'modules/managePlayers/domain/dtos/IEditTitleDTO';
 import makeEditTitleService from 'modules/managePlayers/services/factories/makeEditTitleService';
 import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';

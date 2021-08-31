@@ -1,4 +1,4 @@
-import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
+import IAchievementRequest from 'modules/managePlayers/domain/entities/IAchievementRequest';
 import IAchievementRequestsRepository from 'modules/managePlayers/repositories/IAchievementRequestsRepository';
 
 interface IExecute {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import ITitle from 'modules/managePlayers/entities/ITitle';
+import ITitle from 'modules/managePlayers/domain/entities/ITitle';
 import makeGetTitlesService from 'modules/managePlayers/services/factories/makeGetTitlesService';
 import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';

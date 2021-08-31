@@ -1,4 +1,4 @@
-import ITitle from 'modules/managePlayers/entities/ITitle';
+import ITitle from 'modules/managePlayers/domain/entities/ITitle';
 import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
 
 interface IExecute {

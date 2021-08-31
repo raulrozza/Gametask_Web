@@ -1,6 +1,6 @@
+import IEditTitleDTO from 'modules/managePlayers/domain/dtos/IEditTitleDTO';
+import ITitle from 'modules/managePlayers/domain/entities/ITitle';
 import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
-import IEditTitleDTO from 'modules/managePlayers/dtos/IEditTitleDTO';
-import ITitle from 'modules/managePlayers/entities/ITitle';
 
 interface IExecute {
   title?: ITitle;

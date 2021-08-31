@@ -1,6 +1,6 @@
-import ICreateTitleDTO from 'modules/managePlayers/dtos/ICreateTitleDTO';
-import IEditTitleDTO from 'modules/managePlayers/dtos/IEditTitleDTO';
-import ITitle from 'modules/managePlayers/entities/ITitle';
+import ICreateTitleDTO from 'modules/managePlayers/domain/dtos/ICreateTitleDTO';
+import IEditTitleDTO from 'modules/managePlayers/domain/dtos/IEditTitleDTO';
+import ITitle from 'modules/managePlayers/domain/entities/ITitle';
 import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 

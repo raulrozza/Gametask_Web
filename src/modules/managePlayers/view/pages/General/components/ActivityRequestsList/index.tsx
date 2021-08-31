@@ -24,7 +24,7 @@ import {
 } from './styles';
 
 // Types
-import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
+import IActivityRequest from 'modules/managePlayers/domain/entities/IActivityRequest';
 
 const ActivityRequestsList: React.FC = () => {
   const {

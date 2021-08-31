@@ -1,11 +1,18 @@
 import React, { useState, useCallback } from 'react';
 
 // Assets
-import userPlaceholder from 'assets/img/users/placeholder.png';
 import achievementPlaceholder from 'assets/img/achievements/placeholder.png';
+import userPlaceholder from 'assets/img/users/placeholder.png';
 
 // Components
+import IGrantAchievementDTO from 'modules/managePlayers/domain/dtos/IGrantAchievementDTO';
+import IAchievementRequest from 'modules/managePlayers/domain/entities/IAchievementRequest';
+import useDeleteAchievementRequestController from 'modules/managePlayers/infra/controllers/useDeleteAchievementRequestController';
+import useFetchAchievementRequestsController from 'modules/managePlayers/infra/controllers/useFetchAchievementRequests';
+import useGrantAchievementController from 'modules/managePlayers/infra/controllers/useGrantAchievementController';
 import { Loading, Modal } from 'shared/view/components';
+import { useModalController } from 'shared/view/components/Modal';
+
 import {
   AchievementDetails,
   NoRequests,
@@ -14,17 +21,11 @@ import {
 } from '..';
 
 // Hooks
-import useDeleteAchievementRequestController from 'modules/managePlayers/infra/controllers/useDeleteAchievementRequestController';
-import useGrantAchievementController from 'modules/managePlayers/infra/controllers/useGrantAchievementController';
-import useFetchAchievementRequestsController from 'modules/managePlayers/infra/controllers/useFetchAchievementRequests';
-import { useModalController } from 'shared/view/components/Modal';
 
 // Styles
 import { RequestItem, Grid, Image, Info, Title } from './styles';
 
 // Types
-import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
-import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
 
 const AchievementRequestsList: React.FC = () => {
   const {

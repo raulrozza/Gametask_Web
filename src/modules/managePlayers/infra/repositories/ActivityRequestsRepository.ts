@@ -1,4 +1,4 @@
-import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
+import IActivityRequest from 'modules/managePlayers/domain/entities/IActivityRequest';
 import IActivityRequestsRepository from 'modules/managePlayers/repositories/IActivityRequestsRepository';
 import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 

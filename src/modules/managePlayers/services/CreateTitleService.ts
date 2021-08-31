@@ -1,5 +1,5 @@
-import ICreateTitleDTO from 'modules/managePlayers/dtos/ICreateTitleDTO';
-import ITitle from 'modules/managePlayers/entities/ITitle';
+import ICreateTitleDTO from 'modules/managePlayers/domain/dtos/ICreateTitleDTO';
+import ITitle from 'modules/managePlayers/domain/entities/ITitle';
 import ITitlesRepository from 'modules/managePlayers/repositories/ITitlesRepository';
 
 interface IExecute {

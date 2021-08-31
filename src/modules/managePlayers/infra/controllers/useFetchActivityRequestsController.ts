@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
+import IActivityRequest from 'modules/managePlayers/domain/entities/IActivityRequest';
 import makeListActivityRequestsService from 'modules/managePlayers/services/factories/makeListActivityRequestsService';
 import { useSessionContext} from 'shared/view/contexts';
 import { useToastContext } from 'shared/view/contexts';
