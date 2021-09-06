@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
+
+import ICreateGameDTO from 'modules/user/domain/dtos/ICreateGameDTO';
 import makeCreateGameService from 'modules/user/services/factories/makeCreateGameService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import ICreateGameDTO from 'modules/user/dtos/ICreateGameDTO';
+import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface IHelpers {
   resetForm: () => void;

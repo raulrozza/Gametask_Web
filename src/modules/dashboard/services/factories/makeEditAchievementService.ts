@@ -1,4 +1,4 @@
-import makeAchievementsRepository from 'modules/dashboard/repositories/factories/makeAchievementsRepository';
+import makeAchievementsRepository from 'modules/dashboard/domain/repositories/factories/makeAchievementsRepository';
 import EditAchievementService from 'modules/dashboard/services/EditAchievementService';
 
 export default function makeEditAchievementService(): EditAchievementService {

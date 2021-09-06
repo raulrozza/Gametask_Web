@@ -1,7 +1,9 @@
-import { useFormikContext } from 'formik';
-import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
 import React, { memo, useCallback } from 'react';
+
+import { useFormikContext } from 'formik';
+
 import defaultPalette from 'config/theme/palette';
+import IUpdateGameDTO from 'modules/gameManagement/domain/dtos/IUpdateGameDTO';
 
 import { Button } from './styles';
 

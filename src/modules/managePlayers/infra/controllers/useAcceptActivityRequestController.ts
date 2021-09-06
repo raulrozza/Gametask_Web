@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
+
 import makeAcceptActivityRequestService from 'modules/managePlayers/services/factories/makeAcceptActivityRequestService';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
+import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface UseAcceptActivityRequestController {
   loading: boolean;

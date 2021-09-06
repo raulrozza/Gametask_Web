@@ -1,6 +1,9 @@
 import React from 'react';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+
 import SkeletonLoader from 'tiny-skeleton-loader-react';
+
+import { useThemeContext } from 'shared/view/contexts';
+
 import { Container } from './styles';
 
 const NUMBER_OF_SKELETONS = 9;

@@ -1,7 +1,7 @@
-import IGrantAchievementDTO from 'modules/managePlayers/dtos/IGrantAchievementDTO';
-import IAchievementRequest from 'modules/managePlayers/entities/IAchievementRequest';
-import IAchievementRequestsRepository from 'modules/managePlayers/repositories/IAchievementRequestsRepository';
-import { makeHttpProvider } from 'shared/container/providers';
+import IGrantAchievementDTO from 'modules/managePlayers/domain/dtos/IGrantAchievementDTO';
+import IAchievementRequest from 'modules/managePlayers/domain/entities/IAchievementRequest';
+import IAchievementRequestsRepository from 'modules/managePlayers/domain/repositories/IAchievementRequestsRepository';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class AchievementRequestsRepository
   implements IAchievementRequestsRepository {

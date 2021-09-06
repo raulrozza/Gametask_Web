@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { FormikHelpers, FormikProvider, useFormik } from 'formik';
 import { Button, Input, Textarea } from 'shared/view/components';
-import ActivitySchema from 'modules/dashboard/validation/ActivitySchema';
+import ActivitySchema from 'modules/dashboard/view/validation/ActivitySchema';
 
 import { ButtonContainer, Container, Form } from './styles';
 import useCreateActivityController from 'modules/dashboard/infra/controllers/useCreateActivityController';

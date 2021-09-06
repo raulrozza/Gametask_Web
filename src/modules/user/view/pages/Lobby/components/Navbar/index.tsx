@@ -4,10 +4,11 @@ import React, { memo } from 'react';
 import logo from 'assets/img/logo.png';
 
 // Helpers
+import { useSessionContext } from 'shared/view/contexts';
+
 import { clickOnEnter } from './helpers';
 
 // Hooks
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
 
 // Styles
 import { Container, LobbyTitle, LoggedText, LogoContainer } from './styles';

@@ -1,5 +1,6 @@
 import React, { memo, ButtonHTMLAttributes } from 'react';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+
+import { useThemeContext } from 'shared/view/contexts';
 
 import { ChildrenContainer, Spinner, StyledButton, Text } from './styles';
 

@@ -1,4 +1,4 @@
-import makeGamesRepository from 'shared/repositories/factories/makeGamesRepository';
+import makeGamesRepository from 'shared/domain/repositories/factories/makeGamesRepository';
 import ListAllGamesService from '../ListAllGamesService';
 
 export default function makeListAllGamesService(): ListAllGamesService {

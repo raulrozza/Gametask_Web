@@ -1,20 +1,21 @@
 import React, { useCallback } from 'react';
 
 // Components
-import { Button, Loading } from 'shared/view/components';
 import { FieldArray, Formik } from 'formik';
-import { LevelsContainer } from './components';
 
 // Hooks
 import useGetGameController from 'modules/gameManagement/infra/controller/useGetGameController';
 import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
 
 // Styles
-import { Column, Container, LevelForm, Title } from './styles';
 
 // Types
-import ILevelInfo from 'shared/entities/ILevelInfo';
+import ILevelInfo from 'shared/domain/entities/ILevelInfo';
+import { Button, Loading } from 'shared/view/components';
+import { useToastContext } from 'shared/view/contexts';
+
+import { LevelsContainer } from './components';
+import { Column, Container, LevelForm, Title } from './styles';
 
 interface ILevelValues {
   levels: ILevelInfo[];

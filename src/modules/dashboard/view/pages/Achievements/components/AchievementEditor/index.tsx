@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
-import { FormikHelpers, FormikProvider, useFormik } from 'formik';
-import AchievementSchema from 'modules/dashboard/validation/AchievementSchema';
-import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
-import { TitleInput } from '..';
-import useCreateAchievementController from 'modules/dashboard/infra/controllers/useCreateAchievementController';
 
-import { ButtonContainer, Container, Form } from './styles';
+import { FormikHelpers, FormikProvider, useFormik } from 'formik';
+
+import useCreateAchievementController from 'modules/dashboard/infra/controllers/useCreateAchievementController';
 import useEditAchievementController from 'modules/dashboard/infra/controllers/useEditAchievementController';
+import AchievementSchema from 'modules/dashboard/view/validation/AchievementSchema';
+import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
+
+import { TitleInput } from '..';
+import { ButtonContainer, Container, Form } from './styles';
 
 interface IFormValues {
   name: string;

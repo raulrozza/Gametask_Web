@@ -1,6 +1,6 @@
-import IGamesRepository from 'shared/repositories/IGamesRepository';
-import ICreateGameDTO from 'modules/user/dtos/ICreateGameDTO';
-import IGame from 'shared/entities/IGame';
+import ICreateGameDTO from 'modules/user/domain/dtos/ICreateGameDTO';
+import IGame from 'shared/domain/entities/IGame';
+import IGamesRepository from 'shared/domain/repositories/IGamesRepository';
 
 interface IExecute {
   game?: IGame;

@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import ReactLoading from 'react-loading';
-import useThemeContext from 'shared/container/contexts/ThemeContext/contexts/useThemeContext';
+import { useThemeContext} from 'shared/view/contexts';
 
 // Styles
 import { LoadingContainer } from './styles';

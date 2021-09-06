@@ -4,6 +4,8 @@ import React from 'react';
 import userPlaceholder from 'assets/img/users/placeholder.png';
 
 // Styles
+import IActivityRequest from 'modules/managePlayers/domain/entities/IActivityRequest';
+
 import {
   Container,
   DescriptionBlock,
@@ -13,7 +15,6 @@ import {
 } from './styles';
 
 // Types
-import IActivityRequest from 'modules/managePlayers/entities/IActivityRequest';
 
 interface ActivityModalProps {
   request: IActivityRequest | null;

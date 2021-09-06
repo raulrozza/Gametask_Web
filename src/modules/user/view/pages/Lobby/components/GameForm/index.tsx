@@ -1,19 +1,14 @@
 import React from 'react';
 
-// Components
-import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
-
-// Libs
 import { Formik, Form } from 'formik';
 
-// Schemas
+import useCreateGameController from 'modules/user/infra/controllers/useCreateGameController';
 import GameFormSchema, {
   requiredImageValidation,
-} from 'modules/user/validation/GameFormSchema';
+} from 'modules/user/view/validation/GameFormSchema';
+import { Button, ImageInput, Input, Textarea } from 'shared/view/components';
 
-// Styles
 import { Container, Footer } from './styles';
-import useCreateGameController from 'modules/user/infra/controllers/useCreateGameController';
 
 interface IGameValues {
   name: string;

@@ -1,4 +1,4 @@
-import makeTitlesRepository from 'modules/managePlayers/repositories/factories/makeTitlesRepository';
+import makeTitlesRepository from 'modules/managePlayers/domain/repositories/factories/makeTitlesRepository';
 import EditTitleService from 'modules/managePlayers/services/EditTitleService';
 
 export default function makeEditTitleService(): EditTitleService {

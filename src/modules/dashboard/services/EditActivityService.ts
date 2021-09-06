@@ -1,6 +1,6 @@
-import IEditActivityDTO from 'modules/dashboard/dtos/IEditActivityDTO';
-import IActivity from 'modules/dashboard/entities/IActivity';
-import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
+import IEditActivityDTO from 'modules/dashboard/domain/dtos/IEditActivityDTO';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
+import IActivitiesRepository from 'modules/dashboard/domain/repositories/IActivitiesRepository';
 
 interface IExecute {
   activity?: IActivity;

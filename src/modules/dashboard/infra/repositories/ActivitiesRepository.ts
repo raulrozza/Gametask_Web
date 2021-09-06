@@ -1,8 +1,8 @@
-import ICreateActivityDTO from 'modules/dashboard/dtos/ICreateActivityDTO';
-import IEditActivityDTO from 'modules/dashboard/dtos/IEditActivityDTO';
-import IActivity from 'modules/dashboard/entities/IActivity';
-import IActivitiesRepository from 'modules/dashboard/repositories/IActivitiesRepository';
-import { makeHttpProvider } from 'shared/container/providers';
+import ICreateActivityDTO from 'modules/dashboard/domain/dtos/ICreateActivityDTO';
+import IEditActivityDTO from 'modules/dashboard/domain/dtos/IEditActivityDTO';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
+import IActivitiesRepository from 'modules/dashboard/domain/repositories/IActivitiesRepository';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class ActivitiesRepository implements IActivitiesRepository {
   private httpProvider = makeHttpProvider();

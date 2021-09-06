@@ -1,4 +1,4 @@
-import ILeaderboardsRepository from 'modules/dashboard/repositories/ILeaderboardsRepository';
+import ILeaderboardsRepository from 'modules/dashboard/domain/repositories/ILeaderboardsRepository';
 
 interface IExecute {
   error?: string;

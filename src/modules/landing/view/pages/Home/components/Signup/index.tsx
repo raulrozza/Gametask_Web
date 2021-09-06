@@ -12,7 +12,7 @@ import useSignupController from 'modules/landing/infra/controllers/useSignupCont
 
 import SignupSchema, {
   passwordsMatchValidation,
-} from 'modules/landing/validation/Signup';
+} from 'modules/landing/view/validation/Signup';
 
 interface SignupProps {
   shown: boolean;

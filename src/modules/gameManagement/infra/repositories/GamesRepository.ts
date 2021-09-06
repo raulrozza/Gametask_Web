@@ -1,6 +1,6 @@
-import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
-import IGamesRepository from 'modules/gameManagement/repositories/IGamesRepository';
-import { makeHttpProvider } from 'shared/container/providers';
+import IUpdateGameDTO from 'modules/gameManagement/domain/dtos/IUpdateGameDTO';
+import IGamesRepository from 'modules/gameManagement/domain/repositories/IGamesRepository';
+import makeHttpProvider from 'shared/domain/providers/factories/makeHttpProvider';
 
 export default class GamesRepository implements IGamesRepository {
   private httpProvider = makeHttpProvider();

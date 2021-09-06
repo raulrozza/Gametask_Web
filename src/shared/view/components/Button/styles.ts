@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
 import Loading from 'react-loading';
+import styled, { css } from 'styled-components';
 
 interface StyledButtonProps {
   outline: boolean;

@@ -1,4 +1,4 @@
-import makeTitlesRepository from 'modules/dashboard/repositories/factories/makeTitlesRepository';
+import makeTitlesRepository from 'modules/dashboard/domain/repositories/factories/makeTitlesRepository';
 import GetGameTitlesService from 'modules/dashboard/services/GetGameTitlesService';
 
 export default function makeGetGamesTitlesService(): GetGameTitlesService {

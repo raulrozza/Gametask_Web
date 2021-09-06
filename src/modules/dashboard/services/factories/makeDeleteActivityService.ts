@@ -1,4 +1,4 @@
-import makeActivitiesRepository from 'modules/dashboard/repositories/factories/makeActivitiesRepository';
+import makeActivitiesRepository from 'modules/dashboard/domain/repositories/factories/makeActivitiesRepository';
 import DeleteActivityService from 'modules/dashboard/services/DeleteActivityService';
 
 export default function makeDeleteActivityService(): DeleteActivityService {

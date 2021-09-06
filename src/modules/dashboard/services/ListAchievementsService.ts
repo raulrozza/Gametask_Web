@@ -1,5 +1,5 @@
-import IAchievementsRepository from 'modules/dashboard/repositories/IAchievementsRepository';
-import IAchievement from 'modules/dashboard/entities/IAchievement';
+import IAchievementsRepository from 'modules/dashboard/domain/repositories/IAchievementsRepository';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 
 interface IExecute {
   achievements?: IAchievement[];

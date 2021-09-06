@@ -1,5 +1,5 @@
-import IUserLoginDTO from 'modules/landing/dtos/IUserLoginDTO';
-import IUsersRepository from '../repositories/IUsersRepository';
+import IUserLoginDTO from 'modules/landing/domain/dtos/IUserLoginDTO';
+import IUsersRepository from 'modules/landing/domain/repositories/IUsersRepository';
 
 interface IExecute {
   token?: string;

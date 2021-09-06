@@ -1,5 +1,5 @@
-import IUpdateGameDTO from 'modules/gameManagement/dtos/IUpdateGameDTO';
-import IGamesRepository from 'modules/gameManagement/repositories/IGamesRepository';
+import IUpdateGameDTO from 'modules/gameManagement/domain/dtos/IUpdateGameDTO';
+import IGamesRepository from 'modules/gameManagement/domain/repositories/IGamesRepository';
 
 interface IExecute {
   error?: string;

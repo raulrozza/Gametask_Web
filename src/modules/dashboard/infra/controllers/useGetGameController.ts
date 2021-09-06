@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+
 import makeGetGameDetailsService from 'modules/dashboard/services/factories/makeGetGameDetailsService';
-import IGame from 'shared/entities/IGame';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+import { useSessionContext} from 'shared/view/contexts';
+import { useToastContext } from 'shared/view/contexts';
+import IGame from 'shared/domain/entities/IGame';
 
 interface UseGetGameController {
   loading: boolean;

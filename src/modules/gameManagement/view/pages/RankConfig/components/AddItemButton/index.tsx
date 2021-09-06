@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import React, { useCallback } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import IRank from 'shared/entities/IRank';
+import IRank from 'shared/domain/entities/IRank';
 
 import { Container } from './styles';
 

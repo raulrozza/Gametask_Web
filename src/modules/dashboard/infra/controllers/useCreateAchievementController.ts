@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import ICreateAchievementDTO from 'modules/dashboard/dtos/ICreateAchievementDTO';
+
+import ICreateAchievementDTO from 'modules/dashboard/domain/dtos/ICreateAchievementDTO';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 import makeCreateAchievementService from 'modules/dashboard/services/factories/makeCreateAchievementService';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
-import IAchievement from 'modules/dashboard/entities/IAchievement';
+import { useSessionContext, useToastContext } from 'shared/view/contexts';
 
 interface UseCreateAchievementController {
   loading: boolean;

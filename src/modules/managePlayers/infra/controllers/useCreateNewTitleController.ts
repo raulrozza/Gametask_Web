@@ -1,7 +1,8 @@
-import makeCreateTitleService from 'modules/managePlayers/services/factories/makeCreateTitleService';
 import { useCallback, useMemo, useState } from 'react';
-import useSessionContext from 'shared/container/contexts/SessionContext/contexts/useSessionContext';
-import useToastContext from 'shared/container/contexts/ToastContext/contexts/useToastContext';
+
+import makeCreateTitleService from 'modules/managePlayers/services/factories/makeCreateTitleService';
+import { useSessionContext} from 'shared/view/contexts';
+import { useToastContext } from 'shared/view/contexts';
 
 interface UseCreateNewTitleController {
   loading: boolean;

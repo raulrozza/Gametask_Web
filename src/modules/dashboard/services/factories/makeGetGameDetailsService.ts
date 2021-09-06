@@ -1,4 +1,4 @@
-import makeGamesRepository from 'shared/repositories/factories/makeGamesRepository';
+import makeGamesRepository from 'shared/domain/repositories/factories/makeGamesRepository';
 import GetGameDetailsService from '../GetGameDetailsService';
 
 export default function makeGetGameDetailsService(): GetGameDetailsService {
