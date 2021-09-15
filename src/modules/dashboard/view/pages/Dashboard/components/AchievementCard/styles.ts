@@ -21,6 +21,8 @@ export const Container = styled.div`
       height: 20px;
       width: inherit;
       text-align: center;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
     }
   `}
 `;
