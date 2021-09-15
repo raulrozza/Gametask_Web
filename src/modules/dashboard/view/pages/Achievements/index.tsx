@@ -1,23 +1,19 @@
 import React, { useCallback, useState } from 'react';
 
-// Components
-import { Button, Row } from 'shared/view/components';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
+import useDeleteAchievementController from 'modules/dashboard/infra/controllers/useDeleteAchievementController';
+import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
 import {
   DefaultPageContainer,
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
-import Modal, { useModalController } from 'shared/view/components/Modal';
-import { AchievementCard, AchievementEditor } from './components';
-import { AchievementsContainer } from './styles';
-
-// Hooks
-import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
 import { useItemEditorController } from 'modules/dashboard/view/hooks';
 import { useEditAchievementSelector } from 'modules/dashboard/view/pages/Achievements/hooks';
+import { Button, Row } from 'shared/view/components';
+import Modal, { useModalController } from 'shared/view/components/Modal';
 
-// Types
-import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
-import useDeleteAchievementController from 'modules/dashboard/infra/controllers/useDeleteAchievementController';
+import { AchievementCard, AchievementEditor } from './components';
+import { AchievementsContainer } from './styles';
 
 const Achievements: React.FC = () => {
   const {
@@ -54,14 +50,14 @@ const Achievements: React.FC = () => {
 
   const handleOpenEditorWith = useCallback(
     (achievement?: IAchievement) => {
-      openEditorWith(achievement);
-
       const isTheAlreadySelectedAchievement =
         achievement &&
         achievementValues &&
         achievement.id === achievementValues.id;
 
       if (isTheAlreadySelectedAchievement) return editorController.toggle();
+
+      openEditorWith(achievement);
       editorController.open();
     },
     [achievementValues, editorController, openEditorWith],
@@ -100,7 +96,9 @@ const Achievements: React.FC = () => {
           </DefaultPageContainer.Content>
 
           <DefaultPageContainer.Footer>
-            <Button onClick={editorController.open}>Nova Conquista</Button>
+            <Button onClick={() => handleOpenEditorWith()}>
+              Nova Conquista
+            </Button>
           </DefaultPageContainer.Footer>
         </>
       )}
