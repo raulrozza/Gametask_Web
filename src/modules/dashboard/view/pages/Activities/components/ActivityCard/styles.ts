@@ -11,6 +11,7 @@ export const Container = styled.div`
     position: relative;
 
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-width: thin;
 
     button {
