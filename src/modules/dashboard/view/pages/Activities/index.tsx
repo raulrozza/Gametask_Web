@@ -1,23 +1,19 @@
 import React, { useState, useCallback } from 'react';
 
-// Components
-import { Button, Row } from 'shared/view/components';
+import IActivity from 'modules/dashboard/domain/entities/IActivity';
+import useDeleteActivityController from 'modules/dashboard/infra/controllers/useDeleteActivityController';
+import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
 import {
   DefaultPageContainer,
   DefaultPageLoading,
 } from 'modules/dashboard/view/components';
-import Modal, { useModalController } from 'shared/view/components/Modal';
-import { ActivityCard, ActivityEditor } from './components';
-
-// Hooks
 import { useItemEditorController } from 'modules/dashboard/view/hooks';
-import { useEditActivitySelector } from './hooks';
-import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
+import { Button, Row } from 'shared/view/components';
+import Modal, { useModalController } from 'shared/view/components/Modal';
 
-// Styles
+import { ActivityCard, ActivityEditor } from './components';
+import { useEditActivitySelector } from './hooks';
 import { ActivityContainer } from './styles';
-import IActivity from 'modules/dashboard/domain/entities/IActivity';
-import useDeleteActivityController from 'modules/dashboard/infra/controllers/useDeleteActivityController';
 
 const Activities: React.FC = () => {
   const {
@@ -32,12 +28,11 @@ const Activities: React.FC = () => {
 
   const handleOpenEditorWith = useCallback(
     (activity?: IActivity) => {
-      openEditorWith(activity);
-
       const isTheAlreadySelectedActivity =
         activity && activityValues && activity.id === activityValues.id;
 
       if (isTheAlreadySelectedActivity) return editorController.toggle();
+      openEditorWith(activity);
       editorController.open();
     },
     [activityValues, editorController, openEditorWith],
@@ -99,7 +94,9 @@ const Activities: React.FC = () => {
           </DefaultPageContainer.Content>
 
           <DefaultPageContainer.Footer>
-            <Button onClick={editorController.open}>Nova Atividade</Button>
+            <Button onClick={() => handleOpenEditorWith()}>
+              Nova Atividade
+            </Button>
           </DefaultPageContainer.Footer>
         </>
       )}

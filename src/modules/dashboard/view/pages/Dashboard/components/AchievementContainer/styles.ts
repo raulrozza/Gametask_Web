@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import ExpandableBox from '../ExpandableBox';
 
 export const AchievementsWrapper = styled(ExpandableBox.Container)`

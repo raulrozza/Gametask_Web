@@ -1,16 +1,16 @@
 import React, { memo } from 'react';
 
 import { Link } from 'react-router-dom';
+
+import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
+import { useExpandController } from 'modules/dashboard/view/hooks';
+
 import {
   AchievementCard,
   AchievementSkeletons,
   ExpandableBox,
   NoAchievements,
 } from '..';
-
-import { useExpandController } from 'modules/dashboard/view/hooks';
-import useFetchAchievementsController from 'modules/dashboard/infra/controllers/useFetchAchievementsController';
-
 import { AchievementsWrapper } from './styles';
 
 const AchievementContainer: React.FC = () => {
