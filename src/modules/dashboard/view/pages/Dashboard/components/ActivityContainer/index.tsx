@@ -1,19 +1,16 @@
 import React, { memo } from 'react';
 
-// Components
 import { Link } from 'react-router-dom';
+
+import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
+import { useExpandController } from 'modules/dashboard/view/hooks';
+
 import {
   ActivityCard,
   ActivitiesSkeletons,
   ExpandableBox,
   NoActivities,
 } from '..';
-
-// Hooks
-import useFetchActivitiesController from 'modules/dashboard/infra/controllers/useFetchActivitiesController';
-import { useExpandController } from 'modules/dashboard/view/hooks';
-
-// Styles
 import { ActivitiesWrapper } from './styles';
 
 const ActivityContainer: React.FC = () => {

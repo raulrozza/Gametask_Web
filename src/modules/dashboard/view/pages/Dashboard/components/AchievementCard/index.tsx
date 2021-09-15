@@ -1,7 +1,7 @@
 import React from 'react';
-import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 
 import placeholder from 'assets/img/achievements/placeholder.png';
+import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 
 import { Container } from './styles';
 

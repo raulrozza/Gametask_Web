@@ -9,6 +9,9 @@ export const Container = styled.div`
     text-align: center;
     border: 1px solid ${theme.palette.secondary.dark};
 
+    flex-shrink: 0;
+    max-width: 180px;
+
     .name {
       font-size: 16px;
       text-transform: uppercase;
@@ -17,6 +20,9 @@ export const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .experience {
