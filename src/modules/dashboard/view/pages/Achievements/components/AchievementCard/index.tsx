@@ -1,15 +1,11 @@
 import React, { useCallback } from 'react';
 
-// Assets
 import placeholder from 'assets/img/achievements/placeholder.png';
-
-// Components
-import { EditButton, RemoveButton } from 'modules/dashboard/view/components';
-import { Container, Description, Image, Name } from './styles';
-
-// Types
 import IAchievement from 'modules/dashboard/domain/entities/IAchievement';
 import ITitle from 'modules/dashboard/domain/entities/ITitle';
+import { EditButton, RemoveButton } from 'modules/dashboard/view/components';
+
+import { Container, Description, Image, Name } from './styles';
 
 interface AchievementCardProps {
   achievement: IAchievement;
