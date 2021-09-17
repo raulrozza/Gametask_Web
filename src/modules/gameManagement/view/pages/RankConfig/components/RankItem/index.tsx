@@ -1,8 +1,10 @@
-import theme from 'config/theme';
+import React, { useMemo } from 'react';
+
 import { FieldArrayRenderProps, useField } from 'formik';
+
+import theme from 'config/theme';
 import { RemoveButton } from 'modules/gameManagement/view/components';
 import { Select } from 'modules/gameManagement/view/pages/RankConfig/components';
-import React, { useMemo } from 'react';
 import ILevelInfo from 'shared/domain/entities/ILevelInfo';
 import IRank from 'shared/domain/entities/IRank';
 

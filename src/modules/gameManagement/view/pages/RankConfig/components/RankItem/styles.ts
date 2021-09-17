@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+
 import { ColorInput as ColorInputDefault } from 'modules/gameManagement/view/components';
 import { getContrastColor } from 'modules/gameManagement/view/pages/RankConfig/helpers';
 import { Input } from 'shared/view/components';
@@ -64,6 +65,11 @@ export const SInput = styled(Input)<SInputProps>`
 
     input {
       width: auto;
+    }
+
+    & + div {
+      margin-top: 0px;
+      padding: ${({ theme }) => theme.layout.spacing(0.5, 1)};
     }
   `}
 `;
