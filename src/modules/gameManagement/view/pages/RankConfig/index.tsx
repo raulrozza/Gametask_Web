@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 
-// Components
 import {
   FieldArray,
   FieldArrayRenderProps,
@@ -11,16 +10,13 @@ import {
 
 import useGetGameController from 'modules/dashboard/infra/controllers/useGetGameController';
 import useUpdateGameController from 'modules/gameManagement/infra/controller/useUpdateGameController';
+import GameRanksSchema from 'modules/gameManagement/view/validation/GameRanksSchema';
 import IRank from 'shared/domain/entities/IRank';
 import { Button, Loading } from 'shared/view/components';
 import { useToastContext } from 'shared/view/contexts';
 
 import { AddItemButton, RankItem } from './components';
 import { Container } from './styles';
-
-// Hooks
-
-// Types
 
 export interface IRankValues {
   ranks: IRank[];
@@ -70,6 +66,7 @@ const RankConfig: React.FC = () => {
       <Formik
         initialValues={{ ranks: game.ranks || [] } as IRankValues}
         onSubmit={submitRanks}
+        validationSchema={GameRanksSchema}
       >
         <Form>
           <FieldArray name="ranks">
